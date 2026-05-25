@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Páginas de películas y series</title>
     
-    <!-- Favicon de la pestaña -->
+    <!-- Favicon de la pestaña (Se mantiene intacto) -->
     <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
@@ -18,15 +18,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative; /* Permite posicionar el icono respecto a la pantalla */
+            position: relative;
         }
 
-        /* Estilos para fijar el icono en la esquina superior izquierda */
+        /* Puedes borrar o dejar estos estilos del icono antiguo, ya no afectarán */
         .icono-esquina {
             position: absolute;
-            top: 20px;   /* Centrado/Distancia desde arriba */
-            left: 20px;  /* Centrado/Distancia desde la izquierda */
-            width: 32px; /* Tamaño ideal para que se vea claro en la TV */
+            top: 20px;   
+            left: 20px;  
+            width: 32px; 
             height: 32px;
             object-fit: contain;
         }
@@ -81,14 +81,13 @@
             .grid { grid-template-columns: repeat(2, 1fr); }
             h1 { font-size: 1.2rem; }
             a { font-size: 0.8rem; padding: 8px; }
-            .icono-esquina { width: 24px; height: 24px; top: 15px; left: 15px; } /* Ajuste móvil */
+            .icono-esquina { width: 24px; height: 24px; top: 15px; left: 15px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Icono ubicado en la marca blanca de la esquina -->
-    <img src="favicon.png" alt="Icono" class="icono-esquina">
+    <!-- Se eliminó la etiqueta img que mostraba el icono en la esquina superior izquierda -->
 
     <h1>C:\PAGINAS_DE_PELICULAS_Y_SERIES</h1>
 
@@ -122,3 +121,4 @@
 
 </body>
 </html>
+
