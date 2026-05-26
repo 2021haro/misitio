@@ -16,7 +16,9 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center; /* Centra el grid horizontalmente en la pantalla */
+            justify-content: center;
+            min-height: 90vh; /* Asegura un buen espacio vertical */
             position: relative;
         }
 
@@ -43,10 +45,10 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(4, 1fr); /* CAMBIADO A 4 COLUMNAS */
             gap: 10px;
             width: 100%;
-            max-width: 1000px;
+            max-width: 900px; /* Ajustado el ancho máximo para 4 columnas */
         }
 
         a {
@@ -55,7 +57,7 @@
             justify-content: center;
             color: #0f0;
             text-decoration: none;
-            padding: 10px;
+            padding: 12px 10px; /* Un poco más de espacio vertical */
             border: 1px solid #0f0;
             font-weight: bold;
             font-size: 0.9rem;
@@ -72,6 +74,7 @@
             50%, 100% { opacity: 0; }
         }
 
+        /* Diseño responsivo adaptado */
         @media (max-width: 900px) {
             .grid { grid-template-columns: repeat(3, 1fr); }
         }
@@ -85,8 +88,6 @@
     </style>
 </head>
 <body>
-
-    
 
     <div class="grid">
         <a href="http://serieskao.top" target="_blank">SeriesKao</a>
