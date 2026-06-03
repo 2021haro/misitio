@@ -31,7 +31,6 @@
             position: relative;
         }
 
-        /* Puedes borrar o dejar estos estilos del icono antiguo, ya no afectarán */
         .icono-esquina {
             position: absolute;
             top: 20px;   
@@ -54,7 +53,10 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); 
+            /* Definimos un tamaño base para los botones (mínimo 140px, máximo 1fr) */
+            grid-template-columns: repeat(auto-fit, minmax(140px, 200px)); 
+            /* Esto centra el grupo de elementos horizontalmente en la pantalla */
+            justify-content: center; 
             gap: 10px;
             width: 100%;
             max-width: 900px; 
@@ -71,6 +73,7 @@
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
+            box-sizing: border-box;
         }
 
         a:hover {
@@ -83,13 +86,8 @@
             50%, 100% { opacity: 0; }
         }
 
-        /* Diseño responsivo adaptado */
-        @media (max-width: 900px) {
-            .grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
+        /* Diseño responsivo simplificado */
         @media (max-width: 600px) {
-            .grid { grid-template-columns: repeat(2, 1fr); }
             h1 { font-size: 1.2rem; }
             a { font-size: 0.8rem; padding: 8px; }
             .icono-esquina { width: 24px; height: 24px; top: 15px; left: 15px; }
@@ -103,7 +101,6 @@
     <div class="grid">
         <a href="https://es.pornhub.com/" target="_blank">PornHub</a>
         <a href="https://www.xnxx.es/" target="_blank">Xnxx</a>
-              
     </div>
 
 </body>
