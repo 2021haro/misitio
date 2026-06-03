@@ -12,7 +12,7 @@
            CAMBIA LOS COLORES AQUÍ ABAJO Y SE MODIFICARÁ TODO 
         ======================================================= */
         :root {
-            --color-principal: #ffff00; /* El morado original */
+            --color-principal: #ffff00; /* El amarillo original */
             --color-fondo: #000000;     /* El negro de fondo original */
         }
         /* ======================================================= */
@@ -25,11 +25,11 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
+            align-items: center; /* Centra el título y el contenedor de botones */
             min-height: 90vh; 
             position: relative;
         }
 
-        /* Puedes borrar o dejar estos estilos del icono antiguo, ya no afectarán */
         .icono-esquina {
             position: absolute;
             top: 20px;   
@@ -50,15 +50,15 @@
             animation: p 1s infinite;
         }
 
+        /* CAMBIADO A FLEXBOX PARA COMPORTAMIENTO ULTRA-CENTRADO */
         .grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Mantiene tus 4 columnas originales */
+            display: flex;
+            flex-wrap: wrap;       /* Si no caben en una fila, bajan a la siguiente */
+            justify-content: center; /* ESTO centra los botones horizontalmente, sean 1, 2 o 50 */
             gap: 10px;
-            /* Eliminamos width: 100% para que no se estire a los bordes de la pantalla */
-            width: calc(100% - 40px); 
+            width: 100%;
             max-width: 900px; 
-            /* ESTO HACE LA MAGIA: Centra el contenedor exactamente entre los 2 laterales de forma horizontal */
-            margin: 0 auto; 
+            margin: 0 auto;
         }
 
         a {
@@ -72,6 +72,9 @@
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
+            /* Definimos un tamaño fijo base para que todos los botones midan igual */
+            width: 180px; 
+            box-sizing: border-box;
         }
 
         a:hover {
@@ -84,15 +87,10 @@
             50%, 100% { opacity: 0; }
         }
 
-        /* Diseño responsivo adaptado original */
-        @media (max-width: 900px) {
-            .grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
+        /* Diseño responsivo simple para móviles */
         @media (max-width: 600px) {
-            .grid { grid-template-columns: repeat(2, 1fr); }
             h1 { font-size: 1.2rem; }
-            a { font-size: 0.8rem; padding: 8px; }
+            a { font-size: 0.8rem; padding: 8px; width: 140px; }
             .icono-esquina { width: 24px; height: 24px; top: 15px; left: 15px; }
         }
     </style>
