@@ -3,22 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C:\Páginas_de_películas_y_series</title>
+    <title>Páginas_Nopor</title>
     
     <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
+        /* =======================================================
+           CAMBIA LOS COLORES AQUÍ ABAJO Y SE MODIFICARÁ TODO 
+        ======================================================= */
+        :root {
+            --color-principal: #FF0099; /* El morado original */
+            --color-fondo: #000000;     /* El negro de fondo original */
+        }
+        /* ======================================================= */
+
         body {
             font-family: monospace;
-            background: #000;
-            color: #0f0;
+            background: var(--color-fondo);
+            color: var(--color-principal);
             margin: 0;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centra el grid horizontalmente en la pantalla */
+            align-items: center; 
             justify-content: center;
-            min-height: 90vh; /* Asegura un buen espacio vertical */
+            min-height: 90vh; 
             position: relative;
         }
 
@@ -45,28 +54,28 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* CAMBIADO A 4 COLUMNAS */
+            grid-template-columns: repeat(4, 1fr); 
             gap: 10px;
             width: 100%;
-            max-width: 900px; /* Ajustado el ancho máximo para 4 columnas */
+            max-width: 900px; 
         }
 
         a {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #0f0;
+            color: var(--color-principal);
             text-decoration: none;
-            padding: 12px 10px; /* Un poco más de espacio vertical */
-            border: 1px solid #0f0;
+            padding: 12px 10px; 
+            border: 1px solid var(--color-principal);
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
         }
 
         a:hover {
-            background: #0f0;
-            color: #000;
+            background: var(--color-principal);
+            color: var(--color-fondo);
         }
 
         @keyframes p {
@@ -89,8 +98,8 @@
 </head>
 <body>
 
-    <h1>C:\PAGINAS_DE_PELICULAS_Y_SERIES</h1>
-    
+   <h1>C:\PAGINAS_NOPOR</h1>
+
     <div class="grid">
         <a href="http://serieskao.top" target="_blank">SeriesKao</a>
         <a href="https://seriesflixhd.shop" target="_blank">SeriesFlix_HD</a>
@@ -110,7 +119,7 @@
         <a href="http://seriesyonkis.cx" target="_blank">SeriesYonkis</a>
         <a href="https://gnulahd.nu" target="_blank">GnulaHD</a>
 
-        <a href="https://www.fuegocine.com/" target="_blank">FuegoCine</a>
+        <a href="https://fuegocine.com" target="_blank">FuegoCine</a>
         <a href="https://pelisenhd.org" target="_blank">PelisEnHD</a>
         <a href="https://cineby.sc" target="_blank">CineBy</a>
         <a href="https://sololatino.net" target="_blank">SoloLatino</a>
