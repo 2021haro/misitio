@@ -50,14 +50,15 @@
             animation: p 1s infinite;
         }
 
-        /* CAMBIADO A FLEXBOX PARA COMPORTAMIENTO ULTRA-CENTRADO */
+        /* CONFIGURADO PARA MÁXIMO 5 COLUMNAS Y CENTRADO DE SOBRANTES */
         .grid {
             display: flex;
             flex-wrap: wrap;       /* Si no caben en una fila, bajan a la siguiente */
-            justify-content: center; /* ESTO centra los botones horizontalmente, sean 1, 2 o 50 */
+            justify-content: center; /* ESTO centra los botones horizontalmente, sean los 2 actuales o los sobrantes futuros */
             gap: 10px;
             width: 100%;
-            max-width: 900px; 
+            /* 5 botones de 180px (900px) + 4 espacios de 10px (40px) = 940px exactos */
+            max-width: 940px; 
             margin: 0 auto;
         }
 
@@ -92,6 +93,7 @@
             h1 { font-size: 1.2rem; }
             a { font-size: 0.8rem; padding: 8px; width: 140px; }
             .icono-esquina { width: 24px; height: 24px; top: 15px; left: 15px; }
+            .grid { max-width: 100%; } /* Permite flexibilidad total en pantallas chicas */
         }
     </style>
 </head>
