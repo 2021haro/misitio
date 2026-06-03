@@ -50,14 +50,14 @@
             animation: p 1s infinite;
         }
 
-        /* CAMBIADO A FLEXBOX: Centrado horizontal absoluto para cualquier cantidad de elementos */
+        /* CAMBIADO A CSS GRID: Fuerza exactamente 5 columnas horizontales en escritorio */
         .grid {
-            display: flex;
-            flex-wrap: wrap;       
-            justify-content: center; /* Centra los botones horizontalmente siempre */
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 columnas del mismo tamaño */
+            justify-items: center; /* Centra los botones dentro de su celda */
             gap: 10px;
             width: 100%;
-            max-width: 900px; 
+            max-width: 960px; /* Ajustado para que quepan bien los 5 botones de 180px + gabs */
             margin: 0 auto;
         }
 
@@ -86,7 +86,14 @@
             50%, 100% { opacity: 0; }
         }
 
-        /* Responsivo para pantallas de celular */
+        /* Responsivo para pantallas de celular y tablets */
+        @media (max-width: 980px) {
+            .grid {
+                /* En pantallas medianas/pequeñas pasa a un diseño fluido automático */
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+            }
+        }
+
         @media (max-width: 600px) {
             h1 { font-size: 1.2rem; }
             a { font-size: 0.8rem; padding: 8px; width: 140px; }
