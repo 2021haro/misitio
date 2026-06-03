@@ -9,10 +9,10 @@
 
     <style>
         /* =======================================================
-           CAMBIA LOS COLORES AQUÍ ABAJO Y SE MODIFICARÁ TODO 
+            CAMBIA LOS COLORES AQUÍ ABAJO Y SE MODIFICARÁ TODO 
         ======================================================= */
         :root {
-            --color-principal: #0f0; /* El morado original */
+            --color-principal: #0f0; /* El verde original */
             --color-fondo: #000000;     /* El negro de fondo original */
         }
         /* ======================================================= */
@@ -31,7 +31,6 @@
             position: relative;
         }
 
-        /* Puedes borrar o dejar estos estilos del icono antiguo, ya no afectarán */
         .icono-esquina {
             position: absolute;
             top: 20px;   
@@ -54,7 +53,10 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); 
+            /* Se definen columnas flexibles que se adaptan solas (mínimo 140px, máximo 200px) */
+            grid-template-columns: repeat(auto-fit, minmax(140px, 200px)); 
+            /* Centra los elementos de la última fila y todo el bloque entre los laterales */
+            justify-content: center; 
             gap: 10px;
             width: 100%;
             max-width: 900px; 
@@ -71,6 +73,7 @@
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
+            box-sizing: border-box;
         }
 
         a:hover {
@@ -83,13 +86,8 @@
             50%, 100% { opacity: 0; }
         }
 
-        /* Diseño responsivo adaptado */
-        @media (max-width: 900px) {
-            .grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
+        /* Diseño responsivo simplificado (el grid ya se ajusta solo) */
         @media (max-width: 600px) {
-            .grid { grid-template-columns: repeat(2, 1fr); }
             h1 { font-size: 1.2rem; }
             a { font-size: 0.8rem; padding: 8px; }
             .icono-esquina { width: 24px; height: 24px; top: 15px; left: 15px; }
