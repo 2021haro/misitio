@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Páginas_de_películas_y_series</title>
 
-  <link rel="icon" type="image/png" href="icono.png">
+      <link rel="icon" type="image/png" href="icono.png">
 
     <link rel="apple-touch-icon" sizes="180x180" href="icono.png">
     <link rel="icon" type="image/png" sizes="192x192" href="icono.png">
@@ -81,23 +81,24 @@
             gap: 10px;
         }
 
+        /* MODIFICACIÓN: white-space: nowrap para que no salte de renglón */
         .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); width: auto; padding: 0 20px; white-space: nowrap; }
         .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
         
-        /* Estilos para botones 2, 3, 4 y 5 */
-        .boton-2, .boton-3, .boton-4, .boton-5 { 
+        .boton-2, .boton-3, .boton-4 { 
             color: var(--color-boton-2); 
             border-color: var(--color-boton-2); 
-            width: auto; 
-            padding: 0 20px; 
-            white-space: nowrap; 
+            width: auto; /* Ancho automático para adaptarse al texto */
+            padding: 0 20px; /* Padding lateral para que no quede ajustado */
+            white-space: nowrap; /* ESTO MANTIENE EL TEXTO EN UNA SOLA LÍNEA */
         }
-        .boton-2:hover, .boton-3:hover, .boton-4:hover, .boton-5:hover { background: var(--color-boton-2); color: var(--color-fondo); }
+        .boton-2:hover, .boton-3:hover, .boton-4:hover { background: var(--color-boton-2); color: var(--color-fondo); }
 
         @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
         @media (max-width: 600px) {
             h1 { font-size: 1rem; }
+            /* Ajuste para que en móviles no se desborden si el texto es muy largo */
             a { width: auto; padding: 0 15px; }
         }
     </style>
@@ -136,10 +137,9 @@
         <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" class="boton-1">Calendario Del Mundial</a>
         
         <div class="fila-botones">
-            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer" class="boton-2">Descargar_CocCoc_TV_Browser_apk_Andorid_8+_Fire_TV</a>
-            <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank" rel="noopener noreferrer" class="boton-3">Descargar_CocCoc_TV_Browser_apk_Andorid _7_Fire_TV</a>
-            <a href="#" target="_blank" rel="noopener noreferrer" class="boton-4">btn 4</a>
-            <a href="#" target="_blank" rel="noopener noreferrer" class="boton-5">btn 5</a>
+            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer" class="boton-2">Descargar Coc Coc TV Browser.apk</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="boton-3">Tercer</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="boton-4">Cuarto</a>
         </div>
     </div>
 
