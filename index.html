@@ -7,9 +7,7 @@
 
     <style>
         :root {
-            /* AQUÍ CAMBIAS EL TAMAÑO DE LETRA PARA TODO EL SITIO */
-            --tamano-letra: 16px; 
-            
+            --tamano-letra: 18px; 
             --fondo-pagina: #050a05;
             --color-grid: #00ff00;
             --color-calendario: #ffff00;
@@ -29,72 +27,79 @@
             min-height: 100vh;
         }
 
-        h1 { 
-            font-size: 1.8rem; 
-            margin-bottom: 20px; 
-            color: #00ff00; 
-            text-align: center; 
-            word-wrap: break-word;
-            max-width: 100%;
-        }
+        h1 { font-size: 1.8rem; margin-bottom: 20px; color: #00ff00; text-align: center; }
         
         .cursor { animation: parpadear 1s step-end infinite; }
-
-        @keyframes parpadear {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
+        @keyframes parpadear { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .contenedor-main { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 1000px; }
-        .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+        
+        /* Contenedor Grid con Flexbox para centrado automático */
+        .grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 10px; 
+            width: 100%;
+        }
 
-        /* Estilo general de botones usando la variable */
-        a {
+        /* Botones del GRID */
+        .grid a {
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            padding: 10px;
+            padding: 15px 10px; 
             background-color: transparent;
             border: 1px solid var(--color-grid);
             color: var(--color-grid);
             font-size: var(--tamano-letra); 
             font-weight: bold;
             text-align: center;
-            width: 180px;   
-            height: 50px;   
             transition: all 0.2s ease;
+            /* 20% - 10px del gap permite 5 botones por fila */
+            flex: 0 0 calc(20% - 10px); 
+            min-width: 150px;
         }
+        .grid a:hover { background-color: var(--color-grid); color: #000; }
 
-        a:hover { background-color: var(--color-grid); color: #000; }
-
+        /* Estilo para CALENDARIO */
         .boton-1 { 
             border: 1px solid var(--color-calendario); 
             color: var(--color-calendario); 
-            width: 100%; 
-            max-width: 500px; 
+            padding: 15px 20px;
+            text-decoration: none;
+            text-align: center;
             font-size: var(--tamano-letra);
             font-weight: bold;
-            height: 50px;
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
         }
         .boton-1:hover { background-color: var(--color-calendario); color: #000; }
 
+        /* Estilo para EXTRAS */
         .fila-extras { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .fila-extras a { 
             border: 1px solid var(--color-extras); 
             color: var(--color-extras); 
-            width: 200px; 
+            padding: 15px 20px;
+            text-decoration: none;
             font-size: var(--tamano-letra);
             font-weight: bold;
-            height: 50px;
         }
         .fila-extras a:hover { background-color: var(--color-extras); color: #000; }
 
+        @media (max-width: 800px) {
+            .grid a { flex: 0 0 calc(33.33% - 10px); }
+        }
+
         @media (max-width: 600px) {
             h1 { font-size: 1.2rem; }
-            a { flex: 1 1 40%; width: auto; font-size: 16px; height: 50px; }
-            .boton-1 { width: 100%; font-size: 16px; }
-            .fila-extras a { width: 45%; font-size: 16px; }
+            .grid a { flex: 0 0 calc(50% - 10px); font-size: 16px; padding: 12px 5px; }
+            .fila-extras a { font-size: 16px; padding: 12px 5px; }
+            .boton-1 { font-size: 16px; }
         }
     </style>
 </head>
@@ -129,9 +134,7 @@
             <a href="https://retrotve.com/" target="_blank" rel="noopener noreferrer">RetroTV</a>
         </div>
 
-        <div style="display: flex; justify-content: center;">
-            <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" class="boton-1" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
-        </div>
+        <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" class="boton-1" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
 
         <div class="fila-extras">
             <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer">CocCoc 8+</a>
