@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Páginas_de_películas_y_series</title>
+    <link rel="icon" type="image/png" href="icono.png">
     
     <style>
         :root {
@@ -23,9 +24,38 @@
             flex-direction: column;
             align-items: center;
             padding: 20px 10px;
+            box-sizing: border-box;
         }
 
-        /* Contenedor principal de los botones de abajo */
+        h1 { font-size: 1.5rem; margin: 0 0 20px 0; text-align: center; }
+        
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 940px; 
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-principal);
+            text-decoration: none;
+            padding: 10px;
+            border: 1px solid var(--color-principal);
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .grid a { width: 160px; height: 40px; }
+        a:hover { background: var(--color-principal); color: var(--color-fondo); }
+
         .contenedor-especial {
             display: flex;
             flex-direction: column;
@@ -35,6 +65,9 @@
             max-width: 940px;
         }
 
+        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); }
+
+        /* Estilo para los botones 2, 3 y 4 */
         .fila-botones {
             display: flex;
             flex-wrap: wrap;
@@ -43,46 +76,54 @@
             width: 100%;
         }
 
-        /* Estilo base de los botones */
-        a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .btn-esp {
             color: var(--color-boton-2);
-            border: 1px solid var(--color-boton-2);
+            border-color: var(--color-boton-2);
             padding: 10px 20px;
-            text-decoration: none;
-            text-align: center;
-            font-weight: bold;
-            font-size: 0.9rem;
             min-height: 40px;
-            transition: 0.2s;
         }
-
-        /* Clase para forzar el salto de fila */
-        .salto-fila {
-            width: 100%;
-            height: 0;
-        }
-
-        /* Estilo para escritorio: si quieres que el btn 4 suba, 
-           comenta o borra este bloque. */
-        @media (min-width: 769px) {
-            .salto-fila { display: none; } /* En PC, el salto desaparece y se alinean */
-        }
+        
+        .btn-esp:hover { background: var(--color-boton-2); color: var(--color-fondo); }
     </style>
 </head>
 <body>
 
+    <h1>C:\PAGINAS_DE_PELICULAS_Y_SERIES_</h1>
+
+    <div class="grid">
+        <a href="http://serieskao.top" target="_blank">SeriesKao</a>
+        <a href="https://seriesflixhd.shop" target="_blank">SeriesFlix_HD</a>
+        <a href="http://entrepeliculasyseries.nz" target="_blank">Entre_Pelis_y_Ser</a>
+        <a href="http://poseidonhd2.co" target="_blank">PoseidonHD</a>
+        <a href="http://pelispop.lat" target="_blank">PelisPop</a>
+        <a href="http://cine-calidad.mx" target="_blank">CineCalidad_MX</a>
+        <a href="https://verpeliculasultra.com" target="_blank">Peliculas_Ultra</a>     
+        <a href="http://repelisplus.lat" target="_blank">RePelisPlus</a>
+        <a href="http://lacartoons.com" target="_blank">LaCartoons</a>
+        <a href="http://pelisplushd.to" target="_blank">PelisPlus_HD</a>
+        <a href="http://cinecalidad.pro" target="_blank">CineCalidad_Pro</a>
+        <a href="http://pelispedia.mov" target="_blank">Pelispedia</a>
+        <a href="https://seriesturcastv.to" target="_blank">Series_Turcas_TV</a>
+        <a href="http://seriesyonkis.cx" target="_blank">SeriesYonkis</a>
+        <a href="https://gnulahd.nu" target="_blank">GnulaHD</a>
+        <a href="https://www.fuegocine.com" target="_blank">FuegoCine</a>
+        <a href="https://pelisenhd.org" target="_blank">PelisEnHD</a>
+        <a href="https://cineby.sc" target="_blank">CineBy</a>
+        <a href="https://sololatino.net" target="_blank">SoloLatino</a>
+        <a href="https://cinehd.app/home" target="_blank">CineHD</a>
+        <a href="https://cuevana3.cz" target="_blank">Cuevana_3</a>
+        <a href="https://serieslan.cc/" target="_blank">SeriesLan</a>
+        <a href="https://retrotve.com/" target="_blank">RetoTV</a>
+    </div>
+
     <div class="contenedor-especial">
+        <a href="#" class="boton-1">Calendario Del Mundial</a>
+        
         <div class="fila-botones">
-            <a href="#">Descargar CocCoc<br>Android 8+</a>
-            <a href="#">Descargar CocCoc<br>Android 7+</a>
-            
-            <div class="salto-fila"></div>
-            
-            <a href="#">btn 4</a>
+            <a href="#" class="btn-esp">Descargar CocCoc<br>Android 8+</a>
+            <a href="#" class="btn-esp">Descargar CocCoc<br>Android 7+</a>
         </div>
+        <a href="#" class="btn-esp">btn 4</a>
     </div>
 
 </body>
