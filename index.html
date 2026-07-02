@@ -24,6 +24,7 @@ body {
     text-shadow: 0 0 5px #00ff66;
 }
 
+/* CRT scanlines */
 body::before {
     content: "";
     position: fixed;
@@ -38,7 +39,7 @@ body::before {
     pointer-events: none;
 }
 
-/* 🔥 GRID */
+/* GRID */
 .grid {
     display: flex;
     flex-wrap: wrap;
@@ -48,23 +49,27 @@ body::before {
     margin-bottom: 20px;
 }
 
-/* 🔥 TODOS LOS BOTONES MISMA ALTURA */
+/* 🔥 BASE DE TODOS LOS BOTONES */
 .grid a,
 .boton-1,
 .boton-2,
 .boton-espacial {
-    height: 40px;              /* 👈 MISMA ALTURA QUE CALENDARIO */
+    height: 40px;              /* FIJO */
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     text-decoration: none;
     font-weight: bold;
-    padding: 0 15px;           /* solo horizontal */
     box-sizing: border-box;
+    overflow: hidden;         /* 🔥 evita desbordes */
+    line-height: 1;
     transition: 0.1s;
+    padding: 0 10px;          /* solo horizontal */
+    white-space: nowrap;      /* 🔥 evita romper diseño */
 }
 
-/* GRID BUTTON */
+/* GRID BUTTONS */
 .grid a {
     width: 160px;
     color: #00ff66;
@@ -91,6 +96,7 @@ body::before {
 .boton-2 {
     color: #00ffff;
     border: 1px solid #00ffff;
+    max-width: 260px; /* 🔥 evita que se rompa todo */
 }
 
 .boton-2:hover {
@@ -139,7 +145,6 @@ h1::after {
     0%, 49% { opacity: 1; }
     50%, 100% { opacity: 0; }
 }
-
 </style>
 </head>
 
@@ -148,26 +153,32 @@ h1::after {
 <h1>C:\PAGINAS_DE_PELICULAS_Y_SERIES_</h1>
 
 <div class="grid">
-    <a href="http://serieskao.top" target="_blank">SeriesKao</a>
-    <a href="https://seriesflixhd.shop" target="_blank">SeriesFlix_HD</a>
-    <a href="http://entrepeliculasyseries.nz" target="_blank">Entre_Pelis_y_Ser</a>
-    <a href="http://poseidonhd2.co" target="_blank">PoseidonHD</a>
-    <a href="http://pelispop.lat" target="_blank">PelisPop</a>
-    <a href="http://cine-calidad.mx" target="_blank">CineCalidad_MX</a>
-    <a href="https://verpeliculasultra.com" target="_blank">Peliculas_Ultra</a>
-    <a href="http://repelisplus.lat" target="_blank">RePelisPlus</a>
-    <a href="http://lacartoons.com" target="_blank">LaCartoons</a>
-    <a href="http://pelisplushd.to" target="_blank">PelisPlus_HD</a>
+    <a href="#">SeriesKao</a>
+    <a href="#">SeriesFlix_HD</a>
+    <a href="#">Entre_Pelis_y_Ser</a>
+    <a href="#">PoseidonHD</a>
+    <a href="#">PelisPop</a>
+    <a href="#">CineCalidad_MX</a>
+    <a href="#">Peliculas_Ultra</a>
+    <a href="#">RePelisPlus</a>
+    <a href="#">LaCartoons</a>
+    <a href="#">PelisPlus_HD</a>
+    <a href="#">CineCalidad_Pro</a>
+    <a href="#">Pelispedia</a>
+    <a href="#">Series_Turcas_TV</a>
+    <a href="#">SeriesYonkis</a>
+    <a href="#">GnulaHD</a>
 </div>
 
 <div class="contenedor-especial">
 
-    <a class="boton-1" href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world">
+    <a class="boton-1" href="#">
         Calendario Del Mundial
     </a>
 
     <div class="fila-botones">
-        <a class="boton-2" href="#">Descargar CocCoc TV Android</a>
+        <a class="boton-2" href="#">Descargar CocCoc TV Android 8+</a>
+        <a class="boton-2" href="#">Descargar CocCoc TV Android 7+</a>
         <a class="boton-2" href="#">Router WiFi 7</a>
     </div>
 
