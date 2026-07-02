@@ -2,38 +2,39 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta tag vital para móviles -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Directorio - Dark Mode</title>
+    <title>Dashboard</title>
     <style>
-        * { box-sizing: border-box; } /* Asegura que padding no afecte el ancho total */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
             background-color: #121212;
             color: #e0e0e0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0;
+            font-family: sans-serif;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            justify-content: center; /* Centra todo verticalmente */
+            min-height: 100vh; /* Asegura el alto total */
+            overflow-y: auto; /* Permite scroll solo si es necesario (móvil) */
         }
 
-        h1 { 
-            font-size: 1.2rem; 
-            margin-bottom: 30px;
-            text-align: center;
-        }
+        h1 { font-size: 1.2rem; margin-bottom: 20px; color: #fff; }
 
-        .contenedor-botones {
+        .contenedor-main {
             display: flex;
-            flex-wrap: wrap; /* Clave para que los botones bajen de línea */
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 1000px; /* Tamaño máximo para PC/TV */
+        }
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
-            width: 100%;
-            max-width: 600px; /* Tamaño máximo para mejor lectura */
-            margin-bottom: 20px;
         }
 
         a {
@@ -41,32 +42,31 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            padding: 12px 15px;
-            border: 1px solid #333333;
+            padding: 10px;
+            border: 1px solid #333;
             color: #e0e0e0;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-align: center;
-            height: 45px; /* Ligeramente más alto para mejor toque táctil */
-            border-radius: 6px;
+            border-radius: 4px;
             transition: background 0.2s;
-            flex: 1 1 140px; /* El botón crecerá o encogerá según el espacio */
-            max-width: 180px; /* Evita botones gigantes en tablets */
+            /* En pantallas grandes, esto mantiene todo compacto */
+            width: 140px; 
+            height: 40px;
         }
 
-        a:hover { 
-            background: #1f1f1f;
-            border-color: #555555;
-        }
+        a:hover { background: #1f1f1f; border-color: #555; }
 
-        /* Botón destacado */
-        .boton-1 { background: #ffffff; color: #000000; border: none; flex-basis: 100%; max-width: 100%; }
-        .boton-1:hover { background: #cccccc; }
-        
-        .btn-secundario { border: 1px solid #333; }
-        .btn-secundario:hover { background: #1f1f1f; }
+        .boton-1 { background: #fff; color: #000; border: none; width: 100%; max-width: 440px; }
+        .boton-1:hover { background: #ccc; }
 
-        @media (max-width: 480px) {
-            a { flex: 1 1 45%; } /* En móviles muy pequeños, 2 por fila */
+        .fila-extras { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .fila-extras a { width: 180px; }
+
+        /* Ajuste para móviles: permite scroll natural */
+        @media (max-width: 600px) {
+            body { justify-content: flex-start; min-height: auto; }
+            a { flex: 1 1 40%; width: auto; }
+            .boton-1 { width: 100%; }
         }
     </style>
 </head>
@@ -74,44 +74,43 @@
 
     <h1>DIRECTORIO</h1>
 
-    <div class="contenedor-botones">
-        <a href="http://serieskao.top" target="_blank" rel="noopener noreferrer">SeriesKao</a>
-        <a href="https://seriesflixhd.shop" target="_blank" rel="noopener noreferrer">SeriesFlix</a>
-        <a href="http://entrepeliculasyseries.nz" target="_blank" rel="noopener noreferrer">EntrePelis</a>
-        <a href="http://poseidonhd2.co" target="_blank" rel="noopener noreferrer">PoseidonHD</a>
-        <a href="http://pelispop.lat" target="_blank" rel="noopener noreferrer">PelisPop</a>
-        <a href="http://cine-calidad.mx" target="_blank" rel="noopener noreferrer">CineCalidad</a>
-        <a href="https://verpeliculasultra.com" target="_blank" rel="noopener noreferrer">UltraPelis</a>     
-        <a href="http://repelisplus.lat" target="_blank" rel="noopener noreferrer">RePelisPlus</a>
-        <a href="http://lacartoons.com" target="_blank" rel="noopener noreferrer">LaCartoons</a>
-        <a href="http://pelisplushd.to" target="_blank" rel="noopener noreferrer">PelisPlus</a>
-        <a href="http://cinecalidad.pro" target="_blank" rel="noopener noreferrer">CineCalidad Pro</a>
-        <a href="http://pelispedia.mov" target="_blank" rel="noopener noreferrer">Pelispedia</a>
-        <a href="https://seriesturcastv.to" target="_blank" rel="noopener noreferrer">Series Turcas</a>
-        <a href="http://seriesyonkis.cx" target="_blank" rel="noopener noreferrer">SeriesYonkis</a>
-        <a href="https://gnulahd.nu" target="_blank" rel="noopener noreferrer">GnulaHD</a>
-        <a href="https://www.fuegocine.com" target="_blank" rel="noopener noreferrer">FuegoCine</a>
-        <a href="https://pelisenhd.org" target="_blank" rel="noopener noreferrer">PelisEnHD</a>
-        <a href="https://cineby.sc" target="_blank" rel="noopener noreferrer">CineBy</a>
-        <a href="https://sololatino.net" target="_blank" rel="noopener noreferrer">SoloLatino</a>
-        <a href="https://cinehd.app/home" target="_blank" rel="noopener noreferrer">CineHD</a>
-        <a href="https://cuevana3.cz" target="_blank" rel="noopener noreferrer">Cuevana 3</a>
-        <a href="https://serieslan.cc/" target="_blank" rel="noopener noreferrer">SeriesLan</a>
-        <a href="https://retrotve.com/" target="_blank" rel="noopener noreferrer">RetroTV</a>
-    </div>
+    <div class="contenedor-main">
+        <div class="grid">
+            <a href="http://serieskao.top">SeriesKao</a>
+            <a href="https://seriesflixhd.shop">SeriesFlix</a>
+            <a href="http://entrepeliculasyseries.nz">EntrePelis</a>
+            <a href="http://poseidonhd2.co">PoseidonHD</a>
+            <a href="http://pelispop.lat">PelisPop</a>
+            <a href="http://cine-calidad.mx">CineCalidad</a>
+            <a href="https://verpeliculasultra.com">UltraPelis</a>     
+            <a href="http://repelisplus.lat">RePelisPlus</a>
+            <a href="http://lacartoons.com">LaCartoons</a>
+            <a href="http://pelisplushd.to">PelisPlus</a>
+            <a href="http://cinecalidad.pro">CineCalidad Pro</a>
+            <a href="http://pelispedia.mov">Pelispedia</a>
+            <a href="https://seriesturcastv.to">Series Turcas</a>
+            <a href="http://seriesyonkis.cx">SeriesYonkis</a>
+            <a href="https://gnulahd.nu">GnulaHD</a>
+            <a href="https://www.fuegocine.com">FuegoCine</a>
+            <a href="https://pelisenhd.org">PelisEnHD</a>
+            <a href="https://cineby.sc">CineBy</a>
+            <a href="https://sololatino.net">SoloLatino</a>
+            <a href="https://cinehd.app/home">CineHD</a>
+            <a href="https://cuevana3.cz">Cuevana 3</a>
+            <a href="https://serieslan.cc/">SeriesLan</a>
+            <a href="https://retrotve.com/">RetroTV</a>
+        </div>
 
-    <div class="contenedor-botones">
-        <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" class="boton-1">CALENDARIO MUNDIAL</a>
-    </div>
+        <div style="display: flex; justify-content: center;">
+            <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" class="boton-1">CALENDARIO MUNDIAL</a>
+        </div>
 
-    <div class="contenedor-botones">
-        <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer" class="btn-secundario">CocCoc 8+</a>
-        <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank" rel="noopener noreferrer" class="btn-secundario">CocCoc 7+</a>
-        <a href="https://www.amazon.com.mx/TP-Link-Archer-HomeShield-Compatible-Generaciones/dp/B0FDL3YXCW/ref=bmx_dp_d_sccl_2_1/137-0419166-7375232" target="_blank" rel="noopener noreferrer" class="btn-secundario">WiFi 7</a>
-    </div>
-
-    <div class="contenedor-botones">
-        <a href="https://jahf.vercel.app/x" target="_blank" rel="noopener noreferrer" class="btn-secundario">Versión X (BETA)</a>
+        <div class="fila-extras">
+            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file">CocCoc 8+</a>
+            <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file">CocCoc 7+</a>
+            <a href="https://www.amazon.com.mx/TP-Link-Archer-HomeShield-Compatible-Generaciones/dp/B0FDL3YXCW/ref=bmx_dp_d_sccl_2_1/137-0419166-7375232">WiFi 7</a>
+            <a href="https://jahf.vercel.app/x">Versión X (BETA)</a>
+        </div>
     </div>
 
 </body>
