@@ -2,33 +2,37 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <!-- Meta tag vital para móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Directorio - Dark Mode</title>
     <style>
+        * { box-sizing: border-box; } /* Asegura que padding no afecte el ancho total */
+        
         body {
-            background-color: #121212; /* Fondo oscuro elegante */
+            background-color: #121212;
             color: #e0e0e0;
-            font-family: sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin: 0;
-            padding: 40px 20px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
 
         h1 { 
             font-size: 1.2rem; 
-            margin-bottom: 40px;
-            font-weight: 600;
-            color: #ffffff;
+            margin-bottom: 30px;
+            text-align: center;
         }
 
         .contenedor-botones {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* Clave para que los botones bajen de línea */
             justify-content: center;
             gap: 10px;
             width: 100%;
-            max-width: 940px;
+            max-width: 600px; /* Tamaño máximo para mejor lectura */
             margin-bottom: 20px;
         }
 
@@ -37,15 +41,16 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            padding: 0 15px;
-            border: 1px solid #333333; /* Borde oscuro */
+            padding: 12px 15px;
+            border: 1px solid #333333;
             color: #e0e0e0;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             text-align: center;
-            height: 40px; 
-            box-sizing: border-box;
+            height: 45px; /* Ligeramente más alto para mejor toque táctil */
+            border-radius: 6px;
             transition: background 0.2s;
-            border-radius: 4px;
+            flex: 1 1 140px; /* El botón crecerá o encogerá según el espacio */
+            max-width: 180px; /* Evita botones gigantes en tablets */
         }
 
         a:hover { 
@@ -53,25 +58,23 @@
             border-color: #555555;
         }
 
-        .grid-estandar a { width: 160px; }
-
-        /* Botón destacado en blanco para resaltar sobre el fondo negro */
-        .boton-1 { background: #ffffff; color: #000000; border: none; }
+        /* Botón destacado */
+        .boton-1 { background: #ffffff; color: #000000; border: none; flex-basis: 100%; max-width: 100%; }
         .boton-1:hover { background: #cccccc; }
         
         .btn-secundario { border: 1px solid #333; }
         .btn-secundario:hover { background: #1f1f1f; }
 
-        @media (max-width: 600px) {
-            .grid-estandar a { width: 140px; }
+        @media (max-width: 480px) {
+            a { flex: 1 1 45%; } /* En móviles muy pequeños, 2 por fila */
         }
     </style>
 </head>
 <body>
 
-    <h1>Directorio de Enlaces</h1>
+    <h1>DIRECTORIO</h1>
 
-    <div class="contenedor-botones grid-estandar">
+    <div class="contenedor-botones">
         <a href="http://serieskao.top" target="_blank" rel="noopener noreferrer">SeriesKao</a>
         <a href="https://seriesflixhd.shop" target="_blank" rel="noopener noreferrer">SeriesFlix</a>
         <a href="http://entrepeliculasyseries.nz" target="_blank" rel="noopener noreferrer">EntrePelis</a>
@@ -98,13 +101,13 @@
     </div>
 
     <div class="contenedor-botones">
-        <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" class="boton-1">Calendario Mundial</a>
+        <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" class="boton-1">CALENDARIO MUNDIAL</a>
     </div>
 
     <div class="contenedor-botones">
-        <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer" class="btn-secundario">CocCoc Android 8+</a>
-        <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank" rel="noopener noreferrer" class="btn-secundario">CocCoc Android 7+</a>
-        <a href="https://www.amazon.com.mx/TP-Link-Archer-HomeShield-Compatible-Generaciones/dp/B0FDL3YXCW/ref=bmx_dp_d_sccl_2_1/137-0419166-7375232" target="_blank" rel="noopener noreferrer" class="btn-secundario">WiFi 7 Router</a>
+        <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer" class="btn-secundario">CocCoc 8+</a>
+        <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank" rel="noopener noreferrer" class="btn-secundario">CocCoc 7+</a>
+        <a href="https://www.amazon.com.mx/TP-Link-Archer-HomeShield-Compatible-Generaciones/dp/B0FDL3YXCW/ref=bmx_dp_d_sccl_2_1/137-0419166-7375232" target="_blank" rel="noopener noreferrer" class="btn-secundario">WiFi 7</a>
     </div>
 
     <div class="contenedor-botones">
