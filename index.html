@@ -8,16 +8,13 @@
     <link rel="icon" type="image/png" href="icono.png">
 
     <style>
-        /* =======================================================
-           VARIABLES DE COLORES
-        ======================================================= */
         :root {
-            --color-principal: #33FF33; /* Verde terminal */
-            --color-fondo: #000000;     /* Fondo negro */
-            --color-boton-1: #FFB000;   /* Ámbar (Calendario) */
-            --color-boton-2: #00BFFF;   /* Azul neón */
-            --color-boton-3: #FF33CC;   /* Rosa neón */
-            --color-boton-4: #FFFF33;   /* Amarillo brillante */
+            --color-principal: #33FF33; 
+            --color-fondo: #000000;     
+            --color-boton-1: #FFB000;   
+            --color-boton-2: #00BFFF;   
+            --color-boton-3: #FF33CC;   
+            --color-boton-4: #FFFF33;   
         }
 
         body {
@@ -35,7 +32,7 @@
         h1 { font-size: 1.5rem; margin: 20px 0; text-align: center; }
         h1::after { content: "_"; animation: p 1s infinite; }
 
-        /* Cuadrícula principal (Los botones de películas) */
+        /* Cuadrícula principal */
         .grid {
             display: flex;
             flex-wrap: wrap;       
@@ -43,10 +40,10 @@
             gap: 10px;
             width: 100%;
             max-width: 940px; 
-            margin-bottom: 20px;
+            margin-bottom: 20px; /* Espacio debajo del grid */
         }
 
-        /* Estilo base para todos los enlaces */
+        /* Estilo base de TODOS los botones */
         a {
             display: flex;
             align-items: center;
@@ -58,44 +55,32 @@
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
-            width: 180px;
+            width: 180px; /* Tamaño fijo igual para todos */
             box-sizing: border-box;
         }
 
         a:hover { background: var(--color-principal); color: var(--color-fondo); }
 
-        /* =======================================================
-           SECCIÓN DE BOTONES ESPECIALES (Debajo del calendario)
-        ======================================================= */
+        /* Contenedor especial: Espaciado uniforme */
         .contenedor-especial {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px; /* Espacio entre el Calendario y la fila de botones */
+            gap: 20px; /* Espacio vertical entre Calendario y la fila de botones */
             margin-top: 10px;
         }
 
-        /* Fila para los botones 2, 3 y 4 con acomodo automático */
         .fila-botones {
             display: flex;
-            flex-wrap: wrap; /* Permite que se acomoden solos igual que en el grid */
-            justify-content: center;
             gap: 10px;
-            max-width: 600px; /* Limita el ancho de esta fila */
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        /* Estilo Botón 1 (Calendario): Forzado a una sola línea */
-        .boton-1 { 
-            color: var(--color-boton-1); 
-            border-color: var(--color-boton-1);
-            white-space: nowrap;
-            width: auto;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
+        /* Estilos específicos */
+        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); white-space: nowrap; width: 180px; }
         .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
 
-        /* Clases específicas para botones 2, 3 y 4 */
         .boton-2 { color: var(--color-boton-2); border-color: var(--color-boton-2); }
         .boton-2:hover { background: var(--color-boton-2); color: var(--color-fondo); }
 
@@ -105,12 +90,10 @@
         .boton-4 { color: var(--color-boton-4); border-color: var(--color-boton-4); }
         .boton-4:hover { background: var(--color-boton-4); color: var(--color-fondo); }
 
-        /* Animación del cursor */
         @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
-        /* Responsivo para móviles */
         @media (max-width: 600px) {
-            a { width: 140px; }
+            a { width: 140px; } /* Ajuste proporcional para móvil */
         }
     </style>
 </head>
