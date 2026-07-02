@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" href="icono.png">
 
     <style>
-        /* 🔥 FUENTE GLOBAL PARA TODA LA PÁGINA */
+        /* 🔥 FUENTE GLOBAL */
         * {
             font-family: monospace;
         }
@@ -33,7 +33,9 @@
             box-sizing: border-box;
         }
 
+        /* 🔥 SOLO EL H1 CAMBIA A COURIER NEW */
         h1 {
+            font-family: "Courier New", Courier, monospace;
             font-size: 1.5rem;
             margin: 0 0 20px 0;
             text-align: center;
@@ -54,20 +56,19 @@
             margin-bottom: 20px;
         }
 
+        /* 🔥 BOTÓN PRINCIPAL (GRID) */
         .grid a {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 160px;
             height: 40px;
-            padding: 10px;
-            font-size: 0.9rem;
             color: var(--color-principal);
             text-decoration: none;
             border: 1px solid var(--color-principal);
             font-weight: bold;
+            font-size: 0.9rem;
             text-align: center;
-            transition: background 0.1s, color 0.1s;
             box-sizing: border-box;
         }
 
@@ -86,18 +87,21 @@
             padding-bottom: 10px;
         }
 
+        /* 🔥 BOTÓN 1 */
         .boton-1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            padding: 0 20px;
             color: var(--color-boton-1);
             border: 1px solid var(--color-boton-1);
-            padding: 10px 20px;
             text-decoration: none;
+            font-weight: bold;
+            box-sizing: border-box;
         }
 
-        .boton-1:hover {
-            background: var(--color-boton-1);
-            color: var(--color-fondo);
-        }
-
+        /* 🔥 BOTÓN 2 (fila) */
         .fila-botones {
             display: flex;
             flex-wrap: wrap;
@@ -121,12 +125,7 @@
             box-sizing: border-box;
         }
 
-        .fila-botones a:hover,
-        .boton-2:hover {
-            background: var(--color-boton-2);
-            color: var(--color-fondo);
-        }
-
+        /* 🔥 BOTÓN ESPECIAL */
         .boton-espacial {
             display: flex;
             align-items: center;
@@ -138,8 +137,8 @@
             font-weight: bold;
         }
 
-        .boton-espacial:hover {
-            background: var(--color-boton-espacial);
+        a:hover {
+            background: var(--color-principal);
             color: var(--color-fondo);
         }
 
