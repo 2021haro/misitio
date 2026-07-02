@@ -32,7 +32,6 @@
         h1 { font-size: 1.5rem; margin: 20px 0; text-align: center; }
         h1::after { content: "_"; animation: p 1s infinite; }
 
-        /* Cuadrícula principal */
         .grid {
             display: flex;
             flex-wrap: wrap;       
@@ -40,10 +39,10 @@
             gap: 10px;
             width: 100%;
             max-width: 940px; 
-            margin-bottom: 20px;
+            margin-bottom: 20px; /* Separación de 20px bajo el grid */
         }
 
-        /* Botones estándar (Grid y botones 2, 3, 4) */
+        /* Botones con tamaño uniforme */
         a {
             display: flex;
             align-items: center;
@@ -55,19 +54,20 @@
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
-            width: 180px; /* Tamaño fijo para grid y botones 2,3,4 */
+            width: 180px;      
+            height: 44px;      
             box-sizing: border-box;
         }
 
         a:hover { background: var(--color-principal); color: var(--color-fondo); }
 
-        /* Contenedor especial: Espaciado uniforme */
+        /* Contenedor que agrupa el calendario y la fila inferior */
         .contenedor-especial {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px; 
-            margin-top: 10px;
+            gap: 20px; /* Misma separación (20px) entre calendario y fila inferior */
+            margin-top: 0px; 
         }
 
         .fila-botones {
@@ -77,18 +77,10 @@
             gap: 10px;
         }
 
-        /* ESTILO BOTÓN 1: Adaptable al texto */
-        .boton-1 { 
-            color: var(--color-boton-1); 
-            border-color: var(--color-boton-1);
-            white-space: nowrap; 
-            width: fit-content; /* El botón se ajusta al texto */
-            padding-left: 20px;
-            padding-right: 20px;
-        }
+        /* Estilos específicos */
+        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); }
         .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
 
-        /* Colores específicos para botones inferiores */
         .boton-2 { color: var(--color-boton-2); border-color: var(--color-boton-2); }
         .boton-2:hover { background: var(--color-boton-2); color: var(--color-fondo); }
 
@@ -102,13 +94,12 @@
 
         @media (max-width: 600px) {
             a { width: 140px; }
-            .boton-1 { width: fit-content; font-size: 0.8rem; } /* En móvil también se ajusta */
         }
     </style>
 </head>
 <body>
 
-   <h1>C:\PAGINAS_DE_PELICULAS_Y_SERIES</h1>
+   <h1>C:\PAGINAS_DE_PELICULAS_Y_SERIES_</h1>
 
     <div class="grid">
         <a href="http://serieskao.top" target="_blank">SeriesKao</a>
