@@ -2,20 +2,15 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Páginas_de_películas_y_series</title>
     
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="icon" type="image/png" href="icono.png">
-
     <style>
         :root {
             --color-fondo: #050a05;
             --color-principal: #00ff00;
             --color-boton-1: #ffff00;
             --color-boton-2: #00FFFF;
-            --color-boton-3: #00FFFF;
-            --color-boton-4: #00FFFF;
         }
 
         body {
@@ -23,30 +18,20 @@
             background: var(--color-fondo);
             color: var(--color-principal);
             margin: 0;
-            /* Cambiado a altura fija para evitar el scroll */
-            height: 100vh;
-            /* Flexbox para controlar la distribución */
+            /* Usamos min-height para permitir scroll cuando sea necesario */
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            /* Evita que el contenido desborde */
-            overflow: hidden; 
-            padding: 10px; /* Margen de 10px en todos los lados */
+            /* Aplicamos padding superior e inferior */
+            padding: 20px 10px 10px 10px; 
             box-sizing: border-box;
         }
 
         h1 { 
             font-size: 1.5rem; 
-            margin: 10px 0; /* Reducido un poco para ahorrar espacio */
+            margin: 0 0 20px 0; 
             text-align: center; 
-            word-break: break-all;
-            padding: 0 10px;
-        }
-        
-        h1::after { 
-            content: "_"; 
-            animation: p 1s infinite;
         }
 
         .grid {
@@ -56,7 +41,7 @@
             gap: 10px;
             width: 100%;
             max-width: 940px; 
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         a {
@@ -65,13 +50,13 @@
             justify-content: center;
             color: var(--color-principal);
             text-decoration: none;
-            padding: 10px 10px; /* Ajuste leve de padding */
+            padding: 10px;
             border: 1px solid var(--color-principal);
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
-            width: 180px;
-            height: 40px; /* Altura ligeramente reducida */
+            width: 160px;
+            height: 40px;
             box-sizing: border-box;
             transition: background 0.1s, color 0.1s;
         }
@@ -84,6 +69,8 @@
             align-items: center;
             gap: 10px;
             width: 100%;
+            /* Esto asegura el margen de 10px al final de todo el contenido */
+            padding-bottom: 10px; 
         }
 
         .fila-botones {
@@ -98,11 +85,9 @@
         .boton-2, .boton-3, .boton-4 { color: var(--color-boton-2); border-color: var(--color-boton-2); }
         .boton-2:hover, .boton-3:hover, .boton-4:hover { background: var(--color-boton-2); color: var(--color-fondo); }
 
-        @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
-
         @media (max-width: 600px) {
             h1 { font-size: 1rem; }
-            a { width: 130px; height: 35px; font-size: 0.8rem; }
+            a { width: 140px; }
         }
     </style>
 </head>
@@ -140,9 +125,9 @@
         <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" class="boton-1">Calendario Del Mundial</a>
         
         <div class="fila-botones">
-            <a href="#" class="boton-2">Segundo Botón</a>
-            <a href="#" class="boton-3">Tercer Botón</a>
-            <a href="#" class="boton-4">Cuarto Botón</a>
+            <a href="#" class="boton-2">Segundo</a>
+            <a href="#" class="boton-3">Tercer</a>
+            <a href="#" class="boton-4">Cuarto</a>
         </div>
     </div>
 
