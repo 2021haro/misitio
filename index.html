@@ -6,9 +6,6 @@
     <title>Páginas_de_películas_y_series</title>
     
     <style>
-        /* VARIABLES DE DISEÑO (CSS Variables)
-           Centralizamos los colores aquí para facilitar cualquier cambio visual futuro.
-        */
         :root {
             --color-fondo: #050a05;
             --color-principal: #00ff00;
@@ -16,12 +13,6 @@
             --color-boton-2: #00FFFF;
         }
 
-        /* CONFIGURACIÓN DEL CUERPO (BODY)
-           - min-height: 100vh asegura que, al menos, ocupe toda la pantalla.
-           - display: flex nos permite alinear todo el contenido en columna.
-           - padding: 20px 10px 10px 10px; establece márgenes superiores y laterales, 
-             y el último valor (10px) garantiza el margen inferior al final de la web.
-        */
         body {
             font-family: monospace;
             background: var(--color-fondo);
@@ -35,22 +26,9 @@
             box-sizing: border-box;
         }
 
-        /* TÍTULO CON EFECTO TERMINAL */
-        h1 { 
-            font-size: 1.5rem; 
-            margin: 0 0 20px 0; 
-            text-align: center; 
-        }
-        
-        /* Animación del cursor "_" */
-        h1::after { 
-            content: "_"; 
-            animation: p 1s infinite;
-        }
+        h1 { font-size: 1.5rem; margin: 0 0 20px 0; text-align: center; }
+        h1::after { content: "_"; animation: p 1s infinite; }
 
-        /* GRID DE BOTONES
-           Contenedor flexible que ajusta automáticamente los botones según el ancho.
-        */
         .grid {
             display: flex;
             flex-wrap: wrap;
@@ -81,14 +59,13 @@
 
         a:hover { background: var(--color-principal); color: var(--color-fondo); }
 
-        /* CONTENEDOR INFERIOR PARA BOTONES ESPECIALES */
         .contenedor-especial {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
             width: 100%;
-            padding-bottom: 10px; /* Crea el margen final de 10px con el borde de la web */
+            padding-bottom: 10px;
         }
 
         .fila-botones {
@@ -98,19 +75,25 @@
             gap: 10px;
         }
 
-        /* VARIEDAD DE ESTILOS POR CLASE */
-        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); width: auto; padding: 0 20px; }
+        /* MODIFICACIÓN: white-space: nowrap para que no salte de renglón */
+        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); width: auto; padding: 0 20px; white-space: nowrap; }
         .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
-        .boton-2, .boton-3, .boton-4 { color: var(--color-boton-2); border-color: var(--color-boton-2); }
+        
+        .boton-2, .boton-3, .boton-4 { 
+            color: var(--color-boton-2); 
+            border-color: var(--color-boton-2); 
+            width: auto; /* Ancho automático para adaptarse al texto */
+            padding: 0 20px; /* Padding lateral para que no quede ajustado */
+            white-space: nowrap; /* ESTO MANTIENE EL TEXTO EN UNA SOLA LÍNEA */
+        }
         .boton-2:hover, .boton-3:hover, .boton-4:hover { background: var(--color-boton-2); color: var(--color-fondo); }
 
-        /* LÓGICA DE ANIMACIÓN */
         @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
-        /* RESPONSIVIDAD: Ajuste para pantallas pequeñas */
         @media (max-width: 600px) {
             h1 { font-size: 1rem; }
-            a { width: 140px; }
+            /* Ajuste para que en móviles no se desborden si el texto es muy largo */
+            a { width: auto; padding: 0 15px; }
         }
     </style>
 </head>
@@ -148,9 +131,9 @@
         <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" class="boton-1">Calendario Del Mundial</a>
         
         <div class="fila-botones">
-            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" class="boton-2">Descargar Coc Coc TV Browser.apk</a>
-            <a href="#" class="boton-3">Tercer</a>
-            <a href="#" class="boton-4">Cuarto</a>
+            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer" class="boton-2">Descargar Coc Coc TV Browser.apk</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="boton-3">Tercer</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="boton-4">Cuarto</a>
         </div>
     </div>
 
