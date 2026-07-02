@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Páginas_de_películas_y_series</title>
+    <link rel="icon" type="image/png" href="icono.png">
 
     <link rel="icon" type="image/png" href="icono.png">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="icono.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icono.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icono.png">
     
     <style>
+        /* --- 1. VARIABLES DE COLOR --- */
         :root {
             --color-fondo: #050a05;
             --color-principal: #00ff00;
@@ -15,6 +21,7 @@
             --color-boton-2: #00FFFF;
         }
 
+        /* --- 2. ESTILOS GENERALES (BODY) --- */
         body {
             font-family: monospace;
             background: var(--color-fondo);
@@ -24,13 +31,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 10px 10px 10px;
+            padding: 20px 10px;
             box-sizing: border-box;
         }
 
+        /* --- 3. ENCABEZADO Y ANIMACIÓN --- */
         h1 { font-size: 1.5rem; margin: 0 0 20px 0; text-align: center; }
         h1::after { content: "_"; animation: p 1s infinite; }
+        @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
+        /* --- 4. GRID DE PELÍCULAS --- */
         .grid {
             display: flex;
             flex-wrap: wrap;
@@ -41,6 +51,7 @@
             margin-bottom: 20px;
         }
 
+        /* --- 5. ESTILOS BASE DE TODOS LOS BOTONES --- */
         a {
             display: flex;
             align-items: center;
@@ -52,14 +63,12 @@
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
-            box-sizing: border-box;
-            transition: background 0.1s, color 0.1s;
+            transition: 0.2s;
         }
-
         .grid a { width: 160px; height: 40px; }
-        
         a:hover { background: var(--color-principal); color: var(--color-fondo); }
 
+        /* --- 6. CONTENEDOR ESPECIAL (CALENDARIO Y DESCARGAS) --- */
         .contenedor-especial {
             display: flex;
             flex-direction: column;
@@ -67,12 +76,12 @@
             gap: 10px;
             width: 100%;
             max-width: 940px;
-            padding-bottom: 10px;
         }
 
-        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); width: auto !important; }
-        .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
-        
+        /* Estilo botón calendario */
+        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); }
+
+        /* Contenedor para botones 2 y 3 */
         .fila-botones {
             display: flex;
             flex-wrap: wrap;
@@ -81,20 +90,17 @@
             width: 100%;
         }
 
-        /* Estilo para los botones 2, 3 y 4 */
-        .fila-botones a, .btn-4-especial { 
-            color: var(--color-boton-2); 
+        /* Estilo para botones de descarga (2, 3 y 4) */
+        .btn-esp {
+            color: var(--color-boton-2);
             border-color: var(--color-boton-2);
-            min-height: 40px;
-            height: auto; 
             padding: 10px 20px;
-            text-align: center;
+            min-height: 40px;
+            white-space: normal; /* Permite que el texto baje de renglón */
         }
-        
-        .fila-botones a:hover, .btn-4-especial:hover { background: var(--color-boton-2); color: var(--color-fondo); }
+        .btn-esp:hover { background: var(--color-boton-2); color: var(--color-fondo); }
 
-        @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
-
+        /* --- 7. RESPONSIVIDAD --- */
         @media (max-width: 600px) {
             h1 { font-size: 1rem; }
             .grid a { width: 140px; }
@@ -106,40 +112,40 @@
     <h1>C:\PAGINAS_DE_PELICULAS_Y_SERIES_</h1>
 
     <div class="grid">
-        <a href="http://serieskao.top" target="_blank" rel="noopener noreferrer">SeriesKao</a>
-        <a href="https://seriesflixhd.shop" target="_blank" rel="noopener noreferrer">SeriesFlix_HD</a>
-        <a href="http://entrepeliculasyseries.nz" target="_blank" rel="noopener noreferrer">Entre_Pelis_y_Ser</a>
-        <a href="http://poseidonhd2.co" target="_blank" rel="noopener noreferrer">PoseidonHD</a>
-        <a href="http://pelispop.lat" target="_blank" rel="noopener noreferrer">PelisPop</a>
-        <a href="http://cine-calidad.mx" target="_blank" rel="noopener noreferrer">CineCalidad_MX</a>
-        <a href="https://verpeliculasultra.com" target="_blank" rel="noopener noreferrer">Peliculas_Ultra</a>     
-        <a href="http://repelisplus.lat" target="_blank" rel="noopener noreferrer">RePelisPlus</a>
-        <a href="http://lacartoons.com" target="_blank" rel="noopener noreferrer">LaCartoons</a>
-        <a href="http://pelisplushd.to" target="_blank" rel="noopener noreferrer">PelisPlus_HD</a>
-        <a href="http://cinecalidad.pro" target="_blank" rel="noopener noreferrer">CineCalidad_Pro</a>
-        <a href="http://pelispedia.mov" target="_blank" rel="noopener noreferrer">Pelispedia</a>
-        <a href="https://seriesturcastv.to" target="_blank" rel="noopener noreferrer">Series_Turcas_TV</a>
-        <a href="http://seriesyonkis.cx" target="_blank" rel="noopener noreferrer">SeriesYonkis</a>
-        <a href="https://gnulahd.nu" target="_blank" rel="noopener noreferrer">GnulaHD</a>
-        <a href="https://www.fuegocine.com" target="_blank" rel="noopener noreferrer">FuegoCine</a>
-        <a href="https://pelisenhd.org" target="_blank" rel="noopener noreferrer">PelisEnHD</a>
-        <a href="https://cineby.sc" target="_blank" rel="noopener noreferrer">CineBy</a>
-        <a href="https://sololatino.net" target="_blank" rel="noopener noreferrer">SoloLatino</a>
-        <a href="https://cinehd.app/home" target="_blank" rel="noopener noreferrer">CineHD</a>
-        <a href="https://cuevana3.cz" target="_blank" rel="noopener noreferrer">Cuevana_3</a>
-        <a href="https://serieslan.cc/" target="_blank" rel="noopener noreferrer">SeriesLan</a>
-        <a href="https://retrotve.com/" target="_blank" rel="noopener noreferrer">RetoTV</a>
+        <a href="http://serieskao.top" target="_blank">SeriesKao</a>
+        <a href="https://seriesflixhd.shop" target="_blank">SeriesFlix_HD</a>
+        <a href="http://entrepeliculasyseries.nz" target="_blank">Entre_Pelis_y_Ser</a>
+        <a href="http://poseidonhd2.co" target="_blank">PoseidonHD</a>
+        <a href="http://pelispop.lat" target="_blank">PelisPop</a>
+        <a href="http://cine-calidad.mx" target="_blank">CineCalidad_MX</a>
+        <a href="https://verpeliculasultra.com" target="_blank">Peliculas_Ultra</a>     
+        <a href="http://repelisplus.lat" target="_blank">RePelisPlus</a>
+        <a href="http://lacartoons.com" target="_blank">LaCartoons</a>
+        <a href="http://pelisplushd.to" target="_blank">PelisPlus_HD</a>
+        <a href="http://cinecalidad.pro" target="_blank">CineCalidad_Pro</a>
+        <a href="http://pelispedia.mov" target="_blank">Pelispedia</a>
+        <a href="https://seriesturcastv.to" target="_blank">Series_Turcas_TV</a>
+        <a href="http://seriesyonkis.cx" target="_blank">SeriesYonkis</a>
+        <a href="https://gnulahd.nu" target="_blank">GnulaHD</a>
+        <a href="https://www.fuegocine.com" target="_blank">FuegoCine</a>
+        <a href="https://pelisenhd.org" target="_blank">PelisEnHD</a>
+        <a href="https://cineby.sc" target="_blank">CineBy</a>
+        <a href="https://sololatino.net" target="_blank">SoloLatino</a>
+        <a href="https://cinehd.app/home" target="_blank">CineHD</a>
+        <a href="https://cuevana3.cz" target="_blank">Cuevana_3</a>
+        <a href="https://serieslan.cc/" target="_blank">SeriesLan</a>
+        <a href="https://retrotve.com/" target="_blank">RetoTV</a>
     </div>
 
     <div class="contenedor-especial">
-        <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" class="boton-1">Calendario Del Mundial</a>
+        <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" class="boton-1">Calendario Del Mundial</a>
         
         <div class="fila-botones">
-            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer">Descargar CocCoc TV Browser<br>Android 8+ Fire TV</a>
-            <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank" rel="noopener noreferrer">Descargar CocCoc TV Browser<br>Android 7+ Fire TV</a>
+            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" class="btn-esp">Descargar CocCoc<br>Android 8+</a>
+            <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank" class="btn-esp">Descargar CocCoc<br>Android 7+</a>
         </div>
-        
-        <a href="#" target="_blank" rel="noopener noreferrer" class="btn-4-especial">Descargar Nueva Versión<br>BETA (Próximamente)</a>
+
+        <a href="#" target="_blank" class="btn-esp">Descargar Nueva Versión<br>BETA (Próximamente)</a>
     </div>
 
 </body>
