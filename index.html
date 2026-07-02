@@ -13,7 +13,7 @@
     box-sizing: border-box;
 }
 
-/* 🔥 TERMINAL BACKGROUND */
+/* 🔥 FONDO TERMINAL */
 body {
     margin: 0;
     min-height: 100vh;
@@ -24,12 +24,9 @@ body {
     align-items: center;
     padding: 15px;
     text-shadow: 0 0 5px #00ff66;
-
-    /* 🔥 evita scroll innecesario en TV/PC */
-    overflow-x: hidden;
 }
 
-/* 🔥 SCANLINES CRT */
+/* scanlines */
 body::before {
     content: "";
     position: fixed;
@@ -44,12 +41,10 @@ body::before {
     pointer-events: none;
 }
 
-/* 🔥 TITULO */
+/* TITULO */
 h1 {
     font-family: "Courier New", Courier, monospace;
     color: #00ff66;
-    text-shadow: 0 0 8px #00ff66;
-    margin: 10px 0 20px;
     text-align: center;
 }
 
@@ -63,29 +58,25 @@ h1::after {
     50%, 100% { opacity: 0; }
 }
 
-/* 🔥 LAUNCHER GRID (RESPONSIVE REAL) */
+/* 🔥 GRID REAL (NO SE OCULTA NADA) */
 .grid {
     display: grid;
 
-    /* 🔥 clave del launcher */
+    /* auto distribución real tipo launcher */
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 
     gap: 10px;
 
-    /* ocupa pantalla completa sin romper */
     width: 100%;
     max-width: 1400px;
-
-    /* 🔥 evita scroll en TV/PC */
-    max-height: calc(100vh - 250px);
-    overflow: hidden;
 
     padding: 10px;
 }
 
-/* 🔥 BOTONES UNIFORMES */
+/* BOTONES GRID */
 .grid a {
     height: 40px;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -95,8 +86,6 @@ h1::after {
 
     border: 1px solid #00ff66;
     color: #00ff66;
-
-    transition: 0.1s;
 
     white-space: nowrap;
     overflow: hidden;
@@ -118,28 +107,30 @@ h1::after {
     max-width: 1200px;
 }
 
-/* BOTÓN CALENDARIO */
-.boton-1 {
+/* BOTONES */
+.boton-1,
+.boton-2,
+.boton-espacial {
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 0 15px;
-
-    color: #ffff00;
-    border: 1px solid #ffff00;
-
     text-decoration: none;
     font-weight: bold;
 }
 
+/* CALENDARIO */
+.boton-1 {
+    color: #ffff00;
+    border: 1px solid #ffff00;
+}
 .boton-1:hover {
     background: #ffff00;
     color: #000;
 }
 
-/* FILA BOTONES */
+/* BOTONES 2 */
 .fila-botones {
     display: flex;
     flex-wrap: wrap;
@@ -147,49 +138,26 @@ h1::after {
     gap: 10px;
 }
 
-/* BOTÓN 2 */
 .boton-2 {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0 15px;
-
     color: #00ffff;
     border: 1px solid #00ffff;
-
-    text-decoration: none;
-    font-weight: bold;
 }
-
 .boton-2:hover {
     background: #00ffff;
     color: #000;
 }
 
-/* BOTÓN ESPECIAL */
+/* ESPECIAL */
 .boton-espacial {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0 15px;
-
     color: #ffffff;
     border: 1px solid #ffffff;
-
-    text-decoration: none;
-    font-weight: bold;
 }
-
 .boton-espacial:hover {
     background: #ffffff;
     color: #000;
 }
 
-/* 🔥 RESPONSIVE EXTRA */
+/* RESPONSIVE MÓVIL */
 @media (max-width: 600px) {
     .grid {
         grid-template-columns: repeat(2, 1fr);
@@ -231,9 +199,7 @@ h1::after {
 
 <div class="contenedor-especial">
 
-    <a class="boton-1" href="#">
-        Calendario Del Mundial
-    </a>
+    <a class="boton-1" href="#">Calendario Del Mundial</a>
 
     <div class="fila-botones">
         <a class="boton-2" href="#">CocCoc TV Android 8+</a>
@@ -241,9 +207,7 @@ h1::after {
         <a class="boton-2" href="#">Router WiFi 7</a>
     </div>
 
-    <a class="boton-espacial" href="#">
-        Versión X BETA
-    </a>
+    <a class="boton-espacial" href="#">Versión X BETA</a>
 
 </div>
 
