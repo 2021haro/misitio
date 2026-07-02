@@ -34,7 +34,8 @@
         h1 { font-size: 1.5rem; margin: 0 0 20px 0; text-align: center; }
         h1::after { content: "_"; animation: p 1s infinite; }
 
-        .grid, .fila-botones {
+        /* GRID ORIGINAL PARA BOTONES PRINCIPALES */
+        .grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -44,25 +45,25 @@
             margin-bottom: 20px;
         }
 
-        /* ESTILO BASE DE LOS BOTONES */
+        /* ESTILO BASE DE TODOS LOS BOTONES */
         a {
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--color-principal);
             text-decoration: none;
-            padding: 10px 15px;
+            padding: 10px;
             border: 1px solid var(--color-principal);
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
-            /* Quitamos el ancho fijo para que se ajusten al texto y al contenedor */
-            min-height: 40px;
             box-sizing: border-box;
             transition: background 0.1s, color 0.1s;
-            white-space: nowrap; /* Mantiene el texto en una línea */
         }
 
+        /* Tamaño fijo para botones del GRID */
+        .grid a { width: 160px; height: 40px; }
+        
         a:hover { background: var(--color-principal); color: var(--color-fondo); }
 
         .contenedor-especial {
@@ -72,9 +73,26 @@
             gap: 10px;
             width: 100%;
             max-width: 940px;
+            padding-bottom: 10px;
         }
 
-        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); }
+        /* FILA FLEXIBLE PARA BOTONES 2, 3 Y 4 */
+        .fila-botones {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        /* Botones especiales sin ancho fijo, solo padding */
+        .fila-botones a {
+            min-height: 40px;
+            padding: 0 20px;
+            white-space: nowrap;
+        }
+
+        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); width: auto !important; }
         .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
         
         .boton-2, .boton-3, .boton-4 { 
@@ -87,6 +105,7 @@
 
         @media (max-width: 600px) {
             h1 { font-size: 1rem; }
+            .grid a { width: 140px; }
         }
     </style>
 </head>
