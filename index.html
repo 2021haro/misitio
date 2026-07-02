@@ -8,42 +8,49 @@
     <link rel="icon" type="image/png" href="icono.png">
 
     <style>
+        /* =======================================================
+           CONFIGURACIÓN DE VARIABLES (Paleta de colores)
+           Facilita el cambio de colores en toda la página.
+        ======================================================= */
         :root {
-            --color-principal: #33FF33; 
-            --color-fondo: #000000;     
-            --color-boton-1: #FFB000;   
-            --color-boton-2: #00BFFF;   
-            --color-boton-3: #FF33CC;   
-            --color-boton-4: #FFFF33;   
+            --color-principal: #33FF33; /* Verde estilo terminal */
+            --color-fondo: #000000;     /* Fondo negro absoluto */
+            --color-boton-1: #FFB000;   /* Ámbar */
+            --color-boton-2: #00BFFF;   /* Azul neón */
+            --color-boton-3: #FF33CC;   /* Rosa neón */
+            --color-boton-4: #FFFF33;   /* Amarillo */
         }
 
+        /* Estilo global del cuerpo */
         body {
-            font-family: monospace;
+            font-family: monospace; /* Tipografía tipo sistema antiguo */
             background: var(--color-fondo);
             color: var(--color-principal);
             margin: 0;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center; 
+            align-items: center; /* Centra todo horizontalmente */
             min-height: 90vh; 
         }
 
+        /* Estilo del título principal */
         h1 { font-size: 1.5rem; margin: 20px 0; text-align: center; }
+        /* Animación del guion bajo simulando cursor de terminal */
         h1::after { content: "_"; animation: p 1s infinite; }
 
-        /* Cuadrícula principal */
+        /* Contenedor principal de los botones de películas (Cuadrícula) */
         .grid {
             display: flex;
-            flex-wrap: wrap;       
+            flex-wrap: wrap;       /* Permite que los botones salten de fila */
             justify-content: center;
-            gap: 10px; /* Separación original de 10px */
+            gap: 10px;             /* Separación de 10px entre elementos */
             width: 100%;
             max-width: 940px; 
-            margin-bottom: 10px; /* Igualamos margen inferior a 10px */
+            margin-bottom: 10px;   /* Espacio inferior antes de los botones especiales */
         }
 
-        /* Tamaño estándar para todos */
+        /* Estilos base para TODOS los botones */
         a {
             display: flex;
             align-items: center;
@@ -55,41 +62,44 @@
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
-            width: 180px;      /* Ancho estándar */
-            height: 44px;      /* Altura estándar */
-            box-sizing: border-box;
+            width: 180px;      /* Ancho fijo para alineación perfecta */
+            height: 44px;      /* Altura fija para que todos midan lo mismo */
+            box-sizing: border-box; /* Asegura que el padding no cambie el tamaño final */
         }
 
+        /* Efecto hover: Inversión de colores al pasar el ratón */
         a:hover { background: var(--color-principal); color: var(--color-fondo); }
 
-        /* Contenedor especial */
+        /* Contenedor padre de los botones inferiores (Calendario + 2,3,4) */
         .contenedor-especial {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px; /* Separación de 10px igual que el grid */
+            gap: 10px; /* Misma separación que el grid para mantener uniformidad */
         }
 
+        /* Contenedor para la fila de botones inferiores */
         .fila-botones {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px; /* Separación de 10px igual que el grid */
+            gap: 10px;
         }
 
-        /* ESTILO BOTÓN 1: Mantiene altura estándar pero ancho libre para el texto */
+        /* ESTILO BOTÓN 1: Calendario. 
+           width: auto permite que crezca según su texto. */
         .boton-1 { 
             color: var(--color-boton-1); 
             border-color: var(--color-boton-1);
             white-space: nowrap; 
-            width: auto;         /* Se ajusta al texto */
-            height: 44px;        /* Misma altura que el resto */
+            width: auto;         
+            height: 44px;        /* Mismo alto que los otros */
             padding-left: 20px;
             padding-right: 20px;
         }
         .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
 
-        /* Colores para botones inferiores */
+        /* Estilos para los botones inferiores 2, 3 y 4 */
         .boton-2 { color: var(--color-boton-2); border-color: var(--color-boton-2); }
         .boton-2:hover { background: var(--color-boton-2); color: var(--color-fondo); }
 
@@ -99,10 +109,12 @@
         .boton-4 { color: var(--color-boton-4); border-color: var(--color-boton-4); }
         .boton-4:hover { background: var(--color-boton-4); color: var(--color-fondo); }
 
+        /* Definición de la animación de parpadeo */
         @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
+        /* Ajustes para dispositivos móviles (pantallas pequeñas) */
         @media (max-width: 600px) {
-            a { width: 140px; }
+            a { width: 140px; } /* Botones más estrechos en celular */
         }
     </style>
 </head>
