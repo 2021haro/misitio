@@ -6,13 +6,16 @@
     <title>Páginas_de_películas_y_series</title>
     
     <link rel="icon" type="image/png" href="icono.png">
-    
+
     <style>
+        /* =======================================================
+            CONFIGURACIÓN DE COLORES
+        ======================================================= */
         :root {
-            --color-principal: #33FF33; 
-            --color-fondo: #000000;     
-            --color-boton-1: #FFB000; /* Color calendario */
-            --color-boton-2: #00BFFF; /* Color nuevo botón (Azul neón) */
+            --color-principal: #33FF33; /* Verde fósforo */
+            --color-fondo: #000000;     /* Negro terminal */
+            --color-boton-1: #FFB000;   /* Ámbar */
+            --color-boton-2: #00BFFF;   /* Azul neón */
         }
 
         body {
@@ -25,7 +28,6 @@
             flex-direction: column;
             align-items: center; 
             min-height: 90vh; 
-            position: relative;
         }
 
         h1 { font-size: 1.5rem; margin: 20px 0; text-align: center; }
@@ -38,7 +40,7 @@
             gap: 10px;
             width: 100%;
             max-width: 940px; 
-            margin: 0 auto;
+            margin-bottom: 20px;
         }
 
         a {
@@ -58,12 +60,16 @@
 
         a:hover { background: var(--color-principal); color: var(--color-fondo); }
 
-        /* Estilos para botones especiales */
-        .boton-1, .boton-2 {
-            margin-top: 15px;
-            margin-bottom: 5px;
+        /* Contenedor de botones verticales */
+        .contenedor-especial {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
         }
 
+        /* Estilos de botones especiales */
         .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); }
         .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
 
@@ -107,9 +113,9 @@
         <a href="https://retrotve.com/" target="_blank">RetoTV</a>
     </div>
 
-    <div style="display: flex; gap: 10px;">
+    <div class="contenedor-especial">
         <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" class="boton-1">Calendario Del Mundial</a>
-        <a href="URL_DE_TU_NUEVA_PAGINA" target="_blank" class="boton-2">Nuevo Enlace</a>
+        <a href="URL_AQUÍ" target="_blank" class="boton-2">Segundo Botón</a>
     </div>
 
 </body>
