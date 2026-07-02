@@ -12,6 +12,7 @@
     font-family: monospace;
 }
 
+/* 🔥 TERMINAL BACKGROUND */
 body {
     margin: 0;
     min-height: 100vh;
@@ -24,7 +25,7 @@ body {
     text-shadow: 0 0 5px #00ff66;
 }
 
-/* CRT scanlines */
+/* 🔥 CRT SCANLINES */
 body::before {
     content: "";
     position: fixed;
@@ -39,101 +40,11 @@ body::before {
     pointer-events: none;
 }
 
-/* GRID */
-.grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    max-width: 940px;
-    margin-bottom: 20px;
-}
-
-/* 🔥 BASE DE TODOS LOS BOTONES */
-.grid a,
-.boton-1,
-.boton-2,
-.boton-espacial {
-    height: 40px;              /* FIJO */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    box-sizing: border-box;
-    overflow: hidden;         /* 🔥 evita desbordes */
-    line-height: 1;
-    transition: 0.1s;
-    padding: 0 10px;          /* solo horizontal */
-    white-space: nowrap;      /* 🔥 evita romper diseño */
-}
-
-/* GRID BUTTONS */
-.grid a {
-    width: 160px;
-    color: #00ff66;
-    border: 1px solid #00ff66;
-}
-
-.grid a:hover {
-    background: #00ff66;
-    color: #000;
-}
-
-/* CALENDARIO */
-.boton-1 {
-    color: #ffff00;
-    border: 1px solid #ffff00;
-}
-
-.boton-1:hover {
-    background: #ffff00;
-    color: #000;
-}
-
-/* BOTONES 2 */
-.boton-2 {
-    color: #00ffff;
-    border: 1px solid #00ffff;
-    max-width: 260px; /* 🔥 evita que se rompa todo */
-}
-
-.boton-2:hover {
-    background: #00ffff;
-    color: #000;
-}
-
-/* BOTÓN ESPECIAL */
-.boton-espacial {
-    color: #ffffff;
-    border: 1px solid #ffffff;
-}
-
-.boton-espacial:hover {
-    background: #ffffff;
-    color: #000;
-}
-
-/* CONTENEDOR */
-.contenedor-especial {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    max-width: 940px;
-}
-
-.fila-botones {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
-
+/* 🔥 TITULO */
 h1 {
     font-family: "Courier New", Courier, monospace;
     color: #00ff66;
+    text-shadow: 0 0 8px #00ff66;
 }
 
 h1::after {
@@ -145,6 +56,114 @@ h1::after {
     0%, 49% { opacity: 1; }
     50%, 100% { opacity: 0; }
 }
+
+/* 🔥 GRID COMPLETO (FIX REAL) */
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+/* 🔥 BOTONES GRID */
+.grid a {
+    width: 170px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #00ff66;
+    color: #00ff66;
+    transition: 0.1s;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* hover grid */
+.grid a:hover {
+    background: #00ff66;
+    color: #000;
+}
+
+/* CONTENEDOR */
+.contenedor-especial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* CALENDARIO */
+.boton-1 {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    color: #ffff00;
+    border: 1px solid #ffff00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.boton-1:hover {
+    background: #ffff00;
+    color: #000;
+}
+
+/* BOTONES 2 */
+.fila-botones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.boton-2 {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    color: #00ffff;
+    border: 1px solid #00ffff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.boton-2:hover {
+    background: #00ffff;
+    color: #000;
+}
+
+/* BOTÓN ESPECIAL */
+.boton-espacial {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.boton-espacial:hover {
+    background: #ffffff;
+    color: #000;
+}
+
 </style>
 </head>
 
