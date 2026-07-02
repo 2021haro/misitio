@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Páginas_de_películas_y_series</title>
-
-     <link rel="icon" type="image/png" href="icono.png">
-
+    <title>Páginas de Películas y Series</title>
+    
+    <link rel="icon" type="image/png" href="icono.png">
     <link rel="apple-touch-icon" sizes="180x180" href="icono.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="icono.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="icono.png">
     
     <style>
+        /* Definición de variables de color (estilo "Matrix" o terminal) */
         :root {
             --color-fondo: #050a05;
             --color-principal: #00ff00;
@@ -19,8 +17,9 @@
             --color-boton-2: #00FFFF;
         }
 
+        /* Estilo base del cuerpo: centrado y tipografía de máquina de escribir */
         body {
-            font-family: monospace;
+            font-family: 'Courier New', Courier, monospace;
             background: var(--color-fondo);
             color: var(--color-principal);
             margin: 0;
@@ -28,13 +27,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 10px 10px 10px;
+            padding: 20px 10px;
             box-sizing: border-box;
         }
 
+        /* Estilo del título con efecto de cursor parpadeante */
         h1 { font-size: 1.5rem; margin: 0 0 20px 0; text-align: center; }
         h1::after { content: "_"; animation: p 1s infinite; }
 
+        /* Contenedor tipo rejilla para los enlaces de streaming */
         .grid {
             display: flex;
             flex-wrap: wrap;
@@ -45,6 +46,7 @@
             margin-bottom: 20px;
         }
 
+        /* Estilo genérico para los botones de enlace */
         a {
             display: flex;
             align-items: center;
@@ -56,14 +58,16 @@
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
-            box-sizing: border-box;
             transition: background 0.1s, color 0.1s;
         }
 
+        /* Tamaño fijo para los botones de la rejilla */
         .grid a { width: 160px; height: 40px; }
         
+        /* Efecto de "hover" (cuando pasas el mouse) */
         a:hover { background: var(--color-principal); color: var(--color-fondo); }
 
+        /* Contenedor para botones especiales (descargas y calendario) */
         .contenedor-especial {
             display: flex;
             flex-direction: column;
@@ -71,37 +75,30 @@
             gap: 10px;
             width: 100%;
             max-width: 940px;
-            padding-bottom: 10px;
         }
 
-        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); width: auto !important; }
+        /* Botón estilo amarillo (Calendario) */
+        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); }
         .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
         
-        .fila-botones {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-        }
+        /* Contenedor para alinear botones de descarga en fila */
+        .fila-botones { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; }
 
-        /* Estilo para los botones 2, 3 y 4 */
+        /* Estilo específico para botones de descarga y versión Beta */
         .fila-botones a, .btn-4-especial { 
             color: var(--color-boton-2); 
             border-color: var(--color-boton-2);
-            min-height: 40px;
-            height: auto; 
             padding: 10px 20px;
-            text-align: center;
         }
-        
         .fila-botones a:hover, .btn-4-especial:hover { background: var(--color-boton-2); color: var(--color-fondo); }
 
+        /* Animación para el cursor parpadeante */
         @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
+        /* Ajustes para dispositivos móviles (responsive) */
         @media (max-width: 600px) {
             h1 { font-size: 1rem; }
-            .grid a { width: 140px; }
+            .grid a { width: 45%; }
         }
     </style>
 </head>
@@ -139,11 +136,11 @@
         <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" class="boton-1">Calendario Del Mundial</a>
         
         <div class="fila-botones">
-            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer">Descargar CocCoc TV Browser<br>Android 8+ Fire TV</a>
-            <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank" rel="noopener noreferrer">Descargar CocCoc TV Browser<br>Android 7+ Fire TV</a>
+            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer">Descargar CocCoc TV<br>Android 8+</a>
+            <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank" rel="noopener noreferrer">Descargar CocCoc TV<br>Android 7+</a>
         </div>
         
-        <a href="#" target="_blank" rel="noopener noreferrer" class="btn-4-especial">Descargar Nueva Versión<br>BETA (Próximamente)</a>
+        <a href="#" class="btn-4-especial">Descargar Nueva Versión<br>BETA (Próximamente)</a>
     </div>
 
 </body>
