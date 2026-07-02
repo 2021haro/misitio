@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Páginas_de_películas_y_series</title>
     
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="icon" type="image/png" href="icono.png">
+
     <style>
         :root {
             --color-fondo: #050a05;
@@ -24,21 +27,28 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Fuerza a la página a medir exactamente la altura de la pantalla */
-            height: 100vh;
-            overflow: hidden; /* Esto elimina las barras de desplazamiento por completo */
+            /* Alinea todo el contenido desde la parte superior */
+            justify-content: flex-start; 
+            min-height: 100vh;
+            overflow-x: hidden;
             text-rendering: optimizeSpeed;
         }
 
         h1 { 
             font-size: 1.5rem; 
-            margin: 10px 0; /* Margen reducido */
+            margin: 20px 0; 
             text-align: center; 
             word-break: break-all;
             padding: 0 10px;
+            max-width: 100%;
+            contain: layout;
         }
         
-        h1::after { content: "_"; animation: p 1s infinite; }
+        h1::after { 
+            content: "_"; 
+            animation: p 1s infinite;
+            will-change: opacity;
+        }
 
         .grid {
             display: flex;
@@ -46,10 +56,9 @@
             justify-content: center;
             gap: 10px;
             width: 100%;
-            max-width: 940px;
-            overflow-y: auto; /* Solo los botones de arriba podrán tener scroll si son muchos */
-            flex-grow: 1; /* Esto hace que el grid ocupe todo el espacio disponible hasta los botones inferiores */
-            padding-bottom: 10px;
+            max-width: 940px; 
+            margin-bottom: 20px;
+            contain: content;
         }
 
         a {
@@ -58,26 +67,26 @@
             justify-content: center;
             color: var(--color-principal);
             text-decoration: none;
-            padding: 10px; 
+            padding: 12px 10px; 
             border: 1px solid var(--color-principal);
             font-weight: bold;
             font-size: 0.9rem;
             text-align: center;
             width: 180px;
-            height: 40px; /* Un poco más compacto */
+            height: 44px;
             box-sizing: border-box;
+            transition: background 0.1s, color 0.1s;
+            backface-visibility: hidden;
         }
 
         a:hover { background: var(--color-principal); color: var(--color-fondo); }
 
         .contenedor-especial {
-            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
-            padding-bottom: 20px;
-            flex-shrink: 0; /* Evita que estos botones se encojan */
+            width: 100%;
         }
 
         .fila-botones {
@@ -87,8 +96,7 @@
             gap: 10px;
         }
 
-        /* Colores */
-        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); width: auto; padding: 0 20px; }
+        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); white-space: nowrap; width: auto; height: 44px; padding: 0 20px; }
         .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
         .boton-2 { color: var(--color-boton-2); border-color: var(--color-boton-2); }
         .boton-2:hover { background: var(--color-boton-2); color: var(--color-fondo); }
@@ -100,6 +108,7 @@
         @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
         @media (max-width: 600px) {
+            h1 { font-size: 1.1rem; }
             a { width: 140px; }
         }
     </style>
