@@ -8,14 +8,12 @@
     <link rel="icon" type="image/png" href="icono.png">
 
     <style>
-        /* =======================================================
-            CONFIGURACIÓN DE COLORES
-        ======================================================= */
         :root {
-            --color-principal: #33FF33; /* Verde fósforo */
-            --color-fondo: #000000;     /* Negro terminal */
-            --color-boton-1: #FFB000;   /* Ámbar */
-            --color-boton-2: #00BFFF;   /* Azul neón */
+            --color-principal: #33FF33;
+            --color-fondo: #000000;
+            --color-boton-1: #FFB000;
+            --color-boton-2: #00BFFF;
+            --color-boton-3: #FF33CC; /* Color para el 3er botón */
         }
 
         body {
@@ -60,26 +58,35 @@
 
         a:hover { background: var(--color-principal); color: var(--color-fondo); }
 
-        /* Contenedor de botones verticales */
+        /* Contenedor principal de botones */
         .contenedor-especial {
             display: flex;
             flex-direction: column;
-            gap: 10px;
             align-items: center;
+            gap: 10px;
             margin-top: 10px;
         }
 
-        /* Estilos de botones especiales */
+        /* Fila para los botones 2 y 3 */
+        .fila-botones {
+            display: flex;
+            gap: 10px;
+        }
+
         .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); }
         .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
 
         .boton-2 { color: var(--color-boton-2); border-color: var(--color-boton-2); }
         .boton-2:hover { background: var(--color-boton-2); color: var(--color-fondo); }
 
+        .boton-3 { color: var(--color-boton-3); border-color: var(--color-boton-3); }
+        .boton-3:hover { background: var(--color-boton-3); color: var(--color-fondo); }
+
         @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
         @media (max-width: 600px) {
             a { width: 140px; }
+            .fila-botones { flex-direction: column; } /* En celular, los pone uno debajo de otro */
         }
     </style>
 </head>
@@ -115,7 +122,11 @@
 
     <div class="contenedor-especial">
         <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" class="boton-1">Calendario Del Mundial</a>
-        <a href="URL_AQUÍ" target="_blank" class="boton-2">Segundo Botón</a>
+        
+        <div class="fila-botones">
+            <a href="URL_BOTON_2" target="_blank" class="boton-2">Segundo Botón</a>
+            <a href="URL_BOTON_3" target="_blank" class="boton-3">Tercer Botón</a>
+        </div>
     </div>
 
 </body>
