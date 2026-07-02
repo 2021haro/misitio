@@ -10,6 +10,7 @@
 <style>
 * {
     font-family: monospace;
+    box-sizing: border-box;
 }
 
 /* 🔥 TERMINAL BACKGROUND */
@@ -21,11 +22,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px 10px;
+    padding: 15px;
     text-shadow: 0 0 5px #00ff66;
+
+    /* 🔥 evita scroll innecesario en TV/PC */
+    overflow-x: hidden;
 }
 
-/* 🔥 CRT SCANLINES */
+/* 🔥 SCANLINES CRT */
 body::before {
     content: "";
     position: fixed;
@@ -45,6 +49,8 @@ h1 {
     font-family: "Courier New", Courier, monospace;
     color: #00ff66;
     text-shadow: 0 0 8px #00ff66;
+    margin: 10px 0 20px;
+    text-align: center;
 }
 
 h1::after {
@@ -57,37 +63,46 @@ h1::after {
     50%, 100% { opacity: 0; }
 }
 
-/* 🔥 GRID COMPLETO (FIX REAL) */
+/* 🔥 LAUNCHER GRID (RESPONSIVE REAL) */
 .grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+
+    /* 🔥 clave del launcher */
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+
     gap: 10px;
+
+    /* ocupa pantalla completa sin romper */
     width: 100%;
-    max-width: 1200px;
-    margin-bottom: 20px;
-    padding: 0 10px;
-    box-sizing: border-box;
+    max-width: 1400px;
+
+    /* 🔥 evita scroll en TV/PC */
+    max-height: calc(100vh - 250px);
+    overflow: hidden;
+
+    padding: 10px;
 }
 
-/* 🔥 BOTONES GRID */
+/* 🔥 BOTONES UNIFORMES */
 .grid a {
-    width: 170px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
+
     text-decoration: none;
     font-weight: bold;
+
     border: 1px solid #00ff66;
     color: #00ff66;
+
     transition: 0.1s;
+
     white-space: nowrap;
     overflow: hidden;
 }
 
-/* hover grid */
+/* hover */
 .grid a:hover {
     background: #00ff66;
     color: #000;
@@ -99,19 +114,22 @@ h1::after {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    max-width: 1200px;
     width: 100%;
+    max-width: 1200px;
 }
 
-/* CALENDARIO */
+/* BOTÓN CALENDARIO */
 .boton-1 {
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 0 15px;
+
     color: #ffff00;
     border: 1px solid #ffff00;
+
     text-decoration: none;
     font-weight: bold;
 }
@@ -121,7 +139,7 @@ h1::after {
     color: #000;
 }
 
-/* BOTONES 2 */
+/* FILA BOTONES */
 .fila-botones {
     display: flex;
     flex-wrap: wrap;
@@ -129,14 +147,18 @@ h1::after {
     gap: 10px;
 }
 
+/* BOTÓN 2 */
 .boton-2 {
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 0 15px;
+
     color: #00ffff;
     border: 1px solid #00ffff;
+
     text-decoration: none;
     font-weight: bold;
 }
@@ -152,9 +174,12 @@ h1::after {
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 0 15px;
+
     color: #ffffff;
     border: 1px solid #ffffff;
+
     text-decoration: none;
     font-weight: bold;
 }
@@ -162,6 +187,13 @@ h1::after {
 .boton-espacial:hover {
     background: #ffffff;
     color: #000;
+}
+
+/* 🔥 RESPONSIVE EXTRA */
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 </style>
@@ -187,6 +219,14 @@ h1::after {
     <a href="#">Series_Turcas_TV</a>
     <a href="#">SeriesYonkis</a>
     <a href="#">GnulaHD</a>
+    <a href="#">FuegoCine</a>
+    <a href="#">PelisEnHD</a>
+    <a href="#">CineBy</a>
+    <a href="#">SoloLatino</a>
+    <a href="#">CineHD</a>
+    <a href="#">Cuevana_3</a>
+    <a href="#">SeriesLan</a>
+    <a href="#">RetoTV</a>
 </div>
 
 <div class="contenedor-especial">
@@ -196,8 +236,8 @@ h1::after {
     </a>
 
     <div class="fila-botones">
-        <a class="boton-2" href="#">Descargar CocCoc TV Android 8+</a>
-        <a class="boton-2" href="#">Descargar CocCoc TV Android 7+</a>
+        <a class="boton-2" href="#">CocCoc TV Android 8+</a>
+        <a class="boton-2" href="#">CocCoc TV Android 7+</a>
         <a class="boton-2" href="#">Router WiFi 7</a>
     </div>
 
