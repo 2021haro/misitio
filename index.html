@@ -12,7 +12,6 @@
     font-family: monospace;
 }
 
-/* 🔥 TERMINAL BACKGROUND */
 body {
     margin: 0;
     min-height: 100vh;
@@ -22,11 +21,9 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 20px 10px;
-    box-sizing: border-box;
     text-shadow: 0 0 5px #00ff66;
 }
 
-/* 🔥 SCANLINES */
 body::before {
     content: "";
     position: fixed;
@@ -41,73 +38,48 @@ body::before {
     pointer-events: none;
 }
 
-/* 🔥 TITULO */
-h1 {
-    font-family: "Courier New", Courier, monospace;
-    color: #00ff66;
-    text-shadow: 0 0 8px #00ff66;
-}
-
-h1::after {
-    content: "_";
-    animation: blink 1s infinite;
-}
-
-@keyframes blink {
-    0%, 49% { opacity: 1; }
-    50%, 100% { opacity: 0; }
-}
-
-/* 🔥 GRID ORIGINAL (FLEX COMO PEDISTE) */
+/* 🔥 GRID */
 .grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    width: 100%;
     max-width: 940px;
     margin-bottom: 20px;
 }
 
-/* BOTONES GRID */
-.grid a {
+/* 🔥 TODOS LOS BOTONES MISMA ALTURA */
+.grid a,
+.boton-1,
+.boton-2,
+.boton-espacial {
+    height: 40px;              /* 👈 MISMA ALTURA QUE CALENDARIO */
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 160px;
-    height: 40px;
-    color: #00ff66;
     text-decoration: none;
-    border: 1px solid #00ff66;
     font-weight: bold;
-    font-size: 0.9rem;
-    text-align: center;
+    padding: 0 15px;           /* solo horizontal */
+    box-sizing: border-box;
     transition: 0.1s;
 }
 
-/* hover solo grid */
+/* GRID BUTTON */
+.grid a {
+    width: 160px;
+    color: #00ff66;
+    border: 1px solid #00ff66;
+}
+
 .grid a:hover {
     background: #00ff66;
     color: #000;
-}
-
-/* CONTENEDOR */
-.contenedor-especial {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    max-width: 940px;
 }
 
 /* CALENDARIO */
 .boton-1 {
     color: #ffff00;
     border: 1px solid #ffff00;
-    padding: 10px 20px;
-    text-decoration: none;
-    transition: 0.1s;
 }
 
 .boton-1:hover {
@@ -116,24 +88,9 @@ h1::after {
 }
 
 /* BOTONES 2 */
-.fila-botones {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
-
 .boton-2 {
     color: #00ffff;
     border: 1px solid #00ffff;
-    padding: 10px 20px;
-    text-decoration: none;
-    min-height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    transition: 0.1s;
 }
 
 .boton-2:hover {
@@ -145,15 +102,42 @@ h1::after {
 .boton-espacial {
     color: #ffffff;
     border: 1px solid #ffffff;
-    padding: 10px 20px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.1s;
 }
 
 .boton-espacial:hover {
     background: #ffffff;
     color: #000;
+}
+
+/* CONTENEDOR */
+.contenedor-especial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 940px;
+}
+
+.fila-botones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+h1 {
+    font-family: "Courier New", Courier, monospace;
+    color: #00ff66;
+}
+
+h1::after {
+    content: "_";
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
 }
 
 </style>
@@ -174,43 +158,21 @@ h1::after {
     <a href="http://repelisplus.lat" target="_blank">RePelisPlus</a>
     <a href="http://lacartoons.com" target="_blank">LaCartoons</a>
     <a href="http://pelisplushd.to" target="_blank">PelisPlus_HD</a>
-    <a href="http://cinecalidad.pro" target="_blank">CineCalidad_Pro</a>
-    <a href="http://pelispedia.mov" target="_blank">Pelispedia</a>
-    <a href="https://seriesturcastv.to" target="_blank">Series_Turcas_TV</a>
-    <a href="http://seriesyonkis.cx" target="_blank">SeriesYonkis</a>
-    <a href="https://gnulahd.nu" target="_blank">GnulaHD</a>
-    <a href="https://www.fuegocine.com" target="_blank">FuegoCine</a>
-    <a href="https://pelisenhd.org" target="_blank">PelisEnHD</a>
-    <a href="https://cineby.sc" target="_blank">CineBy</a>
-    <a href="https://sololatino.net" target="_blank">SoloLatino</a>
-    <a href="https://cinehd.app/home" target="_blank">CineHD</a>
-    <a href="https://cuevana3.cz" target="_blank">Cuevana_3</a>
-    <a href="https://serieslan.cc/" target="_blank">SeriesLan</a>
-    <a href="https://retrotve.com/" target="_blank">RetoTV</a>
 </div>
 
 <div class="contenedor-especial">
 
-    <a class="boton-1" href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank">
+    <a class="boton-1" href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world">
         Calendario Del Mundial
     </a>
 
     <div class="fila-botones">
-        <a class="boton-2" href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank">
-            Descargar CocCoc TV Browser Android 8+ Fire TV
-        </a>
-
-        <a class="boton-2" href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank">
-            Descargar CocCoc TV Browser Android 7+ Fire TV
-        </a>
-
-        <a class="boton-2" href="https://www.amazon.com.mx/TP-Link-Archer-HomeShield-Compatible-Generaciones/dp/B0FDL3YXCW/ref=bmx_dp_d_sccl_2_1/137-0419166-7375232" target="_blank">
-            TP-Link Archer BE3600 Router WiFi 7
-        </a>
+        <a class="boton-2" href="#">Descargar CocCoc TV Android</a>
+        <a class="boton-2" href="#">Router WiFi 7</a>
     </div>
 
-    <a class="boton-espacial" href="https://jahf.vercel.app/x" target="_blank">
-        Descargar Nueva Versión X BETA (Próximamente)
+    <a class="boton-espacial" href="#">
+        Versión X BETA
     </a>
 
 </div>
