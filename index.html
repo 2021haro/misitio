@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" href="icono.png">
 
     <style>
-        /* 🔥 FUENTE GLOBAL */
+        /* 🔥 FUENTE GLOBAL SIN CAMBIAR DISEÑO */
         * {
             font-family: monospace;
         }
@@ -56,7 +56,7 @@
             margin-bottom: 20px;
         }
 
-        /* 🔥 BOTÓN PRINCIPAL (GRID) */
+        /* 🔥 NO SE TOCA ESTILO DE BOTONES */
         .grid a {
             display: flex;
             align-items: center;
@@ -70,6 +70,7 @@
             font-size: 0.9rem;
             text-align: center;
             box-sizing: border-box;
+            transition: background 0.1s, color 0.1s;
         }
 
         a:hover {
@@ -87,34 +88,14 @@
             padding-bottom: 10px;
         }
 
-        /* 🔥 BOTÓN 1 */
         .boton-1 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            padding: 0 20px;
             color: var(--color-boton-1);
             border: 1px solid var(--color-boton-1);
+            padding: 10px 20px;
             text-decoration: none;
-            font-weight: bold;
-            box-sizing: border-box;
         }
 
-        /* 🔥 BOTÓN 2 (fila) */
-        .fila-botones {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .fila-botones a,
         .boton-2 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: var(--color-boton-2);
             border: 1px solid var(--color-boton-2);
             min-height: 40px;
@@ -122,14 +103,9 @@
             text-align: center;
             text-decoration: none;
             font-weight: bold;
-            box-sizing: border-box;
         }
 
-        /* 🔥 BOTÓN ESPECIAL */
         .boton-espacial {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: var(--color-boton-espacial);
             border: 1px solid var(--color-boton-espacial);
             padding: 10px 20px;
@@ -137,9 +113,12 @@
             font-weight: bold;
         }
 
-        a:hover {
-            background: var(--color-principal);
-            color: var(--color-fondo);
+        .fila-botones {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
         }
 
         @keyframes p {
