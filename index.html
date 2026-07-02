@@ -8,16 +8,20 @@
     <link rel="icon" type="image/png" href="icono.png">
 
     <style>
+        /* =======================================================
+           VARIABLES DE COLORES (Aquí puedes cambiar el look)
+        ======================================================= */
         :root {
-            --color-principal: #33FF33;
-            --color-fondo: #000000;
-            --color-boton-1: #FFB000;
-            --color-boton-2: #00BFFF;
-            --color-boton-3: #FF33CC; /* Color para el 3er botón */
+            --color-principal: #33FF33; /* Verde fósforo terminal */
+            --color-fondo: #000000;     /* Fondo negro */
+            --color-boton-1: #FFB000;   /* Ámbar */
+            --color-boton-2: #00BFFF;   /* Azul neón */
+            --color-boton-3: #FF33CC;   /* Rosa neón */
         }
 
+        /* Estilo base del cuerpo de la página */
         body {
-            font-family: monospace;
+            font-family: monospace; /* Fuente tipo terminal */
             background: var(--color-fondo);
             color: var(--color-principal);
             margin: 0;
@@ -28,9 +32,11 @@
             min-height: 90vh; 
         }
 
+        /* Título con efecto de cursor parpadeante */
         h1 { font-size: 1.5rem; margin: 20px 0; text-align: center; }
         h1::after { content: "_"; animation: p 1s infinite; }
 
+        /* Cuadrícula principal de botones */
         .grid {
             display: flex;
             flex-wrap: wrap;       
@@ -41,6 +47,7 @@
             margin-bottom: 20px;
         }
 
+        /* Estilo general de todos los enlaces/botones */
         a {
             display: flex;
             align-items: center;
@@ -56,9 +63,10 @@
             box-sizing: border-box;
         }
 
+        /* Efecto al pasar el mouse por encima */
         a:hover { background: var(--color-principal); color: var(--color-fondo); }
 
-        /* Contenedor principal de botones */
+        /* Contenedor padre de los botones especiales inferiores */
         .contenedor-especial {
             display: flex;
             flex-direction: column;
@@ -67,26 +75,38 @@
             margin-top: 10px;
         }
 
-        /* Fila para los botones 2 y 3 */
+        /* Fila para poner el boton 2 y 3 juntos */
         .fila-botones {
             display: flex;
             gap: 10px;
         }
 
-        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); }
+        /* Clase específica para el Botón 1: Forzamos una sola línea con nowrap */
+        .boton-1 { 
+            color: var(--color-boton-1); 
+            border-color: var(--color-boton-1);
+            white-space: nowrap; /* Mantiene el texto en una sola línea */
+            width: auto;         /* Ajusta el ancho al contenido */
+            padding-left: 20px;
+            padding-right: 20px;
+        }
         .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
 
+        /* Clase para Botón 2 */
         .boton-2 { color: var(--color-boton-2); border-color: var(--color-boton-2); }
         .boton-2:hover { background: var(--color-boton-2); color: var(--color-fondo); }
 
+        /* Clase para Botón 3 */
         .boton-3 { color: var(--color-boton-3); border-color: var(--color-boton-3); }
         .boton-3:hover { background: var(--color-boton-3); color: var(--color-fondo); }
 
+        /* Animación del guion del título */
         @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
+        /* Ajustes para celulares */
         @media (max-width: 600px) {
             a { width: 140px; }
-            .fila-botones { flex-direction: column; } /* En celular, los pone uno debajo de otro */
+            .fila-botones { flex-direction: column; } 
         }
     </style>
 </head>
