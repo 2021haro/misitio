@@ -1,157 +1,166 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Páginas_de_películas_y_series</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Páginas_de_películas_y_series</title>
 
-    <link rel="icon" type="image/png" href="icono.png">
+<link rel="icon" type="image/png" href="icono.png">
 
-    <style>
-        /* 🔥 FUENTE GLOBAL */
-        * {
-            font-family: monospace;
-        }
+<style>
+* {
+    font-family: monospace;
+}
 
-        :root {
-            --color-fondo: #050a05;
-            --color-principal: #00ff00;
-            --color-boton-1: #ffff00;
-            --color-boton-2: #00FFFF;
-            --color-boton-espacial: #ffffff;
-        }
+/* 🔥 FONDO TIPO CRT TERMINAL */
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #000;
+    color: #00ff66;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+    box-sizing: border-box;
 
-        body {
-            background: var(--color-fondo);
-            color: var(--color-principal);
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 10px 10px 10px;
-            box-sizing: border-box;
-        }
+    /* glow hacker */
+    text-shadow: 0 0 5px #00ff66;
+    animation: flicker 2s infinite;
+    position: relative;
+    overflow-x: hidden;
+}
 
-        /* 🔥 SOLO EL H1 CAMBIA A COURIER NEW */
-        h1 {
-            font-family: "Courier New", Courier, monospace;
-            font-size: 1.5rem;
-            margin: 0 0 20px 0;
-            text-align: center;
-        }
+/* 🔥 ESCANEO CRT (líneas) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,255,102,0.05),
+        rgba(0,255,102,0.05) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    pointer-events: none;
+}
 
-        h1::after {
-            content: "_";
-            animation: p 1s infinite;
-        }
+/* 🔥 PARPADEO TERMINAL */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.97; }
+}
 
-        .grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            max-width: 940px;
-            margin-bottom: 20px;
-        }
+/* 🔥 H1 TIPO TERMINAL */
+h1 {
+    font-family: "Courier New", monospace;
+    color: #00ff66;
+    text-shadow: 0 0 8px #00ff66;
+}
 
-        /* 🔥 BOTÓN PRINCIPAL (GRID) */
-        .grid a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 160px;
-            height: 40px;
-            color: var(--color-principal);
-            text-decoration: none;
-            border: 1px solid var(--color-principal);
-            font-weight: bold;
-            font-size: 0.9rem;
-            text-align: center;
-            box-sizing: border-box;
-        }
+h1::after {
+    content: "_";
+    animation: blink 1s infinite;
+}
 
-        a:hover {
-            background: var(--color-principal);
-            color: var(--color-fondo);
-        }
+@keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
 
-        .contenedor-especial {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            max-width: 940px;
-            padding-bottom: 10px;
-        }
+/* 🔥 GRID */
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: 940px;
+    margin-bottom: 20px;
+}
 
-        /* 🔥 BOTÓN 1 */
-        .boton-1 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            padding: 0 20px;
-            color: var(--color-boton-1);
-            border: 1px solid var(--color-boton-1);
-            text-decoration: none;
-            font-weight: bold;
-            box-sizing: border-box;
-        }
+/* BOTONES BASE */
+.grid a {
+    width: 160px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #00ff66;
+    color: #00ff66;
+    text-decoration: none;
+    transition: 0.1s;
+    text-shadow: 0 0 5px #00ff66;
+}
 
-        /* 🔥 BOTÓN 2 (fila) */
-        .fila-botones {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-        }
+/* HOVER TERMINAL */
+.grid a:hover {
+    background: #00ff66;
+    color: #000;
+}
 
-        .fila-botones a,
-        .boton-2 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-boton-2);
-            border: 1px solid var(--color-boton-2);
-            min-height: 40px;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: bold;
-            box-sizing: border-box;
-        }
+/* CONTENEDOR */
+.contenedor-especial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 940px;
+}
 
-        /* 🔥 BOTÓN ESPECIAL */
-        .boton-espacial {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-boton-espacial);
-            border: 1px solid var(--color-boton-espacial);
-            padding: 10px 20px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+/* BOTONES SIN CAMBIO DE COLOR ORIGINAL */
+.boton-1 {
+    color: #ffff00;
+    border: 1px solid #ffff00;
+    padding: 10px 20px;
+    text-decoration: none;
+}
 
-        a:hover {
-            background: var(--color-principal);
-            color: var(--color-fondo);
-        }
+.boton-1:hover {
+    background: #ffff00;
+    color: #000;
+}
 
-        @keyframes p {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
+.boton-2 {
+    color: #00ffff;
+    border: 1px solid #00ffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        @media (max-width: 600px) {
-            h1 { font-size: 1rem; }
-            .grid a { width: 140px; }
-        }
-    </style>
+.boton-2:hover {
+    background: #00ffff;
+    color: #000;
+}
+
+.boton-espacial {
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.boton-espacial:hover {
+    background: #ffffff;
+    color: #000;
+}
+
+.fila-botones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+</style>
 </head>
 
 <body>
@@ -170,43 +179,18 @@
     <a href="http://lacartoons.com" target="_blank">LaCartoons</a>
     <a href="http://pelisplushd.to" target="_blank">PelisPlus_HD</a>
     <a href="http://cinecalidad.pro" target="_blank">CineCalidad_Pro</a>
-    <a href="http://pelispedia.mov" target="_blank">Pelispedia</a>
-    <a href="https://seriesturcastv.to" target="_blank">Series_Turcas_TV</a>
-    <a href="http://seriesyonkis.cx" target="_blank">SeriesYonkis</a>
-    <a href="https://gnulahd.nu" target="_blank">GnulaHD</a>
-    <a href="https://www.fuegocine.com" target="_blank">FuegoCine</a>
-    <a href="https://pelisenhd.org" target="_blank">PelisEnHD</a>
-    <a href="https://cineby.sc" target="_blank">CineBy</a>
-    <a href="https://sololatino.net" target="_blank">SoloLatino</a>
-    <a href="https://cinehd.app/home" target="_blank">CineHD</a>
-    <a href="https://cuevana3.cz" target="_blank">Cuevana_3</a>
-    <a href="https://serieslan.cc/" target="_blank">SeriesLan</a>
-    <a href="https://retrotve.com/" target="_blank">RetoTV</a>
 </div>
 
 <div class="contenedor-especial">
 
-    <a class="boton-1" href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank">
-        Calendario Del Mundial
-    </a>
+    <a class="boton-1" href="#">Calendario Del Mundial</a>
 
     <div class="fila-botones">
-        <a class="boton-2" href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank">
-            Descargar CocCoc TV Browser Android 8+ Fire TV
-        </a>
-
-        <a class="boton-2" href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank">
-            Descargar CocCoc TV Browser Android 7+ Fire TV
-        </a>
-
-        <a class="boton-2" href="https://www.amazon.com.mx/TP-Link-Archer-HomeShield-Compatible-Generaciones/dp/B0FDL3YXCW/ref=bmx_dp_d_sccl_2_1/137-0419166-7375232" target="_blank">
-            TP-Link Archer BE3600 Router WiFi 7
-        </a>
+        <a class="boton-2" href="#">Descargar CocCoc TV Android</a>
+        <a class="boton-2" href="#">Router WiFi 7</a>
     </div>
 
-    <a class="boton-espacial" href="https://jahf.vercel.app/x" target="_blank">
-        Descargar Nueva Versión X BETA (Próximamente)
-    </a>
+    <a class="boton-espacial" href="#">Versión X BETA</a>
 
 </div>
 
