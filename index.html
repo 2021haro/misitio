@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Paginas peliculas y series</title>
 
      <link rel="icon" type="image/png" href="icono.png">
     
@@ -11,26 +11,26 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
-            background-color: #121212;
-            color: #e0e0e0;
+            background-color: #ffffff;
+            color: #333333;
             font-family: sans-serif;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Centra todo verticalmente */
-            min-height: 100vh; /* Asegura el alto total */
-            overflow-y: auto; /* Permite scroll solo si es necesario (móvil) */
+            justify-content: center;
+            min-height: 100vh;
+            overflow-y: auto;
         }
 
-        h1 { font-size: 1.2rem; margin-bottom: 20px; color: #fff; }
+        h1 { font-size: 1.2rem; margin-bottom: 20px; color: #000000; }
 
         .contenedor-main {
             display: flex;
             flex-direction: column;
             gap: 15px;
             width: 100%;
-            max-width: 1000px; /* Tamaño máximo para PC/TV */
+            max-width: 1000px;
         }
 
         .grid {
@@ -46,26 +46,24 @@
             justify-content: center;
             text-decoration: none;
             padding: 10px;
-            border: 1px solid #333;
-            color: #e0e0e0;
+            border: 1px solid #cccccc;
+            color: #333333;
             font-size: 0.8rem;
             text-align: center;
             border-radius: 4px;
             transition: background 0.2s;
-            /* En pantallas grandes, esto mantiene todo compacto */
             width: 140px; 
             height: 40px;
         }
 
-        a:hover { background: #1f1f1f; border-color: #555; }
+        a:hover { background: #f0f0f0; border-color: #999999; }
 
-        .boton-1 { background: #fff; color: #000; border: none; width: 100%; max-width: 440px; }
-        .boton-1:hover { background: #ccc; }
+        .boton-1 { background: #333333; color: #ffffff; border: none; width: 100%; max-width: 440px; }
+        .boton-1:hover { background: #000000; }
 
         .fila-extras { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .fila-extras a { width: 180px; }
 
-        /* Ajuste para móviles: permite scroll natural */
         @media (max-width: 600px) {
             body { justify-content: flex-start; min-height: auto; }
             a { flex: 1 1 40%; width: auto; }
