@@ -27,12 +27,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 10px 10px 10px;
+            padding: 20px 0 0 0;
             box-sizing: border-box;
         }
 
-        h1 { font-size: 1.5rem; margin: 0 0 20px 0; text-align: center; }
-        h1::after { content: "_"; animation: p 1s infinite; }
+        h1 { 
+            font-size: 1.5rem; 
+            margin: 0 0 20px 0; 
+            text-align: center; 
+        }
+
+        h1::after { 
+            content: "_"; 
+            animation: p 1s infinite; 
+        }
 
         /* GRID ORIGINAL PARA BOTONES PRINCIPALES */
         .grid {
@@ -41,8 +49,10 @@
             justify-content: center;
             gap: 10px;
             width: 100%;
-            max-width: 999px; 
+            max-width: 940px; 
             margin-bottom: 20px;
+            padding: 0 10px;
+            box-sizing: border-box;
         }
 
         /* ESTILO BASE DE TODOS LOS BOTONES */
@@ -61,10 +71,15 @@
             transition: background 0.1s, color 0.1s;
         }
 
-        /* Tamaño fijo para botones del GRID */
-        .grid a { width: 160px; height: 40px; }
+        .grid a { 
+            width: 160px; 
+            height: 40px; 
+        }
         
-        a:hover { background: var(--color-principal); color: var(--color-fondo); }
+        a:hover { 
+            background: var(--color-principal); 
+            color: var(--color-fondo); 
+        }
 
         .contenedor-especial {
             display: flex;
@@ -73,7 +88,8 @@
             gap: 10px;
             width: 100%;
             max-width: 940px;
-            padding-bottom: 10px;
+            padding: 0 10px 10px 10px;
+            box-sizing: border-box;
         }
 
         /* FILA FLEXIBLE PARA BOTONES 2, 3 Y 4 */
@@ -85,23 +101,37 @@
             width: 100%;
         }
 
-        /* Botones especiales sin ancho fijo, solo padding */
         .fila-botones a {
             min-height: 40px;
             padding: 0 20px;
             white-space: nowrap;
         }
 
-        .boton-1 { color: var(--color-boton-1); border-color: var(--color-boton-1); width: auto !important; }
-        .boton-1:hover { background: var(--color-boton-1); color: var(--color-fondo); }
+        .boton-1 { 
+            color: var(--color-boton-1); 
+            border-color: var(--color-boton-1); 
+            width: auto !important; 
+        }
+
+        .boton-1:hover { 
+            background: var(--color-boton-1); 
+            color: var(--color-fondo); 
+        }
         
         .boton-2, .boton-3, .boton-4 { 
             color: var(--color-boton-2); 
             border-color: var(--color-boton-2); 
         }
-        .boton-2:hover, .boton-3:hover, .boton-4:hover { background: var(--color-boton-2); color: var(--color-fondo); }
 
-        @keyframes p { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+        .boton-2:hover, .boton-3:hover, .boton-4:hover { 
+            background: var(--color-boton-2); 
+            color: var(--color-fondo); 
+        }
+
+        @keyframes p { 
+            0%, 49% { opacity: 1; } 
+            50%, 100% { opacity: 0; } 
+        }
 
         @media (max-width: 600px) {
             h1 { font-size: 1rem; }
@@ -109,6 +139,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <h1>C:\PAGINAS_DE_PELICULAS_Y_SERIES_</h1>
@@ -140,12 +171,22 @@
     </div>
 
     <div class="contenedor-especial">
-        <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" class="boton-1">Calendario Del Mundial</a>
+        <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" class="boton-1">
+            Calendario Del Mundial
+        </a>
         
         <div class="fila-botones">
-            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer" class="boton-2">Descargar_CocCoc_TV_Browser_apk_Andorid_8+_Fire_TV</a>
-            <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank" rel="noopener noreferrer" class="boton-3">Descargar_CocCoc_TV_Browser_apk_Andorid _7_Fire_TV</a>
-            <a href="#" target="_blank" rel="noopener noreferrer" class="boton-4">btn 4</a>
+            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" class="boton-2">
+                Descargar_CocCoc_TV_Browser_apk_Andorid_8+_Fire_TV
+            </a>
+
+            <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank" class="boton-3">
+                Descargar_CocCoc_TV_Browser_apk_Andorid_7_Fire_TV
+            </a>
+
+            <a href="#" target="_blank" class="boton-4">
+                btn 4
+            </a>
         </div>
     </div>
 
