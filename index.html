@@ -23,16 +23,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            overflow: hidden; 
+            min-height: 100vh;
         }
 
-        /* Título con efecto de parpadeo */
-        h1 { font-size: 1.8rem; margin-bottom: 20px; color: #00ff00; }
+        h1 { font-size: 1.8rem; margin-bottom: 20px; color: #00ff00; text-align: center; }
         
-        .cursor {
-            animation: parpadear 1s step-end infinite;
-        }
+        .cursor { animation: parpadear 1s step-end infinite; }
 
         @keyframes parpadear {
             0%, 100% { opacity: 1; }
@@ -42,7 +38,6 @@
         .contenedor-main { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 1000px; }
         .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 
-        /* Estilo con letra de 18px y negritas */
         a {
             display: flex;
             align-items: center;
@@ -55,7 +50,6 @@
             font-size: 18px;
             font-weight: bold;
             text-align: center;
-            border-radius: 0;
             width: 180px;
             height: 50px;
             transition: all 0.2s ease;
@@ -63,7 +57,6 @@
 
         a:hover { background-color: var(--color-grid); color: #000; }
 
-        /* Estilo Botón Calendario */
         .boton-1 { 
             border: 1px solid var(--color-calendario); 
             color: var(--color-calendario); 
@@ -75,7 +68,6 @@
         }
         .boton-1:hover { background-color: var(--color-calendario); color: #000; }
 
-        /* Estilo Botones Extras */
         .fila-extras { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .fila-extras a { 
             border: 1px solid var(--color-extras); 
@@ -88,8 +80,8 @@
         .fila-extras a:hover { background-color: var(--color-extras); color: #000; }
 
         @media (max-width: 600px) {
-            body { height: auto; overflow: auto; padding-bottom: 40px; }
-            a { flex: 1 1 40%; width: auto; }
+            h1 { font-size: 1.1rem; } /* Título más pequeño en móviles */
+            a { flex: 1 1 40%; width: auto; font-size: 14px; } /* Ajuste de botones */
             .boton-1 { width: 100%; }
         }
     </style>
