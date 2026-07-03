@@ -9,9 +9,8 @@
         :root {
             --tamano-letra: 18px; 
             --fondo-pagina: #050a05;
-            --color-grid: #00ff00;
-            --color-calendario: #ffff00;
-            --color-extras: #00FFFF;
+            --color-btn-pys: #00ff00;
+            --color-btn-extras: #00FFFF;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,7 +34,7 @@
         .contenedor-main { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 1000px; }
         
         /* Contenedor Grid con Flexbox para centrado automático */
-        .grid { 
+        .contenedor-btn-pys { 
             display: flex; 
             flex-wrap: wrap; 
             justify-content: center; 
@@ -43,16 +42,16 @@
             width: 100%;
         }
 
-        /* Botones del GRID */
-        .grid a {
+        /* Botones del Contenedor películas y series */
+        .contenedor-btn-pys a {
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             padding: 15px 10px; 
             background-color: transparent;
-            border: 1px solid var(--color-grid);
-            color: var(--color-grid);
+            border: 1px solid var(--color-btn-pys);
+            color: var(--color-btn-pys);
             font-size: var(--tamano-letra); 
             font-weight: bold;
             text-align: center;
@@ -61,45 +60,38 @@
             flex: 0 0 calc(20% - 10px); 
             min-width: 150px;
         }
-        .grid a:hover { background-color: var(--color-grid); color: #000; }
+        .contenedor-btn-pys a:hover { background-color: var(--color-btn-pys); color: #000; }
 
-        /* Estilo para CALENDARIO */
-        .boton-1 { 
-            border: 1px solid var(--color-calendario); 
-            color: var(--color-calendario); 
-            padding: 15px 20px;
-            text-decoration: none;
-            text-align: center;
-            font-size: var(--tamano-letra);
-            font-weight: bold;
-            display: block;
+        /* Estilo para el contenedor de botones inferiores (Calendario y X) */
+        .contenedor-btn-extras { 
+            display: flex; 
+            justify-content: center; 
+            gap: 10px; 
+            flex-wrap: wrap; 
             width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
         }
-        .boton-1:hover { background-color: var(--color-calendario); color: #000; }
-
-        /* Estilo para EXTRAS */
-        .fila-extras { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        .fila-extras a { 
-            border: 1px solid var(--color-extras); 
-            color: var(--color-extras); 
+        .contenedor-btn-extras a { 
+            border: 1px solid var(--color-btn-extras); 
+            color: var(--color-btn-extras); 
             padding: 15px 20px;
             text-decoration: none;
             font-size: var(--tamano-letra);
             font-weight: bold;
+            text-align: center;
+            flex: 1;
+            max-width: 350px; /* Limita el ancho máximo para que se vean estéticos */
+            min-width: 200px;
         }
-        .fila-extras a:hover { background-color: var(--color-extras); color: #000; }
+        .contenedor-btn-extras a:hover { background-color: var(--color-btn-extras); color: #000; }
 
         @media (max-width: 800px) {
-            .grid a { flex: 0 0 calc(33.33% - 10px); }
+            .contenedor-btn-pys a { flex: 0 0 calc(33.33% - 10px); }
         }
 
         @media (max-width: 600px) {
             h1 { font-size: 1.2rem; }
-            .grid a { flex: 0 0 calc(50% - 10px); font-size: 16px; padding: 12px 5px; }
-            .fila-extras a { font-size: 16px; padding: 12px 5px; }
-            .boton-1 { font-size: 16px; }
+            .contenedor-btn-pys a { flex: 0 0 calc(50% - 10px); font-size: 16px; padding: 12px 5px; }
+            .contenedor-btn-extras a { font-size: 16px; padding: 12px 5px; flex: 0 0 100%; max-width: 100%; }
         }
     </style>
 </head>
@@ -108,7 +100,7 @@
     <h1>C:\PAGINAS_DE_PELICULAS_Y_SERIES<span class="cursor">_</span></h1>
 
     <div class="contenedor-main">
-        <div class="grid">
+        <div class="contenedor-btn-pys">
             <a href="http://serieskao.top" target="_blank" rel="noopener noreferrer">SeriesKao</a>
             <a href="https://seriesflixhd.shop" target="_blank" rel="noopener noreferrer">SeriesFlix</a>
             <a href="http://entrepeliculasyseries.nz" target="_blank" rel="noopener noreferrer">EntrePelis</a>
@@ -135,12 +127,8 @@
             <a href="https://tioplus.app/" target="_blank" rel="noopener noreferrer">PlusHD</a>
         </div>
 
-        <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" class="boton-1" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
-
-        <div class="fila-extras">
-            <a href="https://www.mediafire.com/file/5ickvwwax1uqqhq/Co_Co_TV_Browser_133.4.405_Android_8%252B.apk/file" target="_blank" rel="noopener noreferrer">CocCoc 8+</a>
-            <a href="https://www.mediafire.com/file/er065j46qsaql4q/Co_Co_TV_Browser_119.4.245_Android_7%252B.apk/file" target="_blank" rel="noopener noreferrer">CocCoc 7+</a>
-            <a href="https://www.amazon.com.mx/TP-Link-Archer-HomeShield-Compatible-Generaciones/dp/B0FDL3YXCW/ref=bmx_dp_d_sccl_2_1/137-0419166-7375232" target="_blank" rel="noopener noreferrer">WiFi 7</a>
+        <div class="contenedor-btn-extras">
+            <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
             <a href="https://jahf.vercel.app/x" target="_blank" rel="noopener noreferrer">Versión X (BETA)</a>
         </div>
     </div>
