@@ -6,6 +6,7 @@
     <title>C:\PAGINAS_DE_PELICULAS_Y_SERIES_</title>
 
     <style>
+        /* 1. CONFIGURACIÓN Y VARIABLES */
         :root {
             --tamano-letra: 18px; 
             --fondo-pagina: #050a05;
@@ -13,7 +14,12 @@
             --color-btn-extras: #00FFFF;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* 2. ESTILOS GLOBALES */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
         
         body {
             background-color: var(--fondo-pagina);
@@ -26,14 +32,33 @@
             min-height: 100vh;
         }
 
-        h1 { font-size: 1.8rem; margin-bottom: 20px; color: #00ff00; text-align: center; }
+        /* 3. ENCABEZADO (Efecto Terminal) */
+        h1 { 
+            font-size: 1.8rem; 
+            margin-bottom: 20px; 
+            color: #00ff00; 
+            text-align: center; 
+        }
         
-        .cursor { animation: parpadear 1s step-end infinite; }
-        @keyframes parpadear { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .cursor { 
+            animation: parpadear 1s step-end infinite; 
+        }
+        
+        @keyframes parpadear { 
+            0%, 100% { opacity: 1; } 
+            50% { opacity: 0; } 
+        }
 
-        .contenedor-main { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 1000px; }
+        /* 4. ESTRUCTURA PRINCIPAL */
+        .contenedor-main { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            width: 100%; 
+            max-width: 1000px; 
+        }
         
-        /* Contenedor Grid con Flexbox para centrado automático */
+        /* 5. SECCIÓN: BOTONES PELÍCULAS Y SERIES (PYS) */
         .contenedor-btn-pys { 
             display: flex; 
             flex-wrap: wrap; 
@@ -42,7 +67,6 @@
             width: 100%;
         }
 
-        /* Botones del Contenedor películas y series */
         .contenedor-btn-pys a {
             display: flex;
             align-items: center;
@@ -56,13 +80,19 @@
             font-weight: bold;
             text-align: center;
             transition: all 0.2s ease;
-            /* 20% - 10px del gap permite 5 botones por fila */
-            flex: 0 0 calc(20% - 10px); 
+            flex: 0 0 calc(20% - 10px); /* 5 botones por fila en PC */
             min-width: 150px;
         }
-        .contenedor-btn-pys a:hover { background-color: var(--color-btn-pys); color: #000; }
 
-        /* Estilo para el contenedor de botones inferiores (Calendario y X) */
+        /* Optimizado para PC (:hover) y control de TV (:focus) */
+        .contenedor-btn-pys a:hover,
+        .contenedor-btn-pys a:focus { 
+            background-color: var(--color-btn-pys); 
+            color: #000; 
+            outline: none;
+        }
+
+        /* 6. SECCIÓN: BOTONES EXTRAS (Calendario y X) */
         .contenedor-btn-extras { 
             display: flex; 
             justify-content: center; 
@@ -70,6 +100,7 @@
             flex-wrap: wrap; 
             width: 100%;
         }
+
         .contenedor-btn-extras a { 
             border: 1px solid var(--color-btn-extras); 
             color: var(--color-btn-extras); 
@@ -79,19 +110,41 @@
             font-weight: bold;
             text-align: center;
             flex: 1;
-            max-width: 350px; /* Limita el ancho máximo para que se vean estéticos */
+            max-width: 350px; 
             min-width: 200px;
+            transition: all 0.2s ease;
         }
-        .contenedor-btn-extras a:hover { background-color: var(--color-btn-extras); color: #000; }
 
+        /* Optimizado para PC (:hover) y control de TV (:focus) */
+        .contenedor-btn-extras a:hover,
+        .contenedor-btn-extras a:focus { 
+            background-color: var(--color-btn-extras); 
+            color: #000; 
+            outline: none;
+        }
+
+        /* 7. DISEÑO RESPONSIVO (Media Queries) */
         @media (max-width: 800px) {
-            .contenedor-btn-pys a { flex: 0 0 calc(33.33% - 10px); }
+            .contenedor-btn-pys a { 
+                flex: 0 0 calc(33.33% - 10px); /* 3 botones por fila en Tablets */
+            }
         }
 
         @media (max-width: 600px) {
-            h1 { font-size: 1.2rem; }
-            .contenedor-btn-pys a { flex: 0 0 calc(50% - 10px); font-size: 16px; padding: 12px 5px; }
-            .contenedor-btn-extras a { font-size: 16px; padding: 12px 5px; flex: 0 0 100%; max-width: 100%; }
+            h1 { 
+                font-size: 1.2rem; 
+            }
+            .contenedor-btn-pys a { 
+                flex: 0 0 calc(50% - 10px); /* 2 botones por fila en Móviles */
+                font-size: 16px; 
+                padding: 12px 5px; 
+            }
+            .contenedor-btn-extras a { 
+                font-size: 16px; 
+                padding: 12px 5px; 
+                flex: 0 0 100%; 
+                max-width: 100%; /* Ancho completo en pantallas pequeñas */
+            }
         }
     </style>
 </head>
@@ -100,6 +153,7 @@
     <h1>C:\PAGINAS_DE_PELICULAS_Y_SERIES<span class="cursor">_</span></h1>
 
     <div class="contenedor-main">
+        
         <div class="contenedor-btn-pys">
             <a href="http://serieskao.top" target="_blank" rel="noopener noreferrer">SeriesKao</a>
             <a href="https://seriesflixhd.shop" target="_blank" rel="noopener noreferrer">SeriesFlix</a>
@@ -131,6 +185,8 @@
             <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
             <a href="https://jahf.vercel.app/x" target="_blank" rel="noopener noreferrer">Versión X (BETA)</a>
         </div>
+
     </div>
+
 </body>
 </html>
