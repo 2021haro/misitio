@@ -125,11 +125,11 @@
             outline: none;
         }
 
-        /* 7. VENTANA DE CONTRASEÑA INTEGRADA (MODAL) */
+        /* 7. MODALES (ESTILOS COMPARTIDOS) */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(5, 10, 5, 0.9); 
             display: flex; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none;
             transition: opacity 0.3s ease;
@@ -142,67 +142,111 @@
         }
 
         .modal-box {
-            background: #050a05;
-            border: 2px solid var(--color-btn-extras);
-            padding: 30px;
+            background: var(--fondo-pagina);
+            border: 2px solid var(--color-btn-pys); 
+            padding: 35px 30px 30px 30px; 
             text-align: center;
             max-width: 400px;
             width: 90%;
+            position: relative; 
+        }
+
+        .modal-cerrar-esquina {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            color: var(--color-btn-pys);
+            font-size: 20px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            outline: none;
+            padding: 2px 6px;
+            transition: all 0.2s ease;
+        }
+
+        .modal-cerrar-esquina:hover,
+        .modal-cerrar-esquina:focus {
+            color: #ff0000; 
         }
 
         .modal-box p {
-            color: var(--color-btn-extras);
-            margin-bottom: 15px;
+            color: var(--color-btn-pys); 
+            margin-bottom: 20px;
             font-weight: bold;
+            font-size: 16px;
         }
 
         .modal-box input {
             background: transparent;
-            border: 1px solid var(--color-btn-extras);
-            color: #fff;
-            padding: 10px;
+            border: 1px solid var(--color-btn-pys); 
+            color: var(--color-btn-pys); 
+            padding: 12px;
             width: 100%;
             text-align: center;
-            font-size: 16px;
+            font-size: 18px;
             font-family: inherit;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             outline: none;
         }
 
         .modal-box input:focus {
-            box-shadow: 0 0 10px var(--color-btn-extras);
+            box-shadow: 0 0 10px var(--color-btn-pys); 
         }
 
         .modal-botones {
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
 
         .modal-botones button {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             background: transparent;
-            border: 1px solid #ff0000;
-            color: #ff0000;
             font-family: inherit;
             font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .modal-botones button.btn-entrar {
-            border-color: var(--color-btn-extras);
-            color: var(--color-btn-extras);
+        /* Botón Cancelar (Rojo) */
+        .modal-botones button.btn-cancelar {
+            border: 1px solid #ff0000;
+            color: #ff0000;
         }
 
-        .modal-botones button:hover, .modal-botones button:focus {
+        .modal-botones button.btn-cancelar:hover, 
+        .modal-botones button.btn-cancelar:focus {
             background: #ff0000;
             color: #000;
             outline: none;
         }
 
-        .modal-botones button.btn-entrar:hover, .modal-botones button.btn-entrar:focus {
-            background: var(--color-btn-extras);
+        /* Botón Entrar / Aceptar (Verde terminal) */
+        .modal-botones button.btn-entrar,
+        .modal-botones button.btn-aceptar {
+            border: 1px solid var(--color-btn-pys);
+            color: var(--color-btn-pys);
+        }
+
+        .modal-botones button.btn-entrar:hover, 
+        .modal-botones button.btn-entrar:focus,
+        .modal-botones button.btn-aceptar:hover,
+        .modal-botones button.btn-aceptar:focus {
+            background: var(--color-btn-pys);
             color: #000;
+            outline: none;
+        }
+
+        /* Estilo específico para el cuadro de error */
+        .modal-box.error-box {
+            border-color: #ff0000;
+        }
+        .modal-box.error-box p {
+            color: #ff0000;
         }
 
         /* 8. DISEÑO RESPONSIVO */
@@ -223,6 +267,7 @@
 
     <div class="contenedor-main">
         
+        <!-- Bloque de Películas y Series -->
         <div class="contenedor-btn-pys">
             <a href="http://serieskao.top" target="_blank" rel="noopener noreferrer">SeriesKao</a>
             <a href="https://seriesflixhd.shop" target="_blank" rel="noopener noreferrer">SeriesFlix</a>
@@ -250,6 +295,7 @@
             <a href="https://tioplus.app/" target="_blank" rel="noopener noreferrer">PlusHD</a>
         </div>
 
+        <!-- Bloque de Extras inferiores -->
         <div class="contenedor-btn-extras">
             <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
             <button onclick="abrirModal()">Versión X (BETA)</button>
@@ -257,51 +303,84 @@
 
     </div>
 
+    <!-- VENTANA DE CONTRASEÑA -->
     <div id="miModal" class="modal-overlay">
         <div class="modal-box">
+            <button class="modal-cerrar-esquina" onclick="cerrarModal()">X</button>
             <p>INTRODUCE LA CONTRASEÑA:</p>
             <input type="password" id="passInput" placeholder="****" onkeydown="evaluarTecla(event)">
             <div class="modal-botones">
-                <button onclick="cerrarModal()">CANCELAR</button>
+                <button class="btn-cancelar" onclick="cerrarModal()">CANCELAR</button>
                 <button class="btn-entrar" onclick="procesarAcceso()">ENTRAR</button>
             </div>
         </div>
     </div>
 
+    <!-- VENTANA DE ALERTA DE ERROR (NUEVO) -->
+    <div id="modalError" class="modal-overlay">
+        <div class="modal-box error-box">
+            <button class="modal-cerrar-esquina" style="color: #ff0000;" onclick="cerrarModalError()">X</button>
+            <p>CONTRASEÑA INCORRECTA.</p>
+            <div class="modal-botones">
+                <button class="btn-cancelar" style="display:none;"></button> <!-- Dummy para mantener estructura flex -->
+                <button class="btn-aceptar" id="btnAceptarError" onclick="cerrarModalError()">ACEPTAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGICA DE CONTROL -->
     <script>
-        const passCorrecta = "1234"; // Cambia aquí tu contraseña
+        const passCorrecta = "1234"; 
         const enlaceDestino = "https://jahf.vercel.app/x";
 
         function abrirModal() {
             const modal = document.getElementById("miModal");
             const input = document.getElementById("passInput");
             modal.classList.add("activo");
-            input.value = ""; // Limpia intentos anteriores
-            setTimeout(() => input.focus(), 100); // Hace foco en el input para que la TV abra el teclado virtual
+            input.value = ""; 
+            setTimeout(() => input.focus(), 100); 
         }
 
         function cerrarModal() {
             document.getElementById("miModal").classList.remove("activo");
         }
 
+        function mostrarErrorCustom() {
+            const modalErr = document.getElementById("modalError");
+            const btnAceptar = document.getElementById("btnAceptarError");
+            modalErr.classList.add("activo");
+            setTimeout(() => btnAceptar.focus(), 100); // Foco directo en Aceptar para control de TV
+        }
+
+        function cerrarModalError() {
+            document.getElementById("modalError").classList.remove("activo");
+            abrirModal(); // Vuelve a abrir el formulario de contraseña automáticamente
+        }
+
         function procesarAcceso() {
             const entrada = document.getElementById("passInput").value;
             if (entrada === passCorrecta) {
                 cerrarModal();
-                // En TV es más seguro redirigir en la misma pestaña para evitar bloqueos de pop-ups
                 window.location.href = enlaceDestino; 
             } else {
-                alert("Contraseña incorrecta.");
-                document.getElementById("passInput").value = "";
+                cerrarModal();
+                mostrarErrorCustom(); // Llama al modal interno en lugar del alert nativo
             }
         }
 
-        // Permite presionar "Enter" en el teclado de la TV o PC para enviar
         function evaluarTecla(event) {
             if (event.key === "Enter") {
                 procesarAcceso();
             }
         }
+
+        // Eventos de teclado globales (PC)
+        window.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                cerrarModal();
+                cerrarModalError();
+            }
+        });
     </script>
 
 </body>
