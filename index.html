@@ -179,6 +179,11 @@
             font-size: 16px;
         }
 
+        /* Estilo específico para resaltar el texto de error en rojo */
+        .modal-box p.texto-error {
+            color: #ff0000;
+        }
+
         .modal-box input {
             background: transparent;
             border: 1px solid var(--color-btn-pys); 
@@ -204,7 +209,7 @@
         .modal-botones button {
             flex: 1;
             padding: 12px;
-            background: transparent;
+            background: transparent; 
             font-family: inherit;
             font-weight: bold;
             font-size: 16px;
@@ -225,7 +230,7 @@
             outline: none;
         }
 
-        /* Botón Entrar / Aceptar (Verde terminal) */
+        /* Botón Entrar / Aceptar (Verde transparente, cambia con hover/focus) */
         .modal-botones button.btn-entrar,
         .modal-botones button.btn-aceptar {
             border: 1px solid var(--color-btn-pys);
@@ -236,17 +241,9 @@
         .modal-botones button.btn-entrar:focus,
         .modal-botones button.btn-aceptar:hover,
         .modal-botones button.btn-aceptar:focus {
-            background: var(--color-btn-pys);
+            background: var(--color-btn-pys); 
             color: #000;
             outline: none;
-        }
-
-        /* Estilo específico para el cuadro de error */
-        .modal-box.error-box {
-            border-color: #ff0000;
-        }
-        .modal-box.error-box p {
-            color: #ff0000;
         }
 
         /* 8. DISEÑO RESPONSIVO */
@@ -267,7 +264,6 @@
 
     <div class="contenedor-main">
         
-        <!-- Bloque de Películas y Series -->
         <div class="contenedor-btn-pys">
             <a href="http://serieskao.top" target="_blank" rel="noopener noreferrer">SeriesKao</a>
             <a href="https://seriesflixhd.shop" target="_blank" rel="noopener noreferrer">SeriesFlix</a>
@@ -295,7 +291,6 @@
             <a href="https://tioplus.app/" target="_blank" rel="noopener noreferrer">PlusHD</a>
         </div>
 
-        <!-- Bloque de Extras inferiores -->
         <div class="contenedor-btn-extras">
             <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
             <button onclick="abrirModal()">Versión X (BETA)</button>
@@ -303,7 +298,6 @@
 
     </div>
 
-    <!-- VENTANA DE CONTRASEÑA -->
     <div id="miModal" class="modal-overlay">
         <div class="modal-box">
             <button class="modal-cerrar-esquina" onclick="cerrarModal()">X</button>
@@ -316,19 +310,17 @@
         </div>
     </div>
 
-    <!-- VENTANA DE ALERTA DE ERROR (NUEVO) -->
     <div id="modalError" class="modal-overlay">
-        <div class="modal-box error-box">
-            <button class="modal-cerrar-esquina" style="color: #ff0000;" onclick="cerrarModalError()">X</button>
-            <p>CONTRASEÑA INCORRECTA.</p>
+        <div class="modal-box">
+            <button class="modal-cerrar-esquina" onclick="cerrarModalError()">X</button>
+            <p class="texto-error">CONTRASEÑA INCORRECTA.</p>
             <div class="modal-botones">
-                <button class="btn-cancelar" style="display:none;"></button> <!-- Dummy para mantener estructura flex -->
+                <button class="btn-cancelar" style="display:none;"></button> 
                 <button class="btn-aceptar" id="btnAceptarError" onclick="cerrarModalError()">ACEPTAR</button>
             </div>
         </div>
     </div>
 
-    <!-- LOGICA DE CONTROL -->
     <script>
         const passCorrecta = "1234"; 
         const enlaceDestino = "https://jahf.vercel.app/x";
@@ -349,12 +341,12 @@
             const modalErr = document.getElementById("modalError");
             const btnAceptar = document.getElementById("btnAceptarError");
             modalErr.classList.add("activo");
-            setTimeout(() => btnAceptar.focus(), 100); // Foco directo en Aceptar para control de TV
+            setTimeout(() => btnAceptar.focus(), 100); 
         }
 
         function cerrarModalError() {
             document.getElementById("modalError").classList.remove("activo");
-            abrirModal(); // Vuelve a abrir el formulario de contraseña automáticamente
+            abrirModal(); 
         }
 
         function procesarAcceso() {
@@ -364,7 +356,7 @@
                 window.location.href = enlaceDestino; 
             } else {
                 cerrarModal();
-                mostrarErrorCustom(); // Llama al modal interno en lugar del alert nativo
+                mostrarErrorCustom(); 
             }
         }
 
@@ -374,7 +366,6 @@
             }
         }
 
-        // Eventos de teclado globales (PC)
         window.addEventListener('keydown', function(event) {
             if (event.key === "Escape") {
                 cerrarModal();
