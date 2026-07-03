@@ -101,7 +101,7 @@
             width: 100%;
         }
 
-        .contenedor-btn-extras a { 
+        .contenedor-btn-extras a, .contenedor-btn-extras button { 
             border: 1px solid var(--color-btn-extras); 
             color: var(--color-btn-extras); 
             padding: 15px 20px;
@@ -112,41 +112,108 @@
             flex: 1;
             max-width: 350px; 
             min-width: 200px;
+            background: transparent;
+            cursor: pointer;
+            font-family: inherit;
             transition: all 0.2s ease;
         }
 
-        .contenedor-btn-extras a:hover,
-        .contenedor-btn-extras a:focus { 
+        .contenedor-btn-extras a:hover, .contenedor-btn-extras a:focus,
+        .contenedor-btn-extras button:hover, .contenedor-btn-extras button:focus { 
             background-color: var(--color-btn-extras); 
             color: #000; 
             outline: none;
         }
 
-        /* 7. DISEÑO RESPONSIVO (Media Queries) */
+        /* 7. VENTANA DE CONTRASEÑA INTEGRADA (MODAL) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+        }
+
+        .modal-overlay.activo {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #050a05;
+            border: 2px solid var(--color-btn-extras);
+            padding: 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-box p {
+            color: var(--color-btn-extras);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .modal-box input {
+            background: transparent;
+            border: 1px solid var(--color-btn-extras);
+            color: #fff;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            font-family: inherit;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .modal-box input:focus {
+            box-shadow: 0 0 10px var(--color-btn-extras);
+        }
+
+        .modal-botones {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-botones button {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid #ff0000;
+            color: #ff0000;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-botones button.btn-entrar {
+            border-color: var(--color-btn-extras);
+            color: var(--color-btn-extras);
+        }
+
+        .modal-botones button:hover, .modal-botones button:focus {
+            background: #ff0000;
+            color: #000;
+            outline: none;
+        }
+
+        .modal-botones button.btn-entrar:hover, .modal-botones button.btn-entrar:focus {
+            background: var(--color-btn-extras);
+            color: #000;
+        }
+
+        /* 8. DISEÑO RESPONSIVO */
         @media (max-width: 800px) {
-            .contenedor-btn-pys a { 
-                flex: 0 0 calc(33.33% - 10px); 
-            }
+            .contenedor-btn-pys a { flex: 0 0 calc(33.33% - 10px); }
         }
 
         @media (max-width: 600px) {
-            h1 { 
-                font-size: 1.2rem; 
-                white-space: normal; 
-                word-wrap: break-word; 
-                max-width: 90vw; 
-            }
-            .contenedor-btn-pys a { 
-                flex: 0 0 calc(50% - 10px); 
-                font-size: 16px; 
-                padding: 12px 5px; 
-            }
-            .contenedor-btn-extras a { 
-                font-size: 16px; 
-                padding: 12px 5px; 
-                flex: 0 0 100%; 
-                max-width: 100%; 
-            }
+            h1 { font-size: 1.2rem; white-space: normal; word-wrap: break-word; max-width: 90vw; }
+            .contenedor-btn-pys a { flex: 0 0 calc(50% - 10px); font-size: 16px; padding: 12px 5px; }
+            .contenedor-btn-extras a, .contenedor-btn-extras button { font-size: 16px; padding: 12px 5px; flex: 0 0 100%; max-width: 100%; }
         }
     </style>
 </head>
@@ -156,7 +223,6 @@
 
     <div class="contenedor-main">
         
-        <!-- Bloque de Películas y Series -->
         <div class="contenedor-btn-pys">
             <a href="http://serieskao.top" target="_blank" rel="noopener noreferrer">SeriesKao</a>
             <a href="https://seriesflixhd.shop" target="_blank" rel="noopener noreferrer">SeriesFlix</a>
@@ -184,34 +250,56 @@
             <a href="https://tioplus.app/" target="_blank" rel="noopener noreferrer">PlusHD</a>
         </div>
 
-        <!-- Bloque de Extras inferiores -->
         <div class="contenedor-btn-extras">
             <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
-            <!-- Se agregó el id "btn-x" y el evento onclick -->
-            <a href="https://jahf.vercel.app/x" id="btn-x" target="_blank" rel="noopener noreferrer" onclick="validarPassword(event)">Versión X (BETA)</a>
+            <button onclick="abrirModal()">Versión X (BETA)</button>
         </div>
 
     </div>
 
-    <!-- 8. CONTROL DE ACCESO POR CONTRASEÑA -->
+    <div id="miModal" class="modal-overlay">
+        <div class="modal-box">
+            <p>INTRODUCE LA CONTRASEÑA:</p>
+            <input type="password" id="passInput" placeholder="****" onkeydown="evaluarTecla(event)">
+            <div class="modal-botones">
+                <button onclick="cerrarModal()">CANCELAR</button>
+                <button class="btn-entrar" onclick="procesarAcceso()">ENTRAR</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function validarPassword(event) {
-            // 1. Evita que el enlace se abra automáticamente
-            event.preventDefault(); 
-            
-            // 2. Define aquí tu contraseña (cambia '1234' por la que tú quieras)
-            const passwordCorrecto = "1234"; 
-            
-            // 3. Pide la contraseña al usuario
-            const inputUsuario = prompt("Introduce la contraseña de acceso para la Versión X:");
-            
-            // 4. Verifica si es correcta
-            if (inputUsuario === passwordCorrecto) {
-                // Si es correcta, abre el enlace en una nueva pestaña externa
-                window.open(document.getElementById("btn-x").href, "_blank");
-            } else if (inputUsuario !== null) {
-                // Si es incorrecta (y no canceló la ventana), muestra error
-                alert("Contraseña incorrecta. Acceso denegado.");
+        const passCorrecta = "1234"; // Cambia aquí tu contraseña
+        const enlaceDestino = "https://jahf.vercel.app/x";
+
+        function abrirModal() {
+            const modal = document.getElementById("miModal");
+            const input = document.getElementById("passInput");
+            modal.classList.add("activo");
+            input.value = ""; // Limpia intentos anteriores
+            setTimeout(() => input.focus(), 100); // Hace foco en el input para que la TV abra el teclado virtual
+        }
+
+        function cerrarModal() {
+            document.getElementById("miModal").classList.remove("activo");
+        }
+
+        function procesarAcceso() {
+            const entrada = document.getElementById("passInput").value;
+            if (entrada === passCorrecta) {
+                cerrarModal();
+                // En TV es más seguro redirigir en la misma pestaña para evitar bloqueos de pop-ups
+                window.location.href = enlaceDestino; 
+            } else {
+                alert("Contraseña incorrecta.");
+                document.getElementById("passInput").value = "";
+            }
+        }
+
+        // Permite presionar "Enter" en el teclado de la TV o PC para enviar
+        function evaluarTecla(event) {
+            if (event.key === "Enter") {
+                procesarAcceso();
             }
         }
     </script>
