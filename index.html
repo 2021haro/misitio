@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C:\PAGINAS_DE_PELICULAS_Y_SERIES_</title>
 
-       <link rel="icon" type="image/png" href="icono.png">
+     <link rel="icon" type="image/png" href="icono.png">
     
     <style>
         /* 1. CONFIGURACIÓN Y VARIABLES */
@@ -120,6 +120,12 @@
             transition: all 0.2s ease;
         }
 
+        .contenedor-btn-extras button.btn-config {
+            max-width: 60px;
+            min-width: 60px;
+            padding: 15px 0;
+        }
+
         .contenedor-btn-extras a:hover, .contenedor-btn-extras a:focus,
         .contenedor-btn-extras button:hover, .contenedor-btn-extras button:focus { 
             background-color: var(--color-btn-extras); 
@@ -148,9 +154,13 @@
             border: 2px solid var(--color-btn-pys); 
             padding: 35px 30px 30px 30px; 
             text-align: center;
-            max-width: 400px;
+            max-width: 420px;
             width: 90%;
             position: relative; 
+        }
+
+        .modal-box.modal-doble {
+            padding-top: 40px;
         }
 
         .modal-cerrar-esquina {
@@ -176,14 +186,31 @@
 
         .modal-box p {
             color: var(--color-btn-pys); 
-            margin-bottom: 20px;
+            margin-bottom: 8px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 15px;
+            text-align: left;
         }
 
-        /* Estilo específico para resaltar el texto de error en rojo */
+        .modal-box p.texto-centrado {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Título del campo de confirmación ahora en verde */
+        .modal-box p.texto-confirmacion {
+            text-align: center;
+            color: var(--color-btn-pys);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
         .modal-box p.texto-error {
+            text-align: center;
             color: #ff0000;
+            font-size: 16px;
+            margin-bottom: 20px;
         }
 
         .modal-box input {
@@ -193,19 +220,33 @@
             padding: 12px;
             width: 100%;
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
             font-family: inherit;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             outline: none;
+        }
+
+        /* Estilo para los marcadores de posición (placeholders) en color verde sutil */
+        .modal-box input::placeholder {
+            color: var(--color-btn-pys);
+            opacity: 0.5;
         }
 
         .modal-box input:focus {
             box-shadow: 0 0 10px var(--color-btn-pys); 
         }
 
+        .linea-separadora {
+            border: 0;
+            border-top: 1px dashed var(--color-btn-pys);
+            margin: 5px 0 15px 0;
+            opacity: 0.5;
+        }
+
         .modal-botones {
             display: flex;
             gap: 15px;
+            margin-top: 5px;
         }
 
         .modal-botones button {
@@ -219,7 +260,6 @@
             transition: all 0.2s ease;
         }
 
-        /* Botón Cancelar (Rojo) */
         .modal-botones button.btn-cancelar {
             border: 1px solid #ff0000;
             color: #ff0000;
@@ -232,11 +272,11 @@
             outline: none;
         }
 
-        /* Botón Entrar / Aceptar (Verde transparente, cambia con hover/focus) */
         .modal-botones button.btn-entrar,
         .modal-botones button.btn-aceptar {
             border: 1px solid var(--color-btn-pys);
             color: var(--color-btn-pys);
+            background: transparent;
         }
 
         .modal-botones button.btn-entrar:hover, 
@@ -257,6 +297,7 @@
             h1 { font-size: 1.2rem; white-space: normal; word-wrap: break-word; max-width: 90vw; }
             .contenedor-btn-pys a { flex: 0 0 calc(50% - 10px); font-size: 16px; padding: 12px 5px; }
             .contenedor-btn-extras a, .contenedor-btn-extras button { font-size: 16px; padding: 12px 5px; flex: 0 0 100%; max-width: 100%; }
+            .contenedor-btn-extras button.btn-config { flex: 0 0 100%; max-width: 100%; }
         }
     </style>
 </head>
@@ -279,6 +320,7 @@
             <a href="http://pelisplushd.to" target="_blank" rel="noopener noreferrer">PelisPlus</a>
             <a href="http://cinecalidad.pro" target="_blank" rel="noopener noreferrer">CineCalidadPro</a>
             <a href="http://pelispedia.mov" target="_blank" rel="noopener noreferrer">Pelispedia</a>
+            <a href="https://seriesturcastv.to" target="_blank" rel="noopener noreferrer">Series Turcas</a>
             <a href="http://seriesyonkis.cx" target="_blank" rel="noopener noreferrer">SeriesYonkis</a>
             <a href="https://gnulahd.nu" target="_blank" rel="noopener noreferrer">GnulaHD</a>
             <a href="https://www.fuegocine.com" target="_blank" rel="noopener noreferrer">FuegoCine</a>
@@ -295,6 +337,7 @@
         <div class="contenedor-btn-extras">
             <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
             <button onclick="abrirModal()">Versión X (BETA)</button>
+            <button class="btn-config" onclick="abrirModalCambio()" title="Cambiar Contraseña">✪</button>
         </div>
 
     </div>
@@ -302,7 +345,7 @@
     <div id="miModal" class="modal-overlay">
         <div class="modal-box">
             <button class="modal-cerrar-esquina" onclick="cerrarModal()">X</button>
-            <p>INTRODUCE LA CONTRASEÑA:</p>
+            <p class="texto-centrado">INTRODUCE LA CONTRASEÑA:</p>
             <input type="password" id="passInput" placeholder="****" onkeydown="evaluarTecla(event)">
             <div class="modal-botones">
                 <button class="btn-cancelar" onclick="cerrarModal()">CANCELAR</button>
@@ -311,22 +354,80 @@
         </div>
     </div>
 
+    <div id="modalCambio" class="modal-overlay">
+        <div class="modal-box modal-doble">
+            <button class="modal-cerrar-esquina" onclick="cerrarModalCambio()">X</button>
+            
+            <p>NUEVA CONTRASEÑA X:</p>
+            <input type="text" id="nuevoAccesoInput" placeholder="Nueva clave de acceso">
+
+            <p>NUEVA MAESTRA:</p>
+            <input type="text" id="nuevaMaestraInput" placeholder="Nueva clave maestra">
+
+            <hr class="linea-separadora">
+
+            <p class="texto-confirmacion">CONFIRMAR CON MAESTRA ACTUAL:</p>
+            <input type="password" id="maestraActualInput" placeholder="****" onkeydown="evaluarTeclaCambio(event)">
+
+            <div class="modal-botones">
+                <button class="btn-cancelar" onclick="cerrarModalCambio()">CANCELAR</button>
+                <button class="btn-entrar" onclick="procesarCambioContrasena()">GUARDAR</button>
+            </div>
+        </div>
+    </div>
+
     <div id="modalError" class="modal-overlay">
         <div class="modal-box">
             <button class="modal-cerrar-esquina" onclick="cerrarModalError()">X</button>
-            <p class="texto-error">CONTRASEÑA INCORRECTA.</p>
+            <p class="texto-error" id="textoErrorCustom">CONTRASEÑA INCORRECTA.</p>
             <div class="modal-botones">
-                <button class="btn-cancelar" style="display:none;"></button> 
                 <button class="btn-aceptar" id="btnAceptarError" onclick="cerrarModalError()">ACEPTAR</button>
             </div>
         </div>
     </div>
 
-    <script>
-        const passCorrecta = "1234"; 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Credenciales de Firebase integradas
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKQzpfbj6ep-yvyT0Z7GGVQsYmZivyHNw",
+            authDomain: "misitio-2373f.firebaseapp.com",
+            databaseURL: "https://misitio-2373f-default-rtdb.firebaseio.com",
+            projectId: "misitio-2373f",
+            storageBucket: "misitio-2373f.firebasestorage.app",
+            messagingSenderId: "692152740198",
+            appId: "1:692152740198:web:fdce00729ae74eac4ac0a7"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const passRef = ref(db, 'passCorrecta');
+        const maestraRef = ref(db, 'passMaestra');
+
+        // Variables de control locales
+        let passCorrecta = "1234"; 
+        let passMaestra = "admin"; 
         const enlaceDestino = "https://jahf.vercel.app/x";
 
-        function abrirModal() {
+        // Escuchar la contraseña de acceso en tiempo real
+        onValue(passRef, (snapshot) => {
+            if (snapshot.exists()) {
+                passCorrecta = snapshot.val();
+            }
+        });
+
+        // Escuchar la contraseña maestra en tiempo real
+        onValue(maestraRef, (snapshot) => {
+            if (snapshot.exists()) {
+                passMaestra = snapshot.val();
+            }
+        });
+
+        /* --- ACCESO VERSIÓN X --- */
+        window.abrirModal = function() {
             const modal = document.getElementById("miModal");
             const input = document.getElementById("passInput");
             modal.classList.add("activo");
@@ -334,46 +435,125 @@
             setTimeout(() => input.focus(), 100); 
         }
 
-        function cerrarModal() {
+        window.cerrarModal = function() {
             document.getElementById("miModal").classList.remove("activo");
         }
 
-        function mostrarErrorCustom() {
-            const modalErr = document.getElementById("modalError");
-            const btnAceptar = document.getElementById("btnAceptarError");
-            modalErr.classList.add("activo");
-            setTimeout(() => btnAceptar.focus(), 100); 
-        }
-
-        function cerrarModalError() {
-            document.getElementById("modalError").classList.remove("activo");
-            abrirModal(); 
-        }
-
-        function procesarAcceso() {
+        window.procesarAcceso = function() {
             const entrada = document.getElementById("passInput").value;
-            if (entrada === passCorrecta) {
+            if (entrada === passCorrecta.toString()) {
                 cerrarModal();
                 window.location.href = enlaceDestino; 
             } else {
                 cerrarModal();
-                mostrarErrorCustom(); 
+                mostrarErrorCustom("CONTRASEÑA INCORRECTA.", abrirModal); 
             }
         }
 
-        function evaluarTecla(event) {
+        window.evaluarTecla = function(event) {
             if (event.key === "Enter") {
                 procesarAcceso();
             }
         }
 
+        /* --- GUARDADO CON CAMPOS SIMULTÁNEOS (✪) --- */
+        window.abrirModalCambio = function() {
+            const modal = document.getElementById("modalCambio");
+            document.getElementById("nuevoAccesoInput").value = "";
+            document.getElementById("nuevaMaestraInput").value = "";
+            document.getElementById("maestraActualInput").value = "";
+
+            modal.classList.add("activo");
+            setTimeout(() => document.getElementById("nuevoAccesoInput").focus(), 100);
+        }
+
+        window.cerrarModalCambio = function() {
+            document.getElementById("modalCambio").classList.remove("activo");
+        }
+
+        window.procesarCambioContrasena = function() {
+            const nuevoAcceso = document.getElementById("nuevoAccesoInput").value.trim();
+            const nuevaMaestra = document.getElementById("nuevaMaestraInput").value.trim();
+            const maestraActual = document.getElementById("maestraActualInput").value;
+
+            // 1. Validar que se haya escrito la maestra actual para confirmar
+            if (maestraActual === "") {
+                cerrarModalCambio();
+                mostrarErrorCustom("DEBES INTRODUCIR LA MAESTRA ACTUAL.", abrirModalCambio);
+                return;
+            }
+
+            // 2. Comprobar si la maestra actual coincide con Firebase
+            if (maestraActual !== passMaestra.toString()) {
+                cerrarModalCambio();
+                mostrarErrorCustom("CLAVE MAESTRA ACTUAL INCORRECTA.", abrirModalCambio);
+                return;
+            }
+
+            // 3. Comprobar si al menos se quiere cambiar un campo
+            if (nuevoAcceso === "" && nuevaMaestra === "") {
+                cerrarModalCambio();
+                mostrarErrorCustom("NO INTRODUCISTE NINGÚN CAMBIO.", abrirModalCambio);
+                return;
+            }
+
+            // 4. Ejecutar las actualizaciones en Firebase
+            const promesas = [];
+            
+            if (nuevoAcceso !== "") {
+                promesas.push(set(passRef, nuevoAcceso));
+            }
+            if (nuevaMaestra !== "") {
+                promesas.push(set(maestraRef, nuevaMaestra));
+            }
+
+            Promise.all(promesas)
+                .then(() => {
+                    cerrarModalCambio();
+                    mostrarErrorCustom("BASE DE DATOS ACTUALIZADA CON ÉXITO.", () => {});
+                    document.getElementById("textoErrorCustom").style.color = "var(--color-btn-pys)";
+                })
+                .catch(() => {
+                    cerrarModalCambio();
+                    mostrarErrorCustom("ERROR EN LA CONEXIÓN CON FIREBASE.", abrirModalCambio);
+                });
+        }
+
+        window.evaluarTeclaCambio = function(event) {
+            if (event.key === "Enter") {
+                procesarCambioContrasena();
+            }
+        }
+
+        /* --- NOTIFICACIONES / ERROR --- */
+        let funcionRetornoError = () => {};
+
+        window.mostrarErrorCustom = function(texto, funcionAlCerrar) {
+            const modalErr = document.getElementById("modalError");
+            const btnAceptar = document.getElementById("btnAceptarError");
+            const textoErr = document.getElementById("textoErrorCustom");
+            
+            textoErr.style.color = "#ff0000"; 
+            textoErr.textContent = texto;
+            funcionRetornoError = funcionAlCerrar;
+
+            modalErr.classList.add("activo");
+            setTimeout(() => btnAceptar.focus(), 100); 
+        }
+
+        window.cerrarModalError = function() {
+            document.getElementById("modalError").classList.remove("activo");
+            funcionRetornoError(); 
+        }
+
+        /* --- EVENTOS GLOBALES --- */
         window.addEventListener('keydown', function(event) {
             if (event.key === "Escape") {
                 cerrarModal();
-                cerrarModalError();
+                cerrarModalCambio();
+                document.getElementById("modalError").classList.remove("activo");
             }
         });
     </script>
-
 </body>
 </html>
