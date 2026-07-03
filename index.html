@@ -32,6 +32,8 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            user-select: none;
+            -webkit-user-drag: none;
         }
 
         /* 3. ENCABEZADO (Efecto Terminal) */
@@ -198,7 +200,6 @@
             margin-bottom: 20px;
         }
 
-        /* Título del campo de confirmación ahora en verde */
         .modal-box p.texto-confirmacion {
             text-align: center;
             color: var(--color-btn-pys);
@@ -226,7 +227,6 @@
             outline: none;
         }
 
-        /* Estilo para los marcadores de posición (placeholders) en color verde sutil */
         .modal-box input::placeholder {
             color: var(--color-btn-pys);
             opacity: 0.5;
@@ -388,7 +388,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         // Credenciales de Firebase integradas
         const firebaseConfig = {
@@ -404,25 +404,19 @@
         // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        const passRef = ref(db, 'passCorrecta');
-        const maestraRef = ref(db, 'passMaestra');
+        const rootRef = ref(db);
 
         // Variables de control locales
-        let passCorrecta = "1234"; 
-        let passMaestra = "admin"; 
+        let passCorrecta = "a"; 
+        let passMaestra = "1"; 
         const enlaceDestino = "https://jahf.vercel.app/x";
 
-        // Escuchar la contraseña de acceso en tiempo real
-        onValue(passRef, (snapshot) => {
+        // Escuchar cambios globales en tiempo real
+        onValue(rootRef, (snapshot) => {
             if (snapshot.exists()) {
-                passCorrecta = snapshot.val();
-            }
-        });
-
-        // Escuchar la contraseña maestra en tiempo real
-        onValue(maestraRef, (snapshot) => {
-            if (snapshot.exists()) {
-                passMaestra = snapshot.val();
+                const data = snapshot.val();
+                if (data.passCorrecta !== undefined) passCorrecta = data.passCorrecta;
+                if (data.passMaestra !== undefined) passMaestra = data.passMaestra;
             }
         });
 
@@ -456,7 +450,7 @@
             }
         }
 
-        /* --- GUARDADO CON CAMPOS SIMULTÁNEOS (✪) --- */
+        /* --- GUARDADO SEGURO CON VERIFICACIÓN INTEGRADA (✪) --- */
         window.abrirModalCambio = function() {
             const modal = document.getElementById("modalCambio");
             document.getElementById("nuevoAccesoInput").value = "";
@@ -476,38 +470,32 @@
             const nuevaMaestra = document.getElementById("nuevaMaestraInput").value.trim();
             const maestraActual = document.getElementById("maestraActualInput").value;
 
-            // 1. Validar que se haya escrito la maestra actual para confirmar
             if (maestraActual === "") {
                 cerrarModalCambio();
                 mostrarErrorCustom("DEBES INTRODUCIR LA MAESTRA ACTUAL.", abrirModalCambio);
                 return;
             }
 
-            // 2. Comprobar si la maestra actual coincide con Firebase
             if (maestraActual !== passMaestra.toString()) {
                 cerrarModalCambio();
                 mostrarErrorCustom("CLAVE MAESTRA ACTUAL INCORRECTA.", abrirModalCambio);
                 return;
             }
 
-            // 3. Comprobar si al menos se quiere cambiar un campo
             if (nuevoAcceso === "" && nuevaMaestra === "") {
                 cerrarModalCambio();
                 mostrarErrorCustom("NO INTRODUCISTE NINGÚN CAMBIO.", abrirModalCambio);
                 return;
             }
 
-            // 4. Ejecutar las actualizaciones en Firebase
-            const promesas = [];
-            
-            if (nuevoAcceso !== "") {
-                promesas.push(set(passRef, nuevoAcceso));
-            }
-            if (nuevaMaestra !== "") {
-                promesas.push(set(maestraRef, nuevaMaestra));
-            }
+            // Armamos el mapa con los valores. 
+            // Siempre incluimos la passMaestra esperada para pasar exitosamente las reglas de Firebase.
+            const actualizaciones = {};
+            actualizaciones['passCorrecta'] = nuevoAcceso !== "" ? nuevoAcceso : passCorrecta;
+            actualizaciones['passMaestra'] = nuevaMaestra !== "" ? nuevaMaestra : passMaestra;
 
-            Promise.all(promesas)
+            // Transmisión unificada e indescifrable externamente
+            update(rootRef, actualizaciones)
                 .then(() => {
                     cerrarModalCambio();
                     mostrarErrorCustom("BASE DE DATOS ACTUALIZADA CON ÉXITO.", () => {});
@@ -515,7 +503,7 @@
                 })
                 .catch(() => {
                     cerrarModalCambio();
-                    mostrarErrorCustom("ERROR EN LA CONEXIÓN CON FIREBASE.", abrirModalCambio);
+                    mostrarErrorCustom("ERROR: INTENTO DE ESCRITURA BLOQUEADO POR EL SERVIDOR.", abrirModalCambio);
                 });
         }
 
@@ -546,14 +534,31 @@
             funcionRetornoError(); 
         }
 
-        /* --- EVENTOS GLOBALES --- */
+        /* --- ANTI-HERRAMIENTAS DE DESARROLLADOR --- */
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
         window.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
-                cerrarModal();
-                cerrarModalCambio();
-                document.getElementById("modalError").classList.remove("activo");
+            if (event.key === "F12") {
+                event.preventDefault();
+                return false;
+            }
+            if (event.ctrlKey && (event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C' || event.key === 'i' || event.key === 'j' || event.key === 'c') || (event.key === 'U' || event.key === 'u'))) {
+                event.preventDefault();
+                return false;
             }
         });
+
+        setInterval(function() {
+            const antes = new Date();
+            debugger; 
+            const despues = new Date();
+            if (despues - antes > 100) {
+                document.body.innerHTML = "<h1 style='color:#ff0000; margin-top:20%; text-align:center;'>ACCESO DENEGADO: DETECTADO ENTORNO DE DESARROLLO_</h1>";
+            }
+        }, 200);
+
     </script>
 </body>
 </html>
