@@ -38,7 +38,7 @@
             margin-bottom: 20px; 
             color: #00ff00; 
             text-align: center; 
-            white-space: nowrap; /* Evita saltos de línea en PC y TV */
+            white-space: nowrap; 
         }
         
         .cursor { 
@@ -81,11 +81,10 @@
             font-weight: bold;
             text-align: center;
             transition: all 0.2s ease;
-            flex: 0 0 calc(20% - 10px); /* 5 botones por fila en PC */
+            flex: 0 0 calc(20% - 10px); 
             min-width: 150px;
         }
 
-        /* Optimizado para PC (:hover) y control de TV (:focus) */
         .contenedor-btn-pys a:hover,
         .contenedor-btn-pys a:focus { 
             background-color: var(--color-btn-pys); 
@@ -116,7 +115,6 @@
             transition: all 0.2s ease;
         }
 
-        /* Optimizado para PC (:hover) y control de TV (:focus) */
         .contenedor-btn-extras a:hover,
         .contenedor-btn-extras a:focus { 
             background-color: var(--color-btn-extras); 
@@ -127,19 +125,19 @@
         /* 7. DISEÑO RESPONSIVO (Media Queries) */
         @media (max-width: 800px) {
             .contenedor-btn-pys a { 
-                flex: 0 0 calc(33.33% - 10px); /* 3 botones por fila en Tablets */
+                flex: 0 0 calc(33.33% - 10px); 
             }
         }
 
         @media (max-width: 600px) {
             h1 { 
                 font-size: 1.2rem; 
-                white-space: normal; /* Permite que el título salte de renglón si no cabe */
-                word-wrap: break-word; /* Asegura un quiebre limpio en móviles */
-                max-width: 90vw; /* Evita que choque con los bordes de la pantalla */
+                white-space: normal; 
+                word-wrap: break-word; 
+                max-width: 90vw; 
             }
             .contenedor-btn-pys a { 
-                flex: 0 0 calc(50% - 10px); /* 2 botones por fila en Móviles */
+                flex: 0 0 calc(50% - 10px); 
                 font-size: 16px; 
                 padding: 12px 5px; 
             }
@@ -147,7 +145,7 @@
                 font-size: 16px; 
                 padding: 12px 5px; 
                 flex: 0 0 100%; 
-                max-width: 100%; /* Ancho completo en pantallas pequeñas */
+                max-width: 100%; 
             }
         }
     </style>
@@ -158,6 +156,7 @@
 
     <div class="contenedor-main">
         
+        <!-- Bloque de Películas y Series -->
         <div class="contenedor-btn-pys">
             <a href="http://serieskao.top" target="_blank" rel="noopener noreferrer">SeriesKao</a>
             <a href="https://seriesflixhd.shop" target="_blank" rel="noopener noreferrer">SeriesFlix</a>
@@ -185,12 +184,37 @@
             <a href="https://tioplus.app/" target="_blank" rel="noopener noreferrer">PlusHD</a>
         </div>
 
+        <!-- Bloque de Extras inferiores -->
         <div class="contenedor-btn-extras">
             <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
-            <a href="https://jahf.vercel.app/x" target="_blank" rel="noopener noreferrer">Versión X (BETA)</a>
+            <!-- Se agregó el id "btn-x" y el evento onclick -->
+            <a href="https://jahf.vercel.app/x" id="btn-x" target="_blank" rel="noopener noreferrer" onclick="validarPassword(event)">Versión X (BETA)</a>
         </div>
 
     </div>
+
+    <!-- 8. CONTROL DE ACCESO POR CONTRASEÑA -->
+    <script>
+        function validarPassword(event) {
+            // 1. Evita que el enlace se abra automáticamente
+            event.preventDefault(); 
+            
+            // 2. Define aquí tu contraseña (cambia '1234' por la que tú quieras)
+            const passwordCorrecto = "1234"; 
+            
+            // 3. Pide la contraseña al usuario
+            const inputUsuario = prompt("Introduce la contraseña de acceso para la Versión X:");
+            
+            // 4. Verifica si es correcta
+            if (inputUsuario === passwordCorrecto) {
+                // Si es correcta, abre el enlace en una nueva pestaña externa
+                window.open(document.getElementById("btn-x").href, "_blank");
+            } else if (inputUsuario !== null) {
+                // Si es incorrecta (y no canceló la ventana), muestra error
+                alert("Contraseña incorrecta. Acceso denegado.");
+            }
+        }
+    </script>
 
 </body>
 </html>
