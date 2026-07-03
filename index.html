@@ -38,6 +38,7 @@
             margin-bottom: 20px; 
             color: #00ff00; 
             text-align: center; 
+            white-space: nowrap; /* Evita saltos de línea en PC y TV */
         }
         
         .cursor { 
@@ -133,6 +134,9 @@
         @media (max-width: 600px) {
             h1 { 
                 font-size: 1.2rem; 
+                white-space: normal; /* Permite que el título salte de renglón si no cabe */
+                word-wrap: break-word; /* Asegura un quiebre limpio en móviles */
+                max-width: 90vw; /* Evita que choque con los bordes de la pantalla */
             }
             .contenedor-btn-pys a { 
                 flex: 0 0 calc(50% - 10px); /* 2 botones por fila en Móviles */
