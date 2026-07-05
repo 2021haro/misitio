@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C:\PAGINAS_DE_PELICULAS_Y_SERIES_</title>
+
+     <link rel="icon" type="image/png" href="icono.png">
+    
+    <style>
+        /* 1. CONFIGURACIÓN Y VARIABLES */
+        :root {
+            --tamano-letra: 18px; 
+            --fondo-pagina: #050a05;
+            --color-btn-pys: #00ff00;
+            --color-btn-extras: #00FFFF;
+        }
+
+        /* 2. ESTILOS GLOBALES */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        body {
+            background-color: var(--fondo-pagina);
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        /* 3. ENCABEZADO (Efecto Terminal) */
+        h1 { 
+            font-size: 1.8rem; 
+            margin-bottom: 20px; 
+            color: #00ff00; 
+            text-align: center; 
+            white-space: nowrap; 
+        }
+        
+        .cursor { 
+            animation: parpadear 1s step-end infinite; 
+        }
+        
+        @keyframes parpadear { 
+            0%, 100% { opacity: 1; } 
+            50% { opacity: 0; } 
+        }
+
+        /* 4. ESTRUCTURA PRINCIPAL */
+        .contenedor-main { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            width: 100%; 
+            max-width: 1000px; 
+        }
+        
+        /* 5. SECCIÓN: BOTONES PELÍCULAS Y SERIES (PYS) */
+        .contenedor-btn-pys { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 10px; 
+            width: 100%;
+        }
+
+        .contenedor-btn-pys a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 15px 10px; 
+            background-color: transparent;
+            border: 1px solid var(--color-btn-pys);
+            color: var(--color-btn-pys);
+            font-size: var(--tamano-letra); 
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.2s ease;
+            flex: 0 0 calc(20% - 10px); 
+            min-width: 150px;
+        }
+
+        .contenedor-btn-pys a:hover { 
+            background-color: var(--color-btn-pys); 
+            color: #000; 
+        }
+
+        .contenedor-btn-pys a:focus {
+            outline: none;
+        }
+
+        /* 6. SECCIÓN: BOTONES EXTRAS */
+        .contenedor-btn-extras { 
+            display: flex; 
+            justify-content: center; 
+            gap: 10px; 
+            flex-wrap: wrap; 
+            width: 100%;
+        }
+
+        .contenedor-btn-extras a, .contenedor-btn-extras button { 
+            border: 1px solid var(--color-btn-extras); 
+            color: var(--color-btn-extras); 
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: var(--tamano-letra);
+            font-weight: bold;
+            text-align: center;
+            flex: 1;
+            max-width: 320px; 
+            min-width: 180px;
+            background: transparent;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .contenedor-btn-extras a:hover,
+        .contenedor-btn-extras button:hover { 
+            background-color: var(--color-btn-extras); 
+            color: #000; 
+        }
+
+        .contenedor-btn-extras a:focus,
+        .contenedor-btn-extras button:focus {
+            outline: none;
+        }
+
+        /* 7. MODALES (ESTILOS COMPARTIDOS) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 10, 5, 0.9); 
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+        }
+
+        .modal-overlay.activo {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: var(--fondo-pagina);
+            border: 2px solid var(--color-btn-pys); 
+            padding: 35px 30px 30px 30px; 
+            text-align: center;
+            max-width: 440px;
+            width: 90%;
+            position: relative; 
+        }
+
+        .modal-box.modal-doble {
+            padding-top: 40px;
+        }
+
+        .modal-cerrar-esquina {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            color: var(--color-btn-pys);
+            font-size: 20px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            outline: none;
+            padding: 2px 6px;
+            transition: all 0.2s ease;
+        }
+
+        .modal-cerrar-esquina:hover,
+        .modal-cerrar-esquina:focus {
+            color: #ff0000; 
+        }
+
+        .modal-box p {
+            color: var(--color-btn-pys); 
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            text-align: left;
+        }
+
+        .modal-box p.texto-centrado {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-box p.texto-confirmacion {
+            text-align: center;
+            color: var(--color-btn-pys);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .modal-box p.texto-error {
+            text-align: center;
+            color: #ff0000;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-box input {
+            background: transparent;
+            border: 1px solid var(--color-btn-pys); 
+            color: var(--color-btn-pys); 
+            padding: 12px;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            font-family: inherit;
+            margin-bottom: 18px;
+            outline: none;
+        }
+
+        .modal-box input::placeholder {
+            color: var(--color-btn-pys);
+            opacity: 0.5;
+        }
+
+        .modal-box input:focus {
+            box-shadow: 0 0 10px var(--color-btn-pys); 
+        }
+
+        .linea-separadora {
+            border: 0;
+            border-top: 1px dashed var(--color-btn-pys);
+            margin: 5px 0 15px 0;
+            opacity: 0.5;
+        }
+
+        .modal-botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .modal-botones button {
+            flex: 1;
+            padding: 12px;
+            background: transparent; 
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 15px; 
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-botones button.btn-cancelar {
+            border: 1px solid #ff0000;
+            color: #ff0000;
+        }
+
+        .modal-botones button.btn-cancelar:hover, 
+        .modal-botones button.btn-cancelar:focus {
+            background: #ff0000;
+            color: #000;
+            outline: none;
+        }
+
+        .modal-botones button.btn-regresar {
+            border: 1px solid #ffaa00;
+            color: #ffaa00;
+        }
+
+        .modal-botones button.btn-regresar:hover, 
+        .modal-botones button.btn-regresar:focus {
+            background: #ffaa00;
+            color: #000;
+            outline: none;
+        }
+
+        .modal-botones button.btn-entrar,
+        .modal-botones button.btn-aceptar {
+            border: 1px solid var(--color-btn-pys);
+            color: var(--color-btn-pys);
+            background: transparent;
+        }
+
+        .modal-botones button.btn-entrar:hover, 
+        .modal-botones button.btn-entrar:focus,
+        .modal-botones button.btn-aceptar:hover,
+        .modal-botones button.btn-aceptar:focus {
+            background: var(--color-btn-pys); 
+            color: #000;
+            outline: none;
+        }
+
+        /* Opciones del Entorno Maestro */
+        .modal-opciones-maestro {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .modal-opciones-maestro button {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid var(--color-btn-pys);
+            color: var(--color-btn-pys);
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-opciones-maestro button:hover,
+        .modal-opciones-maestro button:focus {
+            background: var(--color-btn-pys);
+            color: #000;
+            outline: none;
+        }
+
+        /* LISTA INTERNA DE EDITAR PÁGINAS */
+        .lista-edicion-paginas {
+            max-height: 160px;
+            overflow-y: auto;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .fila-pagina-editar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(0, 255, 0, 0.2);
+            color: var(--color-btn-pys);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .fila-pagina-editar span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 280px;
+        }
+
+        .btn-borrar-pagina {
+            background: transparent;
+            border: 1px solid #ff0000;
+            color: #ff0000;
+            padding: 2px 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-borrar-pagina:hover {
+            background: #ff0000;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>C:\PAGINAS_DE_PELICULAS_Y_SERIES<span class="cursor">_</span></h1>
+
+    <div class="contenedor-main">
+        
+        <div id="listaPaginasDinamicas" class="contenedor-btn-pys"></div>
+
+        <div class="contenedor-btn-extras">
+            <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
+            <button onclick="abrirModal()">Versión X (BETA)</button>
+            <button onclick="abrirModalAjustes()">Ajustes</button> 
+        </div>
+
+    </div>
+
+    <div id="miModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-cerrar-esquina" onclick="cerrarModal()">X</button>
+            <p class="texto-centrado">INTRODUCE LA CONTRASEÑA:</p>
+            <input type="password" id="passInput" placeholder="****" onkeydown="evaluarTecla(event)">
+            <div class="modal-botones">
+                <button class="btn-cancelar" onclick="cerrarModal()">CANCELAR</button>
+                <button class="btn-entrar" onclick="procesarAcceso()">ENTRAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalMaestroVacio" class="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-cerrar-esquina" onclick="cerrarModalMaestroVacio()">X</button>
+            <p class="texto-centrado">ENTORNO MAESTRO INICIADO</p>
+            
+            <div class="modal-opciones-maestro">
+                <button onclick="accionModificarPaginas()">Modificar páginas</button>
+                <button onclick="accionModificarContrasenas()">Modificar contraseñas</button>
+            </div>
+
+            <div class="modal-botones">
+                <button class="btn-cancelar" style="width: 100%; flex: none;" onclick="cerrarModalMaestroVacio()">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalModificarPaginas" class="modal-overlay">
+        <div class="modal-box modal-doble">
+            <button class="modal-cerrar-esquina" onclick="cerrarModalModificarPaginas()">X</button>
+            <p class="texto-centrado">MODIFICAR PÁGINAS</p>
+            
+            <p>NOMBRE DE LA PÁGINA:</p>
+            <input type="text" id="nombrePaginaInput" placeholder="Ej. SeriesFlix">
+
+            <p>DIRECCIÓN URL:</p>
+            <input type="text" id="urlPaginaInput" placeholder="Ej. https://sitio.com">
+
+            <div class="modal-botones" style="margin-bottom: 20px;">
+                <button class="btn-entrar" style="width: 100%; flex: none;" onclick="guardarNuevaPagina()">AÑADIR NUEVA PÁGINA</button>
+            </div>
+
+            <hr class="linea-separadora">
+
+            <p>PÁGINAS ACTUALES (PICA 'X' PARA ELIMINAR):</p>
+            <div id="listaInternaEliminar" class="lista-edicion-paginas"></div>
+
+            <div class="modal-botones">
+                <button class="btn-cancelar" onclick="cerrarModalModificarPaginas()">CANCELAR</button>
+                <button class="btn-regresar" onclick="regresarDePaginasAMaestro()">REGRESAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalCambio" class="modal-overlay">
+        <div class="modal-box modal-doble">
+            <button class="modal-cerrar-esquina" onclick="cerrarModalCambio()">X</button>
+            
+            <p>NUEVA CONTRASEÑA X:</p>
+            <input type="text" id="nuevoAccesoInput" placeholder="Nueva clave de acceso">
+
+            <p>NUEVA MAESTRA:</p>
+            <input type="text" id="nuevaMaestraInput" placeholder="Nueva clave maestra">
+
+            <hr class="linea-separadora">
+
+            <p class="texto-confirmacion">CONFIRMAR CON MAESTRA ACTUAL:</p>
+            <input type="password" id="maestraActualInput" placeholder="****" onkeydown="evaluarTeclaCambio(event)">
+
+            <div class="modal-botones">
+                <button class="btn-cancelar" onclick="cerrarModalCambio()">CANCELAR</button>
+                <button class="btn-regresar" onclick="regresarAlMenuMaestro()">REGRESAR</button>
+                <button class="btn-entrar" onclick="procesarCambioContrasena()">GUARDAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalError" class="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-cerrar-esquina" onclick="cerrarModalError()">X</button>
+            <p class="texto-error" id="textoErrorCustom">CONTRASEÑA INCORRECTA.</p>
+            <div class="modal-botones">
+                <button class="btn-aceptar" id="btnAceptarError" onclick="cerrarModalError()">ACEPTAR</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, update, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKQzpfbj6ep-yvyT0Z7GGVQsYmZivyHNw",
+            authDomain: "misitio-2373f.firebaseapp.com",
+            databaseURL: "https://misitio-2373f-default-rtdb.firebaseio.com",
+            projectId: "misitio-2373f",
+            storageBucket: "misitio-2373f.firebasestorage.app",
+            messagingSenderId: "692152740198",
+            appId: "1:692152740198:web:fdce00729ae74eac4ac0a7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const rootRef = ref(db);
+
+        let passCorrecta = "a"; 
+        let passMaestra = "1"; 
+        let paginasGlobales = {}; 
+        const enlaceDestino = "https://jahf.vercel.app/x";
+
+        // Escuchar cambios globales y de PÁGINAS en tiempo real
+        onValue(rootRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                if (data.passCorrecta !== undefined) passCorrecta = data.passCorrecta;
+                if (data.passMaestra !== undefined) passMaestra = data.passMaestra;
+                
+                paginasGlobales = data.paginas || {};
+
+                // 1. RENDERIZAR BOTONES DE LA WEB PRINCIPAL
+                const contenedorWeb = document.getElementById("listaPaginasDinamicas");
+                contenedorWeb.innerHTML = ""; 
+                
+                // 2. RENDERIZAR LISTA INTERNA DEL MODAL DE ELIMINAR
+                const contenedorModal = document.getElementById("listaInternaEliminar");
+                contenedorModal.innerHTML = "";
+
+                Object.keys(paginasGlobales).forEach((key) => {
+                    const item = paginasGlobales[key];
+                    if (item.nombre && item.url) {
+                        // Crear para la pantalla principal
+                        const nuevoEnlace = document.createElement("a");
+                        nuevoEnlace.href = item.url;
+                        nuevoEnlace.target = "_blank";
+                        nuevoEnlace.rel = "noopener noreferrer";
+                        nuevoEnlace.textContent = item.nombre;
+                        contenedorWeb.appendChild(nuevoEnlace);
+
+                        // Crear renglón para el menú de borrado
+                        const fila = document.createElement("div");
+                        fila.className = "fila-pagina-editar";
+                        fila.innerHTML = `<span>${item.nombre}</span>`;
+                        
+                        const btnBorrar = document.createElement("button");
+                        btnBorrar.className = "btn-borrar-pagina";
+                        btnBorrar.textContent = "X";
+                        btnBorrar.onclick = () => eliminarPaginaFirebase(key);
+                        
+                        fila.appendChild(btnBorrar);
+                        contenedorModal.appendChild(fila);
+                    }
+                });
+            }
+        });
+
+        /* --- LÓGICA DIRECTA PARA CREAR Y ELIMINAR ELEMENTOS --- */
+        window.guardarNuevaPagina = function() {
+            const nombre = document.getElementById("nombrePaginaInput").value.trim();
+            const url = document.getElementById("urlPaginaInput").value.trim();
+
+            if (nombre === "" || url === "") {
+                mostrarErrorCustom("DEBES LLENAR AMBOS CAMPOS.", () => {});
+                return;
+            }
+
+            // Corregido totalmente: sin la O que congelaba el script
+            const llaves = Object.keys(paginasGlobales).map(Number);
+            const siguienteID = llaves.length > 0 ? Math.max(...llaves) + 1 : 1;
+
+            const nuevaData = {};
+            nuevaData[`paginas/${siguienteID}/nombre`] = nombre;
+            nuevaData[`paginas/${siguienteID}/url`] = url;
+
+            update(rootRef, nuevaData)
+                .then(() => {
+                    document.getElementById("nombrePaginaInput").value = "";
+                    document.getElementById("urlPaginaInput").value = "";
+                })
+                .catch(() => {
+                    mostrarErrorCustom("ERROR AL GUARDAR EN EL SERVIDOR.", () => {});
+                });
+        }
+
+        window.eliminarPaginaFirebase = function(id) {
+            const paginaRef = ref(db, `paginas/${id}`);
+            remove(paginaRef).catch(() => {
+                mostrarErrorCustom("NO SE PUDO ELIMINAR EL ELEMENTO.", () => {});
+            });
+        }
+
+        /* --- CONTROL DE FLUJO PARA MODALES --- */
+        let modoActual = ""; 
+
+        window.abrirModal = function() {
+            modoActual = "X";
+            const modal = document.getElementById("miModal");
+            const input = document.getElementById("passInput");
+            modal.classList.add("activo");
+            input.value = ""; 
+            setTimeout(() => input.focus(), 100); 
+        }
+
+        window.abrirModalAjustes = function() {
+            modoActual = "AJUSTES";
+            const modal = document.getElementById("miModal");
+            const input = document.getElementById("passInput");
+            modal.classList.add("activo");
+            modal.querySelector(".texto-centrado").textContent = "INTRODUCE LA CONTRASEÑA:";
+            input.value = ""; 
+            setTimeout(() => input.focus(), 100); 
+        }
+
+        window.cerrarModal = function() {
+            document.getElementById("miModal").classList.remove("activo");
+            document.querySelector("#miModal .texto-centrado").textContent = "INTRODUCE LA CONTRASEÑA:";
+        }
+
+        window.abrirModalMaestroVacio = function() {
+            document.getElementById("modalMaestroVacio").classList.add("activo");
+        }
+
+        window.cerrarModalMaestroVacio = function() {
+            document.getElementById("modalMaestroVacio").classList.remove("activo");
+        }
+
+        window.abrirModalModificarPaginas = function() {
+            document.getElementById("modalModificarPaginas").classList.add("activo");
+            document.getElementById("nombrePaginaInput").value = "";
+            document.getElementById("urlPaginaInput").value = "";
+        }
+
+        window.cerrarModalModificarPaginas = function() {
+            document.getElementById("modalModificarPaginas").classList.remove("activo");
+        }
+
+        window.accionModificarPaginas = function() {
+            cerrarModalMaestroVacio();
+            abrirModalModificarPaginas();
+        }
+
+        window.accionModificarContrasenas = function() {
+            cerrarModalMaestroVacio();
+            abrirModalCambio(); 
+        }
+
+        window.regresarAlMenuMaestro = function() {
+            cerrarModalCambio();
+            abrirModalMaestroVacio();
+        }
+
+        window.regresarDePaginasAMaestro = function() {
+            cerrarModalModificarPaginas();
+            abrirModalMaestroVacio();
+        }
+
+        window.procesarAcceso = function() {
+            const entrada = document.getElementById("passInput").value;
+            
+            if (entrada === passMaestra.toString()) {
+                cerrarModal();
+                abrirModalMaestroVacio(); 
+                return;
+            }
+
+            if (entrada === passCorrecta.toString()) {
+                cerrarModal();
+                if (modoActual === "X") {
+                    window.location.href = enlaceDestino; 
+                } else if (modoActual === "AJUSTES") {
+                    abrirModalMaestroVacio(); 
+                }
+            } else {
+                cerrarModal();
+                if (modoActual === "X") {
+                    mostrarErrorCustom("CONTRASEÑA INCORRECTA.", abrirModal); 
+                } else {
+                    mostrarErrorCustom("CONTRASEÑA INCORRECTA.", abrirModalAjustes); 
+                }
+            }
+        }
+
+        window.evaluarTecla = function(event) {
+            if (event.key === "Enter") {
+                procesarAcceso();
+            }
+        }
+
+        /* --- GUARDADO SEGURO DE CLAVES --- */
+        window.abrirModalCambio = function() {
+            const modal = document.getElementById("modalCambio");
+            document.getElementById("nuevoAccesoInput").value = "";
+            document.getElementById("nuevaMaestraInput").value = "";
+            document.getElementById("maestraActualInput").value = "";
+
+            modal.classList.add("activo");
+            setTimeout(() => document.getElementById("nuevoAccesoInput").focus(), 100);
+        }
+
+        window.cerrarModalCambio = function() {
+            document.getElementById("modalCambio").classList.remove("activo");
+        }
+
+        window.procesarCambioContrasena = function() {
+            const nuevoAcceso = document.getElementById("nuevoAccesoInput").value.trim();
+            const nuevaMaestra = document.getElementById("nuevaMaestraInput").value.trim();
+            const maestraActual = document.getElementById("maestraActualInput").value;
+
+            if (maestraActual === "") {
+                cerrarModalCambio();
+                mostrarErrorCustom("DEBES INTRODUCIR LA MAESTRA ACTUAL.", abrirModalCambio);
+                return;
+            }
+
+            if (maestraActual !== passMaestra.toString()) {
+                cerrarModalCambio();
+                mostrarErrorCustom("CLAVE MAESTRA ACTUAL INCORRECTA.", abrirModalCambio);
+                return;
+            }
+
+            if (nuevoAcceso === "" && nuevaMaestra === "") {
+                cerrarModalCambio();
+                mostrarErrorCustom("NO INTRODUCISTE NINGÚN CAMBIO.", abrirModalCambio);
+                return;
+            }
+
+            const actualizaciones = {};
+            actualizaciones['passCorrecta'] = nuevoAcceso !== "" ? nuevoAcceso : passCorrecta;
+            actualizaciones['passMaestra'] = nuevaMaestra !== "" ? nuevaMaestra : passMaestra;
+
+            update(rootRef, actualizaciones)
+                .then(() => {
+                    cerrarModalCambio();
+                    mostrarErrorCustom("BASE DE DATOS ACTUALIZADA CON ÉXITO.", () => {});
+                    document.getElementById("textoErrorCustom").style.color = "var(--color-btn-pys)";
+                })
+                .catch(() => {
+                    cerrarModalCambio();
+                    mostrarErrorCustom("ERROR: INTENTO DE ESCRITURA BLOQUEADO POR EL SERVIDOR.", abrirModalCambio);
+                });
+        }
+
+        window.evaluarTeclaCambio = function(event) {
+            if (event.key === "Enter") {
+                procesarCambioContrasena();
+            }
+        }
+
+        /* --- NOTIFICACIONES / ERROR --- */
+        let funcionRetornoError = () => {};
+
+        window.mostrarErrorCustom = function(texto, funcionAlCerrar) {
+            const modalErr = document.getElementById("modalError");
+            const btnAceptar = document.getElementById("btnAceptarError");
+            const textoErr = document.getElementById("textoErrorCustom");
+            
+            textoErr.style.color = "#ff0000"; 
+            textoErr.textContent = texto;
+            funcionRetornoError = funcionAlCerrar;
+
+            modalErr.classList.add("activo");
+            setTimeout(() => btnAceptar.focus(), 100); 
+        }
+
+        window.cerrarModalError = function() {
+            document.getElementById("modalError").classList.remove("activo");
+            funcionRetornoError(); 
+        }
+
+        /* --- ANTI-HERRAMIENTAS DE DESARROLLADOR --- */
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        window.addEventListener('keydown', function(event) {
+            if (event.key === "F12") {
+                event.preventDefault();
+                return false;
+            }
+            if (event.ctrlKey && (event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C' || event.key === 'i' || event.key === 'j' || event.key === 'c') || (event.key === 'U' || event.key === 'u'))) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        setInterval(function() {
+            const antes = new Date();
+            debugger; 
+            const despues = new Date();
+            if (despues - antes > 100) {
+                document.body.innerHTML = "<h1 style='color:#ff0000; margin-top:20%; text-align:center;'>ACCESO DENEGADO: DETECTADO ENTORNO DE DESARROLLO_</h1>";
+            }
+        }, 200);
+    </script>
+</body>
+</html>
