@@ -89,10 +89,13 @@
             min-width: 150px;
         }
 
-        .contenedor-btn-pys a:hover,
-        .contenedor-btn-pys a:focus { 
+        /* Se modificó aquí para que solo actúe con el puntero encima */
+        .contenedor-btn-pys a:hover { 
             background-color: var(--color-btn-pys); 
             color: #000; 
+        }
+
+        .contenedor-btn-pys a:focus {
             outline: none;
         }
 
@@ -128,10 +131,15 @@
             padding: 15px 0;
         }
 
-        .contenedor-btn-extras a:hover, .contenedor-btn-extras a:focus,
-        .contenedor-btn-extras button:hover, .contenedor-btn-extras button:focus { 
+        /* Se modificó aquí para quitar el efecto fijo tras hacer clic */
+        .contenedor-btn-extras a:hover,
+        .contenedor-btn-extras button:hover { 
             background-color: var(--color-btn-extras); 
             color: #000; 
+        }
+
+        .contenedor-btn-extras a:focus,
+        .contenedor-btn-extras button:focus {
             outline: none;
         }
 
@@ -331,7 +339,7 @@
             <a href="https://serieslan.cc/" target="_blank" rel="noopener noreferrer">SeriesLan</a>
             <a href="https://retrotve.com/" target="_blank" rel="noopener noreferrer">RetroTV</a>
             <a href="https://tioplus.app/" target="_blank" rel="noopener noreferrer">PlusHD</a>
-            <a href=" https://lamovie.org/" target="_blank" rel="noopener noreferrer">LaMovie</a>
+            <a href="https://lamovie.org/" target="_blank" rel="noopener noreferrer">LaMovie</a>
         </div>
 
         <div class="contenedor-btn-extras">
@@ -488,13 +496,10 @@
                 return;
             }
 
-            // Armamos el mapa con los valores. 
-            // Siempre incluimos la passMaestra esperada para pasar exitosamente las reglas de Firebase.
             const actualizaciones = {};
             actualizaciones['passCorrecta'] = nuevoAcceso !== "" ? nuevoAcceso : passCorrecta;
             actualizaciones['passMaestra'] = nuevaMaestra !== "" ? nuevaMaestra : passMaestra;
 
-            // Transmisión unificada e indescifrable externamente
             update(rootRef, actualizaciones)
                 .then(() => {
                     cerrarModalCambio();
