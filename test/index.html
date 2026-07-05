@@ -156,7 +156,7 @@
             border: 2px solid var(--color-btn-pys); 
             padding: 35px 30px 30px 30px; 
             text-align: center;
-            max-width: 440px;
+            max-width: 480px; /* Ampliado un poquito más para acomodar ambos botones cómodamente */
             width: 90%;
             position: relative; 
         }
@@ -330,7 +330,7 @@
 
         /* LISTA INTERNA DE EDITAR PÁGINAS */
         .lista-edicion-paginas {
-            max-height: 160px;
+            max-height: 180px;
             overflow-y: auto;
             border: 1px solid rgba(0, 255, 0, 0.3);
             padding: 10px;
@@ -347,13 +347,27 @@
             color: var(--color-btn-pys);
             font-weight: bold;
             font-size: 14px;
+            gap: 10px;
         }
 
-        .fila-pagina-editar span {
+        .info-texto-editar {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 280px;
+            flex: 1;
+        }
+
+        .url-atenuada {
+            opacity: 0.6;
+            font-weight: normal;
+        }
+
+        /* Contenedor para alinear los dos botones de control al extremo derecho */
+        .acciones-fila-lista {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
         }
 
         .btn-borrar-pagina {
@@ -372,6 +386,24 @@
             background: #ff0000;
             color: #000;
         }
+
+        /* Botón de Modificar (Lápiz) */
+        .btn-modificar-fila {
+            background: transparent;
+            border: 1px solid #ffaa00;
+            color: #ffaa00;
+            padding: 2px 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-modificar-fila:hover {
+            background: #ffaa00;
+            color: #000;
+        }
     </style>
 </head>
 <body>
@@ -382,10 +414,12 @@
         
         <div id="listaPaginasDinamicas" class="contenedor-btn-pys"></div>
 
-        <div class="contenedor-btn-extras">
-            <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
-            <button onclick="abrirModal()">Versión X (BETA)</button>
-            <button onclick="abrirModalAjustes()">Ajustes</button> 
+        <div class="contenedor-main">
+            <div class="contenedor-btn-extras">
+                <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
+                <button onclick="abrirModal()">Versión X (BETA)</button>
+                <button onclick="abrirModalAjustes()">Ajustes</button> 
+            </div>
         </div>
 
     </div>
@@ -430,12 +464,12 @@
             <input type="text" id="urlPaginaInput" placeholder="Ej. https://sitio.com">
 
             <div class="modal-botones" style="margin-bottom: 20px;">
-                <button class="btn-entrar" style="width: 100%; flex: none;" onclick="guardarNuevaPagina()">AÑADIR NUEVA PÁGINA</button>
+                <button id="btnGuardarPaginaAccion" class="btn-entrar" style="width: 100%; flex: none;" onclick="guardarNuevaPagina()">AÑADIR NUEVA PÁGINA</button>
             </div>
 
             <hr class="linea-separadora">
 
-            <p>PÁGINAS ACTUALES (PICA 'X' PARA ELIMINAR):</p>
+            <p>PÁGINAS ACTUALES (PICA '✎' PARA MODIFICAR O 'X' PARA ELIMINAR):</p>
             <div id="listaInternaEliminar" class="lista-edicion-paginas"></div>
 
             <div class="modal-botones">
@@ -499,6 +533,7 @@
         let passCorrecta = "a"; 
         let passMaestra = "1"; 
         let paginasGlobales = {}; 
+        let idPaginaEnEdicion = null; // Guarda el ID numérico si estamos modificando uno existente
         const enlaceDestino = "https://jahf.vercel.app/x";
 
         // Escuchar cambios globales y de PÁGINAS en tiempo real
@@ -514,7 +549,7 @@
                 const contenedorWeb = document.getElementById("listaPaginasDinamicas");
                 contenedorWeb.innerHTML = ""; 
                 
-                // 2. RENDERIZAR LISTA INTERNA DEL MODAL DE ELIMINAR
+                // 2. RENDERIZAR LISTA INTERNA DEL MODAL DE ELIMINAR/EDITAR
                 const contenedorModal = document.getElementById("listaInternaEliminar");
                 contenedorModal.innerHTML = "";
 
@@ -529,22 +564,51 @@
                         nuevoEnlace.textContent = item.nombre;
                         contenedorWeb.appendChild(nuevoEnlace);
 
-                        // Crear renglón para el menú de borrado
+                        // Crear renglón para el menú interno
                         const fila = document.createElement("div");
                         fila.className = "fila-pagina-editar";
-                        fila.innerHTML = `<span>${item.nombre}</span>`;
                         
+                        const contenedorTexto = document.createElement("div");
+                        contenedorTexto.className = "info-texto-editar";
+                        contenedorTexto.innerHTML = `<span>${item.nombre}</span> <span class="url-atenuada">-> ${item.url}</span>`;
+                        
+                        // Contenedor derecho para agrupar los botones de acción
+                        const grupoAcciones = document.createElement("div");
+                        grupoAcciones.className = "acciones-fila-lista";
+
+                        // Botón de Modificar (✎)
+                        const btnModificar = document.createElement("button");
+                        btnModificar.className = "btn-modificar-fila";
+                        btnModificar.textContent = "✎";
+                        btnModificar.onclick = () => cargarPaginaParaEditar(key, item.nombre, item.url);
+
+                        // Botón de Eliminar (X)
                         const btnBorrar = document.createElement("button");
                         btnBorrar.className = "btn-borrar-pagina";
                         btnBorrar.textContent = "X";
                         btnBorrar.onclick = () => eliminarPaginaFirebase(key);
                         
-                        fila.appendChild(btnBorrar);
+                        grupoAcciones.appendChild(btnModificar);
+                        grupoAcciones.appendChild(btnBorrar);
+
+                        fila.appendChild(contenedorTexto);
+                        fila.appendChild(grupoAcciones);
                         contenedorModal.appendChild(fila);
                     }
                 });
             }
         });
+
+        /* --- LOGICA PARA MOVER DATOS DE ABAJO HACIA ARRIBA --- */
+        window.cargarPaginaParaEditar = function(id, nombre, url) {
+            idPaginaEnEdicion = id; // Guardamos el ID que estamos editando
+            document.getElementById("nombrePaginaInput").value = nombre;
+            document.getElementById("urlPaginaInput").value = url;
+            
+            // Cambiamos el texto del botón principal de acción
+            document.getElementById("btnGuardarPaginaAccion").textContent = "ACTUALIZAR PÁGINA";
+            document.getElementById("nombrePaginaInput").focus();
+        }
 
         /* --- LÓGICA DIRECTA PARA CREAR Y ELIMINAR ELEMENTOS --- */
         window.guardarNuevaPagina = function() {
@@ -556,18 +620,22 @@
                 return;
             }
 
-            // Corregido totalmente: sin la O que congelaba el script
-            const llaves = Object.keys(paginasGlobales).map(Number);
-            const siguienteID = llaves.length > 0 ? Math.max(...llaves) + 1 : 1;
+            let targetID = idPaginaEnEdicion;
+
+            // Si idPaginaEnEdicion es null, significa que estamos añadiendo una NUEVA, calculamos el ID libre
+            if (targetID === null) {
+                const llaves = Object.keys(paginasGlobales).map(Number);
+                targetID = llaves.length > 0 ? Math.max(...llaves) + 1 : 1;
+            }
 
             const nuevaData = {};
-            nuevaData[`paginas/${siguienteID}/nombre`] = nombre;
-            nuevaData[`paginas/${siguienteID}/url`] = url;
+            nuevaData[`paginas/${targetID}/nombre`] = nombre;
+            nuevaData[`paginas/${targetID}/url`] = url;
 
             update(rootRef, nuevaData)
                 .then(() => {
-                    document.getElementById("nombrePaginaInput").value = "";
-                    document.getElementById("urlPaginaInput").value = "";
+                    // Resetear el estado de edición al terminar con éxito
+                    resetearFormularioPaginas();
                 })
                 .catch(() => {
                     mostrarErrorCustom("ERROR AL GUARDAR EN EL SERVIDOR.", () => {});
@@ -575,10 +643,23 @@
         }
 
         window.eliminarPaginaFirebase = function(id) {
+            // Si eliminamos la misma página que se estaba editando arriba, limpiamos los inputs
+            if (idPaginaEnEdicion === id) {
+                resetearFormularioPaginas();
+            }
+            
             const paginaRef = ref(db, `paginas/${id}`);
             remove(paginaRef).catch(() => {
                 mostrarErrorCustom("NO SE PUDO ELIMINAR EL ELEMENTO.", () => {});
             });
+        }
+
+        // Función auxiliar para dejar los inputs limpios y restaurar el botón verde
+        function resetearFormularioPaginas() {
+            idPaginaEnEdicion = null;
+            document.getElementById("nombrePaginaInput").value = "";
+            document.getElementById("urlPaginaInput").value = "";
+            document.getElementById("btnGuardarPaginaAccion").textContent = "AÑADIR NUEVA PÁGINA";
         }
 
         /* --- CONTROL DE FLUJO PARA MODALES --- */
@@ -618,12 +699,12 @@
 
         window.abrirModalModificarPaginas = function() {
             document.getElementById("modalModificarPaginas").classList.add("activo");
-            document.getElementById("nombrePaginaInput").value = "";
-            document.getElementById("urlPaginaInput").value = "";
+            resetearFormularioPaginas();
         }
 
         window.cerrarModalModificarPaginas = function() {
             document.getElementById("modalModificarPaginas").classList.remove("activo");
+            resetearFormularioPaginas();
         }
 
         window.accionModificarPaginas = function() {
