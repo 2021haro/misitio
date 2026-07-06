@@ -33,8 +33,37 @@
             justify-content: flex-start; 
             min-height: 100vh;
             overflow-y: auto; 
-            user-select: none;
+            user-select: text; 
             -webkit-user-drag: none;
+        }
+
+        /* PERSONALIZACIÓN Y RESPLANDOR VICEVERSA EN LAS BARRAS DE SCROLL */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--fondo-pagina);
+            border-left: 1px dashed rgba(0, 255, 0, 0.2);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 0, 0.4);
+            border-radius: 4px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-btn-pys);
+            border: 1px solid var(--color-btn-pys);
+            box-shadow: 0 0 14px var(--color-btn-pys), inset 0 0 6px var(--color-btn-pys);
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 255, 0, 0.4) #050a05;
         }
 
         /* 3. ENCABEZADO (Efecto Terminal) */
@@ -91,13 +120,12 @@
             min-width: 150px;
         }
 
-        .contenedor-btn-pys a:hover { 
+        .contenedor-btn-pys a:hover,
+        .contenedor-btn-pys a:focus { 
             background-color: var(--color-btn-pys); 
             color: #000; 
-        }
-
-        .contenedor-btn-pys a:focus {
             outline: none;
+            box-shadow: 0 0 12px var(--color-btn-pys);
         }
 
         /* 6. SECCIÓN: BOTONES EXTRAS */
@@ -127,14 +155,13 @@
         }
 
         .contenedor-btn-extras a:hover,
-        .contenedor-btn-extras button:hover { 
+        .contenedor-btn-extras button:hover,
+        .contenedor-btn-extras a:focus,
+        .contenedor-btn-extras button:focus { 
             background-color: var(--color-btn-extras); 
             color: #000; 
-        }
-
-        .contenedor-btn-extras a:focus,
-        .contenedor-btn-extras button:focus {
             outline: none;
+            box-shadow: 0 0 12px var(--color-btn-extras);
         }
 
         /* 7. MODALES (ESTILOS COMPARTIDOS) */
@@ -173,6 +200,16 @@
             padding-top: 40px;
         }
 
+        .titulo-principal-modal {
+            color: var(--color-btn-pys);
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            word-wrap: break-word;
+        }
+
         .modal-cerrar-esquina {
             position: absolute;
             top: 8px;
@@ -192,6 +229,8 @@
         .modal-cerrar-esquina:hover,
         .modal-cerrar-esquina:focus {
             color: #ff0000; 
+            outline: none;
+            text-shadow: 0 0 10px #ff0000;
         }
 
         .modal-box p {
@@ -206,6 +245,14 @@
             text-align: center;
             font-size: 16px;
             margin-bottom: 20px;
+        }
+
+        .subtitulo-dinamico-form {
+            text-align: center !important;
+            font-size: 17px !important;
+            margin-bottom: 20px !important;
+            letter-spacing: 1px;
+            transition: color 0.2s ease;
         }
 
         .modal-box p.texto-confirmacion {
@@ -233,6 +280,7 @@
             font-family: inherit;
             margin-bottom: 18px;
             outline: none;
+            user-select: text !important; 
         }
 
         .modal-box input::placeholder {
@@ -278,6 +326,7 @@
             background: #ff0000;
             color: #000;
             outline: none;
+            box-shadow: 0 0 10px #ff0000;
         }
 
         .modal-botones button.btn-regresar {
@@ -290,6 +339,7 @@
             background: #ffaa00;
             color: #000;
             outline: none;
+            box-shadow: 0 0 10px #ffaa00;
         }
 
         .modal-botones button.btn-entrar,
@@ -306,6 +356,7 @@
             background: var(--color-btn-pys); 
             color: #000;
             outline: none;
+            box-shadow: 0 0 10px var(--color-btn-pys);
         }
 
         /* Opciones del Entorno Maestro */
@@ -327,6 +378,7 @@
             font-size: 16px;
             cursor: pointer;
             transition: all 0.2s ease;
+            letter-spacing: 1px;
         }
 
         .modal-opciones-maestro button:hover,
@@ -334,6 +386,7 @@
             background: var(--color-btn-pys);
             color: #000;
             outline: none;
+            box-shadow: 0 0 10px var(--color-btn-pys);
         }
 
         /* LISTA INTERNA DE EDITAR PÁGINAS */
@@ -390,9 +443,12 @@
             transition: all 0.2s ease;
         }
 
-        .btn-borrar-pagina:hover {
+        .btn-borrar-pagina:hover,
+        .btn-borrar-pagina:focus {
             background: #ff0000;
             color: #000;
+            outline: none;
+            box-shadow: 0 0 8px #ff0000;
         }
 
         .btn-modificar-fila {
@@ -407,9 +463,12 @@
             transition: all 0.2s ease;
         }
 
-        .btn-modificar-fila:hover {
+        .btn-modificar-fila:hover,
+        .btn-modificar-fila:focus {
             background: #ffaa00;
             color: #000;
+            outline: none;
+            box-shadow: 0 0 8px #ffaa00;
         }
 
         /* BARRA CON BOTONES DE SCROLL */
@@ -434,16 +493,38 @@
 
         .btn-scroll-lista:hover,
         .btn-scroll-lista:focus {
-            background: rgba(0, 255, 0, 0.2);
+            background: var(--color-btn-pys);
+            color: #000;
             outline: none;
+            box-shadow: 0 0 10px var(--color-btn-pys);
         }
 
         /* CONTENEDOR FLEX PARA LOS BOTONES DE ACCIÓN DEL FORMULARIO */
         .contenedor-botones-formulario {
             display: flex;
+            flex-direction: column; /* Móvil por defecto: Apilados verticalmente */
             gap: 10px;
             margin-bottom: 20px;
             width: 100%;
+        }
+
+        /* ESTILO DEL AVISO DINÁMICO DE GUARDADO/ACTUALIZADO */
+        .aviso-operacion-estado {
+            display: none;
+            width: 100%;
+            text-align: center !important;
+            font-size: 16px !important;
+            font-weight: bold;
+            color: var(--color-btn-pys);
+            margin: 5px 0 0 0 !important;
+            letter-spacing: 1.5px;
+            animation: parpadearAviso 0.6s linear infinite;
+            order: 99; /* Asegura quedar al final abajo de todo en móvil */
+        }
+
+        @keyframes parpadearAviso {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         #btnGuardarPaginaAccion {
@@ -456,13 +537,15 @@
             padding: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
-            flex: 1; 
+            width: 100%;
             outline: none;
         }
 
-        #btnGuardarPaginaAccion:hover {
+        #btnGuardarPaginaAccion:hover,
+        #btnGuardarPaginaAccion:focus {
             background: var(--color-btn-pys);
             color: #000;
+            box-shadow: 0 0 10px var(--color-btn-pys);
         }
 
         #btnCancelarEdicionForm {
@@ -476,16 +559,17 @@
             padding: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
-            flex: 1; 
+            width: 100%;
             outline: none;
         }
 
-        #btnCancelarEdicionForm:hover {
+        #btnCancelarEdicionForm:hover,
+        #btnCancelarEdicionForm:focus {
             background: #ff0000;
             color: #000;
+            box-shadow: 0 0 10px #ff0000;
         }
 
-        /* ESTRUCTURA BASE PARA DISEÑO VERTICAL DE LA EDICIÓN (MÓVILES) */
         .cuerpo-modificar-paginas {
             display: flex;
             flex-direction: column;
@@ -495,17 +579,13 @@
             width: 100%;
         }
 
-        /* ==========================================================================
-           NUEVA REGLA RESPONSIVE: COMPORTAMIENTO HORIZONTAL EN PC Y NAVEGADORES TV
-           ========================================================================== */
+        /* COMPORTAMIENTO HORIZONTAL EN PC Y NAVEGADORES TV */
         @media (min-width: 768px) {
-            /* Ampliamos el ancho total del modal para acomodar las dos columnas cómodamente */
             #modalModificarPaginas .modal-box {
                 max-width: 900px;
                 width: 95%;
             }
 
-            /* Volvemos el cuerpo un contenedor horizontal de dos columnas */
             .cuerpo-modificar-paginas {
                 display: flex;
                 flex-direction: row;
@@ -514,33 +594,44 @@
                 margin-top: 15px;
             }
 
-            /* Columna Izquierda (Formulario Círculo Rojo) ocupa la mitad */
             .columna-izquierda-form {
                 flex: 1;
                 width: 50%;
             }
 
-            /* Columna Derecha (Lista Círculo Amarillo) ocupa la otra mitad */
+            .contenedor-botones-formulario {
+                flex-direction: row; /* Horizontal en PC */
+                flex-wrap: wrap;
+            }
+
+            #btnGuardarPaginaAccion, #btnCancelarEdicionForm {
+                flex: 1;
+                width: auto;
+            }
+
+            .aviso-operacion-estado {
+                width: 100%;
+                margin-top: 10px !important;
+            }
+
             .columna-derecha-lista {
                 flex: 1;
                 width: 50%;
                 display: flex;
                 flex-direction: column;
+                margin-top: 15px; 
             }
 
-            /* Quitamos la línea de en medio en PC ya que la división es lateral */
             #modalModificarPaginas .linea-separadora {
                 display: none;
             }
 
-            /* Ajustamos la altura de la lista para que se empareje visualmente con los inputs de la izquierda */
             .lista-edicion-paginas {
                 max-height: 230px;
                 height: 230px;
                 margin-bottom: 12px;
             }
             
-            /* Ajustamos el contenedor de los botones inferiores para que abarquen todo el ancho horizontal */
             #modalModificarPaginas .modal-botones {
                 width: 100%;
                 margin-top: 15px;
@@ -558,9 +649,9 @@
 
         <div class="contenedor-main">
             <div class="contenedor-btn-extras">
-                <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer">CALENDARIO MUNDIAL</a>
-                <button onclick="abrirModal()">Versión X (BETA)</button>
-                <button onclick="abrirModalAjustes()">Ajustes</button> 
+                <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" tabindex="1">CALENDARIO MUNDIAL</a>
+                <button onclick="abrirModal()" tabindex="2">Versión X (BETA)</button>
+                <button onclick="abrirModalAjustes()" tabindex="3">Ajustes</button> 
             </div>
         </div>
 
@@ -568,7 +659,7 @@
 
     <div id="miModal" class="modal-overlay">
         <div class="modal-box">
-            <button class="modal-cerrar-esquina" onclick="cerrarModal()">X</button>
+            <button class="modal-cerrar-esquina" onclick="cerrarModal()" title="Cerrar">X</button>
             <p class="texto-centrado">INTRODUCE LA CONTRASEÑA:</p>
             <input type="password" id="passInput" placeholder="****" onkeydown="event => { if(event.key==='Enter') procesarAcceso(); }">
             <div class="modal-botones">
@@ -580,12 +671,12 @@
 
     <div id="modalMaestroVacio" class="modal-overlay">
         <div class="modal-box">
-            <button class="modal-cerrar-esquina" onclick="cerrarModalMaestroVacio()">X</button>
-            <p class="texto-centrado">ENTORNO MAESTRO INICIADO</p>
+            <button class="modal-cerrar-esquina" onclick="cerrarModalMaestroVacio()" title="Cerrar">X</button>
+            <p class="texto-centrado">AJUSTES</p>
             
             <div class="modal-opciones-maestro">
-                <button onclick="accionModificarPaginas()">Modificar páginas</button>
-                <button onclick="accionModificarContrasenas()">Modificar contraseñas</button>
+                <button onclick="accionModificarPaginas()">PÁGINAS</button>
+                <button onclick="accionModificarContrasenas()">CONTRASEÑA</button>
             </div>
 
             <div class="modal-botones">
@@ -596,28 +687,52 @@
 
     <div id="modalModificarPaginas" class="modal-overlay">
         <div class="modal-box modal-doble">
-            <button class="modal-cerrar-esquina" onclick="cerrarModalModificarPaginas()">X</button>
-            <p class="texto-centrado">MODIFICAR PÁGINAS</p>
+            <button class="modal-cerrar-esquina" onclick="cerrarModalModificarPaginas()" title="Cerrar">X</button>
             
+            <h2 id="tituloModalPaginas" class="titulo-principal-modal">C:/ AJUSTES / PÁGINAS</h2>
+
             <div class="cuerpo-modificar-paginas">
                 
                 <div class="columna-izquierda-form">
+                    <p id="indicadorModoFormulario" class="subtitulo-dinamico-form">GUARDAR PÁGINA</p>
+
                     <p>NOMBRE DE LA PÁGINA:</p>
-                    <input type="text" id="nombrePaginaInput" placeholder="Ej. SeriesFlix">
+                    <input type="text" id="nombrePaginaInput" placeholder="Ej. SeriesFlix" onkeydown="
+                        if(event.key === 'Enter') {
+                            event.stopImmediatePropagation();
+                            if(this.value.trim() !== '') {
+                                document.getElementById('urlPaginaInput').focus();
+                            } else {
+                                event.preventDefault();
+                            }
+                        }
+                    ">
 
                     <p>DIRECCIÓN URL:</p>
-                    <input type="text" id="urlPaginaInput" placeholder="Ej. https://sitio.com">
+                    <input type="text" id="urlPaginaInput" placeholder="Ej. https://sitio.com" onkeydown="
+                        if(event.key === 'Enter') {
+                            event.stopImmediatePropagation();
+                            const nom = document.getElementById('nombrePaginaInput').value.trim();
+                            const url = this.value.trim();
+                            if(url !== '' && nom !== '') {
+                                guardarNuevaPagina(true);
+                            } else {
+                                event.preventDefault();
+                            }
+                        }
+                    ">
 
                     <div class="contenedor-botones-formulario">
-                        <button id="btnGuardarPaginaAccion" onclick="guardarNuevaPagina()">AÑADIR NUEVA PÁGINA</button>
+                        <button id="btnGuardarPaginaAccion" onclick="guardarNuevaPagina(false)">GUARDAR PÁGINA</button>
                         <button id="btnCancelarEdicionForm" onclick="resetearFormularioPaginas()">CANCELAR EDICIÓN</button>
+                        <p id="lblAvisoOperacion" class="aviso-operacion-estado"></p>
                     </div>
                 </div>
 
                 <hr class="linea-separadora">
 
                 <div class="columna-derecha-lista">
-                    <p>PÁGINAS ACTUALES (PICA '✎' PARA MODIFICAR O 'X' PARA ELIMINAR):</p>
+                    <p id="textoCantidadPaginas">PÁGINAS ACTUALES:</p>
                     <div id="listaInternaEliminar" class="lista-edicion-paginas"></div>
 
                     <div class="barra-scroll-lista">
@@ -629,21 +744,33 @@
             </div>
 
             <div class="modal-botones">
-                <button class="btn-cancelar" onclick="cerrarModalModificarPaginas()">CANCELAR</button>
+                <button class="btn-cancelar" onclick="cerrarModalModificarPaginas('subir')">CANCELAR</button>
                 <button class="btn-regresar" onclick="regresarDePaginasAMaestro()">REGRESAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalConfirmarEliminar" class="modal-overlay">
+        <div class="modal-box">
+            <p class="texto-centrado" style="color: #ff0000;">¿ESTÁS SEGURO DE ELIMINAR ESTA PÁGINA?</p>
+            <p id="textoPaginaAEliminar" class="texto-centrado" style="opacity: 0.9; font-size: 16px; margin-bottom: 5px; font-weight: bold;"></p>
+            <p id="textoUrlAEliminar" class="texto-centrado" style="opacity: 0.5; font-size: 13px; margin-bottom: 25px; word-break: break-all; font-weight: normal;"></p>
+            <div class="modal-botones">
+                <button class="btn-cancelar" onclick="cerrarConfirmacionEliminar()">CANCELAR</button>
+                <button class="btn-entrar" id="btnConfirmarEliminarFinal">ELIMINAR</button>
             </div>
         </div>
     </div>
 
     <div id="modalCambio" class="modal-overlay">
         <div class="modal-box modal-doble">
-            <button class="modal-cerrar-esquina" onclick="cerrarModalCambio()">X</button>
+            <button class="modal-cerrar-esquina" onclick="cerrarModalCambio()" title="Cerrar">X</button>
             
             <p>NUEVA CONTRASEÑA X:</p>
-            <input type="text" id="nuevoAccesoInput" placeholder="Nueva clave de acceso">
+            <input type="text" id="nuevoAccesoInput" placeholder="Nueva clave de acceso" onkeydown="event => { if(event.key==='Enter') document.getElementById('nuevaMaestraInput').focus(); }">
 
             <p>NUEVA MAESTRA:</p>
-            <input type="text" id="nuevaMaestraInput" placeholder="Nueva clave maestra">
+            <input type="text" id="nuevaMaestraInput" placeholder="Nueva clave maestra" onkeydown="event => { if(event.key==='Enter') document.getElementById('maestraActualInput').focus(); }">
 
             <hr class="linea-separadora">
 
@@ -660,7 +787,7 @@
 
     <div id="modalError" class="modal-overlay">
         <div class="modal-box">
-            <button class="modal-cerrar-esquina" onclick="cerrarModalError()">X</button>
+            <button class="modal-cerrar-esquina" onclick="cerrarModalError()" title="Cerrar">X</button>
             <p class="texto-error" id="textoErrorCustom">CONTRASEÑA INCORRECTA.</p>
             <div class="modal-botones">
                 <button class="btn-aceptar" id="btnAceptarError" onclick="cerrarModalError()">ACEPTAR</button>
@@ -690,7 +817,10 @@
         let passMaestra = "1"; 
         let paginasGlobales = {}; 
         let idPaginaEnEdicion = null; 
+        let idSeleccionadoParaEliminar = null; 
         const enlaceDestino = "https://jahf.vercel.app/x";
+
+        let avisoTimeout = null;
 
         onValue(rootRef, (snapshot) => {
             if (snapshot.exists()) {
@@ -706,14 +836,20 @@
                 const contenedorModal = document.getElementById("listaInternaEliminar");
                 contenedorModal.innerHTML = "";
 
+                let indexTab = 4; 
+                let totalPaginasValidas = 0; 
+
                 Object.keys(paginasGlobales).forEach((key) => {
                     const item = paginasGlobales[key];
                     if (item.nombre && item.url) {
+                        totalPaginasValidas++; 
+
                         const nuevoEnlace = document.createElement("a");
                         nuevoEnlace.href = item.url;
                         nuevoEnlace.target = "_blank";
                         nuevoEnlace.rel = "noopener noreferrer";
                         nuevoEnlace.textContent = item.nombre;
+                        nuevoEnlace.setAttribute("tabindex", indexTab++);
                         contenedorWeb.appendChild(nuevoEnlace);
 
                         const fila = document.createElement("div");
@@ -723,27 +859,31 @@
                         contenedorTexto.className = "info-texto-editar";
                         contenedorTexto.innerHTML = `<span>${item.nombre}</span> <span class="url-atenuada">-> ${item.url}</span>`;
                         
-                        const grupoAcciones = document.createElement("div");
-                        grupoAcciones.className = "acciones-fila-lista";
+                        const groupAcciones = document.createElement("div");
+                        groupAcciones.className = "acciones-fila-lista";
 
                         const btnModificar = document.createElement("button");
                         btnModificar.className = "btn-modificar-fila";
                         btnModificar.textContent = "✎";
+                        btnModificar.title = "Actualizar"; 
                         btnModificar.onclick = () => cargarPaginaParaEditar(key, item.nombre, item.url);
 
                         const btnBorrar = document.createElement("button");
                         btnBorrar.className = "btn-borrar-pagina";
                         btnBorrar.textContent = "X";
-                        btnBorrar.onclick = () => eliminarPaginaFirebase(key);
+                        btnBorrar.title = "Eliminar"; 
+                        btnBorrar.onclick = () => abrirConfirmacionEliminar(key, item.nombre, item.url);
                         
-                        grupoAcciones.appendChild(btnModificar);
-                        grupoAcciones.appendChild(btnBorrar);
+                        groupAcciones.appendChild(btnModificar);
+                        groupAcciones.appendChild(btnBorrar);
 
                         fila.appendChild(contenedorTexto);
-                        fila.appendChild(grupoAcciones);
+                        fila.appendChild(groupAcciones);
                         contenedorModal.appendChild(fila);
                     }
                 });
+
+                document.getElementById("textoCantidadPaginas").innerHTML = `PÁGINAS ACTUALES: ${totalPaginasValidas}`;
             }
         });
 
@@ -760,20 +900,31 @@
             idPaginaEnEdicion = id; 
             document.getElementById("nombrePaginaInput").value = nombre;
             document.getElementById("urlPaginaInput").value = url;
+            
+            const indicador = document.getElementById("indicadorModoFormulario");
+            indicador.textContent = "ACTUALIZAR PÁGINA";
+            indicador.style.color = "#ffaa00";
+
+            document.getElementById("tituloModalPaginas").textContent = `C:/ AJUSTES / PÁGINAS / ${nombre} / ${url}`;
+
             document.getElementById("btnGuardarPaginaAccion").textContent = "ACTUALIZAR PÁGINA";
             document.getElementById("btnCancelarEdicionForm").style.display = "block";
+            
             document.getElementById("nombrePaginaInput").focus();
         }
 
-        window.guardarNuevaPagina = function() {
+        window.guardarNuevaPagina = function(esPorTeclado = false) {
             const nombre = document.getElementById("nombrePaginaInput").value.trim();
             const url = document.getElementById("urlPaginaInput").value.trim();
 
             if (nombre === "" || url === "") {
+                if (esPorTeclado) return;
+                
                 mostrarErrorCustom("DEBES LLENAR AMBOS CAMPOS.", () => {});
                 return;
             }
 
+            const esActualizacion = (idPaginaEnEdicion !== null);
             let targetID = idPaginaEnEdicion;
 
             if (targetID === null) {
@@ -787,28 +938,73 @@
 
             update(rootRef, nuevaData)
                 .then(() => {
+                    const lbl = document.getElementById("lblAvisoOperacion");
+                    lbl.textContent = esActualizacion ? "----- ACTUALIZADO -----" : "----- GUARDADO -----";
+                    lbl.style.display = "block";
+
+                    if (avisoTimeout) clearTimeout(avisoTimeout);
+
+                    // AJUSTADO EXACTAMENTE A 1 SEGUNDO (1000ms)
+                    avisoTimeout = setTimeout(() => {
+                        lbl.style.display = "none";
+                        lbl.textContent = "";
+                    }, 1000);
+
                     resetearFormularioPaginas();
+
+                    // CORREGIDO: Quita el foco del elemento activo para eliminar el estado :focus visual
+                    if (document.activeElement) {
+                        document.activeElement.blur();
+                    }
                 })
                 .catch(() => {
                     mostrarErrorCustom("ERROR AL GUARDAR EN EL SERVIDOR.", () => {});
                 });
         }
 
-        window.eliminarPaginaFirebase = function(id) {
-            if (idPaginaEnEdicion === id) {
-                resetearFormularioPaginas();
+        window.abrirConfirmacionEliminar = function(id, nombre, url) {
+            idSeleccionadoParaEliminar = id;
+            document.getElementById("textoPaginaAEliminar").textContent = `"${nombre}"`;
+            document.getElementById("textoUrlAEliminar").textContent = `${url}`;
+            document.getElementById("modalConfirmarEliminar").classList.add("activo");
+        }
+
+        window.cerrarConfirmacionEliminar = function() {
+            document.getElementById("modalConfirmarEliminar").classList.remove("activo");
+            idSeleccionadoParaEliminar = null;
+            document.getElementById("textoPaginaAEliminar").textContent = "";
+            document.getElementById("textoUrlAEliminar").textContent = "";
+        }
+
+        document.getElementById("btnConfirmarEliminarFinal").onclick = function() {
+            if (idSeleccionadoParaEliminar !== null) {
+                if (idPaginaEnEdicion === idSeleccionadoParaEliminar) {
+                    resetearFormularioPaginas();
+                }
+                const paginaRef = ref(db, `paginas/${idSeleccionadoParaEliminar}`);
+                remove(paginaRef)
+                    .then(() => {
+                        cerrarConfirmacionEliminar();
+                    })
+                    .catch(() => {
+                        cerrarConfirmacionEliminar();
+                        mostrarErrorCustom("NO SE PUDO ELIMINAR EL ELEMENTO.", () => {});
+                    });
             }
-            const paginaRef = ref(db, `paginas/${id}`);
-            remove(paginaRef).catch(() => {
-                mostrarErrorCustom("NO SE PUDO ELIMINAR EL ELEMENTO.", () => {});
-            });
         }
 
         window.resetearFormularioPaginas = function() {
             idPaginaEnEdicion = null;
             document.getElementById("nombrePaginaInput").value = "";
             document.getElementById("urlPaginaInput").value = "";
-            document.getElementById("btnGuardarPaginaAccion").textContent = "AÑADIR NUEVA PÁGINA";
+            
+            const indicador = document.getElementById("indicadorModoFormulario");
+            indicador.textContent = "GUARDAR PÁGINA";
+            indicador.style.color = "var(--color-btn-pys)";
+
+            document.getElementById("tituloModalPaginas").textContent = "C:/ AJUSTES / PÁGINAS";
+
+            document.getElementById("btnGuardarPaginaAccion").textContent = "GUARDAR PÁGINA"; 
             document.getElementById("btnCancelarEdicionForm").style.display = "none";
         }
 
@@ -821,7 +1017,8 @@
             const input = document.getElementById("passInput");
             modal.classList.add("activo");
             input.value = ""; 
-            setTimeout(() => input.focus(), 100); 
+            
+            input.focus();
         }
 
         window.abrirModalAjustes = function() {
@@ -831,7 +1028,8 @@
             modal.classList.add("activo");
             modal.querySelector(".texto-centrado").textContent = "INTRODUCE LA CONTRASEÑA:";
             input.value = ""; 
-            setTimeout(() => input.focus(), 100); 
+            
+            input.focus();
         }
 
         window.cerrarModal = function() {
@@ -850,6 +1048,10 @@
         window.abrirModalModificarPaginas = function() {
             document.getElementById("modalModificarPaginas").classList.add("activo");
             resetearFormularioPaginas();
+            
+            setTimeout(() => {
+                document.getElementById("nombrePaginaInput").focus();
+            }, 50);
         }
 
         window.cerrarModalModificarPaginas = function() {
@@ -909,7 +1111,8 @@
             document.getElementById("nuevaMaestraInput").value = "";
             document.getElementById("maestraActualInput").value = "";
             modal.classList.add("activo");
-            setTimeout(() => document.getElementById("nuevoAccesoInput").focus(), 100);
+            
+            document.getElementById("nuevoAccesoInput").focus();
         }
 
         window.cerrarModalCambio = function() {
@@ -923,7 +1126,7 @@
 
             if (maestraActual === "") {
                 cerrarModalCambio();
-                mostrarErrorCustom("DEBES INTRODUCIR LA MAESTRA ACTUAL.", abrirModalCambio);
+                mostrarErrorCustom("DEBES INTRODUCIR LA CLAVE MAESTRA ACTUAL.", abrirModalCambio);
                 return;
             }
 
@@ -959,7 +1162,6 @@
 
         window.mostrarErrorCustom = function(texto, funcionAlCerrar) {
             const modalErr = document.getElementById("modalError");
-            const btnAceptar = document.getElementById("btnAceptarError");
             const textoErr = document.getElementById("textoErrorCustom");
             
             textoErr.style.color = "#ff0000"; 
@@ -967,7 +1169,6 @@
             funcionRetornoError = funcionAlCerrar;
 
             modalErr.classList.add("activo");
-            setTimeout(() => btnAceptar.focus(), 100); 
         }
 
         window.cerrarModalError = function() {
@@ -975,9 +1176,55 @@
             funcionRetornoError(); 
         }
 
-        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('contextmenu', function(e) { 
+            if (e.target.tagName === 'INPUT') {
+                return true; 
+            }
+            e.preventDefault(); 
+        });
 
+        /* Escuchador global de teclado */
         window.addEventListener('keydown', function(event) {
+            if (event.key === "Escape" || event.key === "Esc") {
+                if (document.getElementById("modalConfirmarEliminar").classList.contains("activo")) {
+                    cerrarConfirmacionEliminar();
+                    return;
+                }
+                if (document.getElementById("modalError").classList.contains("activo")) {
+                    cerrarModalError();
+                    return;
+                }
+                if (document.getElementById("modalCambio").classList.contains("activo")) {
+                    regresarAlMenuMaestro();
+                    return;
+                }
+                if (document.getElementById("modalModificarPaginas").classList.contains("activo")) {
+                    regresarDePaginasAMaestro();
+                    return;
+                }
+                if (document.getElementById("modalMaestroVacio").classList.contains("activo")) {
+                    cerrarModalMaestroVacio();
+                    return;
+                }
+                if (document.getElementById("miModal").classList.contains("activo")) {
+                    cerrarModal();
+                    return;
+                }
+            }
+
+            if (event.key === "Enter") {
+                if (event.target.id === "nombrePaginaInput" || event.target.id === "urlPaginaInput") {
+                    return;
+                }
+
+                if (document.getElementById("modalConfirmarEliminar").classList.contains("activo") && event.target.id !== "btnConfirmarEliminarFinal") {
+                    document.getElementById("btnConfirmarEliminarFinal").click();
+                }
+                if (document.getElementById("modalError").classList.contains("activo")) {
+                    cerrarModalError();
+                }
+            }
+
             if (event.key === "F12") { event.preventDefault(); return false; }
             if (event.ctrlKey && (event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C' || event.key === 'i' || event.key === 'j' || event.key === 'c') || (event.key === 'U' || event.key === 'u'))) {
                 event.preventDefault();
