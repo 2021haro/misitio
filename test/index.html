@@ -508,7 +508,7 @@
             width: 100%;
         }
 
-        /* ESTILO DEL AVISO DINÁMICO DE GUARDADO/ACTUALIZADO */
+        /* ESTILO DEL AVISO DINÁMICO DE GUARDADO/ACTUALIZADO/ELIMINADO */
         .aviso-operacion-estado {
             display: none;
             width: 100%;
@@ -645,6 +645,7 @@
 
     <div class="contenedor-main">
         
+        <!-- CONTENEDOR DINÁMICO DE ENLACES -->
         <div id="listaPaginasDinamicas" class="contenedor-btn-pys"></div>
 
         <div class="contenedor-main">
@@ -657,6 +658,7 @@
 
     </div>
 
+    <!-- MODAL PRINCIPAL DE ACCESO -->
     <div id="miModal" class="modal-overlay">
         <div class="modal-box">
             <button class="modal-cerrar-esquina" onclick="cerrarModal()" title="Cerrar">X</button>
@@ -669,6 +671,7 @@
         </div>
     </div>
 
+    <!-- VENTANA DEL MENÚ MAESTRO -->
     <div id="modalMaestroVacio" class="modal-overlay">
         <div class="modal-box">
             <button class="modal-cerrar-esquina" onclick="cerrarModalMaestroVacio()" title="Cerrar">X</button>
@@ -685,6 +688,7 @@
         </div>
     </div>
 
+    <!-- MODAL COMPLETO: MODIFICAR PÁGINAS -->
     <div id="modalModificarPaginas" class="modal-overlay">
         <div class="modal-box modal-doble">
             <button class="modal-cerrar-esquina" onclick="cerrarModalModificarPaginas()" title="Cerrar">X</button>
@@ -693,6 +697,7 @@
 
             <div class="cuerpo-modificar-paginas">
                 
+                <!-- COLUMNA IZQUIERDA: FORMULARIO -->
                 <div class="columna-izquierda-form">
                     <p id="indicadorModoFormulario" class="subtitulo-dinamico-form">GUARDAR PÁGINA</p>
 
@@ -725,12 +730,14 @@
                     <div class="contenedor-botones-formulario">
                         <button id="btnGuardarPaginaAccion" onclick="guardarNuevaPagina(false)">GUARDAR PÁGINA</button>
                         <button id="btnCancelarEdicionForm" onclick="resetearFormularioPaginas()">CANCELAR EDICIÓN</button>
+                        <!-- MENSAJE DE ESTADO INYECTADO -->
                         <p id="lblAvisoOperacion" class="aviso-operacion-estado"></p>
                     </div>
                 </div>
 
                 <hr class="linea-separadora">
 
+                <!-- COLUMNA DERECHA: LISTA ACTUAL -->
                 <div class="columna-derecha-lista">
                     <p id="textoCantidadPaginas">PÁGINAS ACTUALES:</p>
                     <div id="listaInternaEliminar" class="lista-edicion-paginas"></div>
@@ -750,6 +757,7 @@
         </div>
     </div>
 
+    <!-- MODAL: CONFIRMAR ELIMINACIÓN -->
     <div id="modalConfirmarEliminar" class="modal-overlay">
         <div class="modal-box">
             <p class="texto-centrado" style="color: #ff0000;">¿ESTÁS SEGURO DE ELIMINAR ESTA PÁGINA?</p>
@@ -762,6 +770,7 @@
         </div>
     </div>
 
+    <!-- PANEL DE CAMBIO DE CONTRASEÑA -->
     <div id="modalCambio" class="modal-overlay">
         <div class="modal-box modal-doble">
             <button class="modal-cerrar-esquina" onclick="cerrarModalCambio()" title="Cerrar">X</button>
@@ -785,6 +794,7 @@
         </div>
     </div>
 
+    <!-- MODAL DE ERROR -->
     <div id="modalError" class="modal-overlay">
         <div class="modal-box">
             <button class="modal-cerrar-esquina" onclick="cerrarModalError()" title="Cerrar">X</button>
@@ -839,7 +849,12 @@
                 let indexTab = 4; 
                 let totalPaginasValidas = 0; 
 
-                Object.keys(paginasGlobales).forEach((key) => {
+                // SOLUCIÓN: Ordenamos usando la propiedad 'fechaModificacion' de manera descendente (la más nueva arriba)
+                Object.keys(paginasGlobales).sort((a, b) => {
+                    const fechaA = paginasGlobales[a].fechaModificacion || 0;
+                    const fechaB = paginasGlobales[b].fechaModificacion || 0;
+                    return fechaB - fechaA;
+                }).forEach((key) => {
                     const item = paginasGlobales[key];
                     if (item.nombre && item.url) {
                         totalPaginasValidas++; 
@@ -932,9 +947,13 @@
                 targetID = llaves.length > 0 ? Math.max(...llaves) + 1 : 1;
             }
 
+            // Inyectamos la marca de tiempo actual (timestamp) para forzar el cambio de posición
+            const timestampActual = Date.now();
+
             const nuevaData = {};
             nuevaData[`paginas/${targetID}/nombre`] = nombre;
             nuevaData[`paginas/${targetID}/url`] = url;
+            nuevaData[`paginas/${targetID}/fechaModificacion`] = timestampActual;
 
             update(rootRef, nuevaData)
                 .then(() => {
@@ -944,7 +963,6 @@
 
                     if (avisoTimeout) clearTimeout(avisoTimeout);
 
-                    // AJUSTADO EXACTAMENTE A 1 SEGUNDO (1000ms)
                     avisoTimeout = setTimeout(() => {
                         lbl.style.display = "none";
                         lbl.textContent = "";
@@ -952,7 +970,6 @@
 
                     resetearFormularioPaginas();
 
-                    // CORREGIDO: Quita el foco del elemento activo para eliminar el estado :focus visual
                     if (document.activeElement) {
                         document.activeElement.blur();
                     }
@@ -985,6 +1002,20 @@
                 remove(paginaRef)
                     .then(() => {
                         cerrarConfirmacionEliminar();
+                        
+                        const lbl = document.getElementById("lblAvisoOperacion");
+                        lbl.textContent = "----- ELIMINADO -----";
+                        lbl.style.display = "block";
+
+                        if (avisoTimeout) clearTimeout(avisoTimeout);
+                        avisoTimeout = setTimeout(() => {
+                            lbl.style.display = "none";
+                            lbl.textContent = "";
+                        }, 1000);
+
+                        if (document.activeElement) {
+                            document.activeElement.blur();
+                        }
                     })
                     .catch(() => {
                         cerrarConfirmacionEliminar();
