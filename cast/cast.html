@@ -42,15 +42,24 @@
 
     <script>
         // 1. REEMPLAZA ESTO con las credenciales de tu consola de Firebase
-    const firebaseConfig = {
-    apiKey: "TU_API_KEY_DE_FIREBASE", // Esta la dejas como esté en tu configuración web
-    authDomain: "misitio-2373f.firebaseapp.com",
-    databaseURL: "https://misitio-2373f-default-rtdb.firebaseio.com",
-    projectId: "misitio-2373f",
-    storageBucket: "misitio-2373f.appspot.com",
-    messagingSenderId: "TU_ID",
-    appId: "TU_APP_ID"
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAKQzpfbj6ep-yvyT0Z7GGVQsYmZivyHNw",
+  authDomain: "misitio-2373f.firebaseapp.com",
+  databaseURL: "https://misitio-2373f-default-rtdb.firebaseio.com",
+  projectId: "misitio-2373f",
+  storageBucket: "misitio-2373f.firebasestorage.app",
+  messagingSenderId: "692152740198",
+  appId: "1:692152740198:web:fdce00729ae74eac4ac0a7"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
         // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
