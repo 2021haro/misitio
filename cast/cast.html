@@ -1,1 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptor Cast Local</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        #esperando {
+            color: #fff;
+            font-family: sans-serif;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
 
+    <div id="esperando">Esperando contenido multimedia...</div>
+    <video id="miVideo" controls autoplay style="display: none;"></video>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+    <script>
+        // 1. REEMPLAZA ESTO con las credenciales de tu consola de Firebase
+    const firebaseConfig = {
+    apiKey: "TU_API_KEY_DE_FIREBASE", // Esta la dejas como esté en tu configuración web
+    authDomain: "misitio-2373f.firebaseapp.com",
+    databaseURL: "https://misitio-2373f-default-rtdb.firebaseio.com",
+    projectId: "misitio-2373f",
+    storageBucket: "misitio-2373f.appspot.com",
+    messagingSenderId: "TU_ID",
+    appId: "TU_APP_ID"
+};
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Referencias a los elementos del HTML
+        const videoElement = document.getElementById('miVideo');
+        const mensajeEsperando = document.getElementById('esperando');
+
+        // 2. Escuchar cambios en la base de datos en tiempo real
+        // Escucharemos un nodo llamado "stream/url_actual"
+        database.ref('stream/url_actual').on('value', (snapshot) => {
+            const urlVideo = snapshot.val();
+
+            if (urlVideo && urlVideo.trim() !== "") {
+                // Ocultar mensaje y mostrar video
+                mensajeEsperando.style.display = 'none';
+                videoElement.style.display = 'block';
+
+                // Cambiar la fuente del video y reproducir
+                videoElement.src = urlVideo;
+                videoElement.load();
+                videoElement.play().catch(error => {
+                    console.log("La reproducción automática requiere interacción o el enlace no es directo:", error);
+                });
+            } else {
+                // Si está vacío, volver al estado de espera
+                videoElement.pause();
+                videoElement.style.display = 'none';
+                mensajeEsperando.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
