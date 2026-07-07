@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receptor Cast Universal - Android TV</title>
+    <title>Receptor Cast Fluido - Android TV</title>
     <style>
         * {
             margin: 0;
@@ -35,15 +35,11 @@
 <body>
 
     <div id="esperando">Esperando contenido multimedia...</div>
-    
-    <!-- Retornamos a la etiqueta nativa con atributos clave para Android TV -->
     <video id="miVideo" controls autoplay playsinline webkit-playsinline></video>
 
-    <!-- Scripts de Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-    <!-- Mantener hls.js solo como respaldo por si el navegador lo requiere en lugar del sistema -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <script>
@@ -64,7 +60,6 @@
         const mensajeEsperando = document.getElementById('esperando');
         let hlsInstance = null;
 
-        // Ocultar el elemento de video al iniciar hasta que reciba datos
         videoElement.style.display = 'none';
 
         function limpiarReproductor() {
@@ -88,34 +83,55 @@
                 videoElement.style.display = 'block';
 
                 if (urlMedia.includes('.m3u8')) {
-                    // INTENTO 1: Ver si el navegador nativo de Android TV soporta .m3u8 directamente de forma nativa
-                    if (videoElement.canPlayType('application/vnd.apple.mpegurl') || videoElement.canPlayType('application/x-mpegURL')) {
+                    
+                    // Configuramos Hls.js con esteroides para Android TV (Evita congelamientos)
+                    if (Hls.isSupported()) {
+                        hlsInstance = new Hls({
+                            maxBufferLength: 15,        // Guarda máximo 15 segundos en memoria para no saturar la RAM de la TV
+                            maxMaxBufferLength: 30,     // Límite estricto de búfer
+                            maxBufferSize: 30 * 1000 * 1000, // Máximo 30MB de memoria RAM para video
+                            appendErrorMaxRetry: 5,     // Si falla un fragmento, reintenta 5 veces antes de trabarse
+                            enableWorker: true,         // Activa hilos de procesamiento paralelos en la TV
+                            backBufferLength: 10,       // Borra lo que ya viste para liberar RAM al instante
+                            liveDurationInfinity: true
+                        });
+
+                        hlsInstance.loadSource(urlMedia);
+                        hlsInstance.attachMedia(videoElement);
+                        
+                        hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+                            videoElement.play().catch(e => console.log("Auto-play bloqueado:", e));
+                        });
+
+                        // MANEJO DE ERRORES AUTOMÁTICO: Si el internet fluctúa, el reproductor se repara solo sin trabarse
+                        hlsInstance.on(Hls.Events.ERROR, function (event, data) {
+                            if (data.fatal) {
+                                switch (data.type) {
+                                    case Hls.ErrorTypes.NETWORK_ERROR:
+                                        console.log("Error de red, intentando recuperar...");
+                                        hlsInstance.startLoad();
+                                        break;
+                                    case Hls.ErrorTypes.MEDIA_ERROR:
+                                        console.log("Error de desincronización, intentando recuperar...");
+                                        hlsInstance.recoverMediaError();
+                                        break;
+                                    default:
+                                        limpiarReproductor();
+                                        break;
+                                }
+                            }
+                        });
+
+                    } 
+                    // Si el navegador de la TV fuerza el reproductor del sistema
+                    else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
                         videoElement.type = 'application/x-mpegURL';
                         videoElement.src = urlMedia;
                         videoElement.load();
-                        videoElement.play().catch(e => console.log("Auto-play TV nativo bloqueado:", e));
-                    } 
-                    // INTENTO 2: Si el navegador no lo soporta nativo (como Cốc Cốc), forzar la decodificación por software con Hls.js
-                    else if (Hls.isSupported()) {
-                        hlsInstance = new Hls({
-                            // Configuraciones para mejorar la compatibilidad en hardware limitado de TV
-                            lowLatencyMode: true,
-                            maxBufferSize: 0,
-                            maxBufferLength: 5
-                        });
-                        hlsInstance.loadSource(urlMedia);
-                        hlsInstance.attachMedia(videoElement);
-                        hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
-                            videoElement.play().catch(e => console.log("Auto-play Hls.js bloqueado:", e));
-                        });
-                    } else {
-                        // Forzar asignación directa como último recurso para que el navegador nativo lo intercepte
-                        videoElement.src = urlMedia;
-                        videoElement.load();
-                        videoElement.play().catch(e => console.log("Último recurso bloqueado:", e));
+                        videoElement.play().catch(e => console.log("Error en nativo:", e));
                     }
                 } else {
-                    // Para MP4 y otros formatos estándar
+                    // Para MP4 u otros formatos planos
                     videoElement.src = urlMedia;
                     videoElement.load();
                     videoElement.play().catch(e => console.log("Error en formato estándar:", e));
