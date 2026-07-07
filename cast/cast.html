@@ -5,31 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receptor Cast Local</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             background-color: #000;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
         }
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        #esperando {
-            color: #fff;
-            font-family: sans-serif;
-            font-size: 1.5rem;
-            text-align: center;
-        }
+        video { width: 100%; height: 100%; object-fit: contain; }
+        #esperando { color: #fff; font-family: sans-serif; font-size: 1.5rem; text-align: center; }
     </style>
 </head>
 <body>
@@ -41,45 +25,37 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <script>
-        // Tus credenciales reales de Firebase extraídas de tu consola
+        // Tus credenciales reales de micastlocal
         const firebaseConfig = {
-            apiKey: "AIzaSyDEgq77_Z67332L6eE5Hcl2K1Gv5K1Y8Z0",
-            authDomain: "misitio-2373f.firebaseapp.com",
-            databaseURL: "https://misitio-2373f-default-rtdb.firebaseio.com",
-            projectId: "misitio-2373f",
-            storageBucket: "misitio-2373f.appspot.com",
-            messagingSenderId: "818567527027",
-            appId: "1:818567527027:web:2a8385dafcffbd6198f7e2"
+            apiKey: "AIzaSyARzpYU2Z-VhD3IpNJVoy5YcOBqvbdrr-8",
+            authDomain: "micastlocal.firebaseapp.com",
+            databaseURL: "https://micastlocal-default-rtdb.firebaseio.com",
+            projectId: "micastlocal",
+            storageBucket: "micastlocal.firebasestorage.app",
+            messagingSenderId: "762436108732",
+            appId: "1:762436108732:web:c077f98866eefca4e26bb9"
         };
 
-        // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Referencias a los elementos de la página
         const videoElement = document.getElementById('miVideo');
         const mensajeEsperando = document.getElementById('esperando');
 
-        // Escuchar la ruta "stream/url_actual" en tiempo real
-        database.ref('stream/url_actual').on('value', (snapshot) => {
+        // Escuchando el nodo raíz del nuevo proyecto
+        database.ref('cast-local-web').on('value', (snapshot) => {
             const urlVideo = snapshot.val();
 
             if (urlVideo && urlVideo.trim() !== "") {
-                // Ocultar texto de espera y mostrar el reproductor de video
                 mensajeEsperando.style.display = 'none';
                 videoElement.style.display = 'block';
-
-                // Asignar la nueva URL y reproducir automáticamente
                 videoElement.src = urlVideo;
                 videoElement.load();
-                
                 videoElement.play().catch(error => {
-                    console.log("Nota: La reproducción automática puede requerir un clic del usuario debido a las políticas del navegador.", error);
+                    console.log("Error de auto-reproducción:", error);
                 });
             } else {
-                // Si la URL está vacía, pausar el video y volver al estado de espera
                 videoElement.pause();
-                videoElement.src = "";
                 videoElement.style.display = 'none';
                 mensajeEsperando.style.display = 'block';
             }
