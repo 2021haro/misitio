@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receptor Cast Estable</title>
+    <title>Receptor Cast Nativo</title>
     <style>
         * {
             margin: 0;
@@ -35,12 +35,11 @@
 <body>
 
     <div id="esperando">Esperando contenido multimedia...</div>
-    <video id="miVideo" controls autoplay playsinline webkit-playsinline></video>
+    
+    <video id="miVideo" controls autoplay playsinline webkit-playsinline preload="auto"></video>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <script>
         const firebaseConfig = {
@@ -58,73 +57,41 @@
 
         const videoElement = document.getElementById('miVideo');
         const mensajeEsperando = document.getElementById('esperando');
-        let hlsInstance = null;
 
         videoElement.style.display = 'none';
 
-        function limpiarReproductor() {
-            if (hlsInstance) {
-                hlsInstance.destroy();
-                hlsInstance = null;
-            }
-            videoElement.pause();
-            videoElement.src = "";
-            videoElement.removeAttribute('type');
-            videoElement.load();
-        }
-
+        // Escuchar la base de datos en tiempo real
         database.ref('cast-local-web').on('value', (snapshot) => {
             const urlMedia = snapshot.val();
 
             if (urlMedia && urlMedia.trim() !== "") {
-                limpiarReproductor();
-
+                // Estado de carga inicial
                 mensajeEsperando.style.display = 'none';
                 videoElement.style.display = 'block';
 
+                // Si es un stream .m3u8, le asignamos el tipo nativo para la TV
                 if (urlMedia.includes('.m3u8')) {
-                    if (Hls.isSupported()) {
-                        // Configuración equilibrada (No satura RAM ni rompe la PC)
-                        hlsInstance = new Hls({
-                            maxBufferLength: 20,         // 20 segundos de colchón
-                            maxMaxBufferLength: 40,
-                            maxBufferSize: 50 * 1000 * 1000, // 50MB máximo
-                            lowLatencyMode: false,       // Desactivado para dar más tiempo a cargar páginas pesadas
-                            enableWorker: false          // Desactivado porque rompía la compatibilidad en algunas PCs/TVs
-                        });
-
-                        hlsInstance.loadSource(urlMedia);
-                        hlsInstance.attachMedia(videoElement);
-                        
-                        hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
-                            videoElement.play().catch(e => console.log("Auto-play bloqueado:", e));
-                        });
-
-                        // Recuperación automática estándar
-                        hlsInstance.on(Hls.Events.ERROR, function (event, data) {
-                            if (data.fatal) {
-                                if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                                    hlsInstance.startLoad();
-                                } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-                                    hlsInstance.recoverMediaError();
-                                }
-                            }
-                        });
-                    } 
-                    else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-                        videoElement.type = 'application/x-mpegURL';
-                        videoElement.src = urlMedia;
-                        videoElement.load();
-                        videoElement.play().catch(e => console.log("Error en nativo:", e));
-                    }
+                    videoElement.type = 'application/x-mpegURL';
                 } else {
-                    // Para MP4 y cualquier otro formato plano directo
-                    videoElement.src = urlMedia;
-                    videoElement.load();
-                    videoElement.play().catch(e => console.log("Error en formato estándar:", e));
+                    videoElement.removeAttribute('type'); // Que el navegador decida para MP4/WebM
+                }
+
+                // Cambiar ruta y forzar recarga de buffer nativo limpio
+                videoElement.src = urlMedia;
+                videoElement.load();
+                
+                // Intentar reproducir automáticamente
+                const playPromise = videoElement.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log("Reproducción automática pausada por el navegador, requiere interacción.");
+                    });
                 }
             } else {
-                limpiarReproductor();
+                // Volver al estado de espera si se limpia la pantalla
+                videoElement.pause();
+                videoElement.src = "";
+                videoElement.removeAttribute('type');
                 videoElement.style.display = 'none';
                 mensajeEsperando.style.display = 'block';
             }
