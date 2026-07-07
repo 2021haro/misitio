@@ -3,66 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Control + Iframe Extractor</title>
+    <title>Control Remoto Cast</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #121212; color: #ffffff; padding: 15px;
+            background-color: #121212; color: #ffffff; padding: 20px;
             display: flex; flex-direction: column; align-items: center;
         }
         .container {
-            width: 100%; max-width: 600px; background: #1e1e1e;
+            width: 100%; max-width: 500px; background: #1e1e1e;
             padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            margin-bottom: 15px;
         }
-        h2 { text-align: center; margin-bottom: 15px; color: #00adb5; font-size: 1.3rem; }
-        h3 { color: #ff9f43; font-size: 1.1rem; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem; }
+        h2 { text-align: center; margin-bottom: 20px; color: #00adb5; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
         input[type="text"] {
             width: 100%; padding: 12px; background: #2d2d2d; border: 1px solid #3d3d3d;
-            border-radius: 6px; color: #fff; margin-bottom: 12px; font-size: 1rem;
+            border-radius: 6px; color: #fff; margin-bottom: 15px; font-size: 1rem;
         }
         button {
             width: 100%; padding: 12px; border: none; border-radius: 6px;
-            font-size: 1rem; font-weight: bold; cursor: pointer; margin-bottom: 8px;
+            font-size: 1rem; font-weight: bold; cursor: pointer; margin-bottom: 10px;
         }
-        .btn-cargar { background-color: #ff9f43; color: white; }
-        .btn-extraer { background-color: #4ecc71; color: white; }
         .btn-enviar { background-color: #00adb5; color: white; }
         .btn-limpiar { background-color: #ff2e63; color: white; }
-        
-        /* Contenedor del Iframe */
-        .iframe-wrapper {
-            width: 100%; height: 350px; background: #fff; 
-            border-radius: 8px; overflow: hidden; margin-top: 10px;
-            border: 2px dashed #ff9f43;
-        }
-        iframe { width: 100%; height: 100%; border: none; }
-        .estado { text-align: center; font-size: 0.9rem; color: #aaa; margin-top: 10px; word-break: break-all; }
+        .estado { text-align: center; font-size: 0.9rem; color: #888; margin-top: 15px; word-break: break-all; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h2>Control Cast Experimental</h2>
-        <h3>1. Navegador de Streaming Integrado</h3>
-        <label for="iframeUrlInput">URL de la página de la transmisión:</label>
-        <input type="text" id="iframeUrlInput" placeholder="https://sitiox.com/en-vivo" autocomplete="off">
-        
-        <button class="btn-cargar" id="btnCargarIframe">Cargar Página en Panel</button>
-        <button class="btn-extraer" id="btnExtraerIframe">Pescar .m3u8 del Iframe y Transmitir</button>
-        
-        <div class="iframe-wrapper">
-            <iframe id="miIframe" allow="geolocation; autoplay; encrypted-media" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"></iframe>
-        </div>
-    </div>
-
-    <div class="container">
-        <h3>2. Transmisión Manual y Estado</h3>
-        <label for="urlInput">URL directa en la base de datos:</label>
+        <h2>Control Cast</h2>
+        <label for="urlInput">Pegar URL del Video:</label>
         <input type="text" id="urlInput" placeholder="https://ejemplo.com/video.mp4" autocomplete="off">
         
-        <button class="btn-enviar" id="btnEnviar">Transmitir Manualmente</button>
+        <button class="btn-enviar" id="btnEnviar">Transmitir Video</button>
         <button class="btn-limpiar" id="btnLimpiar">Detener / Limpiar Pantalla</button>
         
         <div class="estado" id="estado">Estado: Conectando...</div>
@@ -72,6 +46,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <script>
+        // Tus credenciales reales de micastlocal
         const firebaseConfig = {
             apiKey: "AIzaSyARzpYU2Z-VhD3IpNJVoy5YcOBqvbdrr-8",
             authDomain: "micastlocal.firebaseapp.com",
@@ -86,15 +61,11 @@
         const database = firebase.database();
 
         const urlInput = document.getElementById('urlInput');
-        const iframeUrlInput = document.getElementById('iframeUrlInput');
-        const miIframe = document.getElementById('miIframe');
-        const btnCargarIframe = document.getElementById('btnCargarIframe');
-        const btnExtraerIframe = document.getElementById('btnExtraerIframe');
         const btnEnviar = document.getElementById('btnEnviar');
         const btnLimpiar = document.getElementById('btnLimpiar');
         const estadoDiv = document.getElementById('estado');
 
-        // Escuchar Firebase
+        // Sincronizar estado con el nodo del nuevo proyecto
         database.ref('cast-local-web').on('value', (snapshot) => {
             const urlActual = snapshot.val();
             if (urlActual && urlActual.trim() !== "") {
@@ -106,67 +77,21 @@
             }
         });
 
-        // 1. Cargar la web dentro del iframe
-        btnCargarIframe.addEventListener('click', () => {
-            const destino = iframeUrlInput.value.trim();
-            if(destino === "") {
-                alert("Pon una URL válida.");
-                return;
-            }
-            estadoDiv.innerText = "Cargando página interna... Dale los permisos de ubicación si saltan en el recuadro.";
-            miIframe.src = destino;
-        });
-
-        // 2. Extraer el .m3u8 desde la ventana interna
-        btnExtraerIframe.addEventListener('click', () => {
-            try {
-                // Intentamos acceder al documento interno del iframe
-                const iframeDoc = miIframe.contentDocument || miIframe.contentWindow.document;
-                
-                // Buscamos cualquier etiqueta <video> o <source> cargada dinámicamente tras darle Play
-                const videoHtml = iframeDoc.querySelector('video');
-                const sourceHtml = iframeDoc.querySelector('source');
-                let urlEncontrada = "";
-
-                if (videoHtml && videoHtml.src) {
-                    urlEncontrada = videoHtml.src;
-                } else if (sourceHtml && sourceHtml.src) {
-                    urlEncontrada = sourceHtml.src;
-                } else {
-                    // Si el reproductor está oculto en scripts, buscamos texto plano .m3u8 en el HTML generado del iframe
-                    const todoElHtml = iframeDoc.documentElement.innerHTML;
-                    const m3u8Regex = /(https?:\/\/[^\s"'><]+\.m3u8[^\s"'><]*)/gi;
-                    const coincidencias = todoElHtml.match(m3u8Regex);
-                    if (coincidencias && coincidencias.length > 0) {
-                        urlEncontrada = coincidencias[0];
-                    }
-                }
-
-                if (urlEncontrada !== "") {
-                    database.ref('cast-local-web').set(urlEncontrada)
-                        .then(() => {
-                            estadoDiv.innerText = "¡Enlace pescado con éxito desde el iframe!\n" + urlEncontrada;
-                        });
-                } else {
-                    estadoDiv.innerText = "Página cargada, pero no se detectó el video activo. ¿Ya le diste Play al reproductor de abajo?";
-                }
-
-            } catch (error) {
-                // ERROR DE SEGURIDAD DEL NAVEGADOR (Same-Origin Policy)
-                console.error(error);
-                estadoDiv.innerText = "Bloqueo de seguridad: El navegador del celular impide leer el interior de esta web debido a políticas Cross-Origin. Si la pantalla del iframe se ve en blanco, la web bloquea el uso de marcos (X-Frame-Options).";
-            }
-        });
-
-        // Manual
         btnEnviar.addEventListener('click', () => {
             const urlAVirar = urlInput.value.trim();
-            if (urlAVirar !== "") database.ref('cast-local-web').set(urlAVirar);
+            if (urlAVirar === "") {
+                alert("Por favor, introduce o pega una URL válida.");
+                return;
+            }
+            database.ref('cast-local-web').set(urlAVirar)
+                .then(() => { estadoDiv.innerText = "¡Enviado con éxito!"; })
+                .catch((error) => { estadoDiv.innerText = "Error: " + error.message; });
         });
 
-        // Limpiar
         btnLimpiar.addEventListener('click', () => {
-            database.ref('cast-local-web').set("");
+            database.ref('cast-local-web').set("")
+                .then(() => { estadoDiv.innerText = "Pantalla limpiada."; urlInput.value = ""; })
+                .catch((error) => { estadoDiv.innerText = "Error: " + error.message; });
         });
     </script>
 </body>
