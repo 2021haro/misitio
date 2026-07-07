@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receptor Cast Universal - Estilo VLC</title>
-    
-    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-    
+    <title>Receptor Cast Universal - Android TV</title>
     <style>
         * {
             margin: 0;
@@ -21,41 +18,35 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: sans-serif;
         }
-        /* Contenedor del reproductor para que ocupe toda la pantalla */
-        .video-container {
+        video {
             width: 100%;
             height: 100%;
-            display: none;
-        }
-        .video-js {
-            width: 100% !important;
-            height: 100% !important;
+            object-fit: contain;
         }
         #esperando {
             color: #fff;
+            font-family: sans-serif;
             font-size: 1.5rem;
             text-align: center;
-            position: absolute;
         }
     </style>
 </head>
 <body>
 
-    <div id="esperando">Esperando contenido multimedia (VLC Listo)...</div>
+    <div id="esperando">Esperando contenido multimedia...</div>
     
-    <div class="video-container" id="playerContainer">
-        <video id="vlcPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay playsinline></video>
-    </div>
+    <!-- Retornamos a la etiqueta nativa con atributos clave para Android TV -->
+    <video id="miVideo" controls autoplay playsinline webkit-playsinline></video>
 
+    <!-- Scripts de Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+    <!-- Mantener hls.js solo como respaldo por si el navegador lo requiere en lugar del sistema -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <script>
-        // Tus credenciales reales de micastlocal
         const firebaseConfig = {
             apiKey: "AIzaSyARzpYU2Z-VhD3IpNJVoy5YcOBqvbdrr-8",
             authDomain: "micastlocal.firebaseapp.com",
@@ -69,60 +60,69 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        const playerContainer = document.getElementById('playerContainer');
+        const videoElement = document.getElementById('miVideo');
         const mensajeEsperando = document.getElementById('esperando');
-        
-        // Inicializar Video.js de forma global
-        const player = videojs('vlcPlayer', {
-            fluid: false,
-            autoplay: true,
-            controls: true,
-            preload: 'auto'
-        });
+        let hlsInstance = null;
 
-        // Detectar automáticamente el tipo de formato/protocolo según la URL
-        function getMimeType(url) {
-            if (url.includes('.m3u8')) return 'application/x-mpegURL'; // HLS / IPTV
-            if (url.includes('.mpd')) return 'application/dash+xml';   // DASH Streaming
-            if (url.includes('.mp4')) return 'video/mp4';
-            if (url.includes('.webm')) return 'video/webm';
-            if (url.includes('.ogg') || url.includes('.ogv')) return 'video/ogg';
-            if (url.includes('.mp3')) return 'audio/mp3';
-            if (url.includes('.wav')) return 'audio/wav';
-            
-            // Si no termina en extensión conocida, intentamos que Video.js lo adivine por defecto
-            return 'video/mp4'; 
+        // Ocultar el elemento de video al iniciar hasta que reciba datos
+        videoElement.style.display = 'none';
+
+        function limpiarReproductor() {
+            if (hlsInstance) {
+                hlsInstance.destroy();
+                hlsInstance = null;
+            }
+            videoElement.pause();
+            videoElement.src = "";
+            videoElement.removeAttribute('type');
+            videoElement.load();
         }
 
-        // Escuchar los cambios en tu Firebase
         database.ref('cast-local-web').on('value', (snapshot) => {
             const urlMedia = snapshot.val();
 
             if (urlMedia && urlMedia.trim() !== "") {
-                // Ocultar pantalla de carga y mostrar reproductor
+                limpiarReproductor();
+
                 mensajeEsperando.style.display = 'none';
-                playerContainer.style.display = 'block';
+                videoElement.style.display = 'block';
 
-                // Obtener el formato adecuado para el motor de Video.js
-                const tipoFormato = getMimeType(urlMedia);
-
-                // Cambiar la fuente dinámicamente y reproducir
-                player.src({
-                    src: urlMedia,
-                    type: tipoFormato
-                });
-                
-                player.ready(function() {
-                    player.play().catch(error => {
-                        console.log("La reproducción automática requiere interacción manual:", error);
-                    });
-                });
-
+                if (urlMedia.includes('.m3u8')) {
+                    // INTENTO 1: Ver si el navegador nativo de Android TV soporta .m3u8 directamente de forma nativa
+                    if (videoElement.canPlayType('application/vnd.apple.mpegurl') || videoElement.canPlayType('application/x-mpegURL')) {
+                        videoElement.type = 'application/x-mpegURL';
+                        videoElement.src = urlMedia;
+                        videoElement.load();
+                        videoElement.play().catch(e => console.log("Auto-play TV nativo bloqueado:", e));
+                    } 
+                    // INTENTO 2: Si el navegador no lo soporta nativo (como Cốc Cốc), forzar la decodificación por software con Hls.js
+                    else if (Hls.isSupported()) {
+                        hlsInstance = new Hls({
+                            // Configuraciones para mejorar la compatibilidad en hardware limitado de TV
+                            lowLatencyMode: true,
+                            maxBufferSize: 0,
+                            maxBufferLength: 5
+                        });
+                        hlsInstance.loadSource(urlMedia);
+                        hlsInstance.attachMedia(videoElement);
+                        hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+                            videoElement.play().catch(e => console.log("Auto-play Hls.js bloqueado:", e));
+                        });
+                    } else {
+                        // Forzar asignación directa como último recurso para que el navegador nativo lo intercepte
+                        videoElement.src = urlMedia;
+                        videoElement.load();
+                        videoElement.play().catch(e => console.log("Último recurso bloqueado:", e));
+                    }
+                } else {
+                    // Para MP4 y otros formatos estándar
+                    videoElement.src = urlMedia;
+                    videoElement.load();
+                    videoElement.play().catch(e => console.log("Error en formato estándar:", e));
+                }
             } else {
-                // Si mandas limpiar desde el control remoto
-                player.pause();
-                player.src('');
-                playerContainer.style.display = 'none';
+                limpiarReproductor();
+                videoElement.style.display = 'none';
                 mensajeEsperando.style.display = 'block';
             }
         });
