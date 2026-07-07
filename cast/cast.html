@@ -3,26 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receptor Cast Local</title>
+    <title>Receptor Cast Universal</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body, html {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             background-color: #000;
             overflow: hidden;
-            display: flex; justify-content: center; align-items: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        video { width: 100%; height: 100%; object-fit: contain; }
-        #esperando { color: #fff; font-family: sans-serif; font-size: 1.5rem; text-align: center; }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        #esperando {
+            color: #fff;
+            font-family: sans-serif;
+            font-size: 1.5rem;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
     <div id="esperando">Esperando contenido multimedia...</div>
-    <video id="miVideo" controls autoplay style="display: none;"></video>
+    <video id="miVideo" controls autoplay playsinline style="display: none;"></video>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <script>
         // Tus credenciales reales de micastlocal
@@ -41,21 +59,58 @@
 
         const videoElement = document.getElementById('miVideo');
         const mensajeEsperando = document.getElementById('esperando');
+        let hlsInstance = null;
 
-        // Escuchando el nodo raíz del nuevo proyecto
+        // Función para limpiar cualquier instancia previa de video/streaming
+        function limpiarReproductor() {
+            if (hlsInstance) {
+                hlsInstance.destroy();
+                hlsInstance = null;
+            }
+            videoElement.pause();
+            videoElement.src = "";
+            videoElement.load();
+        }
+
+        // Escuchando los cambios en Firebase
         database.ref('cast-local-web').on('value', (snapshot) => {
-            const urlVideo = snapshot.val();
+            const urlMedia = snapshot.val();
 
-            if (urlVideo && urlVideo.trim() !== "") {
+            if (urlMedia && urlMedia.trim() !== "") {
+                // Limpiar reproducción anterior antes de cargar la nueva
+                limpiarReproductor();
+
                 mensajeEsperando.style.display = 'none';
                 videoElement.style.display = 'block';
-                videoElement.src = urlVideo;
-                videoElement.load();
-                videoElement.play().catch(error => {
-                    console.log("Error de auto-reproducción:", error);
-                });
+
+                // DETECCIÓN DE FORMATO: Si es un stream HLS (.m3u8)
+                if (urlMedia.includes('.m3u8')) {
+                    if (Hls.isSupported()) {
+                        hlsInstance = new Hls();
+                        hlsInstance.loadSource(urlMedia);
+                        hlsInstance.attachMedia(videoElement);
+                        hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+                            videoElement.play().catch(e => console.log("Auto-play bloqueado:", e));
+                        });
+                    } 
+                    // Soporte nativo para Safari (iOS/Mac) que no requiere Hls.js
+                    else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+                        videoElement.src = urlMedia;
+                        videoElement.addEventListener('loadedmetadata', () => {
+                            videoElement.play().catch(e => console.log("Auto-play bloqueado:", e));
+                        });
+                    }
+                } 
+                // FORMATOS ESTÁNDAR: MP4, WebM, OGG, MP3, WAV, MKV, etc.
+                else {
+                    videoElement.src = urlMedia;
+                    videoElement.load();
+                    videoElement.play().catch(error => {
+                        console.log("La reproducción automática requiere interacción o el formato no es nativo:", error);
+                    });
+                }
             } else {
-                videoElement.pause();
+                limpiarReproductor();
                 videoElement.style.display = 'none';
                 mensajeEsperando.style.display = 'block';
             }
