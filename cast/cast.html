@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receptor Cast Nativo</title>
+    <title>Receptor Cast Nativo - AutoPlay</title>
     <style>
         * {
             margin: 0;
@@ -36,7 +36,7 @@
 
     <div id="esperando">Esperando contenido multimedia...</div>
     
-    <video id="miVideo" controls autoplay playsinline webkit-playsinline preload="auto"></video>
+    <video id="miVideo" controls autoplay playsinline webkit-playsinline preload="auto" muted></video>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
@@ -65,30 +65,36 @@
             const urlMedia = snapshot.val();
 
             if (urlMedia && urlMedia.trim() !== "") {
-                // Estado de carga inicial
                 mensajeEsperando.style.display = 'none';
                 videoElement.style.display = 'block';
 
-                // Si es un stream .m3u8, le asignamos el tipo nativo para la TV
+                // Forzar que empiece muteado para asegurar que el navegador no lo bloquee
+                videoElement.muted = true;
+
                 if (urlMedia.includes('.m3u8')) {
                     videoElement.type = 'application/x-mpegURL';
                 } else {
-                    videoElement.removeAttribute('type'); // Que el navegador decida para MP4/WebM
+                    videoElement.removeAttribute('type');
                 }
 
-                // Cambiar ruta y forzar recarga de buffer nativo limpio
                 videoElement.src = urlMedia;
                 videoElement.load();
                 
-                // Intentar reproducir automáticamente
-                const playPromise = videoElement.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.log("Reproducción automática pausada por el navegador, requiere interacción.");
-                    });
-                }
+                // Ejecutar reproducción automática forzada
+                videoElement.play().then(() => {
+                    // TRUCO: Una vez que el video ya arrancó a reproducirse con éxito en silencio,
+                    // esperamos un milisegundo y le devolvemos el volumen automáticamente.
+                    setTimeout(() => {
+                        videoElement.muted = false;
+                    }, 150);
+                }).catch(error => {
+                    console.log("El navegador bloqueó el autoplay estricto. Intentando bypass alternativo...");
+                    // Reintento de emergencia si la TV es muy estricta
+                    videoElement.muted = true;
+                    videoElement.play();
+                });
+
             } else {
-                // Volver al estado de espera si se limpia la pantalla
                 videoElement.pause();
                 videoElement.src = "";
                 videoElement.removeAttribute('type');
