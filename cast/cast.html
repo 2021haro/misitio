@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receptor Cast Fluido - Android TV</title>
+    <title>Receptor Cast Estable</title>
     <style>
         * {
             margin: 0;
@@ -83,17 +83,14 @@
                 videoElement.style.display = 'block';
 
                 if (urlMedia.includes('.m3u8')) {
-                    
-                    // Configuramos Hls.js con esteroides para Android TV (Evita congelamientos)
                     if (Hls.isSupported()) {
+                        // Configuración equilibrada (No satura RAM ni rompe la PC)
                         hlsInstance = new Hls({
-                            maxBufferLength: 15,        // Guarda máximo 15 segundos en memoria para no saturar la RAM de la TV
-                            maxMaxBufferLength: 30,     // Límite estricto de búfer
-                            maxBufferSize: 30 * 1000 * 1000, // Máximo 30MB de memoria RAM para video
-                            appendErrorMaxRetry: 5,     // Si falla un fragmento, reintenta 5 veces antes de trabarse
-                            enableWorker: true,         // Activa hilos de procesamiento paralelos en la TV
-                            backBufferLength: 10,       // Borra lo que ya viste para liberar RAM al instante
-                            liveDurationInfinity: true
+                            maxBufferLength: 20,         // 20 segundos de colchón
+                            maxMaxBufferLength: 40,
+                            maxBufferSize: 50 * 1000 * 1000, // 50MB máximo
+                            lowLatencyMode: false,       // Desactivado para dar más tiempo a cargar páginas pesadas
+                            enableWorker: false          // Desactivado porque rompía la compatibilidad en algunas PCs/TVs
                         });
 
                         hlsInstance.loadSource(urlMedia);
@@ -103,27 +100,17 @@
                             videoElement.play().catch(e => console.log("Auto-play bloqueado:", e));
                         });
 
-                        // MANEJO DE ERRORES AUTOMÁTICO: Si el internet fluctúa, el reproductor se repara solo sin trabarse
+                        // Recuperación automática estándar
                         hlsInstance.on(Hls.Events.ERROR, function (event, data) {
                             if (data.fatal) {
-                                switch (data.type) {
-                                    case Hls.ErrorTypes.NETWORK_ERROR:
-                                        console.log("Error de red, intentando recuperar...");
-                                        hlsInstance.startLoad();
-                                        break;
-                                    case Hls.ErrorTypes.MEDIA_ERROR:
-                                        console.log("Error de desincronización, intentando recuperar...");
-                                        hlsInstance.recoverMediaError();
-                                        break;
-                                    default:
-                                        limpiarReproductor();
-                                        break;
+                                if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+                                    hlsInstance.startLoad();
+                                } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+                                    hlsInstance.recoverMediaError();
                                 }
                             }
                         });
-
                     } 
-                    // Si el navegador de la TV fuerza el reproductor del sistema
                     else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
                         videoElement.type = 'application/x-mpegURL';
                         videoElement.src = urlMedia;
@@ -131,7 +118,7 @@
                         videoElement.play().catch(e => console.log("Error en nativo:", e));
                     }
                 } else {
-                    // Para MP4 u otros formatos planos
+                    // Para MP4 y cualquier otro formato plano directo
                     videoElement.src = urlMedia;
                     videoElement.load();
                     videoElement.play().catch(e => console.log("Error en formato estándar:", e));
