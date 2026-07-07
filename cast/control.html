@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Remoto Cast</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        h2 { text-align: center; margin-bottom: 20px; color: #00adb5; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background: #2d2d2d;
+            border: 1px solid #3d3d3d;
+            border-radius: 6px;
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background 0.2s;
+        }
+        .btn-enviar { background-color: #00adb5; color: white; }
+        .btn-enviar:hover { background-color: #008086; }
+        .btn-limpiar { background-color: #ff2e63; color: white; }
+        .btn-limpiar:hover { background-color: #d92352; }
+        
+        .estado {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 15px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Control Cast</h2>
+        
+        <label for="urlInput">Pegar URL del Video:</label>
+        <input type="text" id="urlInput" placeholder="https://ejemplo.com/video.mp4" autocomplete="off">
+        
+        <button class="btn-enviar" id="btnEnviar">Transmitir Video</button>
+        <button class="btn-limpiar" id="btnLimpiar">Detener / Limpiar Pantalla</button>
+        
+        <div class="estado" id="estado">Estado: Listo para enviar.</div>
+    </div>
+
+    <!-- Cargamos los scripts de Firebase (Versión de compatibilidad) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+    <script>
+        // REEMPLAZA ESTO con tus mismas credenciales de Firebase
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY_DE_FIREBASE",
+            authDomain: "misitio-2373f.firebaseapp.com",
+            databaseURL: "https://misitio-2373f-default-rtdb.firebaseio.com",
+            projectId: "misitio-2373f",
+            storageBucket: "misitio-2373f.appspot.com",
+            messagingSenderId: "TU_ID",
+            appId: "TU_APP_ID"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Elementos de la interfaz
+        const urlInput = document.getElementById('urlInput');
+        const btnEnviar = document.getElementById('btnEnviar');
+        const btnLimpiar = document.getElementById('btnLimpiar');
+        const estadoDiv = document.getElementById('estado');
+
+        // Escuchar el estado actual en la Base de Datos para mostrarlo en el celular
+        database.ref('stream/url_actual').on('value', (snapshot) => {
+            const urlActual = snapshot.val();
+            if (urlActual && urlActual.trim() !== "") {
+                estadoDiv.innerText = "Transmitiendo actualmente:\n" + urlActual;
+                urlInput.value = urlActual; // Rellena el input con lo que se está viendo
+            } else {
+                estadoDiv.innerText = "Estado: Pantalla vacía (esperando contenido).";
+                urlInput.value = "";
+            }
+        });
+
+        // Evento para enviar la URL al hacer clic en Transmitir
+        btnEnviar.addEventListener('click', () => {
+            const urlAVirar = urlInput.value.trim();
+            
+            if (urlAVirar === "") {
+                alert("Por favor, introduce o pega una URL válida.");
+                return;
+            }
+
+            // Guardamos la URL en Firebase en el nodo exacto que la PC está escuchando
+            database.ref('stream/url_actual').set(urlAVirar)
+                .then(() => {
+                    estadoDiv.innerText = "¡Enviado con éxito!";
+                })
+                .catch((error) => {
+                    estadoDiv.innerText = "Error al enviar: " + error.message;
+                });
+        });
+
+        // Evento para limpiar la pantalla (borrar el contenido de Firebase)
+        btnLimpiar.addEventListener('click', () => {
+            database.ref('stream/url_actual').set("")
+                .then(() => {
+                    estadoDiv.innerText = "Pantalla limpiada.";
+                    urlInput.value = "";
+                })
+                .catch((error) => {
+                    estadoDiv.innerText = "Error al limpiar: " + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
