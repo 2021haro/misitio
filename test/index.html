@@ -14,6 +14,8 @@
             --fondo-pagina: #050a05;
             --color-btn-pys: #00ff00;
             --color-btn-extras: #00FFFF;
+            --color-avisos: #00FFFF; 
+            --color-indicador-form: #ffaa00; /* VARIABLE AGREGADA PARA CAMBIAR EL COLOR DE GUARDAR/ACTUALIZAR PÁGINA */
         }
 
         /* 2. ESTILOS GLOBALES */
@@ -253,6 +255,7 @@
             margin-bottom: 20px !important;
             letter-spacing: 1px;
             transition: color 0.2s ease;
+            color: var(--color-indicador-form) !important; /* Lee de la nueva variable global */
         }
 
         .modal-box p.texto-confirmacion {
@@ -502,7 +505,7 @@
         /* CONTENEDOR FLEX PARA LOS BOTONES DE ACCIÓN DEL FORMULARIO */
         .contenedor-botones-formulario {
             display: flex;
-            flex-direction: column; /* Móvil por defecto: Apilados verticalmente */
+            flex-direction: column; 
             gap: 10px;
             margin-bottom: 20px;
             width: 100%;
@@ -515,11 +518,11 @@
             text-align: center !important;
             font-size: 16px !important;
             font-weight: bold;
-            color: var(--color-btn-pys);
+            color: var(--color-avisos) !important;
             margin: 5px 0 0 0 !important;
             letter-spacing: 1.5px;
             animation: parpadearAviso 0.6s linear infinite;
-            order: 99; /* Asegura quedar al final abajo de todo en móvil */
+            order: 99; 
         }
 
         @keyframes parpadearAviso {
@@ -600,7 +603,7 @@
             }
 
             .contenedor-botones-formulario {
-                flex-direction: row; /* Horizontal en PC */
+                flex-direction: row; 
                 flex-wrap: wrap;
             }
 
@@ -645,7 +648,6 @@
 
     <div class="contenedor-main">
         
-        <!-- CONTENEDOR DINÁMICO DE ENLACES -->
         <div id="listaPaginasDinamicas" class="contenedor-btn-pys"></div>
 
         <div class="contenedor-main">
@@ -658,7 +660,6 @@
 
     </div>
 
-    <!-- MODAL PRINCIPAL DE ACCESO -->
     <div id="miModal" class="modal-overlay">
         <div class="modal-box">
             <button class="modal-cerrar-esquina" onclick="cerrarModal()" title="Cerrar">X</button>
@@ -671,7 +672,6 @@
         </div>
     </div>
 
-    <!-- VENTANA DEL MENÚ MAESTRO -->
     <div id="modalMaestroVacio" class="modal-overlay">
         <div class="modal-box">
             <button class="modal-cerrar-esquina" onclick="cerrarModalMaestroVacio()" title="Cerrar">X</button>
@@ -688,7 +688,6 @@
         </div>
     </div>
 
-    <!-- MODAL COMPLETO: MODIFICAR PÁGINAS -->
     <div id="modalModificarPaginas" class="modal-overlay">
         <div class="modal-box modal-doble">
             <button class="modal-cerrar-esquina" onclick="cerrarModalModificarPaginas()" title="Cerrar">X</button>
@@ -697,7 +696,6 @@
 
             <div class="cuerpo-modificar-paginas">
                 
-                <!-- COLUMNA IZQUIERDA: FORMULARIO -->
                 <div class="columna-izquierda-form">
                     <p id="indicadorModoFormulario" class="subtitulo-dinamico-form">GUARDAR PÁGINA</p>
 
@@ -730,14 +728,12 @@
                     <div class="contenedor-botones-formulario">
                         <button id="btnGuardarPaginaAccion" onclick="guardarNuevaPagina(false)">GUARDAR PÁGINA</button>
                         <button id="btnCancelarEdicionForm" onclick="resetearFormularioPaginas()">CANCELAR EDICIÓN</button>
-                        <!-- MENSAJE DE ESTADO INYECTADO -->
                         <p id="lblAvisoOperacion" class="aviso-operacion-estado"></p>
                     </div>
                 </div>
 
                 <hr class="linea-separadora">
 
-                <!-- COLUMNA DERECHA: LISTA ACTUAL -->
                 <div class="columna-derecha-lista">
                     <p id="textoCantidadPaginas">PÁGINAS ACTUALES:</p>
                     <div id="listaInternaEliminar" class="lista-edicion-paginas"></div>
@@ -757,7 +753,6 @@
         </div>
     </div>
 
-    <!-- MODAL: CONFIRMAR ELIMINACIÓN -->
     <div id="modalConfirmarEliminar" class="modal-overlay">
         <div class="modal-box">
             <p class="texto-centrado" style="color: #ff0000;">¿ESTÁS SEGURO DE ELIMINAR ESTA PÁGINA?</p>
@@ -770,7 +765,6 @@
         </div>
     </div>
 
-    <!-- PANEL DE CAMBIO DE CONTRASEÑA -->
     <div id="modalCambio" class="modal-overlay">
         <div class="modal-box modal-doble">
             <button class="modal-cerrar-esquina" onclick="cerrarModalCambio()" title="Cerrar">X</button>
@@ -794,7 +788,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE ERROR -->
     <div id="modalError" class="modal-overlay">
         <div class="modal-box">
             <button class="modal-cerrar-esquina" onclick="cerrarModalError()" title="Cerrar">X</button>
@@ -849,7 +842,6 @@
                 let indexTab = 4; 
                 let totalPaginasValidas = 0; 
 
-                // SOLUCIÓN: Ordenamos usando la propiedad 'fechaModificacion' de manera descendente (la más nueva arriba)
                 Object.keys(paginasGlobales).sort((a, b) => {
                     const fechaA = paginasGlobales[a].fechaModificacion || 0;
                     const fechaB = paginasGlobales[b].fechaModificacion || 0;
@@ -918,7 +910,8 @@
             
             const indicador = document.getElementById("indicadorModoFormulario");
             indicador.textContent = "ACTUALIZAR PÁGINA";
-            indicador.style.color = "#ffaa00";
+            // Lee dinámicamente de la variable calculada por el navegador
+            indicador.style.color = "var(--color-indicador-form)";
 
             document.getElementById("tituloModalPaginas").textContent = `C:/ AJUSTES / PÁGINAS / ${nombre} / ${url}`;
 
@@ -947,7 +940,6 @@
                 targetID = llaves.length > 0 ? Math.max(...llaves) + 1 : 1;
             }
 
-            // Inyectamos la marca de tiempo actual (timestamp) para forzar el cambio de posición
             const timestampActual = Date.now();
 
             const nuevaData = {};
@@ -1008,6 +1000,7 @@
                         lbl.style.display = "block";
 
                         if (avisoTimeout) clearTimeout(avisoTimeout);
+                        
                         avisoTimeout = setTimeout(() => {
                             lbl.style.display = "none";
                             lbl.textContent = "";
@@ -1031,7 +1024,8 @@
             
             const indicador = document.getElementById("indicadorModoFormulario");
             indicador.textContent = "GUARDAR PÁGINA";
-            indicador.style.color = "var(--color-btn-pys)";
+            // CORREGIDO: Mantiene la consistencia del color usando la nueva variable global
+            indicador.style.color = "var(--color-indicador-form)";
 
             document.getElementById("tituloModalPaginas").textContent = "C:/ AJUSTES / PÁGINAS";
 
