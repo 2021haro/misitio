@@ -14,8 +14,8 @@
             --fondo-pagina: #050a05;
             --color-btn-pys: #00ff00;
             --color-btn-extras: #00FFFF;
-            --color-avisos: #00FFFF; 
-            --color-indicador-form: #ffaa00; /* VARIABLE AGREGADA PARA CAMBIAR EL COLOR DE GUARDAR/ACTUALIZAR PÁGINA */
+            --color-avisos: #ffaa00; 
+            --color-indicador-form: #ffaa00; 
         }
 
         /* 2. ESTILOS GLOBALES */
@@ -235,6 +235,30 @@
             text-shadow: 0 0 10px #ff0000;
         }
 
+        /* BOTÓN DE REGRESAR EN LA ESQUINA SUPERIOR IZQUIERDA */
+        .modal-regresar-esquina {
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            background: transparent;
+            border: none;
+            color: var(--color-btn-pys);
+            font-size: 18px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            outline: none;
+            padding: 2px 6px;
+            transition: all 0.2s ease;
+        }
+
+        .modal-regresar-esquina:hover,
+        .modal-regresar-esquina:focus {
+            color: var(--color-avisos); 
+            outline: none;
+            text-shadow: 0 0 10px var(--color-avisos);
+        }
+
         .modal-box p {
             color: var(--color-btn-pys); 
             margin-bottom: 8px;
@@ -255,7 +279,7 @@
             margin-bottom: 20px !important;
             letter-spacing: 1px;
             transition: color 0.2s ease;
-            color: var(--color-indicador-form) !important; /* Lee de la nueva variable global */
+            color: var(--color-indicador-form) !important;
         }
 
         .modal-box p.texto-confirmacion {
@@ -330,19 +354,6 @@
             color: #000;
             outline: none;
             box-shadow: 0 0 10px #ff0000;
-        }
-
-        .modal-botones button.btn-regresar {
-            border: 1px solid #ffaa00;
-            color: #ffaa00;
-        }
-
-        .modal-botones button.btn-regresar:hover, 
-        .modal-botones button.btn-regresar:focus {
-            background: #ffaa00;
-            color: #000;
-            outline: none;
-            box-shadow: 0 0 10px #ffaa00;
         }
 
         .modal-botones button.btn-entrar,
@@ -530,7 +541,7 @@
             50% { opacity: 0.4; }
         }
 
-        #btnGuardarPaginaAccion {
+        #btnGuardarPaginaAccion, #btnEnviarSugerenciaAccion {
             border: 1px solid var(--color-btn-pys);
             color: var(--color-btn-pys);
             background: transparent;
@@ -544,8 +555,8 @@
             outline: none;
         }
 
-        #btnGuardarPaginaAccion:hover,
-        #btnGuardarPaginaAccion:focus {
+        #btnGuardarPaginaAccion:hover, #btnGuardarPaginaAccion:focus,
+        #btnEnviarSugerenciaAccion:hover, #btnEnviarSugerenciaAccion:focus {
             background: var(--color-btn-pys);
             color: #000;
             box-shadow: 0 0 10px var(--color-btn-pys);
@@ -582,10 +593,57 @@
             width: 100%;
         }
 
+        /* ESTRUCTURA Y ESTILOS PARA EL SISTEMA DE TABS (PESTAÑAS) */
+        .contenedor-tabs-navegacion {
+            display: flex;
+            width: 100%;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .btn-tab-nav {
+            flex: 1;
+            background: transparent;
+            border: 1px dashed rgba(0, 255, 0, 0.4);
+            color: var(--color-btn-pys);
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-tab-nav:hover, .btn-tab-nav:focus {
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+            outline: none;
+        }
+
+        /* Estado activo de la pestaña seleccionada */
+        .btn-tab-nav.tab-activo {
+            border: 1px solid var(--color-btn-pys);
+            background: var(--color-btn-pys);
+            color: #000;
+            box-shadow: 0 0 10px var(--color-btn-pys);
+        }
+
+        .apartado-tab-contenido {
+            display: none;
+            width: 100%;
+        }
+
+        .apartado-tab-contenido.contenido-activo {
+            display: block;
+        }
+
         /* COMPORTAMIENTO HORIZONTAL EN PC Y NAVEGADORES TV */
         @media (min-width: 768px) {
             #modalModificarPaginas .modal-box {
-                max-width: 900px;
+                max-width: 950px;
                 width: 95%;
             }
 
@@ -599,7 +657,7 @@
 
             .columna-izquierda-form {
                 flex: 1;
-                width: 50%;
+                width: 45%;
             }
 
             .contenedor-botones-formulario {
@@ -619,10 +677,9 @@
 
             .columna-derecha-lista {
                 flex: 1;
-                width: 50%;
+                width: 55%;
                 display: flex;
                 flex-direction: column;
-                margin-top: 15px; 
             }
 
             #modalModificarPaginas .linea-separadora {
@@ -633,11 +690,6 @@
                 max-height: 230px;
                 height: 230px;
                 margin-bottom: 12px;
-            }
-            
-            #modalModificarPaginas .modal-botones {
-                width: 100%;
-                margin-top: 15px;
             }
         }
     </style>
@@ -653,7 +705,7 @@
         <div class="contenedor-main">
             <div class="contenedor-btn-extras">
                 <a href="https://www.espn.com.mx/futbol/calendario/_/liga/fifa.world" target="_blank" rel="noopener noreferrer" tabindex="1">CALENDARIO MUNDIAL</a>
-                <button onclick="abrirModal()" tabindex="2">Versión X (BETA)</button>
+                <button onclick="abrirModalSugerirPaginas()" tabindex="2">Sugerir pagina</button>
                 <button onclick="abrirModalAjustes()" tabindex="3">Ajustes</button> 
             </div>
         </div>
@@ -664,10 +716,43 @@
         <div class="modal-box">
             <button class="modal-cerrar-esquina" onclick="cerrarModal()" title="Cerrar">X</button>
             <p class="texto-centrado">INTRODUCE LA CONTRASEÑA:</p>
-            <input type="password" id="passInput" placeholder="****" onkeydown="event => { if(event.key==='Enter') procesarAcceso(); }">
+            <input type="password" id="passInput" placeholder="****" onkeydown="if(event.key==='Enter') { event.preventDefault(); event.stopPropagation(); procesarAcceso(); }">
             <div class="modal-botones">
-                <button class="btn-cancelar" onclick="cerrarModal()">CANCELAR</button>
                 <button class="btn-entrar" onclick="procesarAcceso()">ENTRAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalSugerirPaginas" class="modal-overlay">
+        <div class="modal-box modal-doble">
+            <button class="modal-cerrar-esquina" onclick="cerrarModalSugerirPaginas()" title="Cerrar">X</button>
+            <h2 class="titulo-principal-modal">C:/ SUGERIR PÁGINAS</h2>
+            
+            <p>NOMBRE DE LA PÁGINA:</p>
+            <input type="text" id="nombreSugeridoInput" placeholder="Ej. SeriesFlix" onkeydown="
+                if(event.key === 'Enter') {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    if(this.value.trim() !== '') {
+                        document.getElementById('urlSugeridoInput').focus();
+                    }
+                }
+            ">
+
+            <p>DIRECCIÓN URL:</p>
+            <input type="text" id="urlSugeridoInput" placeholder="Ej. https://sitio.com" onkeydown="
+                if(event.key === 'Enter') {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    if(this.value.trim() !== '' && document.getElementById('nombreSugeridoInput').value.trim() !== '') {
+                        enviarSugerenciaServidor();
+                    }
+                }
+            ">
+
+            <div class="contenedor-botones-formulario">
+                <button id="btnEnviarSugerenciaAccion" onclick="enviarSugerenciaServidor()">ENVIAR SUGERENCIA</button>
+                <p id="lblAvisoOperacionSugerido" class="aviso-operacion-estado"></p>
             </div>
         </div>
     </div>
@@ -681,15 +766,12 @@
                 <button onclick="accionModificarPaginas()">PÁGINAS</button>
                 <button onclick="accionModificarContrasenas()">CONTRASEÑA</button>
             </div>
-
-            <div class="modal-botones">
-                <button class="btn-cancelar" style="width: 100%; flex: none;" onclick="cerrarModalMaestroVacio()">CANCELAR</button>
-            </div>
         </div>
     </div>
 
     <div id="modalModificarPaginas" class="modal-overlay">
         <div class="modal-box modal-doble">
+            <button class="modal-regresar-esquina" onclick="regresarDePaginasAMaestro()" title="Regresar">◀</button>
             <button class="modal-cerrar-esquina" onclick="cerrarModalModificarPaginas()" title="Cerrar">X</button>
             
             <h2 id="tituloModalPaginas" class="titulo-principal-modal">C:/ AJUSTES / PÁGINAS</h2>
@@ -702,11 +784,10 @@
                     <p>NOMBRE DE LA PÁGINA:</p>
                     <input type="text" id="nombrePaginaInput" placeholder="Ej. SeriesFlix" onkeydown="
                         if(event.key === 'Enter') {
-                            event.stopImmediatePropagation();
+                            event.preventDefault();
+                            event.stopPropagation();
                             if(this.value.trim() !== '') {
                                 document.getElementById('urlPaginaInput').focus();
-                            } else {
-                                event.preventDefault();
                             }
                         }
                     ">
@@ -714,13 +795,12 @@
                     <p>DIRECCIÓN URL:</p>
                     <input type="text" id="urlPaginaInput" placeholder="Ej. https://sitio.com" onkeydown="
                         if(event.key === 'Enter') {
-                            event.stopImmediatePropagation();
+                            event.preventDefault();
+                            event.stopPropagation();
                             const nom = document.getElementById('nombrePaginaInput').value.trim();
                             const url = this.value.trim();
                             if(url !== '' && nom !== '') {
                                 guardarNuevaPagina(true);
-                            } else {
-                                event.preventDefault();
                             }
                         }
                     ">
@@ -735,8 +815,18 @@
                 <hr class="linea-separadora">
 
                 <div class="columna-derecha-lista">
-                    <p id="textoCantidadPaginas">PÁGINAS ACTUALES:</p>
-                    <div id="listaInternaEliminar" class="lista-edicion-paginas"></div>
+                    <div class="contenedor-tabs-navegacion">
+                        <button id="btnTabPaginasActuales" class="btn-tab-nav tab-activo" onclick="alternarPestanaListas('tabPaginasActuales')">PÁGINAS ACTUALES: 00</button>
+                        <button id="btnTabPaginasSugeridas" class="btn-tab-nav" onclick="alternarPestanaListas('tabPaginasSugeridas')">PÁGINAS SUGERIDAS: 00</button>
+                    </div>
+
+                    <div id="contenidoTabPaginasActuales" class="apartado-tab-contenido contenido-activo">
+                        <div id="listaInternaEliminar" class="lista-edicion-paginas"></div>
+                    </div>
+
+                    <div id="contenidoTabPaginasSugeridas" class="apartado-tab-contenido">
+                        <div id="listaInternaSugeridas" class="lista-edicion-paginas"></div>
+                    </div>
 
                     <div class="barra-scroll-lista">
                         <button class="btn-scroll-lista" onclick="hacerScrollLista('subir')">SUBIR ▲</button>
@@ -745,16 +835,12 @@
                 </div>
 
             </div>
-
-            <div class="modal-botones">
-                <button class="btn-cancelar" onclick="cerrarModalModificarPaginas('subir')">CANCELAR</button>
-                <button class="btn-regresar" onclick="regresarDePaginasAMaestro()">REGRESAR</button>
-            </div>
         </div>
     </div>
 
     <div id="modalConfirmarEliminar" class="modal-overlay">
         <div class="modal-box">
+            <button class="modal-cerrar-esquina" onclick="cerrarConfirmacionEliminar()" title="Cerrar">X</button>
             <p class="texto-centrado" style="color: #ff0000;">¿ESTÁS SEGURO DE ELIMINAR ESTA PÁGINA?</p>
             <p id="textoPaginaAEliminar" class="texto-centrado" style="opacity: 0.9; font-size: 16px; margin-bottom: 5px; font-weight: bold;"></p>
             <p id="textoUrlAEliminar" class="texto-centrado" style="opacity: 0.5; font-size: 13px; margin-bottom: 25px; word-break: break-all; font-weight: normal;"></p>
@@ -767,30 +853,59 @@
 
     <div id="modalCambio" class="modal-overlay">
         <div class="modal-box modal-doble">
+            <button class="modal-regresar-esquina" onclick="if(!window.estaAlertaBloqueando()) regresarAlMenuMaestro()" title="Regresar">◀</button>
             <button class="modal-cerrar-esquina" onclick="cerrarModalCambio()" title="Cerrar">X</button>
             
-            <p>NUEVA CONTRASEÑA X:</p>
-            <input type="text" id="nuevoAccesoInput" placeholder="Nueva clave de acceso" onkeydown="event => { if(event.key==='Enter') document.getElementById('nuevaMaestraInput').focus(); }">
+            <h2 class="titulo-principal-modal" style="color: var(--color-btn-pys); margin-bottom: 15px;">C:/ AJUSTES / CONTRASEÑA</h2>
+            
+            <div class="contenedor-tabs-navegacion">
+                <button id="btnTabAcceso" class="btn-tab-nav tab-activo" onclick="alternarPestanaContrasena('tab1')">CONTRASEÑA X</button>
+                <button id="btnTabAdmin" class="btn-tab-nav" onclick="alternarPestanaContrasena('tab2')">CONTRASEÑA ADMIN</button>
+            </div>
 
-            <p>NUEVA MAESTRA:</p>
-            <input type="text" id="nuevaMaestraInput" placeholder="Nueva clave maestra" onkeydown="event => { if(event.key==='Enter') document.getElementById('maestraActualInput').focus(); }">
+            <div id="contenidoTabAcceso" class="apartado-tab-contenido contenido-activo">
+                <p>NUEVA CONTRASEÑA X:</p>
+                <input type="text" id="nuevoAccesoInput" placeholder="Contraseña x" onkeydown="
+                    if(event.key==='Enter') {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        if(window.estaAlertaBloqueando()) return;
+                        document.getElementById('maestraActualInput').focus();
+                        if (document.getElementById('maestraActualInput').value.trim() !== '') {
+                            procesarCambioContrasena();
+                        }
+                    }
+                ">
+            </div>
+
+            <div id="contenidoTabAdmin" class="apartado-tab-contenido">
+                <p>NUEVA CONTRASEÑA ADMIN:</p>
+                <input type="text" id="nuevaMaestraInput" placeholder="Contraseña admin" onkeydown="
+                    if(event.key==='Enter') {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        if(window.estaAlertaBloqueando()) return;
+                        document.getElementById('maestraActualInput').focus();
+                        if (document.getElementById('maestraActualInput').value.trim() !== '') {
+                            procesarCambioContrasena();
+                        }
+                    }
+                ">
+            </div>
 
             <hr class="linea-separadora">
 
-            <p class="texto-confirmacion">CONFIRMAR CON MAESTRA ACTUAL:</p>
-            <input type="password" id="maestraActualInput" placeholder="****" onkeydown="event => { if(event.key==='Enter') procesarCambioContrasena(); }">
+            <p class="texto-confirmacion">CONFIRMA CON CONTRASEÑA ADMIN ACTUAL:</p>
+            <input type="password" id="maestraActualInput" placeholder="****" onkeydown="if(event.key==='Enter') { event.preventDefault(); event.stopPropagation(); if(!window.estaAlertaBloqueando()) procesarCambioContrasena(); }">
 
             <div class="modal-botones">
-                <button class="btn-cancelar" onclick="cerrarModalCambio()">CANCELAR</button>
-                <button class="btn-regresar" onclick="regresarAlMenuMaestro()">REGRESAR</button>
-                <button class="btn-entrar" onclick="procesarCambioContrasena()">GUARDAR</button>
+                <button class="btn-entrar" style="width: 100%; flex: none;" onclick="if(!window.estaAlertaBloqueando()) procesarCambioContrasena()">GUARDAR</button>
             </div>
         </div>
     </div>
 
     <div id="modalError" class="modal-overlay">
         <div class="modal-box">
-            <button class="modal-cerrar-esquina" onclick="cerrarModalError()" title="Cerrar">X</button>
             <p class="texto-error" id="textoErrorCustom">CONTRASEÑA INCORRECTA.</p>
             <div class="modal-botones">
                 <button class="btn-aceptar" id="btnAceptarError" onclick="cerrarModalError()">ACEPTAR</button>
@@ -819,11 +934,37 @@
         let passCorrecta = "a"; 
         let passMaestra = "1"; 
         let paginasGlobales = {}; 
+        let sugeridasGlobales = {};
         let idPaginaEnEdicion = null; 
         let idSeleccionadoParaEliminar = null; 
+        let tipoEliminacionActual = "paginas"; 
         const enlaceDestino = "https://jahf.vercel.app/x";
 
         let avisoTimeout = null;
+        let pestañaListaAbierta = "tabPaginasActuales";
+
+        window.alternarPestanaListas = function(tabId) {
+            if(window.estaAlertaBloqueando()) return;
+            
+            pestañaListaAbierta = tabId;
+            const btnActuales = document.getElementById("btnTabPaginasActuales");
+            const btnSugeridas = document.getElementById("btnTabPaginasSugeridas");
+            const divActuales = document.getElementById("contenidoTabPaginasActuales");
+            const divSugeridas = document.getElementById("contenidoTabPaginasSugeridas");
+
+            if (tabId === 'tabPaginasActuales') {
+                btnActuales.classList.add("tab-activo");
+                btnSugeridas.classList.remove("tab-activo");
+                divActuales.classList.add("contenido-activo");
+                divSugeridas.classList.remove("contenido-activo");
+            } else {
+                btnSugeridas.classList.add("tab-activo");
+                btnActuales.classList.remove("tab-activo");
+                divSugeridas.classList.add("contenido-activo");
+                divActuales.classList.remove("contenido-activo");
+            }
+            resetearFormularioPaginas();
+        }
 
         onValue(rootRef, (snapshot) => {
             if (snapshot.exists()) {
@@ -832,15 +973,17 @@
                 if (data.passMaestra !== undefined) passMaestra = data.passMaestra;
                 
                 paginasGlobales = data.paginas || {};
+                sugeridasGlobales = data.sugeridas || {};
 
                 const contenedorWeb = document.getElementById("listaPaginasDinamicas");
                 contenedorWeb.innerHTML = ""; 
                 
-                const contenedorModal = document.getElementById("listaInternaEliminar");
-                contenedorModal.innerHTML = "";
-
                 let indexTab = 4; 
                 let totalPaginasValidas = 0; 
+                let totalSugeridasValidas = 0;
+
+                const contenedorModal = document.getElementById("listaInternaEliminar");
+                contenedorModal.innerHTML = "";
 
                 Object.keys(paginasGlobales).sort((a, b) => {
                     const fechaA = paginasGlobales[a].fechaModificacion || 0;
@@ -872,14 +1015,12 @@
                         const btnModificar = document.createElement("button");
                         btnModificar.className = "btn-modificar-fila";
                         btnModificar.textContent = "✎";
-                        btnModificar.title = "Actualizar"; 
-                        btnModificar.onclick = () => cargarPaginaParaEditar(key, item.nombre, item.url);
+                        btnModificar.onclick = () => { if(!window.estaAlertaBloqueando()) cargarPaginaParaEditar(key, item.nombre, item.url, "paginas"); };
 
                         const btnBorrar = document.createElement("button");
                         btnBorrar.className = "btn-borrar-pagina";
                         btnBorrar.textContent = "X";
-                        btnBorrar.title = "Eliminar"; 
-                        btnBorrar.onclick = () => abrirConfirmacionEliminar(key, item.nombre, item.url);
+                        btnBorrar.onclick = () => { if(!window.estaAlertaBloqueando()) abrirConfirmacionEliminar(key, item.nombre, item.url, "paginas"); };
                         
                         groupAcciones.appendChild(btnModificar);
                         groupAcciones.appendChild(btnBorrar);
@@ -890,12 +1031,61 @@
                     }
                 });
 
-                document.getElementById("textoCantidadPaginas").innerHTML = `PÁGINAS ACTUALES: ${totalPaginasValidas}`;
+                const contenedorModalSugeridas = document.getElementById("listaInternaSugeridas");
+                contenedorModalSugeridas.innerHTML = "";
+
+                Object.keys(sugeridasGlobales).sort((a, b) => {
+                    const fechaA = sugeridasGlobales[a].fechaModificacion || 0;
+                    const fechaB = sugeridasGlobales[b].fechaModificacion || 0;
+                    return fechaB - fechaA;
+                }).forEach((key) => {
+                    const item = sugeridasGlobales[key];
+                    if (item.nombre && item.url) {
+                        totalSugeridasValidas++;
+
+                        const fila = document.createElement("div");
+                        fila.className = "fila-pagina-editar";
+                        
+                        const contenedorTexto = document.createElement("div");
+                        contenedorTexto.className = "info-texto-editar";
+                        contenedorTexto.innerHTML = `<span>${item.nombre}</span> <span class="url-atenuada">-> ${item.url}</span>`;
+                        
+                        const groupAcciones = document.createElement("div");
+                        groupAcciones.className = "acciones-fila-lista";
+
+                        const btnModificar = document.createElement("button");
+                        btnModificar.className = "btn-modificar-fila";
+                        btnModificar.textContent = "✎";
+                        btnModificar.onclick = () => { if(!window.estaAlertaBloqueando()) cargarPaginaParaEditar(key, item.nombre, item.url, "sugeridas"); };
+
+                        const btnBorrar = document.createElement("button");
+                        btnBorrar.className = "btn-borrar-pagina";
+                        btnBorrar.textContent = "X";
+                        btnBorrar.onclick = () => { if(!window.estaAlertaBloqueando()) abrirConfirmacionEliminar(key, item.nombre, item.url, "sugeridas"); };
+                        
+                        groupAcciones.appendChild(btnModificar);
+                        groupAcciones.appendChild(btnBorrar);
+
+                        fila.appendChild(contenedorTexto);
+                        fila.appendChild(groupAcciones);
+                        contenedorModalSugeridas.appendChild(fila);
+                    }
+                });
+
+                const strActuales = totalPaginasValidas < 10 ? '0' + totalPaginasValidas : totalPaginasValidas;
+                const strSugeridas = totalSugeridasValidas < 10 ? '0' + totalSugeridasValidas : totalSugeridasValidas;
+
+                document.getElementById("btnTabPaginasActuales").textContent = `PÁGINAS ACTUALES: ${strActuales}`;
+                document.getElementById("btnTabPaginasSugeridas").textContent = `PÁGINAS SUGERIDAS: ${strSugeridas}`;
             }
         });
 
         window.hacerScrollLista = function(direccion) {
-            const lista = document.getElementById("listaInternaEliminar");
+            if(window.estaAlertaBloqueando()) return;
+            
+            const targetListaId = pestañaListaAbierta === "tabPaginasActuales" ? "listaInternaEliminar" : "listaInternaSugeridas";
+            const lista = document.getElementById(targetListaId);
+            
             if (direccion === "subir") {
                 lista.scrollTop -= 45; 
             } else if (direccion === "bajar") {
@@ -903,17 +1093,17 @@
             }
         }
 
-        window.cargarPaginaParaEditar = function(id, nombre, url) {
+        window.cargarPaginaParaEditar = function(id, nombre, url, nodoTipo) {
             idPaginaEnEdicion = id; 
             document.getElementById("nombrePaginaInput").value = nombre;
             document.getElementById("urlPaginaInput").value = url;
             
             const indicador = document.getElementById("indicadorModoFormulario");
             indicador.textContent = "ACTUALIZAR PÁGINA";
-            // Lee dinámicamente de la variable calculada por el navegador
             indicador.style.color = "var(--color-indicador-form)";
 
-            document.getElementById("tituloModalPaginas").textContent = `C:/ AJUSTES / PÁGINAS / ${nombre} / ${url}`;
+            const textoNodoPath = nodoTipo === "paginas" ? "PÁGINAS" : "SUGERIDAS";
+            document.getElementById("tituloModalPaginas").textContent = `C:/ AJUSTES / ${textoNodoPath} / ${nombre}`;
 
             document.getElementById("btnGuardarPaginaAccion").textContent = "ACTUALIZAR PÁGINA";
             document.getElementById("btnCancelarEdicionForm").style.display = "block";
@@ -922,30 +1112,48 @@
         }
 
         window.guardarNuevaPagina = function(esPorTeclado = false) {
+            if(window.estaAlertaBloqueando()) return;
             const nombre = document.getElementById("nombrePaginaInput").value.trim();
             const url = document.getElementById("urlPaginaInput").value.trim();
 
-            if (nombre === "" || url === "") {
+            if (nombre === "" && url === "") {
                 if (esPorTeclado) return;
-                
-                mostrarErrorCustom("DEBES LLENAR AMBOS CAMPOS.", () => {});
+                mostrarErrorCustom("DEBES LLENAR AMBOS CAMPOS.", () => {
+                    window.focarPrimerElementoVisible("modalModificarPaginas");
+                });
+                return;
+            }
+            if (nombre === "") {
+                if (esPorTeclado) return;
+                mostrarErrorCustom("DEBES INTRODUCIR EL NOMBRE DE LA PÁGINA.", () => {
+                    document.getElementById("nombrePaginaInput").focus();
+                });
+                return;
+            }
+            if (url === "") {
+                if (esPorTeclado) return;
+                mostrarErrorCustom("DEBES INTRODUCIR LA DIRECCIÓN URL.", () => {
+                    document.getElementById("urlPaginaInput").focus();
+                });
                 return;
             }
 
             const esActualizacion = (idPaginaEnEdicion !== null);
             let targetID = idPaginaEnEdicion;
+            
+            const colecciónDestino = pestañaListaAbierta === "tabPaginasActuales" ? "paginas" : "sugeridas";
+            const grupoDatos = pestañaListaAbierta === "tabPaginasActuales" ? paginasGlobales : sugeridasGlobales;
 
             if (targetID === null) {
-                const llaves = Object.keys(paginasGlobales).map(Number);
+                const llaves = Object.keys(grupoDatos).map(Number);
                 targetID = llaves.length > 0 ? Math.max(...llaves) + 1 : 1;
             }
 
             const timestampActual = Date.now();
-
             const nuevaData = {};
-            nuevaData[`paginas/${targetID}/nombre`] = nombre;
-            nuevaData[`paginas/${targetID}/url`] = url;
-            nuevaData[`paginas/${targetID}/fechaModificacion`] = timestampActual;
+            nuevaData[`${colecciónDestino}/${targetID}/nombre`] = nombre;
+            nuevaData[`${colecciónDestino}/${targetID}/url`] = url;
+            nuevaData[`${colecciónDestino}/${targetID}/fechaModificacion`] = timestampActual;
 
             update(rootRef, nuevaData)
                 .then(() => {
@@ -961,21 +1169,74 @@
                     }, 1000);
 
                     resetearFormularioPaginas();
-
-                    if (document.activeElement) {
-                        document.activeElement.blur();
-                    }
+                    if (document.activeElement) document.activeElement.blur();
                 })
                 .catch(() => {
                     mostrarErrorCustom("ERROR AL GUARDAR EN EL SERVIDOR.", () => {});
                 });
         }
 
-        window.abrirConfirmacionEliminar = function(id, nombre, url) {
+        window.enviarSugerenciaServidor = function() {
+            if(window.estaAlertaBloqueando()) return;
+            const nombre = document.getElementById("nombreSugeridoInput").value.trim();
+            const url = document.getElementById("urlSugeridoInput").value.trim();
+
+            if (nombre === "" && url === "") {
+                mostrarErrorCustom("DEBES LLENAR AMBOS CAMPOS.", () => {
+                    window.focarPrimerElementoVisible("modalSugerirPaginas");
+                });
+                return;
+            }
+            if (nombre === "") {
+                mostrarErrorCustom("DEBES INTRODUCIR EL NOMBRE DE LA PÁGINA.", () => {
+                    document.getElementById("nombreSugeridoInput").focus();
+                });
+                return;
+            }
+            if (url === "") {
+                mostrarErrorCustom("DEBES INTRODUCIR LA DIRECCIÓN URL.", () => {
+                    document.getElementById("urlSugeridoInput").focus();
+                });
+                return;
+            }
+
+            const llaves = Object.keys(sugeridasGlobales).map(Number);
+            const targetID = llaves.length > 0 ? Math.max(...llaves) + 1 : 1;
+            const timestampActual = Date.now();
+
+            const sugerenciaData = {};
+            sugerenciaData[`sugeridas/${targetID}/nombre`] = nombre;
+            sugerenciaData[`sugeridas/${targetID}/url`] = url;
+            sugerenciaData[`sugeridas/${targetID}/fechaModificacion`] = timestampActual;
+
+            update(rootRef, sugerenciaData)
+                .then(() => {
+                    const lbl = document.getElementById("lblAvisoOperacionSugerido");
+                    lbl.textContent = "----- ENVIADO -----";
+                    lbl.style.display = "block";
+
+                    setTimeout(() => {
+                        lbl.style.display = "none";
+                        lbl.textContent = "";
+                    }, 1000);
+
+                    document.getElementById("nombreSugeridoInput").value = "";
+                    document.getElementById("urlSugeridoInput").value = "";
+                    document.getElementById("nombreSugeridoInput").focus();
+                })
+                .catch(() => {
+                    mostrarErrorCustom("ERROR AL ENVIAR LA SUGERENCIA.", () => {});
+                });
+        }
+
+        window.abrirConfirmacionEliminar = function(id, nombre, url, nodoTipo) {
             idSeleccionadoParaEliminar = id;
+            tipoEliminacionActual = nodoTipo;
             document.getElementById("textoPaginaAEliminar").textContent = `"${nombre}"`;
             document.getElementById("textoUrlAEliminar").textContent = `${url}`;
             document.getElementById("modalConfirmarEliminar").classList.add("activo");
+            
+            window.focarPrimerElementoVisible("modalConfirmarEliminar");
         }
 
         window.cerrarConfirmacionEliminar = function() {
@@ -983,6 +1244,8 @@
             idSeleccionadoParaEliminar = null;
             document.getElementById("textoPaginaAEliminar").textContent = "";
             document.getElementById("textoUrlAEliminar").textContent = "";
+            
+            window.focarPrimerElementoVisible("modalModificarPaginas");
         }
 
         document.getElementById("btnConfirmarEliminarFinal").onclick = function() {
@@ -990,7 +1253,7 @@
                 if (idPaginaEnEdicion === idSeleccionadoParaEliminar) {
                     resetearFormularioPaginas();
                 }
-                const paginaRef = ref(db, `paginas/${idSeleccionadoParaEliminar}`);
+                const paginaRef = ref(db, `${tipoEliminacionActual}/${idSeleccionadoParaEliminar}`);
                 remove(paginaRef)
                     .then(() => {
                         cerrarConfirmacionEliminar();
@@ -1006,9 +1269,7 @@
                             lbl.textContent = "";
                         }, 1000);
 
-                        if (document.activeElement) {
-                            document.activeElement.blur();
-                        }
+                        if (document.activeElement) document.activeElement.blur();
                     })
                     .catch(() => {
                         cerrarConfirmacionEliminar();
@@ -1024,10 +1285,10 @@
             
             const indicador = document.getElementById("indicadorModoFormulario");
             indicador.textContent = "GUARDAR PÁGINA";
-            // CORREGIDO: Mantiene la consistencia del color usando la nueva variable global
             indicador.style.color = "var(--color-indicador-form)";
 
-            document.getElementById("tituloModalPaginas").textContent = "C:/ AJUSTES / PÁGINAS";
+            const textoNodoPath = pestañaListaAbierta === "tabPaginasActuales" ? "PÁGINAS" : "SUGERIDAS";
+            document.getElementById("tituloModalPaginas").textContent = `C:/ AJUSTES / ${textoNodoPath}`;
 
             document.getElementById("btnGuardarPaginaAccion").textContent = "GUARDAR PÁGINA"; 
             document.getElementById("btnCancelarEdicionForm").style.display = "none";
@@ -1036,16 +1297,6 @@
         /* --- CONTROL DE FLUJO PARA MODALES --- */
         let modoActual = ""; 
 
-        window.abrirModal = function() {
-            modoActual = "X";
-            const modal = document.getElementById("miModal");
-            const input = document.getElementById("passInput");
-            modal.classList.add("activo");
-            input.value = ""; 
-            
-            input.focus();
-        }
-
         window.abrirModalAjustes = function() {
             modoActual = "AJUSTES";
             const modal = document.getElementById("miModal");
@@ -1053,7 +1304,6 @@
             modal.classList.add("activo");
             modal.querySelector(".texto-centrado").textContent = "INTRODUCE LA CONTRASEÑA:";
             input.value = ""; 
-            
             input.focus();
         }
 
@@ -1062,8 +1312,22 @@
             document.querySelector("#miModal .texto-centrado").textContent = "INTRODUCE LA CONTRASEÑA:";
         }
 
+        window.abrirModalSugerirPaginas = function() {
+            document.getElementById("nombreSugeridoInput").value = "";
+            document.getElementById("urlSugeridoInput").value = "";
+            document.getElementById("modalSugerirPaginas").classList.add("activo");
+            setTimeout(() => {
+                document.getElementById("nombreSugeridoInput").focus();
+            }, 50);
+        }
+
+        window.cerrarModalSugerirPaginas = function() {
+            document.getElementById("modalSugerirPaginas").classList.remove("activo");
+        }
+
         window.abrirModalMaestroVacio = function() {
             document.getElementById("modalMaestroVacio").classList.add("activo");
+            window.focarPrimerElementoVisible("modalMaestroVacio");
         }
 
         window.cerrarModalMaestroVacio = function() {
@@ -1072,8 +1336,7 @@
 
         window.abrirModalModificarPaginas = function() {
             document.getElementById("modalModificarPaginas").classList.add("activo");
-            resetearFormularioPaginas();
-            
+            alternarPestanaListas('tabPaginasActuales');
             setTimeout(() => {
                 document.getElementById("nombrePaginaInput").focus();
             }, 50);
@@ -1096,37 +1359,86 @@
 
         window.regresarAlMenuMaestro = function() {
             cerrarModalCambio();
-            abrirModalMaestroVacio();
+            abrirModalMaestroVacio(); 
         }
 
         window.regresarDePaginasAMaestro = function() {
             cerrarModalModificarPaginas();
-            abrirModalMaestroVacio();
+            abrirModalMaestroVacio(); 
         }
 
         window.procesarAcceso = function() {
-            const entrada = document.getElementById("passInput").value;
+            const entrada = document.getElementById("passInput").value.trim();
             
+            // 1. Validar si el campo está vacío
+            if (entrada === "") {
+                cerrarModal();
+                mostrarErrorCustom("DEBES INTRODUCIR LA CONTRASEÑA.", abrirModalAjustes);
+                return;
+            }
+
+            // 2. Si es la contraseña Admin -> Abre Ajustes independientemente de dónde venga
             if (entrada === passMaestra.toString()) {
                 cerrarModal();
                 abrirModalMaestroVacio(); 
                 return;
             }
 
+            // 3. Si es la contraseña X -> Redirige al enlace asignado
             if (entrada === passCorrecta.toString()) {
                 cerrarModal();
-                if (modoActual === "X") {
-                    window.location.href = enlaceDestino; 
-                } else if (modoActual === "AJUSTES") {
-                    abrirModalMaestroVacio(); 
-                }
+                window.location.href = enlaceDestino; 
+                return;
+            }
+
+            // 4. Si es incorrecta
+            cerrarModal();
+            if (modoActual === "AJUSTES") {
+                // Solo muestra alerta si se intentaba entrar como administrador/ajustes
+                mostrarErrorCustom("CONTRASEÑA ADMIN INCORRECTA.", abrirModalAjustes); 
             } else {
-                cerrarModal();
-                if (modoActual === "X") {
-                    mostrarErrorCustom("CONTRASEÑA INCORRECTA.", abrirModal); 
-                } else {
-                    mostrarErrorCustom("CONTRASEÑA INCORRECTA.", abrirModalAjustes); 
-                }
+                // Si venía de Versión X y falló, no muestra NINGUNA alerta o mensaje (Silencio absoluto)
+                document.getElementById("passInput").value = "";
+            }
+        }
+
+        /* DETECTOR DE ALERTAS ACTIVAS EN PRIMER PLANO (BLOQUEA TODO LO DEMÁS) */
+        window.estaAlertaBloqueando = function() {
+            const errActivo = document.getElementById("modalError").classList.contains("activo");
+            const delActivo = document.getElementById("modalConfirmarEliminar").classList.contains("activo");
+            return (errActivo || delActivo);
+        }
+
+        /* VARIABLE PARA RASTREAR CUÁL PESTAÑA ESTÁ ABIERTA EN EL SISTEMA DE CAMBIOS */
+        let pestañaActualAbierta = "tab1";
+
+        /* FUNCIÓN INTERNA PARA ALTERNAR LAS PESTAÑAS DEL PANEL DE CONTRAs */
+        window.alternarPestanaContrasena = function(pestanaId) {
+            if (window.estaAlertaBloqueando()) return;
+
+            const btnAcceso = document.getElementById("btnTabAcceso");
+            const btnAdmin = document.getElementById("btnTabAdmin");
+            const divAcceso = document.getElementById("contenidoTabAcceso");
+            const divAdmin = document.getElementById("contenidoTabAdmin");
+
+            document.getElementById("nuevoAccesoInput").value = "";
+            document.getElementById("nuevaMaestraInput").value = "";
+            document.getElementById("maestraActualInput").value = "";
+
+            if (pestanaId === "tab1") {
+                pestañaActualAbierta = "tab1";
+                btnAcceso.classList.add("tab-activo");
+                btnAdmin.classList.remove("tab-activo");
+                divAcceso.classList.add("contenido-activo");
+                divAdmin.classList.remove("contenido-activo");
+                document.getElementById("nuevoAccesoInput").focus();
+            } else if (pestanaId === "tab2") {
+                pestañaActualAbierta = "tab2";
+                btnAdmin.classList.add("tab-activo");
+                btnAcceso.classList.remove("tab-activo");
+                divAdmin.classList.add("contenido-activo");
+                divAcceso.classList.remove("contenido-activo");
+                document.getElementById("nuevaMaestraInput").focus();
             }
         }
 
@@ -1137,7 +1449,7 @@
             document.getElementById("maestraActualInput").value = "";
             modal.classList.add("activo");
             
-            document.getElementById("nuevoAccesoInput").focus();
+            alternarPestanaContrasena('tab1');
         }
 
         window.cerrarModalCambio = function() {
@@ -1145,25 +1457,56 @@
         }
 
         window.procesarCambioContrasena = function() {
+            if (window.estaAlertaBloqueando()) return;
+
             const nuevoAcceso = document.getElementById("nuevoAccesoInput").value.trim();
             const nuevaMaestra = document.getElementById("nuevaMaestraInput").value.trim();
             const maestraActual = document.getElementById("maestraActualInput").value;
 
-            if (maestraActual === "") {
-                cerrarModalCambio();
-                mostrarErrorCustom("DEBES INTRODUCIR LA CLAVE MAESTRA ACTUAL.", abrirModalCambio);
-                return;
+            if (pestañaActualAbierta === "tab1") {
+                if (nuevoAcceso === "" && maestraActual === "") {
+                    mostrarErrorCustom("NUEVA CONTRASEÑA X Y CONFIRMA CON CONTRASEÑA ADMIN ACTUAL ESTÁN VACÍOS.", () => {
+                        window.focarPrimerElementoVisible("modalCambio");
+                    });
+                    return;
+                }
+                if (nuevoAcceso === "") {
+                    mostrarErrorCustom("DEBES INTRODUCIR LA NUEVA CONTRASEÑA X.", () => {
+                        window.focarPrimerElementoVisible("modalCambio");
+                    });
+                    return;
+                }
+                if (maestraActual === "") {
+                    mostrarErrorCustom("DEBES INTRODUCIR LA CONTRASEÑA ADMIN ACTUAL.", () => {
+                        window.focarPrimerElementoVisible("modalCambio");
+                    });
+                    return;
+                }
+            } else if (pestañaActualAbierta === "tab2") {
+                if (nuevaMaestra === "" && maestraActual === "") {
+                    mostrarErrorCustom("NUEVA CONTRASEÑA ADMIN Y CONFIRMA CON CONTRASEÑA ADMIN ACTUAL ESTÁN VACÍOS.", () => {
+                        window.focarPrimerElementoVisible("modalCambio");
+                    });
+                    return;
+                }
+                if (nuevaMaestra === "") {
+                    mostrarErrorCustom("DEBES INTRODUCIR LA NUEVA CONTRASEÑA ADMIN.", () => {
+                        window.focarPrimerElementoVisible("modalCambio");
+                    });
+                    return;
+                }
+                if (maestraActual === "") {
+                    mostrarErrorCustom("DEBES INTRODUCIR LA CONTRASEÑA ADMIN ACTUAL.", () => {
+                        window.focarPrimerElementoVisible("modalCambio");
+                    });
+                    return;
+                }
             }
 
             if (maestraActual !== passMaestra.toString()) {
-                cerrarModalCambio();
-                mostrarErrorCustom("CLAVE MAESTRA ACTUAL INCORRECTA.", abrirModalCambio);
-                return;
-            }
-
-            if (nuevoAcceso === "" && nuevaMaestra === "") {
-                cerrarModalCambio();
-                mostrarErrorCustom("NO INTRODUCISTE NINGÚN CAMBIO.", abrirModalCambio);
+                mostrarErrorCustom("CONTRASEÑA ADMIN ACTUAL INCORRECTA.", () => {
+                    window.focarPrimerElementoVisible("modalCambio");
+                });
                 return;
             }
 
@@ -1173,13 +1516,19 @@
 
             update(rootRef, actualizaciones)
                 .then(() => {
-                    cerrarModalCambio();
-                    mostrarErrorCustom("BASE DE DATOS ACTUALIZADA CON ÉXITO.", () => {});
+                    mostrarErrorCustom("BASE DE DATOS ACTUALIZADA CON ÉXITO.", () => {
+                        window.focarPrimerElementoVisible("modalCambio");
+                    });
                     document.getElementById("textoErrorCustom").style.color = "var(--color-btn-pys)";
+                    
+                    document.getElementById("nuevoAccesoInput").value = "";
+                    document.getElementById("nuevaMaestraInput").value = "";
+                    document.getElementById("maestraActualInput").value = "";
                 })
                 .catch(() => {
-                    cerrarModalCambio();
-                    mostrarErrorCustom("ERROR: INTENTO DE ESCRITURA BLOQUEADO POR EL SERVIDOR.", abrirModalCambio);
+                    mostrarErrorCustom("ERROR: INTENTO DE ESCRITURA BLOQUEADO POR EL SERVIDOR.", () => {
+                        window.focarPrimerElementoVisible("modalCambio");
+                    });
                 });
         }
 
@@ -1194,6 +1543,7 @@
             funcionRetornoError = funcionAlCerrar;
 
             modalErr.classList.add("activo");
+            window.focarPrimerElementoVisible("modalError");
         }
 
         window.cerrarModalError = function() {
@@ -1208,15 +1558,115 @@
             e.preventDefault(); 
         });
 
+        /* =========================================================================
+           SISTEMA DE ASIGNACIÓN AUTOMÁTICA DE FOCO AL INICIAR / RETROCEDER
+           ========================================================================= */
+        window.focarPrimerElementoVisible = function(containerId) {
+            const contenedor = document.getElementById(containerId);
+            if (!contenedor) return;
+
+            const elementos = Array.from(contenedor.querySelectorAll('button, [href], input, select, textarea, [tabindex]'))
+                .filter(el => el.tabIndex !== -1 && el.getBoundingClientRect().width > 0 && !el.disabled);
+
+            if (elementos.length > 0) {
+                elementos[0].focus();
+            }
+        }
+
+        /* LÓGICA CORE: CICLO CERRADO DE ENFOQUE TAB SEGURO */
+        function ejecutarFocusTrapDinamico(containerId, event) {
+            const contenedor = document.getElementById(containerId);
+            if (!contenedor) return;
+
+            const elementosInteractivos = Array.from(contenedor.querySelectorAll('button, [href], input, select, textarea, [tabindex]'))
+                .filter(el => {
+                    return el.tabIndex !== -1 && el.getBoundingClientRect().width > 0 && !el.disabled;
+                });
+
+            if (elementosInteractivos.length === 0) {
+                event.preventDefault();
+                return;
+            }
+
+            const primerElemento = elementosInteractivos[0];
+            const ultimoElemento = elementosInteractivos[elementosInteractivos.length - 1];
+
+            if (!elementosInteractivos.includes(document.activeElement)) {
+                primerElemento.focus();
+                event.preventDefault();
+                return;
+            }
+
+            if (event.shiftKey) { 
+                if (document.activeElement === primerElemento) {
+                    ultimoElemento.focus();
+                    event.preventDefault();
+                }
+            } else { 
+                if (document.activeElement === ultimoElemento) {
+                    primerElemento.focus();
+                    event.preventDefault();
+                }
+            }
+        }
+
         /* Escuchador global de teclado */
         window.addEventListener('keydown', function(event) {
-            if (event.key === "Escape" || event.key === "Esc") {
-                if (document.getElementById("modalConfirmarEliminar").classList.contains("activo")) {
-                    cerrarConfirmacionEliminar();
+            
+            // 1. EVALUAR PRIMER PLANO ABSOLUTO: MENSAJES Y ALERTAS
+            if (window.estaAlertaBloqueando()) {
+                if (event.key === "Tab") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    if (document.getElementById("modalError").classList.contains("activo")) {
+                        document.getElementById("btnAceptarError").focus();
+                    } else if (document.getElementById("modalConfirmarEliminar").classList.contains("activo")) {
+                        ejecutarFocusTrapDinamico("modalConfirmarEliminar", event);
+                    }
+                    return false;
+                }
+
+                if (event.key === "Escape" || event.key === "Esc" || event.key === "Enter") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    if (document.getElementById("modalError").classList.contains("activo")) {
+                        cerrarModalError();
+                    } else if (document.getElementById("modalConfirmarEliminar").classList.contains("activo")) {
+                        if (event.key === "Escape" || event.key === "Esc") cerrarConfirmacionEliminar();
+                    }
+                }
+                return; 
+            }
+
+            // 2. CICLO TABULADOR ORDENADO PARA LAS DEMÁS VENTANAS INTERMEDIAS ABIERTAS
+            if (event.key === "Tab") {
+                if (document.getElementById("modalSugerirPaginas").classList.contains("activo")) {
+                    ejecutarFocusTrapDinamico("modalSugerirPaginas", event);
                     return;
                 }
-                if (document.getElementById("modalError").classList.contains("activo")) {
-                    cerrarModalError();
+                if (document.getElementById("modalCambio").classList.contains("activo")) {
+                    ejecutarFocusTrapDinamico("modalCambio", event);
+                    return;
+                }
+                if (document.getElementById("modalModificarPaginas").classList.contains("activo")) {
+                    ejecutarFocusTrapDinamico("modalModificarPaginas", event);
+                    return;
+                }
+                if (document.getElementById("modalMaestroVacio").classList.contains("activo")) {
+                    ejecutarFocusTrapDinamico("modalMaestroVacio", event);
+                    return;
+                }
+                if (document.getElementById("miModal").classList.contains("activo")) {
+                    ejecutarFocusTrapDinamico("miModal", event);
+                    return;
+                }
+            }
+
+            // Manejo de la tecla Escape para retroceder limpiamente
+            if (event.key === "Escape" || event.key === "Esc") {
+                if (document.getElementById("modalSugerirPaginas").classList.contains("activo")) {
+                    cerrarModalSugerirPaginas();
                     return;
                 }
                 if (document.getElementById("modalCambio").classList.contains("activo")) {
@@ -1238,15 +1688,8 @@
             }
 
             if (event.key === "Enter") {
-                if (event.target.id === "nombrePaginaInput" || event.target.id === "urlPaginaInput") {
+                if (event.target.id === "passInput" || event.target.id === "nombrePaginaInput" || event.target.id === "urlPaginaInput" || event.target.id === "nuevoAccesoInput" || event.target.id === "nuevaMaestraInput" || event.target.id === "maestraActualInput" || event.target.id === "nombreSugeridoInput" || event.target.id === "urlSugeridoInput") {
                     return;
-                }
-
-                if (document.getElementById("modalConfirmarEliminar").classList.contains("activo") && event.target.id !== "btnConfirmarEliminarFinal") {
-                    document.getElementById("btnConfirmarEliminarFinal").click();
-                }
-                if (document.getElementById("modalError").classList.contains("activo")) {
-                    cerrarModalError();
                 }
             }
 
