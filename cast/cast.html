@@ -3,39 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receptor Cast Nativo - AutoPlay</title>
+    <title>Receptor Cast Dual (Video + Pestaña PC)</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html {
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%; height: 100%;
+            background-color: #000; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
         }
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        #esperando {
-            color: #fff;
-            font-family: sans-serif;
-            font-size: 1.5rem;
-            text-align: center;
-        }
+        video { width: 100%; height: 100%; object-fit: contain; }
+        #esperando { color: #fff; font-family: sans-serif; font-size: 1.5rem; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div id="esperando">Esperando contenido multimedia...</div>
-    
+    <div id="esperando">Esperando contenido multimedia o pantalla...</div>
     <video id="miVideo" controls autoplay playsinline webkit-playsinline preload="auto" muted></video>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -58,19 +40,21 @@
         const videoElement = document.getElementById('miVideo');
         const mensajeEsperando = document.getElementById('esperando');
 
+        let peerConnection = null;
+        const rtcConfig = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+
         videoElement.style.display = 'none';
 
-        // Escuchar la base de datos en tiempo real
+        // 1. ESCUCHAR URLS NORMALES (MP4/M3U8)
         database.ref('cast-local-web').on('value', (snapshot) => {
             const urlMedia = snapshot.val();
 
             if (urlMedia && urlMedia.trim() !== "") {
+                cerrarWebRTC();
                 mensajeEsperando.style.display = 'none';
                 videoElement.style.display = 'block';
 
-                // Forzar que empiece muteado para asegurar que el navegador no lo bloquee
                 videoElement.muted = true;
-
                 if (urlMedia.includes('.m3u8')) {
                     videoElement.type = 'application/x-mpegURL';
                 } else {
@@ -80,28 +64,78 @@
                 videoElement.src = urlMedia;
                 videoElement.load();
                 
-                // Ejecutar reproducción automática forzada
                 videoElement.play().then(() => {
-                    // TRUCO: Una vez que el video ya arrancó a reproducirse con éxito en silencio,
-                    // esperamos un milisegundo y le devolvemos el volumen automáticamente.
-                    setTimeout(() => {
-                        videoElement.muted = false;
-                    }, 150);
-                }).catch(error => {
-                    console.log("El navegador bloqueó el autoplay estricto. Intentando bypass alternativo...");
-                    // Reintento de emergencia si la TV es muy estricta
+                    setTimeout(() => { videoElement.muted = false; }, 150);
+                }).catch(() => {
                     videoElement.muted = true;
                     videoElement.play();
                 });
-
-            } else {
-                videoElement.pause();
-                videoElement.src = "";
-                videoElement.removeAttribute('type');
-                videoElement.style.display = 'none';
-                mensajeEsperando.style.display = 'block';
+            } else if (!peerConnection) {
+                limpiarTodo();
             }
         });
+
+        // 2. ESCUCHAR SEÑALIZACIÓN WEBRTC (TRANSMISIÓN DE PESTAÑA)
+        database.ref('webrtc-signaling/offer').on('value', async (snapshot) => {
+            const offer = snapshot.val();
+            if (offer) {
+                mensajeEsperando.innerText = "Conectando pantalla de PC...";
+                iniciarWebRTCReceiver(offer);
+            }
+        });
+
+        database.ref('webrtc-signaling/candidate-pc').on('child_added', (snapshot) => {
+            const candidate = snapshot.val();
+            if (peerConnection && candidate) {
+                peerConnection.addIceCandidate(new RTCIceCandidate(candidate)).catch(e => {});
+            }
+        });
+
+        async function iniciarWebRTCReceiver(offer) {
+            cerrarWebRTC();
+            videoElement.src = "";
+            videoElement.srcObject = null;
+
+            peerConnection = new RTCPeerConnection(rtcConfig);
+
+            peerConnection.ontrack = (event) => {
+                mensajeEsperando.style.display = 'none';
+                videoElement.style.display = 'block';
+                videoElement.srcObject = event.streams[0];
+                videoElement.muted = false;
+                videoElement.play().catch(e => console.log("Play error:", e));
+            };
+
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate) {
+                    database.ref('webrtc-signaling/candidate-tv').push(event.candidate.toJSON());
+                }
+            };
+
+            await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+            const answer = await peerConnection.createAnswer();
+            await peerConnection.setLocalDescription(answer);
+
+            database.ref('webrtc-signaling/answer').set(answer.toJSON());
+        }
+
+        function cerrarWebRTC() {
+            if (peerConnection) {
+                peerConnection.close();
+                peerConnection = null;
+            }
+        }
+
+        function limpiarTodo() {
+            cerrarWebRTC();
+            database.ref('webrtc-signaling').remove();
+            videoElement.pause();
+            videoElement.src = "";
+            videoElement.srcObject = null;
+            videoElement.style.display = 'none';
+            mensajeEsperando.innerText = "Esperando contenido multimedia o pantalla...";
+            mensajeEsperando.style.display = 'block';
+        }
     </script>
 </body>
 </html>
