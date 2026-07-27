@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control Remoto Cast</title>
+    <title>Control Remoto Cast + Screen Share</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -13,8 +13,10 @@
         .container {
             width: 100%; max-width: 500px; background: #1e1e1e;
             padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
         }
         h2 { text-align: center; margin-bottom: 20px; color: #00adb5; }
+        h3 { color: #ff9f43; font-size: 1.1rem; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
         label { display: block; margin-bottom: 8px; font-weight: bold; }
         input[type="text"] {
             width: 100%; padding: 12px; background: #2d2d2d; border: 1px solid #3d3d3d;
@@ -23,8 +25,10 @@
         button {
             width: 100%; padding: 12px; border: none; border-radius: 6px;
             font-size: 1rem; font-weight: bold; cursor: pointer; margin-bottom: 10px;
+            transition: background 0.2s;
         }
         .btn-enviar { background-color: #00adb5; color: white; }
+        .btn-stream { background-color: #9b59b6; color: white; }
         .btn-limpiar { background-color: #ff2e63; color: white; }
         .estado { text-align: center; font-size: 0.9rem; color: #888; margin-top: 15px; word-break: break-all; }
     </style>
@@ -32,8 +36,17 @@
 <body>
 
     <div class="container">
-        <h2>Control Cast</h2>
-        <label for="urlInput">Pegar URL del Video:</label>
+        <h2>Control Cast PC</h2>
+        
+        <!-- SECCIÓN TRANSMISIÓN DE PESTAÑA -->
+        <h3>1. Transmitir Pestaña de Chrome</h3>
+        <button class="btn-stream" id="btnCompartir">Compartir Pestaña de Chrome a la TV</button>
+
+        <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+
+        <!-- SECCIÓN TRANSMISIÓN POR URL -->
+        <h3>2. Transmitir por Enlace Directo</h3>
+        <label for="urlInput">Pegar URL del Video (MP4 / M3U8):</label>
         <input type="text" id="urlInput" placeholder="https://ejemplo.com/video.mp4" autocomplete="off">
         
         <button class="btn-enviar" id="btnEnviar">Transmitir Video</button>
@@ -46,7 +59,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <script>
-        // Tus credenciales reales de micastlocal
         const firebaseConfig = {
             apiKey: "AIzaSyARzpYU2Z-VhD3IpNJVoy5YcOBqvbdrr-8",
             authDomain: "micastlocal.firebaseapp.com",
@@ -62,36 +74,109 @@
 
         const urlInput = document.getElementById('urlInput');
         const btnEnviar = document.getElementById('btnEnviar');
+        const btnCompartir = document.getElementById('btnCompartir');
         const btnLimpiar = document.getElementById('btnLimpiar');
         const estadoDiv = document.getElementById('estado');
 
-        // Sincronizar estado con el nodo del nuevo proyecto
+        let localStream = null;
+        let peerConnection = null;
+        const rtcConfig = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+
+        // Escuchar cambios de estado
         database.ref('cast-local-web').on('value', (snapshot) => {
             const urlActual = snapshot.val();
             if (urlActual && urlActual.trim() !== "") {
                 estadoDiv.innerText = "Transmitiendo actualmente:\n" + urlActual;
                 urlInput.value = urlActual;
-            } else {
+            } else if (!localStream) {
                 estadoDiv.innerText = "Estado: Pantalla vacía (esperando contenido).";
                 urlInput.value = "";
             }
         });
 
-        btnEnviar.addEventListener('click', () => {
-            const urlAVirar = urlInput.value.trim();
-            if (urlAVirar === "") {
-                alert("Por favor, introduce o pega una URL válida.");
-                return;
+        // 1. TRANSMITIR PESTAÑA WEBRTC
+        btnCompartir.addEventListener('click', async () => {
+            try {
+                // Capturar pantalla/pestaña de Chrome con Audio
+                localStream = await navigator.mediaDevices.getDisplayMedia({
+                    video: { frameRate: { ideal: 30, max: 60 } },
+                    audio: true
+                });
+
+                // Limpiar la URL de video si había una activa
+                database.ref('cast-local-web').set("");
+                database.ref('webrtc-signaling').remove();
+
+                estadoDiv.innerText = "Pestaña capturada. Conectando con la TV...";
+
+                peerConnection = new RTCPeerConnection(rtcConfig);
+
+                // Agregar los tracks de video y audio al flujo
+                localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+
+                peerConnection.onicecandidate = (event) => {
+                    if (event.candidate) {
+                        database.ref('webrtc-signaling/candidate-pc').push(event.candidate.toJSON());
+                    }
+                };
+
+                // Crear Oferta de conexión
+                const offer = await peerConnection.createOffer();
+                await peerConnection.setLocalDescription(offer);
+                database.ref('webrtc-signaling/offer').set(offer.toJSON());
+
+                // Escuchar Respuesta de la TV
+                database.ref('webrtc-signaling/answer').on('value', async (snapshot) => {
+                    const answer = snapshot.val();
+                    if (answer && peerConnection.signalingState !== "stable") {
+                        await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+                        estadoDiv.innerText = "¡Transmitiendo pestaña de Chrome a la TV en vivo!";
+                    }
+                });
+
+                // Escuchar candidatos ICE de la TV
+                database.ref('webrtc-signaling/candidate-tv').on('child_added', (snapshot) => {
+                    const candidate = snapshot.val();
+                    if (candidate) {
+                        peerConnection.addIceCandidate(new RTCIceCandidate(candidate)).catch(e => {});
+                    }
+                });
+
+                // Si el usuario deja de compartir la pestaña desde el banner de Chrome
+                localStream.getVideoTracks()[0].onended = () => {
+                    detenerStream();
+                };
+
+            } catch (err) {
+                estadoDiv.innerText = "Cancelado o no se pudo compartir la pestaña.";
             }
-            database.ref('cast-local-web').set(urlAVirar)
-                .then(() => { estadoDiv.innerText = "¡Enviado con éxito!"; })
-                .catch((error) => { estadoDiv.innerText = "Error: " + error.message; });
         });
 
+        function detenerStream() {
+            if (localStream) {
+                localStream.getTracks().forEach(track => track.stop());
+                localStream = null;
+            }
+            if (peerConnection) {
+                peerConnection.close();
+                peerConnection = null;
+            }
+            database.ref('webrtc-signaling').remove();
+            database.ref('cast-local-web').set("");
+            estadoDiv.innerText = "Transmisión de pestaña finalizada.";
+        }
+
+        // 2. TRANSMITIR URL DIRECTA
+        btnEnviar.addEventListener('click', () => {
+            detenerStream();
+            const urlAVirar = urlInput.value.trim();
+            if (urlAVirar === "") return;
+            database.ref('cast-local-web').set(urlAVirar);
+        });
+
+        // 3. LIMPIAR
         btnLimpiar.addEventListener('click', () => {
-            database.ref('cast-local-web').set("")
-                .then(() => { estadoDiv.innerText = "Pantalla limpiada."; urlInput.value = ""; })
-                .catch((error) => { estadoDiv.innerText = "Error: " + error.message; });
+            detenerStream();
         });
     </script>
 </body>
