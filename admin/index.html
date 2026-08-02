@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C:\PANEL_ADMIN_GITHUB_</title>
+    <title>C:\ADMIN_GESTION_</title>
     <style>
         :root {
             --color-verde: #00ff00;
@@ -12,29 +12,40 @@
             --fondo: #050a05;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
 
         body {
             background-color: var(--fondo);
             color: var(--color-verde);
             font-family: 'Courier New', Courier, monospace;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
 
-        h1 { margin-bottom: 20px; font-size: 1.5rem; text-align: center; }
+        /* Título responsivo usando clamp() para Smart TVs, PCs y Celulares */
+        h1 { 
+            margin-bottom: 20px; 
+            font-size: clamp(1.2rem, 3vw, 2.2rem); 
+            text-align: center;
+            letter-spacing: 1px;
+        }
 
         .panel-box {
             border: 1px solid var(--color-verde);
             padding: 20px;
             width: 100%;
-            max-width: 650px;
+            max-width: 850px;
             margin-bottom: 20px;
         }
 
+        /* ESTILO INTERRUPTOR CIBERNÉTICO */
         .contenedor-switch {
             display: flex;
             align-items: center;
@@ -42,6 +53,8 @@
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px dashed var(--color-verde);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .switch {
@@ -72,16 +85,27 @@
             background-color: var(--color-verde);
         }
 
+        /* Enfocado para el switch con control remoto de Smart TV */
+        .switch input:focus + .slider {
+            outline: 2px solid #ffffff;
+            box-shadow: 0 0 10px var(--color-verde);
+        }
+
         input[type="text"] {
             background: transparent;
             border: 1px solid var(--color-verde);
             color: var(--color-verde);
             padding: 12px;
             width: 100%;
-            font-size: 15px;
+            font-size: clamp(0.85rem, 1.5vw, 1.05rem);
             font-family: inherit;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             outline: none;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 0 10px var(--color-verde);
+            border-color: #ffffff;
         }
 
         input[type="text"]::placeholder { color: var(--color-verde); opacity: 0.5; }
@@ -95,21 +119,25 @@
             color: var(--color-verde);
             font-family: inherit;
             font-weight: bold;
+            font-size: clamp(0.85rem, 1.5vw, 1.05rem);
             text-align: center;
             cursor: pointer;
             margin-bottom: 10px;
             transition: all 0.2s ease;
+            min-height: 44px; /* Tamaño optimizado para pulsaciones táctiles */
         }
 
-        .btn-custom:hover {
+        .btn-custom:hover,
+        .btn-custom:focus {
             background: var(--color-verde);
             color: #000;
-            box-shadow: 0 0 10px var(--color-verde);
+            box-shadow: 0 0 12px var(--color-verde);
+            outline: 2px solid #ffffff;
         }
 
         .lista-archivos {
             margin-top: 15px;
-            max-height: 280px;
+            max-height: 350px;
             overflow-y: auto;
         }
 
@@ -117,9 +145,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
+            padding: 12px 5px;
             border-bottom: 1px dashed rgba(0, 255, 0, 0.3);
-            font-size: 14px;
+            font-size: clamp(0.85rem, 1.5vw, 1.05rem);
             gap: 10px;
         }
 
@@ -132,58 +160,98 @@
 
         .acciones-item {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             flex-shrink: 0;
         }
 
         .btn-accion {
             background: transparent;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 8px 12px;
             font-family: inherit;
             font-weight: bold;
-            font-size: 12px;
+            font-size: clamp(0.75rem, 1.2vw, 0.95rem);
             transition: all 0.2s ease;
+            min-height: 38px;
         }
 
         .btn-pausa { border: 1px solid var(--color-naranja); color: var(--color-naranja); }
-        .btn-pausa:hover { background: var(--color-naranja); color: #000; }
+        .btn-pausa:hover, .btn-pausa:focus { 
+            background: var(--color-naranja); 
+            color: #000; 
+            outline: 2px solid #ffffff;
+            box-shadow: 0 0 10px var(--color-naranja);
+        }
+
         .btn-borrar { border: 1px solid var(--color-rojo); color: var(--color-rojo); }
-        .btn-borrar:hover { background: var(--color-rojo); color: #000; }
+        .btn-borrar:hover, .btn-borrar:focus { 
+            background: var(--color-rojo); 
+            color: #000; 
+            outline: 2px solid #ffffff;
+            box-shadow: 0 0 10px var(--color-rojo);
+        }
 
         .estado-texto { font-weight: bold; }
         .estado-on { color: var(--color-verde); }
         .estado-off { color: var(--color-rojo); }
+
+        /* REGLAS RESPONSIVAS PARA PANTALLAS PEQUEÑAS (MÓVILES) */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .panel-box { padding: 12px; }
+
+            .item-archivo {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .info-item {
+                white-space: normal;
+                word-break: break-all;
+                margin-bottom: 8px;
+            }
+
+            .acciones-item {
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .btn-accion {
+                flex: 1;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <h1>C:\ADMIN_GESTION_GITHUB_</h1>
+    <!-- TÍTULO CAMBIADO A C:\ADMIN_GESTION_ -->
+    <h1>C:\ADMIN_GESTION_</h1>
 
     <div class="panel-box">
         <!-- INTERRUPTOR GENERAL -->
         <div class="contenedor-switch">
             <span>DESCARGAS GENERALES: <span id="lblEstadoSwitch" class="estado-texto estado-off">DESACTIVADAS</span></span>
             <label class="switch">
-                <input type="checkbox" id="chkHabilitarDescargas" onchange="cambiarEstadoDescargas(this.checked)">
+                <input type="checkbox" id="chkHabilitarDescargas" onchange="cambiarEstadoDescargas(this.checked)" tabindex="0">
                 <span class="slider"></span>
             </label>
         </div>
 
         <!-- REGISTRO DE ARCHIVOS -->
         <p style="margin-bottom: 8px;">NOMBRE DEL ARCHIVO:</p>
-        <input type="text" id="nombreCustomInput" placeholder="Ej. Paquete_WXZ_v1.zip">
+        <input type="text" id="nombreCustomInput" placeholder="Ej. Paquete_WXZ_v1.zip" tabindex="0">
 
         <p style="margin-bottom: 8px;">RUTA O LINK DE GITHUB / MEDIAFIRE / DRIVE:</p>
-        <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/raw/main/archivo.zip o link de Drive/Mediafire">
+        <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/releases/download/.../app.apk" tabindex="0">
 
-        <button class="btn-custom" onclick="guardarRegistroArchivo()">PUBLICAR ENLACE EN LA WEB</button>
+        <button class="btn-custom" onclick="guardarRegistroArchivo()" tabindex="0">PUBLICAR ENLACE EN LA WEB</button>
         <p id="estadoSubida" style="text-align: center; margin-top: 10px; font-weight: bold;"></p>
     </div>
 
     <!-- LISTA DE ARCHIVOS PUBLICADOS -->
     <div class="panel-box">
-        <h2 style="font-size: 1rem; margin-bottom: 10px;">ARCHIVOS PUBLICADOS:</h2>
+        <h2 style="font-size: clamp(0.95rem, 2vw, 1.2rem); margin-bottom: 10px;">ARCHIVOS PUBLICADOS:</h2>
         <div id="contenedorListaAdmin" class="lista-archivos"></div>
     </div>
 
@@ -274,10 +342,10 @@
                             <span>${item.nombre}</span> ${estaPausado ? '<span style="color:#ff0000; font-size:12px;">[PAUSADO]</span>' : ''}
                         </div>
                         <div class="acciones-item">
-                            <button class="btn-accion btn-pausa" onclick="alternarPausaArchivo('${id}', ${estaPausado})">
+                            <button class="btn-accion btn-pausa" onclick="alternarPausaArchivo('${id}', ${estaPausado})" tabindex="0">
                                 ${estaPausado ? '▶ REANUDAR' : '⏸ PAUSAR'}
                             </button>
-                            <button class="btn-accion btn-borrar" onclick="eliminarArchivo('${id}')">X</button>
+                            <button class="btn-accion btn-borrar" onclick="eliminarArchivo('${id}')" tabindex="0">X</button>
                         </div>
                     `;
                     contenedor.appendChild(div);
