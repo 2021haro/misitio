@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C:\DESCARGA_DE_ARCHIVOS_</title>
+    <title>C:\ZONA_DE_DESCARGAS_</title>
     <style>
         :root {
             --color-verde: #00ff00;
             --color-rojo: #ff0000;
+            --color-azul: #00e5ff;
             --fondo: #050a05;
         }
 
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--fondo);
@@ -28,133 +25,93 @@
             min-height: 100vh;
         }
 
-        /* Título fluido adaptativo */
-        h1 { 
-            margin-bottom: 20px; 
-            font-size: clamp(1.2rem, 3vw, 2.2rem); 
-            text-align: center;
-            letter-spacing: 1px;
+        .contenedor-principal {
+            width: 100%; max-width: 850px;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        .contenedor-main {
-            width: 100%;
-            max-width: 900px;
+        h1 {
+            font-size: clamp(1.2rem, 3vw, 2.2rem);
+            text-align: center; margin-bottom: 20px; letter-spacing: 1px;
+        }
+
+        /* BANNER DE ESTADO */
+        .banner-estado {
+            border: 1px solid var(--color-azul);
+            padding: 15px; width: 100%; text-align: center;
+            margin-bottom: 25px; background: rgba(0, 229, 255, 0.05);
+            font-size: clamp(0.85rem, 1.5vw, 1.1rem); font-weight: bold;
+            color: var(--color-azul); display: none;
+        }
+
+        /* CONTENEDOR DE ARCHIVOS */
+        .panel-box {
             border: 1px solid var(--color-verde);
-            padding: 20px;
+            padding: 20px; width: 100%; margin-bottom: 20px;
         }
 
-        .mensaje-bloqueado {
-            display: none;
-            border: 1px solid var(--color-rojo);
-            color: var(--color-rojo);
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-            line-height: 1.5;
-            font-size: clamp(0.85rem, 2vw, 1.1rem);
+        .lista-archivos {
+            display: flex; flex-direction: column; gap: 15px;
         }
 
-        .tarjeta-archivo {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px;
-            border: 1px dashed var(--color-verde);
-            margin-bottom: 12px;
-            gap: 15px;
+        .item-archivo {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px; border: 1px dashed rgba(0, 255, 0, 0.4);
+            gap: 10px; flex-wrap: wrap; background: rgba(0, 255, 0, 0.02);
         }
 
-        .nombre-archivo {
-            font-weight: bold;
-            word-break: break-all;
-            flex: 1;
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
+        .info-nombre {
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            word-break: break-all; flex: 1;
         }
 
         .btn-descargar {
-            background: transparent;
-            border: 1px solid var(--color-verde);
-            color: var(--color-verde);
-            padding: 12px 20px;
-            font-family: inherit;
-            font-weight: bold;
-            font-size: clamp(0.85rem, 1.5vw, 1.1rem);
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-height: 44px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            background: transparent; border: 1px solid var(--color-verde);
+            color: var(--color-verde); padding: 10px 20px;
+            font-family: inherit; font-weight: bold; font-size: clamp(0.8rem, 1.2vw, 1rem);
+            cursor: pointer; text-decoration: none; text-align: center;
+            transition: all 0.2s ease; min-height: 40px; display: inline-flex;
+            align-items: center; justify-content: center;
         }
 
-        /* Efecto de enfoque optimizado para Smart TV y PC */
-        .btn-descargar:focus,
-        .btn-descargar:hover {
-            background: var(--color-verde);
-            color: #000;
-            box-shadow: 0 0 15px var(--color-verde);
-            outline: 2px solid #ffffff;
+        .btn-descargar:hover, .btn-descargar:focus {
+            background: var(--color-verde); color: #000;
+            box-shadow: 0 0 12px var(--color-verde); outline: 2px solid #ffffff;
         }
 
-        .btn-descargar.deshabilitado {
-            border-color: #555 !important;
-            color: #555 !important;
-            cursor: not-allowed;
-            box-shadow: none !important;
-            outline: none !important;
+        .mensaje-bloqueo {
+            text-align: center; padding: 40px;
+            border: 1px dashed var(--color-rojo); color: var(--color-rojo);
+            font-size: clamp(1rem, 2vw, 1.3rem); font-weight: bold;
+            background: rgba(255, 0, 0, 0.03); width: 100%;
         }
 
-        .btn-descargar.deshabilitado:focus {
-            background: transparent !important;
-            border-color: var(--color-rojo) !important;
-            color: var(--color-rojo) !important;
-            box-shadow: 0 0 10px var(--color-rojo) !important;
-        }
-
-        /* Responsivo para móviles */
         @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-
-            .contenedor-main {
-                padding: 12px;
-            }
-
-            .tarjeta-archivo {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-            }
-
-            .btn-descargar {
-                width: 100%;
-                margin-top: 5px;
-            }
+            body { padding: 10px; }
+            .item-archivo { flex-direction: column; align-items: stretch; text-align: center; }
+            .btn-descargar { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- TÍTULO CAMBIADO A C:\DESCARGA_DE_ARCHIVOS_ -->
-    <h1>C:\DESCARGA_DE_ARCHIVOS_</h1>
+    <div class="contenedor-principal">
+        <h1>C:\ZONA_DE_DESCARGAS_</h1>
 
-    <div class="contenedor-main">
-        <!-- BANNER DE BLOQUEO DE DESCARGAS -->
-        <div id="bannerBloqueo" class="mensaje-bloqueado">
-            DESCARGAS TEMPORALMENTE DESHABILITADAS POR EL ADMINISTRADOR<br>
-            COMUNÍCATE POR WHATSAPP/MESSENGER CON EL ADMINISTRADOR.
+        <!-- BANNER DE TIEMPO / ESTADO -->
+        <div id="bannerEstado" class="banner-estado"></div>
+
+        <!-- LISTA DE DESCARGAS -->
+        <div class="panel-box">
+            <div id="contenedorArchivos" class="lista-archivos">
+                <p style="text-align: center; opacity: 0.6;">CARGANDO ARCHIVOS...</p>
+            </div>
         </div>
-
-        <div id="listaDescargas"></div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAKQzpfbj6ep-yvyT0Z7GGVQsYmZivyHNw",
@@ -169,99 +126,104 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        let descargasGeneralHabilitadas = false;
-        let listaArchivosCache = {};
+        let timerCuentaRegresivaWeb = null;
 
-        function formatearUrlDirecta(url) {
-            if (!url) return "#";
-            if (url.includes("drive.google.com")) {
-                const match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
-                if (match && match[1]) return `https://drive.google.com/uc?export=download&id=${match[1]}`;
-            }
-            if (url.includes("dropbox.com")) {
-                return url.replace("dl=0", "dl=1").replace("www.dropbox.com", "dl.dropboxusercontent.com");
-            }
-            if (url.includes("github.com") && url.includes("/blob/")) {
-                return url.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/");
-            }
-            return url;
-        }
+        // Escuchar cambios en tiempo real en la Base de Datos
+        onValue(ref(db), (snapshot) => {
+            const data = snapshot.val() || {};
+            const descargasGeneral = data.descargasHabilitadas || false;
+            const configTiempo = data.configTiempo || { habilitado: false, timestampFin: 0, congeladoMs: 0 };
+            const listaArchivos = data.listaArchivos || {};
 
-        // 1. Escuchar el switch general de Firebase
-        onValue(ref(db, 'descargasHabilitadas'), (snapshot) => {
-            descargasGeneralHabilitadas = snapshot.val() || false;
-            document.getElementById("bannerBloqueo").style.display = descargasGeneralHabilitadas ? "none" : "block";
-            renderizarLista();
+            evaluarAccesoYRenderizar(descargasGeneral, configTiempo, listaArchivos);
         });
 
-        // 2. Escuchar la lista de archivos de Firebase
-        onValue(ref(db, 'listaArchivos'), (snapshot) => {
-            listaArchivosCache = snapshot.val() || {};
-            renderizarLista();
-        });
+        function evaluarAccesoYRenderizar(generalHabilitado, configTiempo, archivos) {
+            const banner = document.getElementById("bannerEstado");
+            const contenedor = document.getElementById("contenedorArchivos");
+            
+            if (timerCuentaRegresivaWeb) {
+                clearInterval(timerCuentaRegresivaWeb);
+                timerCuentaRegresivaWeb = null;
+            }
 
-        function renderizarLista() {
-            const contenedor = document.getElementById("listaDescargas");
-            contenedor.innerHTML = "";
-            const llaves = Object.keys(listaArchivosCache);
+            let descargasPermitidas = false;
 
-            if (llaves.length === 0) {
-                contenedor.innerHTML = "<p style='text-align:center; opacity:0.6; padding: 15px;'>NO HAY ARCHIVOS DISPONIBLES.</p>";
+            // 1. Validar si el acceso general permanente está activo
+            if (generalHabilitado) {
+                descargasPermitidas = true;
+                banner.style.display = "none";
+            } 
+            // 2. Validar si el acceso por tiempo está activo y vigente
+            else if (configTiempo.habilitado && configTiempo.timestampFin > Date.now()) {
+                descargasPermitidas = true;
+                banner.style.display = "block";
+                iniciarRelojWeb(configTiempo.timestampFin);
+            } 
+            // 3. Si hay tiempo congelado
+            else if (configTiempo.habilitado && configTiempo.congeladoMs > 0) {
+                descargasPermitidas = false;
+                banner.style.display = "block";
+                const totalSegs = Math.max(0, Math.floor(configTiempo.congeladoMs / 1000));
+                const hrs = Math.floor(totalSegs / 3600);
+                const mins = Math.floor((totalSegs % 3600) / 60);
+                const segs = totalSegs % 60;
+                const formato = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
+                banner.innerHTML = `⏳ DESCARGAS DISPONIBLES POR TIEMPO LIMITADO TERMINA EN: ${formato} <span style="color:var(--color-rojo); font-size:12px;"><br>[EN PAUSA / EDITANDO]</span>`;
+            } 
+            // 4. Si el tiempo expiró o está apagado
+            else {
+                descargasPermitidas = false;
+                banner.style.display = "none";
+                if (configTiempo.habilitado && configTiempo.timestampFin > 0 && configTiempo.timestampFin <= Date.now()) {
+                    // Auto-apagar en base de datos si el tiempo llegó a 0
+                    update(ref(db, 'configTiempo'), { habilitado: false, timestampFin: 0, congeladoMs: 0 });
+                }
+            }
+
+            // Filtrar archivos válidos (que no estén pausados)
+            const llavesArchivos = Object.keys(archivos).filter(id => !archivos[id].pausado);
+
+            if (!descargasPermitidas || llavesArchivos.length === 0) {
+                contenedor.innerHTML = `<div class="mensaje-bloqueo">✖ DESCARGAS DESACTIVADAS O NO DISPONIBLES</div>`;
                 return;
             }
 
-            llaves.forEach(id => {
-                const item = listaArchivosCache[id];
+            // Renderizar lista de archivos disponibles para descarga
+            contenedor.innerHTML = "";
+            llavesArchivos.forEach(id => {
+                const item = archivos[id];
                 const div = document.createElement("div");
-                div.className = "tarjeta-archivo";
-
-                const estaDisponible = descargasGeneralHabilitadas && (!item.pausado);
-                const claseBoton = estaDisponible ? "btn-descargar" : "btn-descargar deshabilitado";
-                const textoBoton = !descargasGeneralHabilitadas ? "BLOQUEADO" : (item.pausado ? "PAUSADO" : "DESCARGAR");
-
+                div.className = "item-archivo";
                 div.innerHTML = `
-                    <span class="nombre-archivo">${item.nombre}</span>
-                    <button onclick="window.ejecutarDescargaSegura('${id}')" class="${claseBoton}" id="btnFile_${id}" tabindex="0">
-                        ${textoBoton}
-                    </button>
+                    <span class="info-nombre">${item.nombre}</span>
+                    <a href="${item.url}" class="btn-descargar" target="_blank" tabindex="0">DESCARGAR</a>
                 `;
                 contenedor.appendChild(div);
             });
         }
 
-        // 3. Ejecutar descarga o mostrar alerta
-        window.ejecutarDescargaSegura = async function(id) {
-            const btn = document.getElementById(`btnFile_${id}`);
-            
-            const snapshotEstado = await get(ref(db, 'descargasHabilitadas'));
-            const estadoGeneral = snapshotEstado.val() || false;
+        function iniciarRelojWeb(timestampFin) {
+            const banner = document.getElementById("bannerEstado");
 
-            const item = listaArchivosCache[id];
+            const actualizarReloj = () => {
+                const restante = timestampFin - Date.now();
+                if (restante <= 0) {
+                    clearInterval(timerCuentaRegresivaWeb);
+                    update(ref(db, 'configTiempo'), { habilitado: false, timestampFin: 0, congeladoMs: 0 });
+                    return;
+                }
 
-            if (!estadoGeneral || (item && item.pausado)) {
-                alert("ACCESO DENEGADO: ESTE ARCHIVO NO ESTÁ DISPONIBLE ACTUALMENTE.\nCOMUNÍCATE POR WHATSAPP/MESSENGER CON EL ADMINISTRADOR.");
-                return;
-            }
+                const hrs = Math.floor(restante / (1000 * 60 * 60));
+                const mins = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+                const segs = Math.floor((restante % (1000 * 60)) / 1000);
 
-            if (!item || !item.url) return;
+                const formato = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
+                banner.innerHTML = `⏳ DESCARGAS DISPONIBLES POR TIEMPO LIMITADO TERMINA EN: ${formato}`;
+            };
 
-            const urlFinal = formatearUrlDirecta(item.url);
-            const textoOriginal = btn.textContent;
-            btn.textContent = "INICIANDO...";
-
-            const a = document.createElement("a");
-            a.href = urlFinal;
-            a.rel = "noopener noreferrer";
-            a.setAttribute("download", item.nombre);
-            a.style.display = "none";
-            document.body.appendChild(a);
-
-            a.click();
-
-            setTimeout(() => {
-                a.remove();
-                btn.textContent = textoOriginal;
-            }, 1000);
+            actualizarReloj();
+            timerCuentaRegresivaWeb = setInterval(actualizarReloj, 1000);
         }
     </script>
 </body>
