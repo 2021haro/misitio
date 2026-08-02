@@ -86,6 +86,14 @@
             font-size: clamp(0.9rem, 2vw, 1.2rem);
         }
 
+        /* Estilo para la nota o aviso en letras blancas */
+        .nota-archivo {
+            color: #ffffff;
+            font-size: clamp(0.75rem, 1.4vw, 0.9rem);
+            margin-top: 5px;
+            word-break: break-all;
+        }
+
         .texto-actualizando {
             color: var(--color-naranja);
             font-size: clamp(0.75rem, 1.4vw, 0.9rem);
@@ -151,12 +159,10 @@
     <h1>C:\DESCARGA_DE_ARCHIVOS_</h1>
 
     <div class="contenedor-main">
-        <!-- BANNER CUENTA REGRESIVA SI HAY TIEMPO ACTIVO -->
         <div id="bannerTiempoReloj" class="banner-tiempo">
             ⏳ DESCARGAS DISPONIBLES POR TIEMPO LIMITADO TERMINA EN : <span id="lblRelojUsuario">--:--:--</span>
         </div>
 
-        <!-- BANNER DE BLOQUEO DE DESCARGAS -->
         <div id="bannerBloqueo" class="mensaje-bloqueado">
             DESCARGAS TEMPORALMENTE DESHABILITADAS POR EL ADMINISTRADOR<br>
             COMUNÍCATE POR WHATSAPP/MESSENGER CON EL ADMINISTRADOR.
@@ -167,7 +173,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAKQzpfbj6ep-yvyT0Z7GGVQsYmZivyHNw",
@@ -309,11 +315,13 @@
                 }
 
                 const mostrarAvisoEdicion = globalPermitido && estaEditando;
+                const tieneNota = item.nota && item.nota.trim() !== "";
 
                 div.innerHTML = `
                     <div class="columna-info">
                         <span class="nombre-archivo">${item.nombre}</span>
-                        ${mostrarAvisoEdicion ? '<span class="texto-actualizando">ACTUALIZANDO ARCHIVO ESPERE UN MOMENTO</span>' : ''}
+                        ${tieneNota ? `<span class="nota-archivo">${item.nota}</span>` : ''}
+                        ${mostrarAvisoEdicion ? '<span class="texto-actualizando">ACTUALIZAR ARCHIVO ESPERE UN MOMENTO</span>' : ''}
                     </div>
                     <button onclick="window.ejecutarDescargaSegura('${id}')" class="${claseBoton}" id="btnFile_${id}" tabindex="0">
                         ${textoBoton}
