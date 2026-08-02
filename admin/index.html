@@ -354,6 +354,15 @@
         window.addEventListener("beforeunload", () => {
             if (idArchivoEnEdicion) {
                 update(ref(db, `listaArchivos/${idArchivoEnEdicion}`), { editando: false });
+                
+                // Si el tiempo estaba congelado por estar editando, se reanuda automáticamente al cerrar/recargar
+                if (configTiempoGlobal.habilitado && configTiempoGlobal.congeladoMs > 0) {
+                    const nuevoFin = Date.now() + configTiempoGlobal.congeladoMs;
+                    update(ref(db, 'configTiempo'), {
+                        timestampFin: nuevoFin,
+                        congeladoMs: 0
+                    });
+                }
             }
         });
 
@@ -372,7 +381,7 @@
                 const passMaestraVal = snapMaestra.exists() ? String(snapMaestra.val()) : null;
 
                 if (passIngresada === passMaestraVal) {
-                    await limpiarEdicionesHuérfanas();
+                    await limpiarEdicionesHuérfanasYRestaurarTiempo();
                     desbloquearPanel();
                 } else {
                     msgError.textContent = "CONTRASEÑA INCORRECTA.";
@@ -385,16 +394,28 @@
             }
         }
 
-        // Función para limpiar cualquier estado de edición colgado en Firebase al iniciar sesión
-        async function limpiarEdicionesHuérfanas() {
+        // Función para limpiar cualquier estado de edición colgado y restaurar tiempo congelado huérfano al iniciar sesión
+        async function limpiarEdicionesHuérfanasYRestaurarTiempo() {
             try {
-                const snap = await get(ref(db, 'listaArchivos'));
-                if (snap.exists()) {
-                    const archivos = snap.val();
+                const snapArchivos = await get(ref(db, 'listaArchivos'));
+                if (snapArchivos.exists()) {
+                    const archivos = snapArchivos.val();
                     for (const id in archivos) {
                         if (archivos[id].editando) {
                             await update(ref(db, `listaArchivos/${id}`), { editando: false });
                         }
+                    }
+                }
+
+                const snapTiempo = await get(ref(db, 'configTiempo'));
+                if (snapTiempo.exists()) {
+                    const tiempoVal = snapTiempo.val();
+                    if (tiempoVal && tiempoVal.habilitado && tiempoVal.congeladoMs > 0) {
+                        const nuevoFin = Date.now() + tiempoVal.congeladoMs;
+                        await update(ref(db, 'configTiempo'), {
+                            timestampFin: nuevoFin,
+                            congeladoMs: 0
+                        });
                     }
                 }
             } catch (e) {
