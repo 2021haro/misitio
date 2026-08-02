@@ -202,7 +202,10 @@
             font-size: clamp(0.85rem, 1.5vw, 1.05rem); gap: 10px;
         }
 
-        .info-item { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+        .info-item { display: flex; flexDirection: column; overflow: hidden; flex: 1; }
+        .nombre-item-admin { word-break: break-all; }
+        .nota-item-admin { color: #ffffff; font-size: 0.85rem; margin-top: 3px; word-break: break-all; }
+
         .acciones-item { display: flex; gap: 8px; flex-shrink: 0; }
 
         .btn-accion {
@@ -498,12 +501,16 @@
                         div.className = "item-archivo";
                         const estaPausado = item.pausado || false;
                         const estaEditando = item.editando || false;
+                        const tieneNota = item.nota && item.nota.trim() !== "";
 
                         div.innerHTML = `
                             <div class="info-item">
-                                <span>${item.nombre}</span> 
-                                ${estaPausado ? '<span style="color:#ff0000; font-size:12px;">[NO ACTIVO]</span>' : '<span style="color:var(--color-azul); font-size:12px;">[ACTIVO]</span>'}
-                                ${estaEditando ? '<span style="color:var(--color-naranja); font-size:12px;">[EDITANDO...]</span>' : ''}
+                                <div class="nombre-item-admin">
+                                    <span>${item.nombre}</span> 
+                                    ${estaPausado ? '<span style="color:#ff0000; font-size:12px;">[NO ACTIVO]</span>' : '<span style="color:var(--color-azul); font-size:12px;">[ACTIVO]</span>'}
+                                    ${estaEditando ? '<span style="color:var(--color-naranja); font-size:12px;">[EDITANDO...]</span>' : ''}
+                                </div>
+                                ${tieneNota ? `<div class="nota-item-admin">${item.nota}</div>` : ''}
                             </div>
                             <div class="acciones-item">
                                 <button class="btn-accion btn-editar" onclick="cargarEdicionArchivo('${id}')" tabindex="0" title="Editar">✏</button>
