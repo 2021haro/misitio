@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C:\ARCHIVOS_WXZ_</title>
+    <style>
+        :root {
+            --color-verde: #00ff00;
+            --color-rojo: #ff0000;
+            --fondo: #050a05;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--fondo);
+            color: var(--color-verde);
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 { margin-bottom: 20px; font-size: 1.5rem; text-align: center; }
+
+        .contenedor-main {
+            width: 100%;
+            max-width: 700px;
+            border: 1px solid var(--color-verde);
+            padding: 20px;
+        }
+
+        .mensaje-bloqueado {
+            display: none;
+            border: 1px solid var(--color-rojo);
+            color: var(--color-rojo);
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .tarjeta-archivo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border: 1px dashed var(--color-verde);
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nombre-archivo {
+            font-weight: bold;
+            word-break: break-all;
+            flex: 1;
+        }
+
+        .btn-descargar {
+            background: transparent;
+            border: 1px solid var(--color-verde);
+            color: var(--color-verde);
+            padding: 10px 18px;
+            font-family: inherit;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-descargar:hover {
+            background: var(--color-verde);
+            color: #000;
+            box-shadow: 0 0 10px var(--color-verde);
+        }
+
+        .btn-descargar.deshabilitado {
+            border-color: #555 !important;
+            color: #555 !important;
+            cursor: not-allowed;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>C:\DESCARGA_DE_ARCHIVOS_WXZ_</h1>
+
+    <div class="contenedor-main">
+        <div id="bannerBloqueo" class="mensaje-bloqueado">
+            [!] DESCARGAS TEMPORALMENTE DESHABILITADAS POR EL ADMINISTRADOR [!]
+        </div>
+
+        <div id="listaDescargas"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKQzpfbj6ep-yvyT0Z7GGVQsYmZivyHNw",
+            authDomain: "misitio-2373f.firebaseapp.com",
+            databaseURL: "https://misitio-2373f-default-rtdb.firebaseio.com",
+            projectId: "misitio-2373f",
+            storageBucket: "misitio-2373f.firebasestorage.app",
+            messagingSenderId: "692152740198",
+            appId: "1:692152740198:web:fdce00729ae74eac4ac0a7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let descargasPermitidas = false;
+        let listaArchivosCache = {};
+
+        // Convertidor de URL directa (Drive/Dropbox)
+        function obtenerEnlaceDirecto(url) {
+            if (!url) return "#";
+            if (url.includes("drive.google.com")) {
+                const match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
+                if (match && match[1]) return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+            }
+            if (url.includes("dropbox.com")) {
+                return url.replace("dl=0", "dl=1").replace("www.dropbox.com", "dl.dropboxusercontent.com");
+            }
+            return url;
+        }
+
+        // 1. Escuchar el interruptor en tiempo real
+        onValue(ref(db, 'descargasHabilitadas'), (snapshot) => {
+            descargasPermitidas = snapshot.val() || false;
+            document.getElementById("bannerBloqueo").style.display = descargasPermitidas ? "none" : "block";
+            renderizarLista();
+        });
+
+        // 2. Escuchar la lista de archivos de la base de datos
+        onValue(ref(db, 'listaArchivos'), (snapshot) => {
+            listaArchivosCache = snapshot.val() || {};
+            renderizarLista();
+        });
+
+        function renderizarLista() {
+            const contenedor = document.getElementById("listaDescargas");
+            contenedor.innerHTML = "";
+            const llaves = Object.keys(listaArchivosCache);
+
+            if (llaves.length === 0) {
+                contenedor.innerHTML = "<p style='text-align:center; opacity:0.6;'>NO HAY ARCHIVOS DISPONIBLES.</p>";
+                return;
+            }
+
+            llaves.forEach(id => {
+                const item = listaArchivosCache[id];
+                const div = document.createElement("div");
+                div.className = "tarjeta-archivo";
+                const claseBoton = descargasPermitidas ? "btn-descargar" : "btn-descargar deshabilitado";
+
+                // Se asigna la función 'ejecutarDescargaSegura' en lugar de un enlace directo
+                div.innerHTML = `
+                    <span class="nombre-archivo">${item.nombre}</span>
+                    <a href="#" onclick="event.preventDefault(); window.ejecutarDescargaSegura('${id}')" class="${claseBoton}" id="btnFile_${id}">
+                        ${descargasPermitidas ? 'DESCARGAR' : 'BLOQUEADO'}
+                    </a>
+                `;
+                contenedor.appendChild(div);
+            });
+        }
+
+        // 3. FUNCIÓN DE DESCARGA SEGURA CON VERIFICACIÓN DE ESTADO
+        window.ejecutarDescargaSegura = async function(id) {
+            const btn = document.getElementById(`btnFile_${id}`);
+            
+            // Re-verificar directamente con la base de datos antes de entregar el archivo
+            const snapshotEstado = await get(ref(db, 'descargasHabilitadas'));
+            const estadoReal = snapshotEstado.val() || false;
+
+            if (!estadoReal) {
+                alert("ACCESO DENEGADO: Las descargas han sido deshabilitadas por el administrador.");
+                return;
+            }
+
+            const item = listaArchivosCache[id];
+            if (!item || !item.url) return;
+
+            const urlFinal = obtenerEnlaceDirecto(item.url);
+            const textoOriginal = btn.textContent;
+            btn.textContent = "PROCESANDO...";
+
+            try {
+                // Descarga binaria en segundo plano
+                const respuesta = await fetch(urlFinal);
+                if (!respuesta.ok) throw new Error("Error en la respuesta de la red.");
+                
+                const blob = await respuesta.blob();
+                const urlBlob = window.URL.createObjectURL(blob);
+                
+                // Creación de enlace temporal e invisible
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = urlBlob;
+                a.download = item.nombre;
+                document.body.appendChild(a);
+                a.click();
+                
+                // Limpieza de memoria
+                window.URL.revokeObjectURL(urlBlob);
+                a.remove();
+                
+                btn.textContent = textoOriginal;
+            } catch (e) {
+                // Si la descarga por Fetch es bloqueada por CORS (común en Drive), abre el enlace dinámicamente sin revelarlo en el botón
+                window.open(urlFinal, '_blank');
+                btn.textContent = textoOriginal;
+            }
+        }
+    </script>
+</body>
+</html>
