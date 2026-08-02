@@ -93,9 +93,9 @@
     <h1>C:\DESCARGA_DE_ARCHIVOS_WXZ_</h1>
 
     <div class="contenedor-main">
-        <!-- BANNER DE BLOQUEO ACTUALIZADO CON MAYÚSCULAS Y SALTO DE RENGLÓN -->
+        <!-- BANNER SIN LOS SÍMBOLOS [!] -->
         <div id="bannerBloqueo" class="mensaje-bloqueado">
-            [!] DESCARGAS TEMPORALMENTE DESHABILITADAS POR EL ADMINISTRADOR [!]<br>
+            DESCARGAS TEMPORALMENTE DESHABILITADAS POR EL ADMINISTRADOR<br>
             COMUNÍCATE POR WHATSAPP/MESSENGER CON EL ADMINISTRADOR.
         </div>
 
@@ -122,7 +122,6 @@
         let descargasGeneralHabilitadas = false;
         let listaArchivosCache = {};
 
-        // Convierte enlaces de Drive, Dropbox o GitHub a descarga directa
         function formatearUrlDirecta(url) {
             if (!url) return "#";
             if (url.includes("drive.google.com")) {
