@@ -202,9 +202,9 @@
             font-size: clamp(0.85rem, 1.5vw, 1.05rem); gap: 10px;
         }
 
-        .info-item { display: flex; flexDirection: column; overflow: hidden; flex: 1; }
+        .info-item { display: flex; flex-direction: row; align-items: center; overflow: hidden; flex: 1; flex-wrap: wrap; gap: 5px; }
         .nombre-item-admin { word-break: break-all; }
-        .nota-item-admin { color: #ffffff; font-size: 0.85rem; margin-top: 3px; word-break: break-all; }
+        .nota-item-admin { color: #ffffff; font-size: 0.85rem; word-break: break-all; width: 100%; }
 
         .acciones-item { display: flex; gap: 8px; flex-shrink: 0; }
 
@@ -240,7 +240,8 @@
             .panel-box { padding: 12px; }
             .encabezado-admin { flex-direction: row; gap: 12px; }
             .item-archivo { flex-direction: column; align-items: stretch; text-align: center; }
-            .info-item { white-space: normal; word-break: break-all; margin-bottom: 8px; }
+            .info-item { flex-direction: column; align-items: center; text-align: center; gap: 4px; margin-bottom: 8px; }
+            .nota-item-admin { display: block; width: 100%; }
             .acciones-item { justify-content: center; width: 100%; flex-wrap: wrap; }
             .btn-accion { flex: 1; }
         }
