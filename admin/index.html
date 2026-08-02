@@ -9,6 +9,7 @@
             --color-verde: #00ff00;
             --color-rojo: #ff0000;
             --color-naranja: #ffaa00;
+            --color-azul: #00e5ff;
             --fondo: #050a05;
         }
 
@@ -70,7 +71,6 @@
             position: relative;
         }
 
-        /* ENCABEZADO Y BOTÓN CERRAR SESIÓN */
         .encabezado-admin {
             display: flex;
             justify-content: space-between;
@@ -207,6 +207,30 @@
             outline: 2px solid #ffffff;
         }
 
+        .btn-cancelar-edit {
+            display: none;
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid var(--color-rojo);
+            color: var(--color-rojo);
+            font-family: inherit;
+            font-weight: bold;
+            font-size: clamp(0.8rem, 1.3vw, 0.95rem);
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-cancelar-edit:hover,
+        .btn-cancelar-edit:focus {
+            background: var(--color-rojo);
+            color: #000;
+            box-shadow: 0 0 10px var(--color-rojo);
+            outline: 2px solid #ffffff;
+        }
+
         .lista-archivos {
             margin-top: 15px;
             max-height: 350px;
@@ -245,6 +269,14 @@
             font-size: clamp(0.75rem, 1.2vw, 0.95rem);
             transition: all 0.2s ease;
             min-height: 38px;
+        }
+
+        .btn-editar { border: 1px solid var(--color-azul); color: var(--color-azul); }
+        .btn-editar:hover, .btn-editar:focus { 
+            background: var(--color-azul); 
+            color: #000; 
+            outline: 2px solid #ffffff;
+            box-shadow: 0 0 10px var(--color-azul);
         }
 
         .btn-pausa { border: 1px solid var(--color-naranja); color: var(--color-naranja); }
@@ -295,6 +327,7 @@
             .acciones-item {
                 justify-content: space-between;
                 width: 100%;
+                flex-wrap: wrap;
             }
 
             .btn-accion {
@@ -332,14 +365,15 @@
                 </label>
             </div>
 
-            <!-- REGISTRO DE ARCHIVOS -->
-            <p style="margin-bottom: 8px; text-align: left;">NOMBRE DEL ARCHIVO:</p>
+            <!-- REGISTRO / EDICIÓN DE ARCHIVOS -->
+            <p style="margin-bottom: 8px; text-align: left;" id="lblFormTitulo">NOMBRE DEL ARCHIVO:</p>
             <input type="text" id="nombreCustomInput" placeholder="Ej. Paquete_WXZ_v1.zip" tabindex="0" style="text-align: left;">
 
             <p style="margin-bottom: 8px; text-align: left;">RUTA O LINK DE GITHUB / MEDIAFIRE / DRIVE:</p>
             <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/releases/download/.../app.apk" tabindex="0" style="text-align: left;">
 
-            <button class="btn-custom" onclick="guardarRegistroArchivo()" tabindex="0">PUBLICAR ENLACE EN LA WEB</button>
+            <button class="btn-custom" id="btnPublicar" onclick="guardarRegistroArchivo()" tabindex="0">PUBLICAR ENLACE EN LA WEB</button>
+            <button class="btn-cancelar-edit" id="btnCancelarEdit" onclick="cancelarModoEdicion()" tabindex="0">CANCELAR EDICIÓN</button>
             <p id="estadoSubida" style="text-align: center; margin-top: 10px; font-weight: bold; min-height: 20px;"></p>
         </div>
 
@@ -367,6 +401,9 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
+        let idArchivoEnEdicion = null;
+        let listaGlobalArchivos = {};
+
         // Tecla Enter para enviar contraseña
         document.getElementById("passInputLogin").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
@@ -386,7 +423,6 @@
             }
 
             try {
-                // Se lee EXCLUSIVAMENTE el nodo passMaestra
                 const snapMaestra = await get(ref(db, 'passMaestra'));
                 const passMaestraVal = snapMaestra.exists() ? String(snapMaestra.val()) : null;
 
@@ -410,6 +446,7 @@
             document.getElementById("passInputLogin").value = "";
             document.getElementById("contenidoAdmin").style.display = "none";
             document.getElementById("pantallaLogin").style.display = "flex";
+            cancelarModoEdicion();
         }
 
         function desbloquearPanel() {
@@ -430,11 +467,11 @@
             onValue(ref(db, 'listaArchivos'), (snapshot) => {
                 const contenedor = document.getElementById("contenedorListaAdmin");
                 contenedor.innerHTML = "";
-                const data = snapshot.val();
+                listaGlobalArchivos = snapshot.val() || {};
 
-                if (data) {
-                    Object.keys(data).forEach(id => {
-                        const item = data[id];
+                if (Object.keys(listaGlobalArchivos).length > 0) {
+                    Object.keys(listaGlobalArchivos).forEach(id => {
+                        const item = listaGlobalArchivos[id];
                         const div = document.createElement("div");
                         div.className = "item-archivo";
                         const estaPausado = item.pausado || false;
@@ -444,6 +481,7 @@
                                 <span>${item.nombre}</span> ${estaPausado ? '<span style="color:#ff0000; font-size:12px;">[PAUSADO]</span>' : ''}
                             </div>
                             <div class="acciones-item">
+                                <button class="btn-accion btn-editar" onclick="cargarEdicionArchivo('${id}')" tabindex="0">✏ EDITAR</button>
                                 <button class="btn-accion btn-pausa" onclick="alternarPausaArchivo('${id}', ${estaPausado})" tabindex="0">
                                     ${estaPausado ? '▶ REANUDAR' : '⏸ PAUSAR'}
                                 </button>
@@ -462,6 +500,36 @@
             set(ref(db, 'descargasHabilitadas'), nuevoEstado);
         }
 
+        // CARGAR DATOS EN EL FORMULARIO PARA EDITAR
+        window.cargarEdicionArchivo = function(id) {
+            const item = listaGlobalArchivos[id];
+            if (!item) return;
+
+            idArchivoEnEdicion = id;
+            document.getElementById("nombreCustomInput").value = item.nombre || "";
+            document.getElementById("urlArchivoInput").value = item.url || "";
+
+            const btnPublicar = document.getElementById("btnPublicar");
+            btnPublicar.textContent = "ACTUALIZAR ARCHIVO";
+            btnPublicar.style.borderColor = "var(--color-verde)";
+
+            document.getElementById("btnCancelarEdit").style.display = "block";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // CANCELAR MODO EDICIÓN
+        window.cancelarModoEdicion = function() {
+            idArchivoEnEdicion = null;
+            document.getElementById("nombreCustomInput").value = "";
+            document.getElementById("urlArchivoInput").value = "";
+
+            const btnPublicar = document.getElementById("btnPublicar");
+            btnPublicar.textContent = "PUBLICAR ENLACE EN LA WEB";
+
+            document.getElementById("btnCancelarEdit").style.display = "none";
+        }
+
+        // GUARDAR O ACTUALIZAR REGISTRO EN FIREBASE
         window.guardarRegistroArchivo = async function() {
             const nombre = document.getElementById("nombreCustomInput").value.trim();
             const url = document.getElementById("urlArchivoInput").value.trim();
@@ -478,19 +546,20 @@
                 return;
             }
 
-            const idUnico = Date.now();
+            // Si idArchivoEnEdicion tiene un ID, se edita; de lo contrario, se crea uno nuevo
+            const idTarget = idArchivoEnEdicion ? idArchivoEnEdicion : Date.now();
 
             try {
-                await update(ref(db, `listaArchivos/${idUnico}`), {
+                await update(ref(db, `listaArchivos/${idTarget}`), {
                     nombre: nombre,
                     url: url,
-                    pausado: false
+                    pausado: idArchivoEnEdicion && listaGlobalArchivos[idArchivoEnEdicion] ? (listaGlobalArchivos[idArchivoEnEdicion].pausado || false) : false
                 });
 
                 estado.style.color = "#00ff00";
-                estado.textContent = "----- REGISTRO PUBLICADO -----";
-                document.getElementById("nombreCustomInput").value = "";
-                document.getElementById("urlArchivoInput").value = "";
+                estado.textContent = idArchivoEnEdicion ? "----- REGISTRO ACTUALIZADO -----" : "----- REGISTRO PUBLICADO -----";
+                
+                cancelarModoEdicion();
                 setTimeout(() => { estado.textContent = ""; }, 2000);
             } catch(e) {
                 estado.style.color = "#ff0000";
@@ -507,6 +576,11 @@
 
         window.eliminarArchivo = async function(id) {
             if(!confirm("¿Eliminar este registro?")) return;
+            
+            if (idArchivoEnEdicion === id) {
+                cancelarModoEdicion();
+            }
+
             remove(ref(db, 'listaArchivos/' + id));
         }
     </script>
