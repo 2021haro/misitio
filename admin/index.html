@@ -13,11 +13,7 @@
             --fondo: #050a05;
         }
 
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--fondo);
@@ -30,309 +26,220 @@
             min-height: 100vh;
         }
 
-        /* ESTILOS DEL MODAL DE LOGIN */
+        /* LOGIN MODAL */
         #pantallaLogin {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--fondo);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            padding: 15px;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; padding: 15px;
         }
 
         .box-login {
             border: 1px solid var(--color-verde);
-            padding: 25px;
-            width: 100%;
-            max-width: 420px;
-            text-align: center;
-            background: #000;
+            padding: 25px; width: 100%; max-width: 420px;
+            text-align: center; background: #000;
             box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
         }
 
         .box-login h2 {
             font-size: clamp(1rem, 2.5vw, 1.4rem);
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+            margin-bottom: 15px; letter-spacing: 1px;
         }
 
-        /* ESTILOS DEL PANEL DE ADMINISTRACIÓN */
+        /* ADMIN PANEL */
         #contenidoAdmin {
-            display: none;
-            width: 100%;
-            max-width: 850px;
-            flex-direction: column;
-            align-items: center;
+            display: none; width: 100%; max-width: 850px;
+            flex-direction: column; align-items: center;
             position: relative;
         }
 
         .encabezado-admin {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
+            display: flex; justify-content: space-between;
+            align-items: center; width: 100%; margin-bottom: 20px;
+            flex-wrap: wrap; gap: 10px;
         }
 
         h1 { 
             font-size: clamp(1.2rem, 3vw, 2.2rem); 
-            text-align: center;
-            letter-spacing: 1px;
-            flex: 1;
+            text-align: center; letter-spacing: 1px; flex: 1;
         }
 
         .btn-logout {
-            background: transparent;
-            border: 1px solid var(--color-rojo);
-            color: var(--color-rojo);
-            padding: 8px 15px;
-            font-family: inherit;
-            font-weight: bold;
-            font-size: clamp(0.75rem, 1.2vw, 0.95rem);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-height: 38px;
+            background: transparent; border: 1px solid var(--color-rojo);
+            color: var(--color-rojo); padding: 8px 12px;
+            font-family: inherit; font-weight: bold;
+            font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+            cursor: pointer; transition: all 0.2s ease; min-height: 38px; min-width: 42px;
+            display: inline-flex; align-items: center; justify-content: center;
         }
 
-        .btn-logout:hover,
-        .btn-logout:focus {
-            background: var(--color-rojo);
-            color: #000;
-            box-shadow: 0 0 10px var(--color-rojo);
-            outline: 2px solid #ffffff;
+        .btn-logout:hover, .btn-logout:focus {
+            background: var(--color-rojo); color: #000;
+            box-shadow: 0 0 10px var(--color-rojo); outline: 2px solid #ffffff;
         }
 
         .panel-box {
             border: 1px solid var(--color-verde);
-            padding: 20px;
-            width: 100%;
-            margin-bottom: 20px;
+            padding: 20px; width: 100%; margin-bottom: 20px;
         }
 
         .contenedor-switch {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed var(--color-verde);
-            flex-wrap: wrap;
-            gap: 10px;
+            display: flex; align-items: center;
+            justify-content: space-between; margin-bottom: 15px;
+            padding-bottom: 15px; border-bottom: 1px dashed var(--color-verde);
+            flex-wrap: wrap; gap: 10px;
         }
 
         .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 30px;
+            position: relative; display: inline-block;
+            width: 60px; height: 30px;
         }
 
         .switch input { opacity: 0; width: 0; height: 0; }
 
         .slider {
             position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #333;
-            border: 1px solid var(--color-rojo);
-            transition: .4s;
+            background-color: #333; border: 1px solid var(--color-rojo); transition: .4s;
         }
 
         .slider:before {
             position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px;
-            background-color: var(--color-rojo);
-            transition: .4s;
+            background-color: var(--color-rojo); transition: .4s;
         }
 
-        input:checked + .slider { border-color: var(--color-verde); }
+        /* Switch Bloqueado (Deshabilitado) */
+        .switch input:disabled + .slider {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Switches en Azul cuando estan activados */
+        input:checked + .slider { border-color: var(--color-azul); }
         input:checked + .slider:before {
-            transform: translateX(30px);
-            background-color: var(--color-verde);
+            transform: translateX(30px); background-color: var(--color-azul);
         }
 
         .switch input:focus + .slider {
-            outline: 2px solid #ffffff;
-            box-shadow: 0 0 10px var(--color-verde);
+            outline: 2px solid #ffffff; box-shadow: 0 0 10px var(--color-azul);
         }
 
-        input[type="text"],
-        input[type="password"] {
-            background: transparent;
+        /* SECCIÓN DE TIEMPO SIEMPRE VISIBLE */
+        .seccion-tiempo {
+            display: block;
+            background: rgba(0, 255, 0, 0.03);
             border: 1px solid var(--color-verde);
-            color: var(--color-verde);
-            padding: 12px;
-            width: 100%;
-            font-size: clamp(0.85rem, 1.5vw, 1.05rem);
-            font-family: inherit;
-            margin-bottom: 15px;
-            outline: none;
-            text-align: center;
+            padding: 15px; margin-bottom: 15px;
         }
 
-        input[type="text"]:focus,
-        input[type="password"]:focus {
-            box-shadow: 0 0 10px var(--color-verde);
-            border-color: #ffffff;
+        .inputs-tiempo {
+            display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px;
+            align-items: center; flex-wrap: wrap;
         }
 
-        input::placeholder { color: var(--color-verde); opacity: 0.5; }
+        .campo-tiempo {
+            display: flex; flex-direction: column; flex: 1; min-width: 100px;
+        }
+
+        .campo-tiempo label { font-size: 0.8rem; margin-bottom: 5px; color: var(--color-verde); }
+
+        input[type="number"], input[type="text"], input[type="password"] {
+            background: transparent; border: 1px solid var(--color-verde);
+            color: var(--color-verde); padding: 12px; width: 100%;
+            font-size: clamp(0.85rem, 1.5vw, 1.05rem); font-family: inherit;
+            margin-bottom: 15px; outline: none; text-align: center;
+        }
+
+        input[type="number"] {
+            border-color: var(--color-verde); color: var(--color-verde); margin-bottom: 0;
+        }
+
+        input:focus {
+            box-shadow: 0 0 10px var(--color-verde); border-color: #ffffff;
+        }
 
         .btn-custom {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background: transparent;
-            border: 1px solid var(--color-verde);
-            color: var(--color-verde);
-            font-family: inherit;
-            font-weight: bold;
-            font-size: clamp(0.85rem, 1.5vw, 1.05rem);
-            text-align: center;
-            cursor: pointer;
-            margin-bottom: 10px;
-            transition: all 0.2s ease;
-            min-height: 44px;
+            display: block; width: 100%; padding: 12px; background: transparent;
+            border: 1px solid var(--color-verde); color: var(--color-verde);
+            font-family: inherit; font-weight: bold; font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+            text-align: center; cursor: pointer; margin-bottom: 10px;
+            transition: all 0.2s ease; min-height: 44px;
         }
 
-        .btn-custom:hover,
-        .btn-custom:focus {
-            background: var(--color-verde);
-            color: #000;
-            box-shadow: 0 0 12px var(--color-verde);
-            outline: 2px solid #ffffff;
+        .btn-custom:hover, .btn-custom:focus {
+            background: var(--color-verde); color: #000;
+            box-shadow: 0 0 12px var(--color-verde); outline: 2px solid #ffffff;
+        }
+
+        .btn-tiempo {
+            border-color: var(--color-verde); color: var(--color-verde); margin-top: 10px;
+        }
+
+        .btn-tiempo:hover, .btn-tiempo:focus {
+            background: var(--color-verde); color: #000; box-shadow: 0 0 12px var(--color-verde);
+        }
+
+        .btn-cancelar-tiempo {
+            border-color: var(--color-rojo); color: var(--color-rojo); margin-top: 10px;
+        }
+
+        .btn-cancelar-tiempo:hover, .btn-cancelar-tiempo:focus {
+            background: var(--color-rojo); color: #000; box-shadow: 0 0 12px var(--color-rojo);
         }
 
         .btn-cancelar-edit {
-            display: none;
-            width: 100%;
-            padding: 10px;
-            background: transparent;
-            border: 1px solid var(--color-rojo);
-            color: var(--color-rojo);
-            font-family: inherit;
-            font-weight: bold;
-            font-size: clamp(0.8rem, 1.3vw, 0.95rem);
-            text-align: center;
-            cursor: pointer;
-            margin-bottom: 10px;
-            transition: all 0.2s ease;
+            display: none; width: 100%; padding: 10px; background: transparent;
+            border: 1px solid var(--color-rojo); color: var(--color-rojo);
+            font-family: inherit; font-weight: bold; font-size: clamp(0.8rem, 1.3vw, 0.95rem);
+            text-align: center; cursor: pointer; margin-bottom: 10px; transition: all 0.2s ease;
         }
 
-        .btn-cancelar-edit:hover,
-        .btn-cancelar-edit:focus {
-            background: var(--color-rojo);
-            color: #000;
-            box-shadow: 0 0 10px var(--color-rojo);
-            outline: 2px solid #ffffff;
-        }
-
-        .lista-archivos {
-            margin-top: 15px;
-            max-height: 350px;
-            overflow-y: auto;
-        }
+        .lista-archivos { margin-top: 15px; max-height: 350px; overflow-y: auto; }
 
         .item-archivo {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 5px;
-            border-bottom: 1px dashed rgba(0, 255, 0, 0.3);
-            font-size: clamp(0.85rem, 1.5vw, 1.05rem);
-            gap: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 5px; border-bottom: 1px dashed rgba(0, 255, 0, 0.3);
+            font-size: clamp(0.85rem, 1.5vw, 1.05rem); gap: 10px;
         }
 
-        .info-item {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            flex: 1;
-        }
-
-        .acciones-item {
-            display: flex;
-            gap: 8px;
-            flex-shrink: 0;
-        }
+        .info-item { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+        .acciones-item { display: flex; gap: 8px; flex-shrink: 0; }
 
         .btn-accion {
-            background: transparent;
-            cursor: pointer;
-            padding: 8px 12px;
-            font-family: inherit;
-            font-weight: bold;
-            font-size: clamp(0.75rem, 1.2vw, 0.95rem);
-            transition: all 0.2s ease;
-            min-height: 38px;
+            background: transparent; cursor: pointer; padding: 8px 12px;
+            font-family: inherit; font-weight: bold; font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+            transition: all 0.2s ease; min-height: 38px; min-width: 42px;
+            display: inline-flex; align-items: center; justify-content: center;
         }
 
-        .btn-editar { border: 1px solid var(--color-azul); color: var(--color-azul); }
-        .btn-editar:hover, .btn-editar:focus { 
-            background: var(--color-azul); 
-            color: #000; 
-            outline: 2px solid #ffffff;
-            box-shadow: 0 0 10px var(--color-azul);
-        }
+        /* Botón Editar */
+        .btn-editar { border: 1px solid var(--color-naranja); color: var(--color-naranja); }
+        .btn-editar:hover { background: var(--color-naranja); color: #000; }
 
-        .btn-pausa { border: 1px solid var(--color-naranja); color: var(--color-naranja); }
-        .btn-pausa:hover, .btn-pausa:focus { 
-            background: var(--color-naranja); 
-            color: #000; 
-            outline: 2px solid #ffffff;
-            box-shadow: 0 0 10px var(--color-naranja);
-        }
+        /* Botón Activar (Azul) */
+        .btn-activar { border: 1px solid var(--color-azul); color: var(--color-azul); }
+        .btn-activar:hover { background: var(--color-azul); color: #000; }
 
+        /* Botón Desactivar (Rojo) */
+        .btn-desactivar { border: 1px solid var(--color-rojo); color: var(--color-rojo); }
+        .btn-desactivar:hover { background: var(--color-rojo); color: #000; }
+
+        /* Botón Eliminar */
         .btn-borrar { border: 1px solid var(--color-rojo); color: var(--color-rojo); }
-        .btn-borrar:hover, .btn-borrar:focus { 
-            background: var(--color-rojo); 
-            color: #000; 
-            outline: 2px solid #ffffff;
-            box-shadow: 0 0 10px var(--color-rojo);
-        }
+        .btn-borrar:hover { background: var(--color-rojo); color: #000; }
 
         .estado-texto { font-weight: bold; }
-        .estado-on { color: var(--color-verde); }
+        .estado-on { color: var(--color-azul); }
         .estado-off { color: var(--color-rojo); }
 
         @media (max-width: 600px) {
             body { padding: 10px; }
             .panel-box { padding: 12px; }
-
-            .encabezado-admin {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .btn-logout {
-                width: 100%;
-            }
-
-            .item-archivo {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-            }
-
-            .info-item {
-                white-space: normal;
-                word-break: break-all;
-                margin-bottom: 8px;
-            }
-
-            .acciones-item {
-                justify-content: space-between;
-                width: 100%;
-                flex-wrap: wrap;
-            }
-
-            .btn-accion {
-                flex: 1;
-            }
+            .encabezado-admin { flex-direction: row; gap: 12px; }
+            .item-archivo { flex-direction: column; align-items: stretch; text-align: center; }
+            .info-item { white-space: normal; word-break: break-all; margin-bottom: 8px; }
+            .acciones-item { justify-content: center; width: 100%; flex-wrap: wrap; }
+            .btn-accion { flex: 1; }
         }
     </style>
 </head>
@@ -352,24 +259,57 @@
     <div id="contenidoAdmin">
         <div class="encabezado-admin">
             <h1>C:\ADMIN_GESTION_</h1>
-            <button class="btn-logout" onclick="cerrarSesion()" tabindex="0">[X] CERRAR SESIÓN</button>
+            <button class="btn-logout" onclick="cerrarSesion()" tabindex="0" title="Cerrar sesión">X</button>
         </div>
 
         <div class="panel-box">
-            <!-- INTERRUPTOR GENERAL -->
+            <!-- 1. INTERRUPTOR GENERAL PERMANENTE -->
             <div class="contenedor-switch">
-                <span>DESCARGAS GENERALES: <span id="lblEstadoSwitch" class="estado-texto estado-off">DESACTIVADAS</span></span>
+                <span style="color: var(--color-verde);">DESCARGAS GENERALES: <span id="lblEstadoSwitch" class="estado-texto estado-off">DESACTIVADAS</span></span>
                 <label class="switch">
                     <input type="checkbox" id="chkHabilitarDescargas" onchange="cambiarEstadoDescargas(this.checked)" tabindex="0">
                     <span class="slider"></span>
                 </label>
             </div>
 
+            <!-- 2. INTERRUPTOR POR TIEMPO (DESHABILITADO AL INICIO) -->
+            <div class="contenedor-switch" style="border-bottom: none; margin-bottom: 5px;">
+                <span style="color: var(--color-verde);">DESCARGAS GENERALES POR TIEMPO: <span id="lblEstadoTiempo" class="estado-texto estado-off">DESACTIVADAS</span></span>
+                <label class="switch">
+                    <input type="checkbox" id="chkHabilitarTiempo" onchange="alternarModuloTiempo(this.checked)" disabled tabindex="0">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- PANEL DE TIEMPO (SIEMPRE VISIBLE) -->
+            <div id="boxTiempoConfig" class="seccion-tiempo">
+                <div id="formTiempoInputs">
+                    <p style="color: var(--color-verde); font-size: 0.9rem;">CONFIGURA EL TIEMPO DISPONIBLE:</p>
+                    <div class="inputs-tiempo">
+                        <div class="campo-tiempo">
+                            <label>HORAS:</label>
+                            <input type="number" id="inputHoras" min="0" max="72" value="0" tabindex="0">
+                        </div>
+                        <div class="campo-tiempo">
+                            <label>MINUTOS:</label>
+                            <input type="number" id="inputMinutos" min="0" max="59" value="30" tabindex="0">
+                        </div>
+                    </div>
+                    <button class="btn-custom btn-tiempo" onclick="guardarTiempoDescarga()" tabindex="0">GUARDAR Y ACTIVAR TIEMPO</button>
+                </div>
+
+                <div id="infoTiempoActivo" style="display: none; text-align: center;">
+                    <p style="color: var(--color-verde); font-weight: bold; font-size: 1.1rem;" id="txtRelojRestante">TIEMPO RESTANTE: --:--:--</p>
+                    <button class="btn-custom btn-cancelar-tiempo" onclick="eliminarTiempoDescarga()" tabindex="0">ELIMINAR Y CANCELAR TIEMPO</button>
+                </div>
+            </div>
+
             <!-- REGISTRO / EDICIÓN DE ARCHIVOS -->
-            <p style="margin-bottom: 8px; text-align: left;" id="lblFormTitulo">NOMBRE DEL ARCHIVO:</p>
+            <hr style="border-color: var(--color-verde); margin: 20px 0;">
+            <p style="margin-bottom: 8px; text-align: left;">NOMBRE DEL ARCHIVO:</p>
             <input type="text" id="nombreCustomInput" placeholder="Ej. Paquete_WXZ_v1.zip" tabindex="0" style="text-align: left;">
 
-            <p style="margin-bottom: 8px; text-align: left;">RUTA O LINK DE GITHUB / MEDIAFIRE / DRIVE:</p>
+            <p style="margin-bottom: 8px; text-align: left;">RUTA O LINK DE GITHUB:</p>
             <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/releases/download/.../app.apk" tabindex="0" style="text-align: left;">
 
             <button class="btn-custom" id="btnPublicar" onclick="guardarRegistroArchivo()" tabindex="0">PUBLICAR ENLACE EN LA WEB</button>
@@ -403,15 +343,20 @@
 
         let idArchivoEnEdicion = null;
         let listaGlobalArchivos = {};
+        let configTiempoGlobal = { habilitado: false, timestampFin: 0, congeladoMs: 0 };
+        let timerCuentaRegresivaAdmin = null;
 
-        // Tecla Enter para enviar contraseña
         document.getElementById("passInputLogin").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                verificarLogin();
+            if (event.key === "Enter") verificarLogin();
+        });
+
+        // Limpieza automática si se cierra la pestaña o navegador de forma imprevista
+        window.addEventListener("beforeunload", () => {
+            if (idArchivoEnEdicion) {
+                update(ref(db, `listaArchivos/${idArchivoEnEdicion}`), { editando: false });
             }
         });
 
-        // VERIFICACIÓN ÚNICAMENTE CON passMaestra DE FIREBASE
         window.verificarLogin = async function() {
             const passIngresada = document.getElementById("passInputLogin").value.trim();
             const msgError = document.getElementById("msgErrorLogin");
@@ -427,6 +372,7 @@
                 const passMaestraVal = snapMaestra.exists() ? String(snapMaestra.val()) : null;
 
                 if (passIngresada === passMaestraVal) {
+                    await limpiarEdicionesHuérfanas();
                     desbloquearPanel();
                 } else {
                     msgError.textContent = "CONTRASEÑA INCORRECTA.";
@@ -439,14 +385,29 @@
             }
         }
 
-        // CERRAR SESIÓN COMPLETO
-        window.cerrarSesion = function() {
-            sessionStorage.clear();
-            localStorage.clear();
+        // Función para limpiar cualquier estado de edición colgado en Firebase al iniciar sesión
+        async function limpiarEdicionesHuérfanas() {
+            try {
+                const snap = await get(ref(db, 'listaArchivos'));
+                if (snap.exists()) {
+                    const archivos = snap.val();
+                    for (const id in archivos) {
+                        if (archivos[id].editando) {
+                            await update(ref(db, `listaArchivos/${id}`), { editando: false });
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error("Error al limpiar ediciones huérfanas", e);
+            }
+        }
+
+        window.cerrarSesion = async function() {
+            await cancelarModoEdicion();
+            sessionStorage.clear(); localStorage.clear();
             document.getElementById("passInputLogin").value = "";
             document.getElementById("contenidoAdmin").style.display = "none";
             document.getElementById("pantallaLogin").style.display = "flex";
-            cancelarModoEdicion();
         }
 
         function desbloquearPanel() {
@@ -456,6 +417,7 @@
         }
 
         function escucharBaseDeDatos() {
+            // 1. Switch General
             onValue(ref(db, 'descargasHabilitadas'), (snapshot) => {
                 const estado = snapshot.val() || false;
                 document.getElementById("chkHabilitarDescargas").checked = estado;
@@ -464,6 +426,48 @@
                 lbl.className = `estado-texto ${estado ? 'estado-on' : 'estado-off'}`;
             });
 
+            // 2. Control de Tiempo
+            onValue(ref(db, 'configTiempo'), (snapshot) => {
+                configTiempoGlobal = snapshot.val() || { habilitado: false, timestampFin: 0, congeladoMs: 0 };
+                const chkTiempo = document.getElementById("chkHabilitarTiempo");
+                const lblTiempo = document.getElementById("lblEstadoTiempo");
+
+                chkTiempo.checked = configTiempoGlobal.habilitado;
+                lblTiempo.textContent = configTiempoGlobal.habilitado ? "ACTIVADAS" : "DESACTIVADAS";
+                lblTiempo.className = `estado-texto ${configTiempoGlobal.habilitado ? 'estado-on' : 'estado-off'}`;
+
+                if (configTiempoGlobal.habilitado) {
+                    chkTiempo.disabled = false;
+
+                    if (configTiempoGlobal.congeladoMs > 0) {
+                        document.getElementById("formTiempoInputs").style.display = "none";
+                        document.getElementById("infoTiempoActivo").style.display = "block";
+                        if (timerCuentaRegresivaAdmin) clearInterval(timerCuentaRegresivaAdmin);
+                        
+                        const totalSegs = Math.max(0, Math.floor(configTiempoGlobal.congeladoMs / 1000));
+                        const hrs = Math.floor(totalSegs / 3600);
+                        const mins = Math.floor((totalSegs % 3600) / 60);
+                        const segs = totalSegs % 60;
+                        const formato = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
+                        document.getElementById("txtRelojRestante").textContent = `TIEMPO RESTANTE (CONGELADO): ${formato}`;
+                    } else if (configTiempoGlobal.timestampFin > Date.now()) {
+                        document.getElementById("formTiempoInputs").style.display = "none";
+                        document.getElementById("infoTiempoActivo").style.display = "block";
+                        iniciarRelojAdmin(configTiempoGlobal.timestampFin);
+                    } else {
+                        document.getElementById("formTiempoInputs").style.display = "block";
+                        document.getElementById("infoTiempoActivo").style.display = "none";
+                        if (timerCuentaRegresivaAdmin) clearInterval(timerCuentaRegresivaAdmin);
+                    }
+                } else {
+                    chkTiempo.disabled = true;
+                    document.getElementById("formTiempoInputs").style.display = "block";
+                    document.getElementById("infoTiempoActivo").style.display = "none";
+                    if (timerCuentaRegresivaAdmin) clearInterval(timerCuentaRegresivaAdmin);
+                }
+            });
+
+            // 3. Lista de Archivos
             onValue(ref(db, 'listaArchivos'), (snapshot) => {
                 const contenedor = document.getElementById("contenedorListaAdmin");
                 contenedor.innerHTML = "";
@@ -475,17 +479,20 @@
                         const div = document.createElement("div");
                         div.className = "item-archivo";
                         const estaPausado = item.pausado || false;
+                        const estaEditando = item.editando || false;
 
                         div.innerHTML = `
                             <div class="info-item">
-                                <span>${item.nombre}</span> ${estaPausado ? '<span style="color:#ff0000; font-size:12px;">[PAUSADO]</span>' : ''}
+                                <span>${item.nombre}</span> 
+                                ${estaPausado ? '<span style="color:#ff0000; font-size:12px;">[NO ACTIVO]</span>' : '<span style="color:var(--color-azul); font-size:12px;">[ACTIVO]</span>'}
+                                ${estaEditando ? '<span style="color:var(--color-naranja); font-size:12px;">[EDITANDO...]</span>' : ''}
                             </div>
                             <div class="acciones-item">
-                                <button class="btn-accion btn-editar" onclick="cargarEdicionArchivo('${id}')" tabindex="0">✏ EDITAR</button>
-                                <button class="btn-accion btn-pausa" onclick="alternarPausaArchivo('${id}', ${estaPausado})" tabindex="0">
-                                    ${estaPausado ? '▶ REANUDAR' : '⏸ PAUSAR'}
+                                <button class="btn-accion btn-editar" onclick="cargarEdicionArchivo('${id}')" tabindex="0" title="Editar">✏</button>
+                                <button class="btn-accion ${estaPausado ? 'btn-activar' : 'btn-desactivar'}" onclick="alternarPausaArchivo('${id}', ${estaPausado})" tabindex="0" title="${estaPausado ? 'Activar' : 'Desactivar'}">
+                                    ${estaPausado ? '▶' : '⏸'}
                                 </button>
-                                <button class="btn-accion btn-borrar" onclick="eliminarArchivo('${id}')" tabindex="0">X</button>
+                                <button class="btn-accion btn-borrar" onclick="eliminarArchivo('${id}')" tabindex="0" title="Eliminar">X</button>
                             </div>
                         `;
                         contenedor.appendChild(div);
@@ -496,40 +503,171 @@
             });
         }
 
+        function tieneArchivoActivoDisponibles() {
+            const llaves = Object.keys(listaGlobalArchivos);
+            if (llaves.length === 0) return false;
+            return llaves.some(id => !listaGlobalArchivos[id].pausado);
+        }
+
+        function validarExistenciaArchivoActivo() {
+            const llaves = Object.keys(listaGlobalArchivos);
+            if (llaves.length === 0) {
+                alert("NO HAY ARCHIVOS PUBLICADOS. DEBES PUBLICAR AL MENOS UNO.");
+                return false;
+            }
+            if (!tieneArchivoActivoDisponibles()) {
+                alert("TODOS LOS ARCHIVOS ESTÁN DESACTIVADOS. ACTIVA AL MENOS UNO.");
+                return false;
+            }
+            return true;
+        }
+
+        function autoApagarDescargasSiNoHayActivos() {
+            if (!tieneArchivoActivoDisponibles()) {
+                const chkGen = document.getElementById("chkHabilitarDescargas").checked;
+                const chkTiempo = document.getElementById("chkHabilitarTiempo").checked;
+
+                if (chkGen || chkTiempo) {
+                    set(ref(db, 'descargasHabilitadas'), false);
+                    set(ref(db, 'configTiempo'), {
+                        habilitado: false,
+                        timestampFin: 0,
+                        congeladoMs: 0
+                    });
+                    alert("NO QUEDAN ARCHIVOS ACTIVOS. SE HAN DESHABILITADO LAS DESCARGAS AUTOMÁTICAMENTE.");
+                }
+            }
+        }
+
         window.cambiarEstadoDescargas = function(nuevoEstado) {
+            if (nuevoEstado) {
+                if (!validarExistenciaArchivoActivo()) {
+                    document.getElementById("chkHabilitarDescargas").checked = false;
+                    return;
+                }
+                set(ref(db, 'configTiempo'), {
+                    habilitado: false,
+                    timestampFin: 0,
+                    congeladoMs: 0
+                });
+            }
             set(ref(db, 'descargasHabilitadas'), nuevoEstado);
         }
 
-        // CARGAR DATOS EN EL FORMULARIO PARA EDITAR
-        window.cargarEdicionArchivo = function(id) {
+        window.alternarModuloTiempo = function(habilitado) {
+            if (!habilitado) {
+                set(ref(db, 'configTiempo'), {
+                    habilitado: false,
+                    timestampFin: 0,
+                    congeladoMs: 0
+                });
+            }
+        }
+
+        window.guardarTiempoDescarga = function() {
+            if (!validarExistenciaArchivoActivo()) return;
+
+            const h = parseInt(document.getElementById("inputHoras").value) || 0;
+            const m = parseInt(document.getElementById("inputMinutos").value) || 0;
+
+            if (h === 0 && m === 0) {
+                alert("INGRESA UN TIEMPO VÁLIDO (AL MENOS 1 MINUTO)");
+                return;
+            }
+
+            const duracionMs = (h * 3600 + m * 60) * 1000;
+            const timestampFin = Date.now() + duracionMs;
+
+            set(ref(db, 'descargasHabilitadas'), false);
+            set(ref(db, 'configTiempo'), {
+                habilitado: true,
+                timestampFin: timestampFin,
+                congeladoMs: 0
+            });
+        }
+
+        window.eliminarTiempoDescarga = function() {
+            set(ref(db, 'configTiempo'), {
+                habilitado: false,
+                timestampFin: 0,
+                congeladoMs: 0
+            });
+        }
+
+        function iniciarRelojAdmin(timestampFin) {
+            if (timerCuentaRegresivaAdmin) clearInterval(timerCuentaRegresivaAdmin);
+
+            const actualizar = () => {
+                const restante = timestampFin - Date.now();
+                if (restante <= 0) {
+                    clearInterval(timerCuentaRegresivaAdmin);
+                    eliminarTiempoDescarga();
+                    return;
+                }
+                const hrs = Math.floor(restante / (1000 * 60 * 60));
+                const mins = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+                const segs = Math.floor((restante % (1000 * 60)) / 1000);
+
+                const formato = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
+                document.getElementById("txtRelojRestante").textContent = `TIEMPO RESTANTE: ${formato}`;
+            };
+
+            actualizar();
+            timerCuentaRegresivaAdmin = setInterval(actualizar, 1000);
+        }
+
+        window.cargarEdicionArchivo = async function(id) {
             const item = listaGlobalArchivos[id];
             if (!item) return;
 
+            if (idArchivoEnEdicion && idArchivoEnEdicion !== id) {
+                update(ref(db, `listaArchivos/${idArchivoEnEdicion}`), { editando: false });
+            }
+
             idArchivoEnEdicion = id;
+            await update(ref(db, `listaArchivos/${id}`), { editando: true });
+
+            if (configTiempoGlobal.habilitado && configTiempoGlobal.timestampFin > Date.now()) {
+                const restanteMs = Math.max(0, configTiempoGlobal.timestampFin - Date.now());
+                await update(ref(db, 'configTiempo'), {
+                    congeladoMs: restanteMs,
+                    timestampFin: 0
+                });
+            }
+
             document.getElementById("nombreCustomInput").value = item.nombre || "";
             document.getElementById("urlArchivoInput").value = item.url || "";
 
             const btnPublicar = document.getElementById("btnPublicar");
             btnPublicar.textContent = "ACTUALIZAR ARCHIVO";
-            btnPublicar.style.borderColor = "var(--color-verde)";
-
             document.getElementById("btnCancelarEdit").style.display = "block";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // CANCELAR MODO EDICIÓN
-        window.cancelarModoEdicion = function() {
+        async function descongelarTiempoSiEsNecesario() {
+            if (configTiempoGlobal.habilitado && configTiempoGlobal.congeladoMs > 0) {
+                const nuevoFin = Date.now() + configTiempoGlobal.congeladoMs;
+                await update(ref(db, 'configTiempo'), {
+                    timestampFin: nuevoFin,
+                    congeladoMs: 0
+                });
+            }
+        }
+
+        window.cancelarModoEdicion = async function() {
+            if (idArchivoEnEdicion) {
+                await update(ref(db, `listaArchivos/${idArchivoEnEdicion}`), { editando: false });
+            }
+
             idArchivoEnEdicion = null;
             document.getElementById("nombreCustomInput").value = "";
             document.getElementById("urlArchivoInput").value = "";
-
-            const btnPublicar = document.getElementById("btnPublicar");
-            btnPublicar.textContent = "PUBLICAR ENLACE EN LA WEB";
-
+            document.getElementById("btnPublicar").textContent = "PUBLICAR ENLACE EN LA WEB";
             document.getElementById("btnCancelarEdit").style.display = "none";
+
+            await descongelarTiempoSiEsNecesario();
         }
 
-        // GUARDAR O ACTUALIZAR REGISTRO EN FIREBASE
         window.guardarRegistroArchivo = async function() {
             const nombre = document.getElementById("nombreCustomInput").value.trim();
             const url = document.getElementById("urlArchivoInput").value.trim();
@@ -538,28 +676,31 @@
             if (nombre === "" || url === "") {
                 estado.style.color = "#ff0000";
                 estado.textContent = "LLENA AMBOS CAMPOS.";
-                setTimeout(() => { 
-                    if (estado.textContent === "LLENA AMBOS CAMPOS.") {
-                        estado.textContent = ""; 
-                    }
-                }, 3000);
+                setTimeout(() => { if (estado.textContent === "LLENA AMBOS CAMPOS.") estado.textContent = ""; }, 3000);
                 return;
             }
 
-            // Si idArchivoEnEdicion tiene un ID, se edita; de lo contrario, se crea uno nuevo
             const idTarget = idArchivoEnEdicion ? idArchivoEnEdicion : Date.now();
 
             try {
                 await update(ref(db, `listaArchivos/${idTarget}`), {
                     nombre: nombre,
                     url: url,
-                    pausado: idArchivoEnEdicion && listaGlobalArchivos[idArchivoEnEdicion] ? (listaGlobalArchivos[idArchivoEnEdicion].pausado || false) : false
+                    pausado: idArchivoEnEdicion && listaGlobalArchivos[idArchivoEnEdicion] ? (listaGlobalArchivos[idArchivoEnEdicion].pausado || false) : false,
+                    editando: false
                 });
 
                 estado.style.color = "#00ff00";
                 estado.textContent = idArchivoEnEdicion ? "----- REGISTRO ACTUALIZADO -----" : "----- REGISTRO PUBLICADO -----";
                 
-                cancelarModoEdicion();
+                idArchivoEnEdicion = null;
+                document.getElementById("nombreCustomInput").value = "";
+                document.getElementById("urlArchivoInput").value = "";
+                document.getElementById("btnPublicar").textContent = "PUBLICAR ENLACE EN LA WEB";
+                document.getElementById("btnCancelarEdit").style.display = "none";
+
+                await descongelarTiempoSiEsNecesario();
+
                 setTimeout(() => { estado.textContent = ""; }, 2000);
             } catch(e) {
                 estado.style.color = "#ff0000";
@@ -568,20 +709,18 @@
             }
         }
 
-        window.alternarPausaArchivo = function(id, estadoActual) {
-            update(ref(db, `listaArchivos/${id}`), {
-                pausado: !estadoActual
-            });
+        window.alternarPausaArchivo = async function(id, estadoActual) {
+            await update(ref(db, `listaArchivos/${id}`), { pausado: !estadoActual });
+            if (!estadoActual) {
+                autoApagarDescargasSiNoHayActivos();
+            }
         }
 
         window.eliminarArchivo = async function(id) {
             if(!confirm("¿Eliminar este registro?")) return;
-            
-            if (idArchivoEnEdicion === id) {
-                cancelarModoEdicion();
-            }
-
-            remove(ref(db, 'listaArchivos/' + id));
+            if (idArchivoEnEdicion === id) await cancelarModoEdicion();
+            await remove(ref(db, 'listaArchivos/' + id));
+            autoApagarDescargasSiNoHayActivos();
         }
     </script>
 </body>
