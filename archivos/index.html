@@ -116,11 +116,11 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        let descargasPermitidas = false;
+        let descargasGeneralHabilitadas = false;
         let listaArchivosCache = {};
 
-        // Convertidor de URL directa (Drive/Dropbox)
-        function obtenerEnlaceDirecto(url) {
+        // Convierte enlaces de Drive, Dropbox o GitHub a enlaces de descarga forzada
+        function formatearUrlDirecta(url) {
             if (!url) return "#";
             if (url.includes("drive.google.com")) {
                 const match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
@@ -129,17 +129,20 @@
             if (url.includes("dropbox.com")) {
                 return url.replace("dl=0", "dl=1").replace("www.dropbox.com", "dl.dropboxusercontent.com");
             }
+            if (url.includes("github.com") && url.includes("/blob/")) {
+                return url.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/");
+            }
             return url;
         }
 
-        // 1. Escuchar el interruptor en tiempo real
+        // 1. Escuchar Switch General
         onValue(ref(db, 'descargasHabilitadas'), (snapshot) => {
-            descargasPermitidas = snapshot.val() || false;
-            document.getElementById("bannerBloqueo").style.display = descargasPermitidas ? "none" : "block";
+            descargasGeneralHabilitadas = snapshot.val() || false;
+            document.getElementById("bannerBloqueo").style.display = descargasGeneralHabilitadas ? "none" : "block";
             renderizarLista();
         });
 
-        // 2. Escuchar la lista de archivos de la base de datos
+        // 2. Escuchar Lista de Archivos
         onValue(ref(db, 'listaArchivos'), (snapshot) => {
             listaArchivosCache = snapshot.val() || {};
             renderizarLista();
@@ -159,65 +162,55 @@
                 const item = listaArchivosCache[id];
                 const div = document.createElement("div");
                 div.className = "tarjeta-archivo";
-                const claseBoton = descargasPermitidas ? "btn-descargar" : "btn-descargar deshabilitado";
 
-                // Se asigna la función 'ejecutarDescargaSegura' en lugar de un enlace directo
+                const estaDisponible = descargasGeneralHabilitadas && (!item.pausado);
+                const claseBoton = estaDisponible ? "btn-descargar" : "btn-descargar deshabilitado";
+                const textoBoton = !descargasGeneralHabilitadas ? "BLOQUEADO" : (item.pausado ? "PAUSADO" : "DESCARGAR");
+
                 div.innerHTML = `
                     <span class="nombre-archivo">${item.nombre}</span>
-                    <a href="#" onclick="event.preventDefault(); window.ejecutarDescargaSegura('${id}')" class="${claseBoton}" id="btnFile_${id}">
-                        ${descargasPermitidas ? 'DESCARGAR' : 'BLOQUEADO'}
-                    </a>
+                    <button onclick="window.ejecutarDescargaSegura('${id}')" class="${claseBoton}" id="btnFile_${id}">
+                        ${textoBoton}
+                    </button>
                 `;
                 contenedor.appendChild(div);
             });
         }
 
-        // 3. FUNCIÓN DE DESCARGA SEGURA CON VERIFICACIÓN DE ESTADO
+        // 3. DESCARGA AUTOMÁTICA EN MEMORIA (Cero historial / Cero URL en el botón)
         window.ejecutarDescargaSegura = async function(id) {
             const btn = document.getElementById(`btnFile_${id}`);
             
-            // Re-verificar directamente con la base de datos antes de entregar el archivo
             const snapshotEstado = await get(ref(db, 'descargasHabilitadas'));
-            const estadoReal = snapshotEstado.val() || false;
+            const estadoGeneral = snapshotEstado.val() || false;
 
-            if (!estadoReal) {
-                alert("ACCESO DENEGADO: Las descargas han sido deshabilitadas por el administrador.");
+            const item = listaArchivosCache[id];
+
+            if (!estadoGeneral || (item && item.pausado)) {
+                alert("ACCESO DENEGADO: Este archivo no está disponible actualmente.");
                 return;
             }
 
-            const item = listaArchivosCache[id];
             if (!item || !item.url) return;
 
-            const urlFinal = obtenerEnlaceDirecto(item.url);
+            const urlFinal = formatearUrlDirecta(item.url);
             const textoOriginal = btn.textContent;
-            btn.textContent = "PROCESANDO...";
+            btn.textContent = "INICIANDO...";
 
-            try {
-                // Descarga binaria en segundo plano
-                const respuesta = await fetch(urlFinal);
-                if (!respuesta.ok) throw new Error("Error en la respuesta de la red.");
-                
-                const blob = await respuesta.blob();
-                const urlBlob = window.URL.createObjectURL(blob);
-                
-                // Creación de enlace temporal e invisible
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = urlBlob;
-                a.download = item.nombre;
-                document.body.appendChild(a);
-                a.click();
-                
-                // Limpieza de memoria
-                window.URL.revokeObjectURL(urlBlob);
+            // Generar enlace dinámico temporal en memoria
+            const a = document.createElement("a");
+            a.href = urlFinal;
+            a.rel = "noopener noreferrer";
+            a.setAttribute("download", item.nombre);
+            a.style.display = "none";
+            document.body.appendChild(a);
+
+            a.click();
+
+            setTimeout(() => {
                 a.remove();
-                
                 btn.textContent = textoOriginal;
-            } catch (e) {
-                // Si la descarga por Fetch es bloqueada por CORS (común en Drive), abre el enlace dinámicamente sin revelarlo en el botón
-                window.open(urlFinal, '_blank');
-                btn.textContent = textoOriginal;
-            }
+            }, 1000);
         }
     </script>
 </body>
