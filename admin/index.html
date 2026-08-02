@@ -29,7 +29,6 @@
             min-height: 100vh;
         }
 
-        /* Título responsivo usando clamp() para Smart TVs, PCs y Celulares */
         h1 { 
             margin-bottom: 20px; 
             font-size: clamp(1.2rem, 3vw, 2.2rem); 
@@ -85,7 +84,6 @@
             background-color: var(--color-verde);
         }
 
-        /* Enfocado para el switch con control remoto de Smart TV */
         .switch input:focus + .slider {
             outline: 2px solid #ffffff;
             box-shadow: 0 0 10px var(--color-verde);
@@ -124,7 +122,7 @@
             cursor: pointer;
             margin-bottom: 10px;
             transition: all 0.2s ease;
-            min-height: 44px; /* Tamaño optimizado para pulsaciones táctiles */
+            min-height: 44px;
         }
 
         .btn-custom:hover,
@@ -195,7 +193,6 @@
         .estado-on { color: var(--color-verde); }
         .estado-off { color: var(--color-rojo); }
 
-        /* REGLAS RESPONSIVAS PARA PANTALLAS PEQUEÑAS (MÓVILES) */
         @media (max-width: 600px) {
             body { padding: 10px; }
             .panel-box { padding: 12px; }
@@ -225,7 +222,6 @@
 </head>
 <body>
 
-    <!-- TÍTULO CAMBIADO A C:\ADMIN_GESTION_ -->
     <h1>C:\ADMIN_GESTION_</h1>
 
     <div class="panel-box">
@@ -246,7 +242,7 @@
         <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/releases/download/.../app.apk" tabindex="0">
 
         <button class="btn-custom" onclick="guardarRegistroArchivo()" tabindex="0">PUBLICAR ENLACE EN LA WEB</button>
-        <p id="estadoSubida" style="text-align: center; margin-top: 10px; font-weight: bold;"></p>
+        <p id="estadoSubida" style="text-align: center; margin-top: 10px; font-weight: bold; min-height: 20px;"></p>
     </div>
 
     <!-- LISTA DE ARCHIVOS PUBLICADOS -->
@@ -285,7 +281,7 @@
             set(ref(db, 'descargasHabilitadas'), nuevoEstado);
         }
 
-        // 2. Guardar Enlace en Firebase
+        // 2. Guardar Enlace en Firebase con temporizador de 3 segundos
         window.guardarRegistroArchivo = async function() {
             const nombre = document.getElementById("nombreCustomInput").value.trim();
             const url = document.getElementById("urlArchivoInput").value.trim();
@@ -294,6 +290,11 @@
             if (nombre === "" || url === "") {
                 estado.style.color = "#ff0000";
                 estado.textContent = "LLENA AMBOS CAMPOS.";
+                setTimeout(() => { 
+                    if (estado.textContent === "LLENA AMBOS CAMPOS.") {
+                        estado.textContent = ""; 
+                    }
+                }, 3000);
                 return;
             }
 
@@ -314,6 +315,7 @@
             } catch(e) {
                 estado.style.color = "#ff0000";
                 estado.textContent = "ERROR AL GUARDAR EN BASE DE DATOS";
+                setTimeout(() => { estado.textContent = ""; }, 3000);
             }
         }
 
