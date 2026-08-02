@@ -119,7 +119,7 @@
         let descargasGeneralHabilitadas = false;
         let listaArchivosCache = {};
 
-        // Convierte enlaces de Drive, Dropbox o GitHub a enlaces de descarga forzada
+        // Convierte enlaces a descarga forzada directa
         function formatearUrlDirecta(url) {
             if (!url) return "#";
             if (url.includes("drive.google.com")) {
@@ -177,7 +177,7 @@
             });
         }
 
-        // 3. DESCARGA AUTOMÁTICA EN MEMORIA (Cero historial / Cero URL en el botón)
+        // 3. DESCARGA CON MENSAJE PERSONALIZADO SI ESTÁ BLOQUEADO/PAUSADO
         window.ejecutarDescargaSegura = async function(id) {
             const btn = document.getElementById(`btnFile_${id}`);
             
@@ -186,8 +186,9 @@
 
             const item = listaArchivosCache[id];
 
+            // Mensaje modificado con el texto solicitado
             if (!estadoGeneral || (item && item.pausado)) {
-                alert("ACCESO DENEGADO: Este archivo no está disponible actualmente.");
+                alert("ACCESO DENEGADO: Este archivo no está disponible actualmente. Comunícate por WhatsApp o Messenger con el administrador");
                 return;
             }
 
@@ -197,7 +198,6 @@
             const textoOriginal = btn.textContent;
             btn.textContent = "INICIANDO...";
 
-            // Generar enlace dinámico temporal en memoria
             const a = document.createElement("a");
             a.href = urlFinal;
             a.rel = "noopener noreferrer";
