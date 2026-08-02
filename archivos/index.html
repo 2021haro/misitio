@@ -11,24 +11,34 @@
             --fondo: #050a05;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
 
         body {
             background-color: var(--fondo);
             color: var(--color-verde);
             font-family: 'Courier New', Courier, monospace;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
 
-        h1 { margin-bottom: 20px; font-size: 1.5rem; text-align: center; }
+        /* Título fluido adaptativo desde celular hasta Smart TV */
+        h1 { 
+            margin-bottom: 20px; 
+            font-size: clamp(1.2rem, 3vw, 2.2rem); 
+            text-align: center;
+            letter-spacing: 1px;
+        }
 
         .contenedor-main {
             width: 100%;
-            max-width: 700px;
+            max-width: 900px;
             border: 1px solid var(--color-verde);
             padding: 20px;
         }
@@ -43,41 +53,50 @@
             margin-bottom: 15px;
             letter-spacing: 1px;
             line-height: 1.5;
+            font-size: clamp(0.85rem, 2vw, 1.1rem);
         }
 
         .tarjeta-archivo {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 14px;
             border: 1px dashed var(--color-verde);
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
+            margin-bottom: 12px;
+            gap: 15px;
         }
 
         .nombre-archivo {
             font-weight: bold;
             word-break: break-all;
             flex: 1;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
         }
 
         .btn-descargar {
             background: transparent;
             border: 1px solid var(--color-verde);
             color: var(--color-verde);
-            padding: 10px 18px;
+            padding: 12px 20px;
             font-family: inherit;
             font-weight: bold;
+            font-size: clamp(0.85rem, 1.5vw, 1.1rem);
             text-decoration: none;
             cursor: pointer;
             transition: all 0.2s ease;
+            min-height: 44px; /* Tamaño táctil recomendado para móviles */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
+        /* Efecto de enfoque optimizado para navegación por control remoto en Smart TV */
+        .btn-descargar:focus,
         .btn-descargar:hover {
             background: var(--color-verde);
             color: #000;
-            box-shadow: 0 0 10px var(--color-verde);
+            box-shadow: 0 0 15px var(--color-verde);
+            outline: 2px solid #ffffff;
         }
 
         .btn-descargar.deshabilitado {
@@ -85,6 +104,36 @@
             color: #555 !important;
             cursor: not-allowed;
             box-shadow: none !important;
+            outline: none !important;
+        }
+
+        .btn-descargar.deshabilitado:focus {
+            background: transparent !important;
+            border-color: var(--color-rojo) !important;
+            color: var(--color-rojo) !important;
+            box-shadow: 0 0 10px var(--color-rojo) !important;
+        }
+
+        /* RESPONSIVO PARA PANTALLAS PEQUEÑAS (MÓVILES) */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .contenedor-main {
+                padding: 12px;
+            }
+
+            .tarjeta-archivo {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .btn-descargar {
+                width: 100%;
+                margin-top: 5px;
+            }
         }
     </style>
 </head>
@@ -93,7 +142,7 @@
     <h1>C:\DESCARGA_DE_ARCHIVOS_WXZ_</h1>
 
     <div class="contenedor-main">
-        <!-- BANNER SIN LOS SÍMBOLOS [!] -->
+        <!-- BANNER DE BLOQUEO DE DESCARGAS -->
         <div id="bannerBloqueo" class="mensaje-bloqueado">
             DESCARGAS TEMPORALMENTE DESHABILITADAS POR EL ADMINISTRADOR<br>
             COMUNÍCATE POR WHATSAPP/MESSENGER CON EL ADMINISTRADOR.
@@ -156,7 +205,7 @@
             const llaves = Object.keys(listaArchivosCache);
 
             if (llaves.length === 0) {
-                contenedor.innerHTML = "<p style='text-align:center; opacity:0.6;'>NO HAY ARCHIVOS DISPONIBLES.</p>";
+                contenedor.innerHTML = "<p style='text-align:center; opacity:0.6; padding: 15px;'>NO HAY ARCHIVOS DISPONIBLES.</p>";
                 return;
             }
 
@@ -171,7 +220,7 @@
 
                 div.innerHTML = `
                     <span class="nombre-archivo">${item.nombre}</span>
-                    <button onclick="window.ejecutarDescargaSegura('${id}')" class="${claseBoton}" id="btnFile_${id}">
+                    <button onclick="window.ejecutarDescargaSegura('${id}')" class="${claseBoton}" id="btnFile_${id}" tabindex="0">
                         ${textoBoton}
                     </button>
                 `;
