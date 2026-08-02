@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C:\PANEL_ADMIN_LINKS_</title>
+    <title>C:\PANEL_ADMIN_GITHUB_</title>
     <style>
         :root {
             --color-verde: #00ff00;
@@ -31,11 +31,10 @@
             border: 1px solid var(--color-verde);
             padding: 20px;
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
             margin-bottom: 20px;
         }
 
-        /* ESTILO INTERRUPTOR */
         .contenedor-switch {
             display: flex;
             align-items: center;
@@ -73,7 +72,6 @@
             background-color: var(--color-verde);
         }
 
-        /* INPUTS DE TEXTO Y BOTÓN */
         input[type="text"] {
             background: transparent;
             border: 1px solid var(--color-verde);
@@ -86,22 +84,9 @@
             outline: none;
         }
 
-        input[type="text"]::placeholder {
-            color: var(--color-verde);
-            opacity: 0.5;
-        }
-
-        input[type="text"]:focus {
-            box-shadow: 0 0 8px var(--color-verde);
-        }
-
-        .contenedor-botones-form {
-            display: flex;
-            gap: 10px;
-        }
+        input[type="text"]::placeholder { color: var(--color-verde); opacity: 0.5; }
 
         .btn-custom {
-            flex: 1;
             display: block;
             width: 100%;
             padding: 12px;
@@ -112,6 +97,7 @@
             font-weight: bold;
             text-align: center;
             cursor: pointer;
+            margin-bottom: 10px;
             transition: all 0.2s ease;
         }
 
@@ -121,21 +107,9 @@
             box-shadow: 0 0 10px var(--color-verde);
         }
 
-        .btn-cancelar {
-            display: none;
-            border-color: var(--color-rojo) !important;
-            color: var(--color-rojo) !important;
-        }
-
-        .btn-cancelar:hover {
-            background: var(--color-rojo) !important;
-            color: #000 !important;
-            box-shadow: 0 0 10px var(--color-rojo) !important;
-        }
-
         .lista-archivos {
             margin-top: 15px;
-            max-height: 250px;
+            max-height: 280px;
             overflow-y: auto;
         }
 
@@ -143,7 +117,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            padding: 10px 0;
             border-bottom: 1px dashed rgba(0, 255, 0, 0.3);
             font-size: 14px;
             gap: 10px;
@@ -168,80 +142,48 @@
             padding: 4px 8px;
             font-family: inherit;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 12px;
             transition: all 0.2s ease;
         }
 
-        .btn-modificar {
-            border: 1px solid var(--color-naranja);
-            color: var(--color-naranja);
-        }
-
-        .btn-modificar:hover {
-            background: var(--color-naranja);
-            color: #000;
-            box-shadow: 0 0 8px var(--color-naranja);
-        }
-
-        .btn-borrar {
-            border: 1px solid var(--color-rojo);
-            color: var(--color-rojo);
-        }
-
-        .btn-borrar:hover {
-            background: var(--color-rojo);
-            color: #000;
-            box-shadow: 0 0 8px var(--color-rojo);
-        }
+        .btn-pausa { border: 1px solid var(--color-naranja); color: var(--color-naranja); }
+        .btn-pausa:hover { background: var(--color-naranja); color: #000; }
+        .btn-borrar { border: 1px solid var(--color-rojo); color: var(--color-rojo); }
+        .btn-borrar:hover { background: var(--color-rojo); color: #000; }
 
         .estado-texto { font-weight: bold; }
         .estado-on { color: var(--color-verde); }
         .estado-off { color: var(--color-rojo); }
-
-        .subtitulo-modo {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-align: center;
-            letter-spacing: 1px;
-            color: var(--color-naranja);
-            display: none;
-        }
     </style>
 </head>
 <body>
 
-    <h1>C:\ADMIN_GESTION_ARCHIVOS_</h1>
+    <h1>C:\ADMIN_GESTION_GITHUB_</h1>
 
     <div class="panel-box">
-        <!-- INTERRUPTOR DE HABILITACIÓN -->
+        <!-- INTERRUPTOR GENERAL -->
         <div class="contenedor-switch">
-            <span>DESCARGAS WXZ: <span id="lblEstadoSwitch" class="estado-texto estado-off">DESACTIVADAS</span></span>
+            <span>DESCARGAS GENERALES: <span id="lblEstadoSwitch" class="estado-texto estado-off">DESACTIVADAS</span></span>
             <label class="switch">
                 <input type="checkbox" id="chkHabilitarDescargas" onchange="cambiarEstadoDescargas(this.checked)">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- FORMULARIO DE EDICIÓN Y REGISTRO -->
-        <p id="lblModoFormulario" class="subtitulo-modo">[ MODO EDICIÓN DE ENLACE ]</p>
-
+        <!-- REGISTRO DE ARCHIVOS -->
         <p style="margin-bottom: 8px;">NOMBRE DEL ARCHIVO:</p>
-        <input type="text" id="nombreArchivoInput" placeholder="Ej. Paquete_WXZ_v1.zip">
+        <input type="text" id="nombreCustomInput" placeholder="Ej. Paquete_WXZ_v1.zip">
 
-        <p style="margin-bottom: 8px;">LINK DE GOOGLE DRIVE / DROPBOX:</p>
-        <input type="text" id="urlArchivoInput" placeholder="Ej. https://drive.google.com/file/d/...">
+        <p style="margin-bottom: 8px;">RUTA O LINK DE GITHUB / MEDIAFIRE / DRIVE:</p>
+        <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/raw/main/archivo.zip o link de Drive/Mediafire">
 
-        <div class="contenedor-botones-form">
-            <button id="btnGuardarAccion" class="btn-custom" onclick="guardarEnlace()">GUARDAR ENLACE</button>
-            <button id="btnCancelarAccion" class="btn-custom btn-cancelar" onclick="resetearFormulario()">CANCELAR EDICIÓN</button>
-        </div>
-        <p id="estadoGuardado" style="text-align: center; margin-top: 10px; font-weight: bold;"></p>
+        <button class="btn-custom" onclick="guardarRegistroArchivo()">PUBLICAR ENLACE EN LA WEB</button>
+        <p id="estadoSubida" style="text-align: center; margin-top: 10px; font-weight: bold;"></p>
     </div>
 
-    <!-- LISTA DE ARCHIVOS REGISTRADOS -->
+    <!-- LISTA DE ARCHIVOS PUBLICADOS -->
     <div class="panel-box">
-        <h2 style="font-size: 1rem; margin-bottom: 10px;">ARCHIVOS EN EL SERVIDOR:</h2>
+        <h2 style="font-size: 1rem; margin-bottom: 10px;">ARCHIVOS PUBLICADOS:</h2>
         <div id="contenedorListaAdmin" class="lista-archivos"></div>
     </div>
 
@@ -262,11 +204,8 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        let idEnEdicion = null; // Guardará la id si se está modificando un item
-
-        // 1. Sincronizar estado del Switch
-        const switchRef = ref(db, 'descargasHabilitadas');
-        onValue(switchRef, (snapshot) => {
+        // 1. Sincronizar Switch General
+        onValue(ref(db, 'descargasHabilitadas'), (snapshot) => {
             const estado = snapshot.val() || false;
             document.getElementById("chkHabilitarDescargas").checked = estado;
             const lbl = document.getElementById("lblEstadoSwitch");
@@ -275,69 +214,50 @@
         });
 
         window.cambiarEstadoDescargas = function(nuevoEstado) {
-            set(switchRef, nuevoEstado);
+            set(ref(db, 'descargasHabilitadas'), nuevoEstado);
         }
 
-        // 2. Guardar o Actualizar Enlace en Realtime Database
-        window.guardarEnlace = function() {
-            const nombre = document.getElementById("nombreArchivoInput").value.trim();
+        // 2. Guardar Enlace en Firebase
+        window.guardarRegistroArchivo = async function() {
+            const nombre = document.getElementById("nombreCustomInput").value.trim();
             const url = document.getElementById("urlArchivoInput").value.trim();
-            const estado = document.getElementById("estadoGuardado");
+            const estado = document.getElementById("estadoSubida");
 
             if (nombre === "" || url === "") {
                 estado.style.color = "#ff0000";
-                estado.textContent = "DEBES LLENAR AMBOS CAMPOS.";
+                estado.textContent = "LLENA AMBOS CAMPOS.";
                 return;
             }
 
-            const esActualizacion = (idEnEdicion !== null);
-            const targetID = esActualizacion ? idEnEdicion : Date.now();
+            const idUnico = Date.now();
 
-            const datosGuardar = {};
-            datosGuardar['listaArchivos/' + targetID] = {
-                nombre: nombre,
-                url: url
-            };
-
-            update(ref(db), datosGuardar)
-                .then(() => {
-                    estado.style.color = "#00ff00";
-                    estado.textContent = esActualizacion ? "----- ACTUALIZADO -----" : "----- GUARDADO -----";
-                    resetearFormulario();
-                    setTimeout(() => { estado.textContent = ""; }, 2000);
-                })
-                .catch(() => {
-                    estado.style.color = "#ff0000";
-                    estado.textContent = "ERROR AL GUARDAR EN EL SERVIDOR.";
+            try {
+                await update(ref(db, `listaArchivos/${idUnico}`), {
+                    nombre: nombre,
+                    url: url,
+                    pausado: false
                 });
+
+                estado.style.color = "#00ff00";
+                estado.textContent = "----- REGISTRO PUBLICADO -----";
+                document.getElementById("nombreCustomInput").value = "";
+                document.getElementById("urlArchivoInput").value = "";
+                setTimeout(() => { estado.textContent = ""; }, 2000);
+            } catch(e) {
+                estado.style.color = "#ff0000";
+                estado.textContent = "ERROR AL GUARDAR EN BASE DE DATOS";
+            }
         }
 
-        // 3. Cargar datos en el formulario para modificar
-        window.cargarParaEditar = function(id, nombre, url) {
-            idEnEdicion = id;
-            document.getElementById("nombreArchivoInput").value = nombre;
-            document.getElementById("urlArchivoInput").value = url;
-
-            document.getElementById("lblModoFormulario").style.display = "block";
-            document.getElementById("btnGuardarAccion").textContent = "ACTUALIZAR ENLACE";
-            document.getElementById("btnCancelarAccion").style.display = "block";
-            document.getElementById("nombreArchivoInput").focus();
+        // 3. Alternar Pausa
+        window.alternarPausaArchivo = function(id, estadoActual) {
+            update(ref(db, `listaArchivos/${id}`), {
+                pausado: !estadoActual
+            });
         }
 
-        // 4. Cancelar / Resetear Formulario
-        window.resetearFormulario = function() {
-            idEnEdicion = null;
-            document.getElementById("nombreArchivoInput").value = "";
-            document.getElementById("urlArchivoInput").value = "";
-
-            document.getElementById("lblModoFormulario").style.display = "none";
-            document.getElementById("btnGuardarAccion").textContent = "GUARDAR ENLACE";
-            document.getElementById("btnCancelarAccion").style.display = "none";
-        }
-
-        // 5. Renderizar lista de archivos en pantalla
-        const listaRef = ref(db, 'listaArchivos');
-        onValue(listaRef, (snapshot) => {
+        // 4. Renderizar Lista
+        onValue(ref(db, 'listaArchivos'), (snapshot) => {
             const contenedor = document.getElementById("contenedorListaAdmin");
             contenedor.innerHTML = "";
             const data = snapshot.val();
@@ -347,26 +267,29 @@
                     const item = data[id];
                     const div = document.createElement("div");
                     div.className = "item-archivo";
+                    const estaPausado = item.pausado || false;
+
                     div.innerHTML = `
                         <div class="info-item">
-                            <span>${item.nombre}</span>
+                            <span>${item.nombre}</span> ${estaPausado ? '<span style="color:#ff0000; font-size:12px;">[PAUSADO]</span>' : ''}
                         </div>
                         <div class="acciones-item">
-                            <button class="btn-accion btn-modificar" onclick="cargarParaEditar('${id}', '${item.nombre.replace(/'/g, "\\'")}', '${item.url.replace(/'/g, "\\'")}')">✎</button>
+                            <button class="btn-accion btn-pausa" onclick="alternarPausaArchivo('${id}', ${estaPausado})">
+                                ${estaPausado ? '▶ REANUDAR' : '⏸ PAUSAR'}
+                            </button>
                             <button class="btn-accion btn-borrar" onclick="eliminarArchivo('${id}')">X</button>
                         </div>
                     `;
                     contenedor.appendChild(div);
                 });
             } else {
-                contenedor.innerHTML = "<p style='opacity:0.5; text-align:center;'>NO HAY ARCHIVOS REGISTRADOS</p>";
+                contenedor.innerHTML = "<p style='opacity:0.5; text-align:center;'>NO HAY ARCHIVOS PUBLICADOS</p>";
             }
         });
 
-        // 6. Eliminar archivo de la base de datos
-        window.eliminarArchivo = function(id) {
-            if(!confirm("¿Eliminar este enlace?")) return;
-            if (idEnEdicion === id) resetearFormulario();
+        // 5. Eliminar
+        window.eliminarArchivo = async function(id) {
+            if(!confirm("¿Eliminar este registro?")) return;
             remove(ref(db, 'listaArchivos/' + id));
         }
     </script>
