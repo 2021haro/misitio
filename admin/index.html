@@ -29,22 +29,93 @@
             min-height: 100vh;
         }
 
+        /* ESTILOS DEL MODAL DE LOGIN */
+        #pantallaLogin {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--fondo);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 15px;
+        }
+
+        .box-login {
+            border: 1px solid var(--color-verde);
+            padding: 25px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            background: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+        }
+
+        .box-login h2 {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* ESTILOS DEL PANEL DE ADMINISTRACIÓN */
+        #contenidoAdmin {
+            display: none;
+            width: 100%;
+            max-width: 850px;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* ENCABEZADO Y BOTÓN CERRAR SESIÓN */
+        .encabezado-admin {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
         h1 { 
-            margin-bottom: 20px; 
             font-size: clamp(1.2rem, 3vw, 2.2rem); 
             text-align: center;
             letter-spacing: 1px;
+            flex: 1;
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: 1px solid var(--color-rojo);
+            color: var(--color-rojo);
+            padding: 8px 15px;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 38px;
+        }
+
+        .btn-logout:hover,
+        .btn-logout:focus {
+            background: var(--color-rojo);
+            color: #000;
+            box-shadow: 0 0 10px var(--color-rojo);
+            outline: 2px solid #ffffff;
         }
 
         .panel-box {
             border: 1px solid var(--color-verde);
             padding: 20px;
             width: 100%;
-            max-width: 850px;
             margin-bottom: 20px;
         }
 
-        /* ESTILO INTERRUPTOR CIBERNÉTICO */
         .contenedor-switch {
             display: flex;
             align-items: center;
@@ -89,7 +160,8 @@
             box-shadow: 0 0 10px var(--color-verde);
         }
 
-        input[type="text"] {
+        input[type="text"],
+        input[type="password"] {
             background: transparent;
             border: 1px solid var(--color-verde);
             color: var(--color-verde);
@@ -99,14 +171,16 @@
             font-family: inherit;
             margin-bottom: 15px;
             outline: none;
+            text-align: center;
         }
 
-        input[type="text"]:focus {
+        input[type="text"]:focus,
+        input[type="password"]:focus {
             box-shadow: 0 0 10px var(--color-verde);
             border-color: #ffffff;
         }
 
-        input[type="text"]::placeholder { color: var(--color-verde); opacity: 0.5; }
+        input::placeholder { color: var(--color-verde); opacity: 0.5; }
 
         .btn-custom {
             display: block;
@@ -197,6 +271,15 @@
             body { padding: 10px; }
             .panel-box { padding: 12px; }
 
+            .encabezado-admin {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn-logout {
+                width: 100%;
+            }
+
             .item-archivo {
                 flex-direction: column;
                 align-items: stretch;
@@ -222,38 +305,54 @@
 </head>
 <body>
 
-    <h1>C:\ADMIN_GESTION_</h1>
-
-    <div class="panel-box">
-        <!-- INTERRUPTOR GENERAL -->
-        <div class="contenedor-switch">
-            <span>DESCARGAS GENERALES: <span id="lblEstadoSwitch" class="estado-texto estado-off">DESACTIVADAS</span></span>
-            <label class="switch">
-                <input type="checkbox" id="chkHabilitarDescargas" onchange="cambiarEstadoDescargas(this.checked)" tabindex="0">
-                <span class="slider"></span>
-            </label>
+    <!-- PANTALLA DE LOGIN -->
+    <div id="pantallaLogin">
+        <div class="box-login">
+            <h2>INTRODUCE LA CONTRASEÑA:</h2>
+            <input type="password" id="passInputLogin" placeholder="******" tabindex="0">
+            <button class="btn-custom" onclick="verificarLogin()" tabindex="0">ENTRAR</button>
+            <p id="msgErrorLogin" style="color: var(--color-rojo); font-weight: bold; margin-top: 10px; min-height: 20px;"></p>
         </div>
-
-        <!-- REGISTRO DE ARCHIVOS -->
-        <p style="margin-bottom: 8px;">NOMBRE DEL ARCHIVO:</p>
-        <input type="text" id="nombreCustomInput" placeholder="Ej. Paquete_WXZ_v1.zip" tabindex="0">
-
-        <p style="margin-bottom: 8px;">RUTA O LINK DE GITHUB / MEDIAFIRE / DRIVE:</p>
-        <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/releases/download/.../app.apk" tabindex="0">
-
-        <button class="btn-custom" onclick="guardarRegistroArchivo()" tabindex="0">PUBLICAR ENLACE EN LA WEB</button>
-        <p id="estadoSubida" style="text-align: center; margin-top: 10px; font-weight: bold; min-height: 20px;"></p>
     </div>
 
-    <!-- LISTA DE ARCHIVOS PUBLICADOS -->
-    <div class="panel-box">
-        <h2 style="font-size: clamp(0.95rem, 2vw, 1.2rem); margin-bottom: 10px;">ARCHIVOS PUBLICADOS:</h2>
-        <div id="contenedorListaAdmin" class="lista-archivos"></div>
+    <!-- CONTENIDO ADMIN -->
+    <div id="contenidoAdmin">
+        <div class="encabezado-admin">
+            <h1>C:\ADMIN_GESTION_</h1>
+            <button class="btn-logout" onclick="cerrarSesion()" tabindex="0">[X] CERRAR SESIÓN</button>
+        </div>
+
+        <div class="panel-box">
+            <!-- INTERRUPTOR GENERAL -->
+            <div class="contenedor-switch">
+                <span>DESCARGAS GENERALES: <span id="lblEstadoSwitch" class="estado-texto estado-off">DESACTIVADAS</span></span>
+                <label class="switch">
+                    <input type="checkbox" id="chkHabilitarDescargas" onchange="cambiarEstadoDescargas(this.checked)" tabindex="0">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- REGISTRO DE ARCHIVOS -->
+            <p style="margin-bottom: 8px; text-align: left;">NOMBRE DEL ARCHIVO:</p>
+            <input type="text" id="nombreCustomInput" placeholder="Ej. Paquete_WXZ_v1.zip" tabindex="0" style="text-align: left;">
+
+            <p style="margin-bottom: 8px; text-align: left;">RUTA O LINK DE GITHUB / MEDIAFIRE / DRIVE:</p>
+            <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/releases/download/.../app.apk" tabindex="0" style="text-align: left;">
+
+            <button class="btn-custom" onclick="guardarRegistroArchivo()" tabindex="0">PUBLICAR ENLACE EN LA WEB</button>
+            <p id="estadoSubida" style="text-align: center; margin-top: 10px; font-weight: bold; min-height: 20px;"></p>
+        </div>
+
+        <!-- LISTA DE ARCHIVOS PUBLICADOS -->
+        <div class="panel-box">
+            <h2 style="font-size: clamp(0.95rem, 2vw, 1.2rem); margin-bottom: 10px;">ARCHIVOS PUBLICADOS:</h2>
+            <div id="contenedorListaAdmin" class="lista-archivos"></div>
+        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, onValue, remove, update, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAKQzpfbj6ep-yvyT0Z7GGVQsYmZivyHNw",
@@ -268,20 +367,101 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // 1. Sincronizar Switch General
-        onValue(ref(db, 'descargasHabilitadas'), (snapshot) => {
-            const estado = snapshot.val() || false;
-            document.getElementById("chkHabilitarDescargas").checked = estado;
-            const lbl = document.getElementById("lblEstadoSwitch");
-            lbl.textContent = estado ? "ACTIVADAS" : "DESACTIVADAS";
-            lbl.className = `estado-texto ${estado ? 'estado-on' : 'estado-off'}`;
+        // Tecla Enter para enviar contraseña
+        document.getElementById("passInputLogin").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                verificarLogin();
+            }
         });
+
+        // VERIFICACIÓN ÚNICAMENTE CON passMaestra DE FIREBASE
+        window.verificarLogin = async function() {
+            const passIngresada = document.getElementById("passInputLogin").value.trim();
+            const msgError = document.getElementById("msgErrorLogin");
+
+            if (passIngresada === "") {
+                msgError.textContent = "INGRESA LA CONTRASEÑA.";
+                setTimeout(() => { msgError.textContent = ""; }, 3000);
+                return;
+            }
+
+            try {
+                // Se lee EXCLUSIVAMENTE el nodo passMaestra
+                const snapMaestra = await get(ref(db, 'passMaestra'));
+                const passMaestraVal = snapMaestra.exists() ? String(snapMaestra.val()) : null;
+
+                if (passIngresada === passMaestraVal) {
+                    desbloquearPanel();
+                } else {
+                    msgError.textContent = "CONTRASEÑA INCORRECTA.";
+                    document.getElementById("passInputLogin").value = "";
+                    setTimeout(() => { msgError.textContent = ""; }, 3000);
+                }
+            } catch(e) {
+                msgError.textContent = "ERROR DE CONEXIÓN A FIREBASE.";
+                setTimeout(() => { msgError.textContent = ""; }, 3000);
+            }
+        }
+
+        // CERRAR SESIÓN COMPLETO
+        window.cerrarSesion = function() {
+            sessionStorage.clear();
+            localStorage.clear();
+            document.getElementById("passInputLogin").value = "";
+            document.getElementById("contenidoAdmin").style.display = "none";
+            document.getElementById("pantallaLogin").style.display = "flex";
+        }
+
+        function desbloquearPanel() {
+            document.getElementById("pantallaLogin").style.display = "none";
+            document.getElementById("contenidoAdmin").style.display = "flex";
+            escucharBaseDeDatos();
+        }
+
+        function escucharBaseDeDatos() {
+            onValue(ref(db, 'descargasHabilitadas'), (snapshot) => {
+                const estado = snapshot.val() || false;
+                document.getElementById("chkHabilitarDescargas").checked = estado;
+                const lbl = document.getElementById("lblEstadoSwitch");
+                lbl.textContent = estado ? "ACTIVADAS" : "DESACTIVADAS";
+                lbl.className = `estado-texto ${estado ? 'estado-on' : 'estado-off'}`;
+            });
+
+            onValue(ref(db, 'listaArchivos'), (snapshot) => {
+                const contenedor = document.getElementById("contenedorListaAdmin");
+                contenedor.innerHTML = "";
+                const data = snapshot.val();
+
+                if (data) {
+                    Object.keys(data).forEach(id => {
+                        const item = data[id];
+                        const div = document.createElement("div");
+                        div.className = "item-archivo";
+                        const estaPausado = item.pausado || false;
+
+                        div.innerHTML = `
+                            <div class="info-item">
+                                <span>${item.nombre}</span> ${estaPausado ? '<span style="color:#ff0000; font-size:12px;">[PAUSADO]</span>' : ''}
+                            </div>
+                            <div class="acciones-item">
+                                <button class="btn-accion btn-pausa" onclick="alternarPausaArchivo('${id}', ${estaPausado})" tabindex="0">
+                                    ${estaPausado ? '▶ REANUDAR' : '⏸ PAUSAR'}
+                                </button>
+                                <button class="btn-accion btn-borrar" onclick="eliminarArchivo('${id}')" tabindex="0">X</button>
+                            </div>
+                        `;
+                        contenedor.appendChild(div);
+                    });
+                } else {
+                    contenedor.innerHTML = "<p style='opacity:0.5; text-align:center;'>NO HAY ARCHIVOS PUBLICADOS</p>";
+                }
+            });
+        }
 
         window.cambiarEstadoDescargas = function(nuevoEstado) {
             set(ref(db, 'descargasHabilitadas'), nuevoEstado);
         }
 
-        // 2. Guardar Enlace en Firebase con temporizador de 3 segundos
         window.guardarRegistroArchivo = async function() {
             const nombre = document.getElementById("nombreCustomInput").value.trim();
             const url = document.getElementById("urlArchivoInput").value.trim();
@@ -319,45 +499,12 @@
             }
         }
 
-        // 3. Alternar Pausa
         window.alternarPausaArchivo = function(id, estadoActual) {
             update(ref(db, `listaArchivos/${id}`), {
                 pausado: !estadoActual
             });
         }
 
-        // 4. Renderizar Lista
-        onValue(ref(db, 'listaArchivos'), (snapshot) => {
-            const contenedor = document.getElementById("contenedorListaAdmin");
-            contenedor.innerHTML = "";
-            const data = snapshot.val();
-
-            if (data) {
-                Object.keys(data).forEach(id => {
-                    const item = data[id];
-                    const div = document.createElement("div");
-                    div.className = "item-archivo";
-                    const estaPausado = item.pausado || false;
-
-                    div.innerHTML = `
-                        <div class="info-item">
-                            <span>${item.nombre}</span> ${estaPausado ? '<span style="color:#ff0000; font-size:12px;">[PAUSADO]</span>' : ''}
-                        </div>
-                        <div class="acciones-item">
-                            <button class="btn-accion btn-pausa" onclick="alternarPausaArchivo('${id}', ${estaPausado})" tabindex="0">
-                                ${estaPausado ? '▶ REANUDAR' : '⏸ PAUSAR'}
-                            </button>
-                            <button class="btn-accion btn-borrar" onclick="eliminarArchivo('${id}')" tabindex="0">X</button>
-                        </div>
-                    `;
-                    contenedor.appendChild(div);
-                });
-            } else {
-                contenedor.innerHTML = "<p style='opacity:0.5; text-align:center;'>NO HAY ARCHIVOS PUBLICADOS</p>";
-            }
-        });
-
-        // 5. Eliminar
         window.eliminarArchivo = async function(id) {
             if(!confirm("¿Eliminar este registro?")) return;
             remove(ref(db, 'listaArchivos/' + id));
