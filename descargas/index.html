@@ -28,6 +28,30 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
+        /* Estilos personalizados para la barra de desplazamiento (Scrollbar) acorde al tema de la web */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--borde-sutil) var(--fondo);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--fondo);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--borde-sutil);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--borde-hover);
+        }
+
         body {
             background-color: var(--fondo);
             color: var(--texto-principal);
