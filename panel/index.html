@@ -186,6 +186,15 @@
             box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
         }
 
+        /* Estilo cuando el input está deshabilitado / bloqueado */
+        input[type="text"]:disabled {
+            background: #1e293b;
+            color: var(--texto-secundario);
+            cursor: not-allowed;
+            border-color: var(--borde-sutil);
+            opacity: 0.7;
+        }
+
         input[type="number"] {
             margin-bottom: 0;
             text-align: center;
@@ -211,16 +220,33 @@
         }
 
         .btn-tiempo {
-            background: var(--color-azul);
-            box-shadow: 0 4px 12px var(--color-azul-glow);
+            background: var(--color-primary);
+            box-shadow: 0 4px 12px var(--color-primary-glow);
             margin-top: 15px; margin-bottom: 0;
-            color: #0f172a;
-            font-weight: 700;
+            color: #ffffff;
+            font-weight: 600;
         }
 
         .btn-tiempo:hover, .btn-tiempo:focus {
-            background: #7dd3fc;
-            box-shadow: 0 6px 16px var(--color-azul-glow);
+            background: #4f46e5;
+            box-shadow: 0 6px 16px var(--color-primary-glow);
+        }
+
+        /* Estilo transparente/sutil (idéntico a .btn-cancelar-tiempo) para "Editar Código de la Web" */
+        .btn-editar-codigo {
+            background: rgba(244, 63, 94, 0.1); 
+            border: 1px solid rgba(244, 63, 94, 0.3); 
+            color: #fb7185; 
+            margin-bottom: 0;
+            box-shadow: none;
+        }
+
+        .btn-editar-codigo:hover, .btn-editar-codigo:focus {
+            background: var(--color-rojo); 
+            color: #fff; 
+            box-shadow: 0 4px 12px var(--color-rojo-glow);
+            transform: translateY(-1px);
+            outline: none;
         }
 
         .btn-cancelar-tiempo {
@@ -313,7 +339,16 @@
             <button class="btn-logout" onclick="cerrarSesion()" tabindex="0" title="Cerrar sesión">Salir</button>
         </div>
 
-        <!-- 1. PANEL DE CONTROL DE DESCARGAS (INTERRUPTORES) -->
+        <!-- 1. PANEL DE CÓDIGO DE DOWNLOADER APP -->
+        <div class="panel-box">
+            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Código de Downloader App:</p>
+            <input type="text" id="codigoDownloaderInput" placeholder="Ej. 123456" tabindex="0" style="text-align: left;">
+
+            <button class="btn-custom" id="btnPublicarCodigo" onclick="gestionarCodigoDownloader()" tabindex="0" style="margin-bottom: 0;">Publicar Código en la Web</button>
+            <p id="estadoSubidaCodigo" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
+        </div>
+
+        <!-- 2. PANEL DE CONTROL DE DESCARGAS (INTERRUPTORES) -->
         <div class="panel-box">
             <div class="contenedor-switch">
                 <span style="color: var(--texto-principal); font-weight: 500;">DESCARGAS GENERALES: <span id="lblEstadoSwitch" class="estado-texto estado-off">DESACTIVADAS</span></span>
@@ -354,7 +389,7 @@
             </div>
         </div>
 
-        <!-- 2. PANEL DE REGISTRO / PUBLICAR ARCHIVO -->
+        <!-- 3. PANEL DE REGISTRO / PUBLICAR ARCHIVO -->
         <div class="panel-box">
             <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Nombre del archivo:</p>
             <input type="text" id="nombreCustomInput" placeholder="Ej. Xuper_TV_24.3.apk" tabindex="0" style="text-align: left;">
@@ -369,7 +404,7 @@
             <p id="estadoSubida" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
         </div>
 
-        <!-- 3. PANEL DE ARCHIVOS PUBLICADOS -->
+        <!-- 4. PANEL DE ARCHIVOS PUBLICADOS -->
         <div class="panel-box" style="margin-bottom: 0;">
             <h2 style="font-size: clamp(0.95rem, 2vw, 1.1rem); font-weight: 700; margin-bottom: 15px; color: var(--texto-principal);">Archivos Publicados:</h2>
             <div id="contenedorListaAdmin" class="lista-archivos"></div>
@@ -396,6 +431,7 @@
         let listaGlobalArchivos = {};
         let configTiempoGlobal = { habilitado: false, timestampFin: 0, congeladoMs: 0 };
         let timerCuentaRegresivaAdmin = null;
+        let modoEdicionActivo = false;
 
         document.getElementById("passInputLogin").addEventListener("keypress", function(event) {
             if (event.key === "Enter") verificarLogin();
@@ -442,6 +478,26 @@
         }
 
         function escucharBaseDeDatos() {
+            onValue(ref(db, 'codigoDownloader'), (snapshot) => {
+                const inputCodigo = document.getElementById("codigoDownloaderInput");
+                const btnCodigo = document.getElementById("btnPublicarCodigo");
+
+                if (snapshot.exists() && snapshot.val().trim() !== "") {
+                    if (!modoEdicionActivo) {
+                        inputCodigo.value = snapshot.val();
+                        inputCodigo.disabled = true;
+                        btnCodigo.textContent = "Editar Código de la Web";
+                        btnCodigo.className = "btn-custom btn-editar-codigo";
+                    }
+                } else {
+                    modoEdicionActivo = false;
+                    inputCodigo.value = "";
+                    inputCodigo.disabled = false;
+                    btnCodigo.textContent = "Publicar Código en la Web";
+                    btnCodigo.className = "btn-custom";
+                }
+            });
+
             onValue(ref(db, 'descargasHabilitadas'), (snapshot) => {
                 const estado = snapshot.val() || false;
                 document.getElementById("chkHabilitarDescargas").checked = estado;
@@ -525,6 +581,49 @@
                     contenedor.innerHTML = "<p style='opacity:0.5; text-align:center; padding: 20px; font-size: 0.9rem; color: var(--texto-secundario);'>No hay archivos publicados.</p>";
                 }
             });
+        }
+
+        window.gestionarCodigoDownloader = async function() {
+            const inputCodigo = document.getElementById("codigoDownloaderInput");
+            const btnCodigo = document.getElementById("btnPublicarCodigo");
+            const estado = document.getElementById("estadoSubidaCodigo");
+
+            if (inputCodigo.disabled) {
+                modoEdicionActivo = true;
+                inputCodigo.disabled = false;
+                inputCodigo.focus();
+                btnCodigo.textContent = "Guardar Código Editado";
+                btnCodigo.className = "btn-custom btn-tiempo";
+                estado.style.color = "var(--color-verde)";
+                estado.textContent = "Modo edición activado. Modifica y guarda.";
+                setTimeout(() => { estado.textContent = ""; }, 3000);
+                return;
+            }
+
+            const codigo = inputCodigo.value.trim();
+
+            if (codigo === "") {
+                estado.style.color = "var(--color-rojo)";
+                estado.textContent = "Ingresa el código de Downloader.";
+                setTimeout(() => { estado.textContent = ""; }, 3000);
+                return;
+            }
+
+            try {
+                await set(ref(db, 'codigoDownloader'), codigo);
+                modoEdicionActivo = false;
+                inputCodigo.disabled = true;
+                btnCodigo.textContent = "Editar Código de la Web";
+                btnCodigo.className = "btn-custom btn-editar-codigo";
+
+                estado.style.color = "var(--color-verde)";
+                estado.textContent = "¡Código guardado con éxito!";
+                setTimeout(() => { estado.textContent = ""; }, 2000);
+            } catch(e) {
+                estado.style.color = "var(--color-rojo)";
+                estado.textContent = "Error al guardar en base de datos";
+                setTimeout(() => { estado.textContent = ""; }, 3000);
+            }
         }
 
         window.copiarLinkUrl = function(url) {
