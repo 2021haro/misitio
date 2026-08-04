@@ -3,169 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C:\DESCARGA_DE_ARCHIVOS_</title>
+    <title>Centro de Descargas Seguras</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-verde: #00ff00;
-            --color-rojo: #ff0000;
-            --color-naranja: #ffaa00;
-            --color-azul: #00e5ff;
-            --fondo: #050a05;
+            /* Tema Dark Lite: Tonos oscuros suaves, modernos y elegantes */
+            --color-primary: #6366f1;
+            --color-primary-glow: rgba(99, 102, 241, 0.2);
+            --color-verde: #14b8a6;
+            --color-verde-glow: rgba(20, 184, 166, 0.15);
+            --color-rojo: #f43f5e;
+            --color-rojo-glow: rgba(244, 63, 94, 0.15);
+            --color-naranja: #fbbf24;
+            --color-azul: #38bdf8;
+            --color-azul-glow: rgba(56, 189, 248, 0.15);
+            
+            --fondo: #0f172a;
+            --panel-bg: #1e293b;
+            --borde-sutil: #334155;
+            --borde-hover: #475569;
+            --texto-principal: #f8fafc;
+            --texto-secundario: #94a3b8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--fondo);
-            color: var(--color-verde);
-            font-family: 'Courier New', Courier, monospace;
-            padding: 15px;
+            color: var(--texto-principal);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
 
-        h1 { 
-            margin-bottom: 20px; 
-            font-size: clamp(1.2rem, 3vw, 2.2rem); 
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 35px;
             text-align: center;
-            letter-spacing: 1px;
+        }
+
+        h1 { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            color: #f1f5f9;
+            font-size: clamp(1.4rem, 2.5vw, 2rem); 
+            letter-spacing: -0.3px;
         }
 
         .contenedor-main {
             width: 100%;
-            max-width: 900px;
-            border: 1px solid var(--color-verde);
-            padding: 20px;
+            max-width: 850px;
+            background: var(--panel-bg);
+            border: 1px solid var(--borde-sutil);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
 
         .mensaje-bloqueado {
             display: none;
-            border: 1px solid var(--color-rojo);
-            color: var(--color-rojo);
-            padding: 15px;
+            background: rgba(244, 63, 94, 0.1);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            color: #fb7185;
+            padding: 16px 20px;
+            border-radius: 12px;
             text-align: center;
-            font-weight: bold;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+            font-weight: 500;
+            margin-bottom: 24px;
             line-height: 1.5;
-            font-size: clamp(0.85rem, 2vw, 1.1rem);
+            font-size: clamp(0.85rem, 2vw, 0.92rem);
         }
 
         .banner-tiempo {
             display: none;
-            border: 1px solid var(--color-azul);
-            color: var(--color-azul);
-            padding: 10px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
+            padding: 14px 18px;
+            border-radius: 12px;
             text-align: center;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: clamp(0.85rem, 1.8vw, 1rem);
+            font-weight: 500;
+            margin-bottom: 24px;
+            font-size: clamp(0.85rem, 1.8vw, 0.92rem);
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .tarjeta-archivo {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px;
-            border: 1px dashed var(--color-verde);
-            margin-bottom: 12px;
-            gap: 15px;
+            padding: 18px 22px;
+            background: #1e293b;
+            border: 1px solid var(--borde-sutil);
+            border-radius: 14px;
+            margin-bottom: 14px;
+            gap: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .tarjeta-archivo:hover {
+            border-color: var(--borde-hover);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: #273548;
         }
 
         .columna-info {
             display: flex;
             flex-direction: column;
             flex: 1;
+            gap: 4px;
         }
 
         .nombre-archivo {
-            font-weight: bold;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            color: #f8fafc;
             word-break: break-all;
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            font-size: clamp(0.95rem, 2vw, 1.05rem);
         }
 
-        /* Estilo para la nota o aviso en letras blancas */
         .nota-archivo {
-            color: #ffffff;
-            font-size: clamp(0.75rem, 1.4vw, 0.9rem);
-            margin-top: 5px;
+            color: var(--texto-secundario);
+            font-size: clamp(0.8rem, 1.4vw, 0.88rem);
             word-break: break-all;
+            line-height: 1.4;
         }
 
         .texto-actualizando {
-            color: var(--color-naranja);
-            font-size: clamp(0.75rem, 1.4vw, 0.9rem);
-            font-weight: bold;
-            margin-top: 5px;
-            letter-spacing: 0.5px;
+            color: #fbbf24;
+            font-size: clamp(0.75rem, 1.4vw, 0.82rem);
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        
+        .texto-actualizando::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background-color: #fbbf24;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); opacity: 0.9; }
+            70% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.9; }
         }
 
         .btn-descargar {
-            background: transparent;
-            border: 1px solid var(--color-verde);
-            color: var(--color-verde);
-            padding: 12px 20px;
-            font-family: inherit;
-            font-weight: bold;
-            font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+            background: var(--color-primary);
+            border: 1px solid transparent;
+            color: #ffffff;
+            padding: 10px 22px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: clamp(0.85rem, 1.5vw, 0.9rem);
             text-decoration: none;
             cursor: pointer;
-            transition: all 0.2s ease;
-            min-height: 44px;
+            border-radius: 10px;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+            min-height: 42px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            white-space: nowrap;
         }
 
         .btn-descargar:focus,
         .btn-descargar:hover {
-            background: var(--color-verde);
-            color: #000;
-            box-shadow: 0 0 15px var(--color-verde);
-            outline: 2px solid #ffffff;
+            background: #4f46e5;
+            box-shadow: 0 0 12px var(--color-primary-glow);
+            outline: none;
         }
 
         .btn-descargar.deshabilitado {
-            border-color: #555 !important;
-            color: #555 !important;
+            background: #0f172a !important;
+            border: 1px solid var(--borde-sutil) !important;
+            color: #64748b !important;
             cursor: not-allowed;
             box-shadow: none !important;
-            outline: none !important;
         }
 
-        .btn-descargar.deshabilitado:focus {
-            background: transparent !important;
-            border-color: var(--color-rojo) !important;
-            color: var(--color-rojo) !important;
-            box-shadow: 0 0 10px var(--color-rojo) !important;
-        }
-
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            .contenedor-main { padding: 12px; }
+        @media (max-width: 650px) {
+            body { padding: 16px 12px; }
+            .contenedor-main { padding: 18px; }
             .tarjeta-archivo {
                 flex-direction: column;
                 align-items: stretch;
-                text-align: center;
+                text-align: left;
+                gap: 14px;
+                padding: 14px;
             }
-            .btn-descargar { width: 100%; margin-top: 5px; }
+            .btn-descargar { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <h1>C:\DESCARGA_DE_ARCHIVOS_</h1>
+    <div class="terminal-header">
+        <h1>Centro de Descargas</h1>
+    </div>
 
     <div class="contenedor-main">
         <div id="bannerTiempoReloj" class="banner-tiempo">
-            ⏳ DESCARGAS DISPONIBLES POR TIEMPO LIMITADO TERMINA EN : <span id="lblRelojUsuario">--:--:--</span>
+            ⏳ Descargas disponibles por tiempo limitado. Finaliza en: <span id="lblRelojUsuario">--:--:--</span>
         </div>
 
         <div id="bannerBloqueo" class="mensaje-bloqueado">
-            DESCARGAS TEMPORALMENTE DESHABILITADAS POR EL ADMINISTRADOR<br>
-            COMUNÍCATE POR WHATSAPP/MESSENGER CON EL ADMINISTRADOR.
+            ⚠️ Descargas temporalmente deshabilitadas por el administrador.<br>
+            Comunícate por WhatsApp / Messenger con el administrador.
         </div>
 
         <div id="listaDescargas"></div>
@@ -291,7 +349,7 @@
             const llaves = Object.keys(listaArchivosCache);
 
             if (llaves.length === 0) {
-                contenedor.innerHTML = "<p style='text-align:center; opacity:0.6; padding: 15px;'>NO HAY ARCHIVOS DISPONIBLES.</p>";
+                contenedor.innerHTML = "<p style='text-align:center; color: var(--texto-secundario); padding: 30px; font-family: Plus Jakarta Sans, sans-serif;'>No hay archivos disponibles en este momento.</p>";
                 return;
             }
 
@@ -307,11 +365,11 @@
                 
                 const claseBoton = estaDisponible ? "btn-descargar" : "btn-descargar deshabilitado";
                 
-                let textoBoton = "DESCARGAR";
+                let textoBoton = "Descargar";
                 if (!globalPermitido || estaEditando) {
-                    textoBoton = "BLOQUEADO";
+                    textoBoton = "Bloqueado";
                 } else if (item.pausado) {
-                    textoBoton = "NO ACTIVO";
+                    textoBoton = "No Activo";
                 }
 
                 const mostrarAvisoEdicion = globalPermitido && estaEditando;
@@ -321,7 +379,7 @@
                     <div class="columna-info">
                         <span class="nombre-archivo">${item.nombre}</span>
                         ${tieneNota ? `<span class="nota-archivo">${item.nota}</span>` : ''}
-                        ${mostrarAvisoEdicion ? '<span class="texto-actualizando">ACTUALIZAR ARCHIVO ESPERE UN MOMENTO</span>' : ''}
+                        ${mostrarAvisoEdicion ? '<span class="texto-actualizando">Actualizando archivo, espere un momento...</span>' : ''}
                     </div>
                     <button onclick="window.ejecutarDescargaSegura('${id}')" class="${claseBoton}" id="btnFile_${id}" tabindex="0">
                         ${textoBoton}
@@ -337,7 +395,7 @@
             const item = listaArchivosCache[id];
 
             if (!globalPermitido || (item && item.pausado) || (item && item.editando)) {
-                alert("ACCESO DENEGADO: ESTE ARCHIVO NO ESTÁ DISPONIBLE ACTUALMENTE.\nCOMUNÍCATE POR WHATSAPP/MESSENGER CON EL ADMINISTRADOR.");
+                alert("Acceso denegado: Este archivo no está disponible actualmente.\n\nComunícate por WhatsApp / Messenger con el administrador.");
                 return;
             }
 
@@ -345,7 +403,7 @@
 
             const urlFinal = formatearUrlDirecta(item.url);
             const textoOriginal = btn.textContent;
-            btn.textContent = "INICIANDO...";
+            btn.textContent = "Iniciando...";
 
             const a = document.createElement("a");
             a.href = urlFinal;
