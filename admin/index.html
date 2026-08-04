@@ -3,23 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C:\ADMIN_GESTION_</title>
+    <title>Panel de Administración</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-verde: #00ff00;
-            --color-rojo: #ff0000;
-            --color-naranja: #ffaa00;
-            --color-azul: #00e5ff;
-            --fondo: #050a05;
+            --color-primary: #6366f1;
+            --color-primary-glow: rgba(99, 102, 241, 0.2);
+            --color-verde: #14b8a6;
+            --color-verde-glow: rgba(20, 184, 166, 0.15);
+            --color-rojo: #f43f5e;
+            --color-rojo-glow: rgba(244, 63, 94, 0.15);
+            --color-naranja: #fbbf24;
+            --color-azul: #38bdf8;
+            --color-azul-glow: rgba(56, 189, 248, 0.15);
+            
+            --fondo: #0f172a;
+            --panel-bg: #1e293b;
+            --borde-sutil: #334155;
+            --borde-hover: #475569;
+            --texto-principal: #f8fafc;
+            --texto-secundario: #94a3b8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--fondo);
-            color: var(--color-verde);
-            font-family: 'Courier New', Courier, monospace;
-            padding: 15px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(20, 184, 166, 0.06) 0%, transparent 45%);
+            background-attachment: fixed;
+            color: var(--texto-principal);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -30,21 +46,26 @@
         #pantallaLogin {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--fondo);
+            background-color: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex; justify-content: center; align-items: center;
-            z-index: 9999; padding: 15px;
+            z-index: 9999; padding: 20px;
         }
 
         .box-login {
-            border: 1px solid var(--color-verde);
-            padding: 25px; width: 100%; max-width: 420px;
-            text-align: center; background: #000;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            border: 1px solid var(--borde-sutil);
+            border-radius: 24px;
+            padding: 35px 30px; width: 100%; max-width: 420px;
+            text-align: center; background: #1e293b;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
         }
 
         .box-login h2 {
-            font-size: clamp(1rem, 2.5vw, 1.4rem);
-            margin-bottom: 15px; letter-spacing: 1px;
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            font-weight: 700;
+            margin-bottom: 20px; letter-spacing: -0.3px;
+            color: var(--texto-principal);
         }
 
         /* ADMIN PANEL */
@@ -56,84 +77,95 @@
 
         .encabezado-admin {
             display: flex; justify-content: space-between;
-            align-items: center; width: 100%; margin-bottom: 20px;
-            flex-wrap: wrap; gap: 10px;
+            align-items: center; width: 100%; margin-bottom: 30px;
+            flex-wrap: wrap; gap: 15px;
         }
 
         h1 { 
-            font-size: clamp(1.2rem, 3vw, 2.2rem); 
-            text-align: center; letter-spacing: 1px; flex: 1;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1.3rem, 3vw, 2rem); 
+            font-weight: 800;
+            text-align: center; letter-spacing: -0.5px; flex: 1;
+            color: #f1f5f9;
         }
 
         .btn-logout {
-            background: transparent; border: 1px solid var(--color-rojo);
-            color: var(--color-rojo); padding: 8px 12px;
-            font-family: inherit; font-weight: bold;
-            font-size: clamp(0.85rem, 1.3vw, 1.1rem);
-            cursor: pointer; transition: all 0.2s ease; min-height: 38px; min-width: 42px;
+            background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3);
+            color: #fb7185; padding: 10px 16px;
+            font-family: inherit; font-weight: 600;
+            font-size: clamp(0.85rem, 1.3vw, 0.95rem);
+            border-radius: 12px;
+            cursor: pointer; transition: all 0.2s ease; min-height: 42px; min-width: 44px;
             display: inline-flex; align-items: center; justify-content: center;
         }
 
         .btn-logout:hover, .btn-logout:focus {
-            background: var(--color-rojo); color: #000;
-            box-shadow: 0 0 10px var(--color-rojo); outline: 2px solid #ffffff;
+            background: var(--color-rojo); color: #fff;
+            box-shadow: 0 4px 12px var(--color-rojo-glow); outline: none;
         }
 
         .panel-box {
-            border: 1px solid var(--color-verde);
-            padding: 20px; width: 100%; margin-bottom: 20px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--borde-sutil);
+            border-radius: 24px;
+            padding: 25px; width: 100%; margin-bottom: 24px;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.3);
         }
 
         .contenedor-switch {
             display: flex; align-items: center;
-            justify-content: space-between; margin-bottom: 15px;
-            padding-bottom: 15px; border-bottom: 1px dashed var(--color-verde);
-            flex-wrap: wrap; gap: 10px;
+            justify-content: space-between; margin-bottom: 20px;
+            padding-bottom: 20px; border-bottom: 1px solid var(--borde-sutil);
+            flex-wrap: wrap; gap: 15px;
         }
 
         .switch {
             position: relative; display: inline-block;
-            width: 60px; height: 30px;
+            width: 52px; height: 28px;
         }
 
         .switch input { opacity: 0; width: 0; height: 0; }
 
         .slider {
             position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #333; border: 1px solid var(--color-rojo); transition: .4s;
+            background-color: #334155; border: 1px solid var(--borde-sutil); border-radius: 28px; transition: .3s;
         }
 
         .slider:before {
-            position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px;
-            background-color: var(--color-rojo); transition: .4s;
+            position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
+            background-color: #ffffff; border-radius: 50%; transition: .3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         /* Switch Bloqueado (Deshabilitado) */
         .switch input:disabled + .slider {
             cursor: not-allowed;
-            opacity: 0.6;
+            opacity: 0.4;
         }
 
-        /* Switches en Azul cuando estan activados */
-        input:checked + .slider { border-color: var(--color-azul); }
+        /* Switches en Azul/Primario cuando estan activados */
+        input:checked + .slider { border-color: var(--color-primary); background-color: var(--color-primary); }
         input:checked + .slider:before {
-            transform: translateX(30px); background-color: var(--color-azul);
+            transform: translateX(24px); background-color: #ffffff;
         }
 
         .switch input:focus + .slider {
-            outline: 2px solid #ffffff; box-shadow: 0 0 10px var(--color-azul);
+            outline: none; box-shadow: 0 0 10px var(--color-primary-glow);
         }
 
         /* SECCIÓN DE TIEMPO SIEMPRE VISIBLE */
         .seccion-tiempo {
             display: block;
-            background: rgba(0, 255, 0, 0.03);
-            border: 1px solid var(--color-verde);
-            padding: 15px; margin-bottom: 15px;
+            background: rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 16px;
+            padding: 20px; margin-top: 15px;
         }
 
         .inputs-tiempo {
-            display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px;
+            display: flex; gap: 15px; margin-top: 12px; margin-bottom: 15px;
             align-items: center; flex-wrap: wrap;
         }
 
@@ -141,109 +173,123 @@
             display: flex; flex-direction: column; flex: 1; min-width: 100px;
         }
 
-        .campo-tiempo label { font-size: 0.8rem; margin-bottom: 5px; color: var(--color-verde); }
+        .campo-tiempo label { font-size: 0.75rem; font-weight: 600; margin-bottom: 6px; color: var(--texto-secundario); letter-spacing: 0.5px; text-transform: uppercase; }
 
         input[type="number"], input[type="text"], input[type="password"] {
-            background: transparent; border: 1px solid var(--color-verde);
-            color: var(--color-verde); padding: 12px; width: 100%;
-            font-size: clamp(0.85rem, 1.5vw, 1.05rem); font-family: inherit;
-            margin-bottom: 15px; outline: none; text-align: center;
+            background: #0f172a; border: 1px solid var(--borde-sutil);
+            color: var(--texto-principal); padding: 14px 16px; width: 100%;
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem); font-family: inherit; font-weight: 500;
+            border-radius: 12px;
+            margin-bottom: 18px; outline: none; text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
         }
 
         input[type="number"] {
-            border-color: var(--color-verde); color: var(--color-verde); margin-bottom: 0;
+            margin-bottom: 0;
+            text-align: center;
         }
 
         input:focus {
-            box-shadow: 0 0 10px var(--color-verde); border-color: #ffffff;
+            box-shadow: 0 0 0 3px var(--color-primary-glow); border-color: var(--color-primary);
+            background: #1e293b;
         }
 
         .btn-custom {
-            display: block; width: 100%; padding: 12px; background: transparent;
-            border: 1px solid var(--color-verde); color: var(--color-verde);
-            font-family: inherit; font-weight: bold; font-size: clamp(0.85rem, 1.5vw, 1.05rem);
-            text-align: center; cursor: pointer; margin-bottom: 10px;
-            transition: all 0.2s ease; min-height: 44px;
+            display: block; width: 100%; padding: 14px; background: var(--color-primary);
+            border: 1px solid transparent; color: #ffffff;
+            font-family: inherit; font-weight: 600; font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+            text-align: center; cursor: pointer; border-radius: 12px; margin-bottom: 12px;
+            transition: all 0.25s ease; min-height: 48px;
+            box-shadow: 0 4px 12px var(--color-primary-glow);
         }
 
         .btn-custom:hover, .btn-custom:focus {
-            background: var(--color-verde); color: #000;
-            box-shadow: 0 0 12px var(--color-verde); outline: 2px solid #ffffff;
+            background: #4f46e5;
+            box-shadow: 0 6px 16px var(--color-primary-glow); transform: translateY(-1px); outline: none;
         }
 
         .btn-tiempo {
-            border-color: var(--color-verde); color: var(--color-verde); margin-top: 10px;
+            background: var(--color-azul);
+            box-shadow: 0 4px 12px var(--color-azul-glow);
+            margin-top: 15px; margin-bottom: 0;
+            color: #0f172a;
+            font-weight: 700;
         }
 
         .btn-tiempo:hover, .btn-tiempo:focus {
-            background: var(--color-verde); color: #000; box-shadow: 0 0 12px var(--color-verde);
+            background: #7dd3fc;
+            box-shadow: 0 6px 16px var(--color-azul-glow);
         }
 
         .btn-cancelar-tiempo {
-            border-color: var(--color-rojo); color: var(--color-rojo); margin-top: 10px;
+            background: rgba(244, 63, 94, 0.1); border-color: rgba(244, 63, 94, 0.3); color: #fb7185; margin-top: 15px; margin-bottom: 0;
+            box-shadow: none;
         }
 
         .btn-cancelar-tiempo:hover, .btn-cancelar-tiempo:focus {
-            background: var(--color-rojo); color: #000; box-shadow: 0 0 12px var(--color-rojo);
+            background: var(--color-rojo); color: #fff; box-shadow: 0 4px 12px var(--color-rojo-glow);
         }
 
-        .btn-cancelar-edit {
-            display: none; width: 100%; padding: 10px; background: transparent;
-            border: 1px solid var(--color-rojo); color: var(--color-rojo);
-            font-family: inherit; font-weight: bold; font-size: clamp(0.8rem, 1.3vw, 0.95rem);
-            text-align: center; cursor: pointer; margin-bottom: 10px; transition: all 0.2s ease;
-        }
-
-        .lista-archivos { margin-top: 15px; max-height: 350px; overflow-y: auto; }
+        .lista-archivos { margin-top: 15px; max-height: 400px; overflow-y: auto; padding-right: 5px; }
 
         .item-archivo {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 5px; border-bottom: 1px dashed rgba(0, 255, 0, 0.3);
-            font-size: clamp(0.85rem, 1.5vw, 1.05rem); gap: 10px;
+            padding: 16px; background: #1e293b;
+            border: 1px solid var(--borde-sutil); border-radius: 14px;
+            margin-bottom: 12px;
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem); gap: 15px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .item-archivo:hover {
+            border-color: var(--borde-hover);
+            background: #273548;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
-        .info-item { display: flex; flex-direction: row; align-items: center; overflow: hidden; flex: 1; flex-wrap: wrap; gap: 5px; }
-        .nombre-item-admin { word-break: break-all; }
-        .nota-item-admin { color: #ffffff; font-size: 0.85rem; word-break: break-all; width: 100%; }
+        .info-item { display: flex; flex-direction: column; overflow: hidden; flex: 1; gap: 4px; }
+        .nombre-item-admin { word-break: break-all; font-weight: 600; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: #f8fafc; }
+        .nota-item-admin { color: var(--texto-secundario); font-size: 0.85rem; word-break: break-all; width: 100%; line-height: 1.4; }
 
         .acciones-item { display: flex; gap: 8px; flex-shrink: 0; }
 
         .btn-accion {
-            background: transparent; cursor: pointer; padding: 8px 12px;
-            font-family: inherit; font-weight: bold; font-size: clamp(0.85rem, 1.3vw, 1.1rem);
-            transition: all 0.2s ease; min-height: 38px; min-width: 42px;
+            background: #0f172a; cursor: pointer; padding: 8px 12px;
+            font-family: inherit; font-weight: 600; font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+            border-radius: 10px; border: 1px solid var(--borde-sutil);
+            transition: all 0.2s ease; min-height: 38px; min-width: 38px;
             display: inline-flex; align-items: center; justify-content: center;
         }
 
-        /* Botón Editar */
-        .btn-editar { border: 1px solid var(--color-naranja); color: var(--color-naranja); }
-        .btn-editar:hover { background: var(--color-naranja); color: #000; }
+        /* Botón Copiar Link (Azul/Celeste) */
+        .btn-copiar { border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
+        .btn-copiar:hover { background: var(--color-azul); color: #0f172a; border-color: var(--color-azul); }
 
         /* Botón Activar (Azul) */
-        .btn-activar { border: 1px solid var(--color-azul); color: var(--color-azul); }
-        .btn-activar:hover { background: var(--color-azul); color: #000; }
+        .btn-activar { border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
+        .btn-activar:hover { background: var(--color-azul); color: #0f172a; border-color: var(--color-azul); }
 
         /* Botón Desactivar (Rojo) */
-        .btn-desactivar { border: 1px solid var(--color-rojo); color: var(--color-rojo); }
-        .btn-desactivar:hover { background: var(--color-rojo); color: #000; }
+        .btn-desactivar { border-color: rgba(244, 63, 94, 0.3); color: #fb7185; background: rgba(244, 63, 94, 0.08); }
+        .btn-desactivar:hover { background: var(--color-rojo); color: #fff; border-color: var(--color-rojo); }
 
         /* Botón Eliminar */
-        .btn-borrar { border: 1px solid var(--color-rojo); color: var(--color-rojo); }
-        .btn-borrar:hover { background: var(--color-rojo); color: #000; }
+        .btn-borrar { border-color: rgba(244, 63, 94, 0.3); color: #fb7185; background: rgba(244, 63, 94, 0.08); }
+        .btn-borrar:hover { background: var(--color-rojo); color: #fff; border-color: var(--color-rojo); }
 
-        .estado-texto { font-weight: bold; }
-        .estado-on { color: var(--color-azul); }
+        .estado-texto { font-weight: 600; font-size: 0.9rem; }
+        .estado-on { color: var(--color-verde); }
         .estado-off { color: var(--color-rojo); }
 
         @media (max-width: 600px) {
-            body { padding: 10px; }
-            .panel-box { padding: 12px; }
+            body { padding: 20px 12px; }
+            .panel-box { padding: 18px; }
             .encabezado-admin { flex-direction: row; gap: 12px; }
-            .item-archivo { flex-direction: column; align-items: stretch; text-align: center; }
-            .info-item { flex-direction: column; align-items: center; text-align: center; gap: 4px; margin-bottom: 8px; }
-            .nota-item-admin { display: block; width: 100%; }
-            .acciones-item { justify-content: center; width: 100%; flex-wrap: wrap; }
-            .btn-accion { flex: 1; }
+            .item-archivo { flex-direction: column; align-items: stretch; text-align: left; }
+            .info-item { gap: 6px; margin-bottom: 10px; }
+            .acciones-item { justify-content: flex-end; width: 100%; flex-wrap: wrap; }
         }
     </style>
 </head>
@@ -252,81 +298,79 @@
     <!-- PANTALLA DE LOGIN -->
     <div id="pantallaLogin">
         <div class="box-login">
-            <h2>INTRODUCE LA CONTRASEÑA:</h2>
-            <input type="password" id="passInputLogin" placeholder="******" tabindex="0">
-            <button class="btn-custom" onclick="verificarLogin()" tabindex="0">ENTRAR</button>
-            <p id="msgErrorLogin" style="color: var(--color-rojo); font-weight: bold; margin-top: 10px; min-height: 20px;"></p>
+            <h2>Contraseña</h2>
+            <input type="password" id="passInputLogin" placeholder="••••" tabindex="0">
+            <button class="btn-custom" onclick="verificarLogin()" tabindex="0" style="margin-bottom: 0;">Entrar</button>
+            <p id="msgErrorLogin" style="color: var(--color-rojo); font-weight: 600; margin-top: 15px; font-size: 0.85rem; min-height: 20px;"></p>
         </div>
     </div>
 
     <!-- CONTENIDO ADMIN -->
     <div id="contenidoAdmin">
         <div class="encabezado-admin">
-            <h1>C:\ADMIN_GESTION_</h1>
-            <button class="btn-logout" onclick="cerrarSesion()" tabindex="0" title="Cerrar sesión">X</button>
+            <h1>Panel de Administración</h1>
+            <button class="btn-logout" onclick="cerrarSesion()" tabindex="0" title="Cerrar sesión">Salir</button>
         </div>
 
+        <!-- 1. PANEL DE CONTROL DE DESCARGAS (INTERRUPTORES) -->
         <div class="panel-box">
-            <!-- 1. INTERRUPTOR GENERAL PERMANENTE -->
             <div class="contenedor-switch">
-                <span style="color: var(--color-verde);">DESCARGAS GENERALES: <span id="lblEstadoSwitch" class="estado-texto estado-off">DESACTIVADAS</span></span>
+                <span style="color: var(--texto-principal); font-weight: 500;">DESCARGAS GENERALES: <span id="lblEstadoSwitch" class="estado-texto estado-off">DESACTIVADAS</span></span>
                 <label class="switch">
                     <input type="checkbox" id="chkHabilitarDescargas" onchange="cambiarEstadoDescargas(this.checked)" tabindex="0">
                     <span class="slider"></span>
                 </label>
             </div>
 
-            <!-- 2. INTERRUPTOR POR TIEMPO (DESHABILITADO AL INICIO) -->
-            <div class="contenedor-switch" style="border-bottom: none; margin-bottom: 5px;">
-                <span style="color: var(--color-verde);">DESCARGAS GENERALES POR TIEMPO: <span id="lblEstadoTiempo" class="estado-texto estado-off">DESACTIVADAS</span></span>
+            <div class="contenedor-switch" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+                <span style="color: var(--texto-principal); font-weight: 500;">DESCARGAS POR TIEMPO: <span id="lblEstadoTiempo" class="estado-texto estado-off">DESACTIVADAS</span></span>
                 <label class="switch">
                     <input type="checkbox" id="chkHabilitarTiempo" onchange="alternarModuloTiempo(this.checked)" disabled tabindex="0">
                     <span class="slider"></span>
                 </label>
             </div>
 
-            <!-- PANEL DE TIEMPO (SIEMPRE VISIBLE) -->
             <div id="boxTiempoConfig" class="seccion-tiempo">
                 <div id="formTiempoInputs">
-                    <p style="color: var(--color-verde); font-size: 0.9rem;">CONFIGURA EL TIEMPO DISPONIBLE:</p>
+                    <p style="color: var(--texto-secundario); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Configura el tiempo disponible:</p>
                     <div class="inputs-tiempo">
                         <div class="campo-tiempo">
-                            <label>HORAS:</label>
+                            <label>Horas</label>
                             <input type="number" id="inputHoras" min="0" max="72" value="0" tabindex="0">
                         </div>
                         <div class="campo-tiempo">
-                            <label>MINUTOS:</label>
+                            <label>Minutos</label>
                             <input type="number" id="inputMinutos" min="0" max="59" value="30" tabindex="0">
                         </div>
                     </div>
-                    <button class="btn-custom btn-tiempo" onclick="guardarTiempoDescarga()" tabindex="0">GUARDAR Y ACTIVAR TIEMPO</button>
+                    <button class="btn-custom btn-tiempo" onclick="guardarTiempoDescarga()" tabindex="0">Guardar y Activar Tiempo</button>
                 </div>
 
                 <div id="infoTiempoActivo" style="display: none; text-align: center;">
-                    <p style="color: var(--color-verde); font-weight: bold; font-size: 1.1rem;" id="txtRelojRestante">TIEMPO RESTANTE: --:--:--</p>
-                    <button class="btn-custom btn-cancelar-tiempo" onclick="eliminarTiempoDescarga()" tabindex="0">ELIMINAR Y CANCELAR TIEMPO</button>
+                    <p style="color: var(--color-azul); font-weight: 700; font-size: 1rem; font-family: 'JetBrains Mono', monospace;" id="txtRelojRestante">TIEMPO RESTANTE: --:--:--</p>
+                    <button class="btn-custom btn-cancelar-tiempo" onclick="eliminarTiempoDescarga()" tabindex="0">Eliminar y Cancelar Tiempo</button>
                 </div>
             </div>
-
-            <!-- REGISTRO / EDICIÓN DE ARCHIVOS -->
-            <hr style="border-color: var(--color-verde); margin: 20px 0;">
-            <p style="margin-bottom: 8px; text-align: left;">NOMBRE DEL ARCHIVO:</p>
-            <input type="text" id="nombreCustomInput" placeholder="Ej. Paquete_WXZ_v1.zip" tabindex="0" style="text-align: left;">
-
-            <p style="margin-bottom: 8px; text-align: left;">NOTA O AVISO:</p>
-            <input type="text" id="notaCustomInput" placeholder="Ej. Versión actualizada con correcciones" tabindex="0" style="text-align: left;">
-
-            <p style="margin-bottom: 8px; text-align: left;">RUTA O LINK DE GITHUB:</p>
-            <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/releases/download/.../app.apk" tabindex="0" style="text-align: left;">
-
-            <button class="btn-custom" id="btnPublicar" onclick="guardarRegistroArchivo()" tabindex="0">PUBLICAR ENLACE EN LA WEB</button>
-            <button class="btn-cancelar-edit" id="btnCancelarEdit" onclick="cancelarModoEdicion()" tabindex="0">CANCELAR EDICIÓN</button>
-            <p id="estadoSubida" style="text-align: center; margin-top: 10px; font-weight: bold; min-height: 20px;"></p>
         </div>
 
-        <!-- LISTA DE ARCHIVOS PUBLICADOS -->
+        <!-- 2. PANEL DE REGISTRO / PUBLICAR ARCHIVO -->
         <div class="panel-box">
-            <h2 style="font-size: clamp(0.95rem, 2vw, 1.2rem); margin-bottom: 10px;">ARCHIVOS PUBLICADOS:</h2>
+            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Nombre del archivo:</p>
+            <input type="text" id="nombreCustomInput" placeholder="Ej. Xuper_TV_24.3.apk" tabindex="0" style="text-align: left;">
+
+            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Nota:</p>
+            <input type="text" id="notaCustomInput" placeholder="Ej. Versión actualizada con correcciones" tabindex="0" style="text-align: left;">
+
+            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Ruta o link de GitHub:</p>
+            <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/releases/download/.../app.apk" tabindex="0" style="text-align: left;">
+
+            <button class="btn-custom" id="btnPublicar" onclick="guardarRegistroArchivo()" tabindex="0" style="margin-bottom: 0;">Publicar Archivo en la Web</button>
+            <p id="estadoSubida" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
+        </div>
+
+        <!-- 3. PANEL DE ARCHIVOS PUBLICADOS -->
+        <div class="panel-box" style="margin-bottom: 0;">
+            <h2 style="font-size: clamp(0.95rem, 2vw, 1.1rem); font-weight: 700; margin-bottom: 15px; color: var(--texto-principal);">Archivos Publicados:</h2>
             <div id="contenedorListaAdmin" class="lista-archivos"></div>
         </div>
     </div>
@@ -348,7 +392,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        let idArchivoEnEdicion = null;
         let listaGlobalArchivos = {};
         let configTiempoGlobal = { habilitado: false, timestampFin: 0, congeladoMs: 0 };
         let timerCuentaRegresivaAdmin = null;
@@ -357,26 +400,12 @@
             if (event.key === "Enter") verificarLogin();
         });
 
-        window.addEventListener("beforeunload", () => {
-            if (idArchivoEnEdicion) {
-                update(ref(db, `listaArchivos/${idArchivoEnEdicion}`), { editando: false });
-                
-                if (configTiempoGlobal.habilitado && configTiempoGlobal.congeladoMs > 0) {
-                    const nuevoFin = Date.now() + configTiempoGlobal.congeladoMs;
-                    update(ref(db, 'configTiempo'), {
-                        timestampFin: nuevoFin,
-                        congeladoMs: 0
-                    });
-                }
-            }
-        });
-
         window.verificarLogin = async function() {
             const passIngresada = document.getElementById("passInputLogin").value.trim();
             const msgError = document.getElementById("msgErrorLogin");
 
             if (passIngresada === "") {
-                msgError.textContent = "INGRESA LA CONTRASEÑA.";
+                msgError.textContent = "Ingresa la contraseña.";
                 setTimeout(() => { msgError.textContent = ""; }, 3000);
                 return;
             }
@@ -386,49 +415,19 @@
                 const passMaestraVal = snapMaestra.exists() ? String(snapMaestra.val()) : null;
 
                 if (passIngresada === passMaestraVal) {
-                    await limpiarEdicionesHuérfanasYRestaurarTiempo();
                     desbloquearPanel();
                 } else {
-                    msgError.textContent = "CONTRASEÑA INCORRECTA.";
+                    msgError.textContent = "Contraseña incorrecta.";
                     document.getElementById("passInputLogin").value = "";
                     setTimeout(() => { msgError.textContent = ""; }, 3000);
                 }
             } catch(e) {
-                msgError.textContent = "ERROR DE CONEXIÓN A FIREBASE.";
+                msgError.textContent = "Error de conexión a Firebase.";
                 setTimeout(() => { msgError.textContent = ""; }, 3000);
             }
         }
 
-        async function limpiarEdicionesHuérfanasYRestaurarTiempo() {
-            try {
-                const snapArchivos = await get(ref(db, 'listaArchivos'));
-                if (snapArchivos.exists()) {
-                    const archivos = snapArchivos.val();
-                    for (const id in archivos) {
-                        if (archivos[id].editando) {
-                            await update(ref(db, `listaArchivos/${id}`), { editando: false });
-                        }
-                    }
-                }
-
-                const snapTiempo = await get(ref(db, 'configTiempo'));
-                if (snapTiempo.exists()) {
-                    const tiempoVal = snapTiempo.val();
-                    if (tiempoVal && tiempoVal.habilitado && tiempoVal.congeladoMs > 0) {
-                        const nuevoFin = Date.now() + tiempoVal.congeladoMs;
-                        await update(ref(db, 'configTiempo'), {
-                            timestampFin: nuevoFin,
-                            congeladoMs: 0
-                        });
-                    }
-                }
-            } catch (e) {
-                console.error("Error al limpiar ediciones huérfanas", e);
-            }
-        }
-
-        window.cerrarSesion = async function() {
-            await cancelarModoEdicion();
+        window.cerrarSesion = function() {
             sessionStorage.clear(); localStorage.clear();
             document.getElementById("passInputLogin").value = "";
             document.getElementById("contenidoAdmin").style.display = "none";
@@ -501,31 +500,41 @@
                         const div = document.createElement("div");
                         div.className = "item-archivo";
                         const estaPausado = item.pausado || false;
-                        const estaEditando = item.editando || false;
                         const tieneNota = item.nota && item.nota.trim() !== "";
 
                         div.innerHTML = `
                             <div class="info-item">
                                 <div class="nombre-item-admin">
                                     <span>${item.nombre}</span> 
-                                    ${estaPausado ? '<span style="color:#ff0000; font-size:12px;">[NO ACTIVO]</span>' : '<span style="color:var(--color-azul); font-size:12px;">[ACTIVO]</span>'}
-                                    ${estaEditando ? '<span style="color:var(--color-naranja); font-size:12px;">[EDITANDO...]</span>' : ''}
+                                    ${estaPausado ? '<span style="color:#fb7185; font-size:11px; font-weight:600; background:rgba(244,63,94,0.1); padding:2px 8px; border-radius:6px;">[NO ACTIVO]</span>' : '<span style="color:#14b8a6; font-size:11px; font-weight:600; background:rgba(20,184,166,0.1); padding:2px 8px; border-radius:6px;">[ACTIVO]</span>'}
                                 </div>
                                 ${tieneNota ? `<div class="nota-item-admin">${item.nota}</div>` : ''}
                             </div>
                             <div class="acciones-item">
-                                <button class="btn-accion btn-editar" onclick="cargarEdicionArchivo('${id}')" tabindex="0" title="Editar">✏</button>
+                                <button class="btn-accion btn-copiar" onclick="copiarLinkUrl('${item.url}')" tabindex="0" title="Copiar Link del URL">🔗</button>
                                 <button class="btn-accion ${estaPausado ? 'btn-activar' : 'btn-desactivar'}" onclick="alternarPausaArchivo('${id}', ${estaPausado})" tabindex="0" title="${estaPausado ? 'Activar' : 'Desactivar'}">
-                                    ${estaPausado ? '▶' : '⏸'}
+                                    ${estaPausado ? '▶️' : '⏸️'}
                                 </button>
-                                <button class="btn-accion btn-borrar" onclick="eliminarArchivo('${id}')" tabindex="0" title="Eliminar">X</button>
+                                <button class="btn-accion btn-borrar" onclick="eliminarArchivo('${id}')" tabindex="0" title="Eliminar">🗑️</button>
                             </div>
                         `;
                         contenedor.appendChild(div);
                     });
                 } else {
-                    contenedor.innerHTML = "<p style='opacity:0.5; text-align:center;'>NO HAY ARCHIVOS PUBLICADOS</p>";
+                    contenedor.innerHTML = "<p style='opacity:0.5; text-align:center; padding: 20px; font-size: 0.9rem; color: var(--texto-secundario);'>No hay archivos publicados.</p>";
                 }
+            });
+        }
+
+        window.copiarLinkUrl = function(url) {
+            if (!url) {
+                alert("No hay URL disponible para copiar.");
+                return;
+            }
+            navigator.clipboard.writeText(url).then(() => {
+                alert("¡Link copiado al portapapeles!");
+            }).catch(err => {
+                console.error("Error al copiar el enlace: ", err);
             });
         }
 
@@ -538,11 +547,11 @@
         function validarExistenciaArchivoActivo() {
             const llaves = Object.keys(listaGlobalArchivos);
             if (llaves.length === 0) {
-                alert("NO HAY ARCHIVOS PUBLICADOS. DEBES PUBLICAR AL MENOS UNO.");
+                alert("No hay archivos publicados. Debes publicar al menos uno.");
                 return false;
             }
             if (!tieneArchivoActivoDisponibles()) {
-                alert("TODOS LOS ARCHIVOS ESTÁN DESACTIVADOS. ACTIVA AL MENOS UNO.");
+                alert("Todos los archivos están desactivados. Activa al menos uno.");
                 return false;
             }
             return true;
@@ -560,7 +569,7 @@
                         timestampFin: 0,
                         congeladoMs: 0
                     });
-                    alert("NO QUEDAN ARCHIVOS ACTIVOS. SE HAN DESHABILITADO LAS DESCARGAS AUTOMÁTICAMENTE.");
+                    alert("No quedan archivos activos. Se han deshabilitado las descargas automáticamente.");
                 }
             }
         }
@@ -597,7 +606,7 @@
             const m = parseInt(document.getElementById("inputMinutos").value) || 0;
 
             if (h === 0 && m === 0) {
-                alert("INGRESA UN TIEMPO VÁLIDO (AL MENOS 1 MINUTO)");
+                alert("Ingresa un tiempo válido (al menos 1 minuto).");
                 return;
             }
 
@@ -642,100 +651,40 @@
             timerCuentaRegresivaAdmin = setInterval(actualizar, 1000);
         }
 
-        window.cargarEdicionArchivo = async function(id) {
-            const item = listaGlobalArchivos[id];
-            if (!item) return;
-
-            if (idArchivoEnEdicion && idArchivoEnEdicion !== id) {
-                update(ref(db, `listaArchivos/${idArchivoEnEdicion}`), { editando: false });
-            }
-
-            idArchivoEnEdicion = id;
-            await update(ref(db, `listaArchivos/${id}`), { editando: true });
-
-            if (configTiempoGlobal.habilitado && configTiempoGlobal.timestampFin > Date.now()) {
-                const restanteMs = Math.max(0, configTiempoGlobal.timestampFin - Date.now());
-                await update(ref(db, 'configTiempo'), {
-                    congeladoMs: restanteMs,
-                    timestampFin: 0
-                });
-            }
-
-            document.getElementById("nombreCustomInput").value = item.nombre || "";
-            document.getElementById("notaCustomInput").value = item.nota || "";
-            document.getElementById("urlArchivoInput").value = item.url || "";
-
-            const btnPublicar = document.getElementById("btnPublicar");
-            btnPublicar.textContent = "ACTUALIZAR ARCHIVO";
-            document.getElementById("btnCancelarEdit").style.display = "block";
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        async function descongelarTiempoSiEsNecesario() {
-            if (configTiempoGlobal.habilitado && configTiempoGlobal.congeladoMs > 0) {
-                const nuevoFin = Date.now() + configTiempoGlobal.congeladoMs;
-                await update(ref(db, 'configTiempo'), {
-                    timestampFin: nuevoFin,
-                    congeladoMs: 0
-                });
-            }
-        }
-
-        window.cancelarModoEdicion = async function() {
-            if (idArchivoEnEdicion) {
-                await update(ref(db, `listaArchivos/${idArchivoEnEdicion}`), { editando: false });
-            }
-
-            idArchivoEnEdicion = null;
-            document.getElementById("nombreCustomInput").value = "";
-            document.getElementById("notaCustomInput").value = "";
-            document.getElementById("urlArchivoInput").value = "";
-            document.getElementById("btnPublicar").textContent = "PUBLICAR ENLACE EN LA WEB";
-            document.getElementById("btnCancelarEdit").style.display = "none";
-
-            await descongelarTiempoSiEsNecesario();
-        }
-
         window.guardarRegistroArchivo = async function() {
             const nombre = document.getElementById("nombreCustomInput").value.trim();
             const nota = document.getElementById("notaCustomInput").value.trim();
             const url = document.getElementById("urlArchivoInput").value.trim();
             const estado = document.getElementById("estadoSubida");
 
-            if (nombre === "" || url === "") {
-                estado.style.color = "#ff0000";
-                estado.textContent = "LLENA LOS CAMPOS OBLIGATORIOS (NOMBRE Y URL).";
+            if (nombre === "" || nota === "" || url === "") {
+                estado.style.color = "var(--color-rojo)";
+                estado.textContent = "Llena los campos obligatorios (Nombre, Nota y URL).";
                 setTimeout(() => { estado.textContent = ""; }, 3000);
                 return;
             }
 
-            const idTarget = idArchivoEnEdicion ? idArchivoEnEdicion : Date.now();
+            const idTarget = Date.now();
 
             try {
                 await update(ref(db, `listaArchivos/${idTarget}`), {
                     nombre: nombre,
                     nota: nota,
                     url: url,
-                    pausado: idArchivoEnEdicion && listaGlobalArchivos[idArchivoEnEdicion] ? (listaGlobalArchivos[idArchivoEnEdicion].pausado || false) : false,
-                    editando: false
+                    pausado: false
                 });
 
-                estado.style.color = "#00ff00";
-                estado.textContent = idArchivoEnEdicion ? "----- REGISTRO ACTUALIZADO -----" : "----- REGISTRO PUBLICADO -----";
+                estado.style.color = "var(--color-verde)";
+                estado.textContent = "¡Registro publicado con éxito!";
                 
-                idArchivoEnEdicion = null;
                 document.getElementById("nombreCustomInput").value = "";
                 document.getElementById("notaCustomInput").value = "";
                 document.getElementById("urlArchivoInput").value = "";
-                document.getElementById("btnPublicar").textContent = "PUBLICAR ENLACE EN LA WEB";
-                document.getElementById("btnCancelarEdit").style.display = "none";
-
-                await descongelarTiempoSiEsNecesario();
 
                 setTimeout(() => { estado.textContent = ""; }, 2000);
             } catch(e) {
-                estado.style.color = "#ff0000";
-                estado.textContent = "ERROR AL GUARDAR EN BASE DE DATOS";
+                estado.style.color = "var(--color-rojo)";
+                estado.textContent = "Error al guardar en base de datos";
                 setTimeout(() => { estado.textContent = ""; }, 3000);
             }
         }
@@ -749,7 +698,6 @@
 
         window.eliminarArchivo = async function(id) {
             if(!confirm("¿Eliminar este registro?")) return;
-            if (idArchivoEnEdicion === id) await cancelarModoEdicion();
             await remove(ref(db, 'listaArchivos/' + id));
             autoApagarDescargasSiNoHayActivos();
         }
