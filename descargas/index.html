@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centro de Descargas Seguras</title>
+    <title>Descargas</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -75,7 +75,7 @@
             border-radius: 12px;
             text-align: center;
             font-weight: 500;
-            margin-bottom: 24px;
+            margin-bottom: 0;
             line-height: 1.5;
             font-size: clamp(0.85rem, 2vw, 0.92rem);
         }
@@ -107,6 +107,10 @@
             transition: all 0.2s ease;
         }
 
+        .tarjeta-archivo:last-child {
+            margin-bottom: 0;
+        }
+
         .tarjeta-archivo:hover {
             border-color: var(--borde-hover);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -135,33 +139,6 @@
             line-height: 1.4;
         }
 
-        .texto-actualizando {
-            color: #fbbf24;
-            font-size: clamp(0.75rem, 1.4vw, 0.82rem);
-            font-weight: 500;
-            font-family: 'JetBrains Mono', monospace;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 4px;
-        }
-        
-        .texto-actualizando::before {
-            content: "";
-            width: 6px;
-            height: 6px;
-            background-color: #fbbf24;
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse-dot 1.5s infinite;
-        }
-
-        @keyframes pulse-dot {
-            0% { transform: scale(0.95); opacity: 0.9; }
-            70% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(0.95); opacity: 0.9; }
-        }
-
         .btn-descargar {
             background: var(--color-primary);
             border: 1px solid transparent;
@@ -188,14 +165,6 @@
             outline: none;
         }
 
-        .btn-descargar.deshabilitado {
-            background: #0f172a !important;
-            border: 1px solid var(--borde-sutil) !important;
-            color: #64748b !important;
-            cursor: not-allowed;
-            box-shadow: none !important;
-        }
-
         @media (max-width: 650px) {
             body { padding: 16px 12px; }
             .contenedor-main { padding: 18px; }
@@ -213,7 +182,7 @@
 <body>
 
     <div class="terminal-header">
-        <h1>Centro de Descargas</h1>
+        <h1>Descargas</h1>
     </div>
 
     <div class="contenedor-main">
@@ -346,43 +315,39 @@
         function renderizarLista() {
             const contenedor = document.getElementById("listaDescargas");
             contenedor.innerHTML = "";
-            const llaves = Object.keys(listaArchivosCache);
+            
+            const globalPermitido = estaGlobalmentePermitido();
 
-            if (llaves.length === 0) {
-                contenedor.innerHTML = "<p style='text-align:center; color: var(--texto-secundario); padding: 30px; font-family: Plus Jakarta Sans, sans-serif;'>No hay archivos disponibles en este momento.</p>";
+            // Si las descargas están desactivadas globalmente, no mostramos ningún archivo
+            if (!globalPermitido) {
                 return;
             }
 
-            const globalPermitido = estaGlobalmentePermitido();
+            // Filtrar solo los archivos que NO estén pausados (activos)
+            const llavesActivas = Object.keys(listaArchivosCache).filter(id => {
+                const item = listaArchivosCache[id];
+                return item && !item.pausado;
+            });
 
-            llaves.forEach(id => {
+            if (llavesActivas.length === 0) {
+                contenedor.innerHTML = "<p style='text-align:center; color: var(--texto-secundario); padding: 10px 0; font-family: Plus Jakarta Sans, sans-serif;'>No hay archivos disponibles en este momento.</p>";
+                return;
+            }
+
+            llavesActivas.forEach(id => {
                 const item = listaArchivosCache[id];
                 const div = document.createElement("div");
                 div.className = "tarjeta-archivo";
 
-                const estaEditando = item.editando || false;
-                const estaDisponible = globalPermitido && (!item.pausado) && (!estaEditando);
-                
-                const claseBoton = estaDisponible ? "btn-descargar" : "btn-descargar deshabilitado";
-                
-                let textoBoton = "Descargar";
-                if (!globalPermitido || estaEditando) {
-                    textoBoton = "Bloqueado";
-                } else if (item.pausado) {
-                    textoBoton = "No Activo";
-                }
-
-                const mostrarAvisoEdicion = globalPermitido && estaEditando;
                 const tieneNota = item.nota && item.nota.trim() !== "";
 
                 div.innerHTML = `
                     <div class="columna-info">
                         <span class="nombre-archivo">${item.nombre}</span>
                         ${tieneNota ? `<span class="nota-archivo">${item.nota}</span>` : ''}
-                        ${mostrarAvisoEdicion ? '<span class="texto-actualizando">Actualizando archivo, espere un momento...</span>' : ''}
                     </div>
-                    <button onclick="window.ejecutarDescargaSegura('${id}')" class="${claseBoton}" id="btnFile_${id}" tabindex="0">
-                        ${textoBoton}
+                    <button onclick="window.ejecutarDescargaSegura('${id}')" class="btn-descargar" id="btnFile_${id}" tabindex="0">
+                        Descargar
                     </button>
                 `;
                 contenedor.appendChild(div);
@@ -394,7 +359,7 @@
             const globalPermitido = estaGlobalmentePermitido();
             const item = listaArchivosCache[id];
 
-            if (!globalPermitido || (item && item.pausado) || (item && item.editando)) {
+            if (!globalPermitido || (item && item.pausado)) {
                 alert("Acceso denegado: Este archivo no está disponible actualmente.\n\nComunícate por WhatsApp / Messenger con el administrador.");
                 return;
             }
