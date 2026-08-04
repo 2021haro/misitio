@@ -28,6 +28,30 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
+        /* Estilos personalizados para la barra de desplazamiento global (Scrollbar) */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--borde-sutil) var(--fondo);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--fondo);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--borde-sutil);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--borde-hover);
+        }
+
         body {
             background-color: var(--fondo);
             background-image: 
@@ -258,7 +282,10 @@
             background: var(--color-rojo); color: #fff; box-shadow: 0 4px 12px var(--color-rojo-glow);
         }
 
-        .lista-archivos { margin-top: 15px; max-height: 400px; overflow-y: auto; padding-right: 5px; }
+        .lista-archivos { 
+            margin-top: 15px; 
+            /* Se removió max-height y overflow-y para mostrar todos los elementos sin scroll interno */
+        }
 
         .item-archivo {
             display: flex; justify-content: space-between; align-items: center;
