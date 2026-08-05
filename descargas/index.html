@@ -38,7 +38,6 @@
             user-select: none;
         }
 
-        /* Permitir selección en inputs si los hubiera, o mantenerlo restringido */
         input {
             -webkit-user-select: text;
             -moz-user-select: text;
@@ -46,7 +45,6 @@
             user-select: text;
         }
 
-        /* Estilos personalizados para la barra de desplazamiento (Scrollbar) acorde al tema de la web */
         * {
             scrollbar-width: thin;
             scrollbar-color: var(--borde-sutil) var(--fondo);
@@ -98,7 +96,6 @@
             letter-spacing: -0.3px;
         }
 
-        /* ESTILO PARA EL BLOQUE DE CÓDIGO DE DOWNLOADER */
         .downloader-box {
             background: rgba(56, 189, 248, 0.05);
             border: 1px solid rgba(56, 189, 248, 0.2);
@@ -151,7 +148,6 @@
             font-size: clamp(0.85rem, 2vw, 0.92rem);
         }
 
-        /* CONTENEDOR FLEXIBLE PARA SEPARAR INFORMACIÓN Y QR DENTRO DEL BANNER */
         .bloque-bloqueado-grid {
             display: flex;
             align-items: center;
@@ -166,7 +162,6 @@
             text-align: center;
         }
 
-        /* ESTILO PARA LA INFORMACIÓN DEL ADMINISTRADOR (PANEL INDEPENDIENTE) */
         .info-admin-box {
             display: none;
             background: rgba(56, 189, 248, 0.06);
@@ -182,25 +177,30 @@
             word-break: break-all;
         }
 
-        /* ESTILO PARA LOS CONTENEDORES DE CÓDIGOS QR */
         .qr-admin-box {
             display: none;
             background: #ffffff;
             border: 1px solid var(--borde-sutil);
-            padding: 10px;
-            border-radius: 12px;
+            padding: 12px;
+            border-radius: 14px;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             flex-shrink: 0;
             position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .qr-admin-box:hover {
+            transform: scale(1.03);
         }
 
         .qr-wrapper {
             position: relative;
-            width: 110px;
-            height: 110px;
+            width: 150px;
+            height: 150px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -213,15 +213,15 @@
 
         .qr-logo-fb {
             position: absolute;
-            width: 26px;
-            height: 26px;
+            width: 52px;
+            height: 52px;
             background: #ffffff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-            padding: 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            padding: 4px;
         }
 
         .qr-logo-fb svg {
@@ -232,15 +232,15 @@
 
         .qr-logo-wp {
             position: absolute;
-            width: 26px;
-            height: 26px;
+            width: 52px;
+            height: 52px;
             background: #ffffff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-            padding: 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            padding: 4px;
         }
 
         .qr-logo-wp svg {
@@ -370,11 +370,12 @@
             <div class="bloque-bloqueado-grid">
                 <div class="columna-mensaje">
                     ⚠️ Descargas temporalmente deshabilitadas por el administrador.<br>
-                    Comunícate por WhatsApp / Messenger con el administrador.
+                    Comunícate por WhatsApp / Messenger con el administrador.<br>
+                    « Solo mensajes 💬 »
                     <div id="lblInformacionAdmin" class="info-admin-box"></div>
                 </div>
                 <div id="lblQrAdminContainer" class="qr-admin-box"></div>
-                <div id="lblWpAdminContainer" class="qr-admin-box"></div>
+                <div id="lblWpAdminContainer" class="qr-admin-box" title="Clic para chatear por WhatsApp"></div>
             </div>
         </div>
 
@@ -385,7 +386,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Bloquear combinaciones de teclas comunes para inspección y copiado (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+C)
         document.addEventListener('keydown', function(e) {
             if (
                 e.key === 'F12' ||
@@ -397,7 +397,6 @@
             }
         });
 
-        // Bloquear clic derecho globalmente
         document.addEventListener('contextmenu', event => event.preventDefault());
 
         const firebaseConfig = {
@@ -425,9 +424,8 @@
         let textoQrCache = "";
 
         let mostrarWpCache = false;
-        let textoWpCache = "";
+        let numeroWpCache = "";
 
-        // Escuchar el código de Downloader App desde Firebase
         onValue(ref(db, 'codigoDownloader'), (snapshot) => {
             const codigo = snapshot.val();
             const lblCodigo = document.getElementById("lblCodigoDownloader");
@@ -438,13 +436,11 @@
             }
         });
 
-        // Escuchar el estado de visualización de la información
         onValue(ref(db, 'mostrarInformacion'), (snapshot) => {
             mostrarInfoCache = snapshot.val() || false;
             actualizarVisibilidadInformacion();
         });
 
-        // Escuchar la información personalizada desde Firebase
         onValue(ref(db, 'informacion'), (snapshot) => {
             textoInfoCache = snapshot.val() || "";
             actualizarVisibilidadInformacion();
@@ -462,13 +458,11 @@
             actualizarVisibilidadBloqueoGeneral();
         }
 
-        // Escuchar el estado de visualización del código QR Facebook
         onValue(ref(db, 'mostrarQr'), (snapshot) => {
             mostrarQrCache = snapshot.val() || false;
             actualizarVisibilidadQr();
         });
 
-        // Escuchar el contenido del código QR Facebook desde Firebase
         onValue(ref(db, 'codigoQr'), (snapshot) => {
             textoQrCache = snapshot.val() || "";
             actualizarVisibilidadQr();
@@ -479,6 +473,7 @@
             contenedorQr.innerHTML = "";
             if (mostrarQrCache && textoQrCache.trim() !== "") {
                 contenedorQr.style.display = "flex";
+                contenedorQr.onclick = () => window.open(textoQrCache, '_blank');
                 
                 const wrapper = document.createElement("div");
                 wrapper.className = "qr-wrapper";
@@ -486,8 +481,8 @@
 
                 new QRCode(wrapper, {
                     text: textoQrCache,
-                    width: 110,
-                    height: 110,
+                    width: 150,
+                    height: 150,
                     colorDark: "#000000",
                     colorLight: "#ffffff",
                     correctLevel: QRCode.CorrectLevel.H
@@ -503,32 +498,33 @@
             actualizarVisibilidadBloqueoGeneral();
         }
 
-        // Escuchar el estado de visualización del código QR WhatsApp
         onValue(ref(db, 'mostrarWp'), (snapshot) => {
             mostrarWpCache = snapshot.val() || false;
             actualizarVisibilidadWp();
         });
 
-        // Escuchar el contenido del código QR WhatsApp desde Firebase
         onValue(ref(db, 'codigoWp'), (snapshot) => {
-            textoWpCache = snapshot.val() || "";
+            numeroWpCache = snapshot.val() || "";
             actualizarVisibilidadWp();
         });
 
         function actualizarVisibilidadWp() {
             const contenedorWp = document.getElementById("lblWpAdminContainer");
             contenedorWp.innerHTML = "";
-            if (mostrarWpCache && textoWpCache.trim() !== "") {
+            if (mostrarWpCache && numeroWpCache.trim() !== "") {
                 contenedorWp.style.display = "flex";
+                
+                const linkWp = `https://wa.me/${numeroWpCache}`;
+                contenedorWp.onclick = () => window.open(linkWp, '_blank');
                 
                 const wrapper = document.createElement("div");
                 wrapper.className = "qr-wrapper";
                 contenedorWp.appendChild(wrapper);
 
                 new QRCode(wrapper, {
-                    text: textoWpCache,
-                    width: 110,
-                    height: 110,
+                    text: linkWp,
+                    width: 150,
+                    height: 150,
                     colorDark: "#000000",
                     colorLight: "#ffffff",
                     correctLevel: QRCode.CorrectLevel.H
@@ -651,12 +647,10 @@
             
             const globalPermitido = estaGlobalmentePermitido();
 
-            // Si las descargas están desactivadas globalmente, no mostramos ningún archivo
             if (!globalPermitido) {
                 return;
             }
 
-            // Filtrar solo los archivos que NO estén pausados (activos)
             const llavesActivas = Object.keys(listaArchivosCache).filter(id => {
                 const item = listaArchivosCache[id];
                 return item && !item.pausado;
