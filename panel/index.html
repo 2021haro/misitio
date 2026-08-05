@@ -404,6 +404,15 @@
         <!-- 1. PANEL DE CÓDIGO DE DOWNLOADER APP -->
         <div class="panel-box">
             <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Código de Downloader App:</p>
+            
+            <div class="contenedor-switch" style="margin-bottom: 15px; padding-bottom: 15px;">
+                <span style="color: var(--texto-principal); font-weight: 500; font-size: 0.9rem;">MOSTRAR CÓDIGO: <span id="lblEstadoCodigo" class="estado-texto estado-off">DESACTIVADO</span></span>
+                <label class="switch">
+                    <input type="checkbox" id="chkMostrarCodigo" onchange="cambiarEstadoMostrarCodigo(this.checked)" tabindex="0">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
             <input type="text" id="codigoDownloaderInput" placeholder="Ej. 123456" tabindex="0" style="text-align: left;">
 
             <button class="btn-custom" id="btnPublicarCodigo" onclick="gestionarCodigoDownloader()" tabindex="0" style="margin-bottom: 0;">Publicar Código en la Web</button>
@@ -622,6 +631,14 @@
         }
 
         function escucharBaseDeDatos() {
+            onValue(ref(db, 'mostrarCodigo'), (snapshot) => {
+                const estado = snapshot.val() || false;
+                document.getElementById("chkMostrarCodigo").checked = estado;
+                const lbl = document.getElementById("lblEstadoCodigo");
+                lbl.textContent = estado ? "ACTIVADO" : "DESACTIVADO";
+                lbl.className = `estado-texto ${estado ? 'estado-on' : 'estado-off'}`;
+            });
+
             onValue(ref(db, 'codigoDownloader'), (snapshot) => {
                 const inputCodigo = document.getElementById("codigoDownloaderInput");
                 const btnCodigo = document.getElementById("btnPublicarCodigo");
@@ -829,6 +846,10 @@
                     contenedor.innerHTML = "<p style='opacity:0.5; text-align:center; padding: 20px; font-size: 0.9rem; color: var(--texto-secundario);'>No hay archivos publicados.</p>";
                 }
             });
+        }
+
+        window.cambiarEstadoMostrarCodigo = function(estado) {
+            set(ref(db, 'mostrarCodigo'), estado);
         }
 
         window.cambiarEstadoMostrarInfo = function(estado) {
@@ -1046,7 +1067,6 @@
                 return;
             }
 
-            // Limpiar el número de espacios, guiones o símbolos +, dejando solo dígitos para la URL wa.me
             wpVal = wpVal.replace(/\D/g, "");
 
             try {
