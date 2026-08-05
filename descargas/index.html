@@ -97,6 +97,7 @@
         }
 
         .downloader-box {
+            display: none;
             background: rgba(56, 189, 248, 0.05);
             border: 1px solid rgba(56, 189, 248, 0.2);
             border-radius: 14px;
@@ -358,7 +359,7 @@
     </div>
 
     <!-- PANEL DE CÓDIGO DE DOWNLOADER APP -->
-    <div class="downloader-box">
+    <div id="downloaderBoxContainer" class="downloader-box">
         <p>Código de Downloader App :</p>
         <div id="lblCodigoDownloader" class="downloader-codigo">------</div>
     </div>
@@ -419,6 +420,9 @@
         let listaArchivosCache = {};
         let timerRelojUsuario = null;
 
+        let mostrarCodigoCache = false;
+        let textoCodigoCache = "";
+
         let mostrarInfoCache = false;
         let textoInfoCache = "";
 
@@ -428,15 +432,28 @@
         let mostrarWpCache = false;
         let numeroWpCache = "";
 
+        onValue(ref(db, 'mostrarCodigo'), (snapshot) => {
+            mostrarCodigoCache = snapshot.val() || false;
+            actualizarVisibilidadCodigo();
+        });
+
         onValue(ref(db, 'codigoDownloader'), (snapshot) => {
-            const codigo = snapshot.val();
+            textoCodigoCache = snapshot.val() || "";
+            actualizarVisibilidadCodigo();
+        });
+
+        function actualizarVisibilidadCodigo() {
+            const boxContainer = document.getElementById("downloaderBoxContainer");
             const lblCodigo = document.getElementById("lblCodigoDownloader");
-            if (codigo) {
-                lblCodigo.textContent = codigo;
+
+            if (mostrarCodigoCache && textoCodigoCache.trim() !== "") {
+                lblCodigo.textContent = textoCodigoCache;
+                boxContainer.style.display = "block";
             } else {
                 lblCodigo.textContent = "------";
+                boxContainer.style.display = "none";
             }
-        });
+        }
 
         onValue(ref(db, 'mostrarInformacion'), (snapshot) => {
             mostrarInfoCache = snapshot.val() || false;
