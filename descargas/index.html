@@ -6,6 +6,7 @@
     <title>Descargas</title>
     <link rel="icon" type="image/png" href="icono.png">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
             --color-primary: #6366f1;
@@ -26,7 +27,24 @@
             --texto-secundario: #94a3b8;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* Bloquear selección de texto en toda la página */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Permitir selección en inputs si los hubiera, o mantenerlo restringido */
+        input {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
 
         /* Estilos personalizados para la barra de desplazamiento (Scrollbar) acorde al tema de la web */
         * {
@@ -133,6 +151,104 @@
             font-size: clamp(0.85rem, 2vw, 0.92rem);
         }
 
+        /* CONTENEDOR FLEXIBLE PARA SEPARAR INFORMACIÓN Y QR DENTRO DEL BANNER */
+        .bloque-bloqueado-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .columna-mensaje {
+            flex: 1;
+            min-width: 240px;
+            text-align: center;
+        }
+
+        /* ESTILO PARA LA INFORMACIÓN DEL ADMINISTRADOR (PANEL INDEPENDIENTE) */
+        .info-admin-box {
+            display: none;
+            background: rgba(56, 189, 248, 0.06);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            color: #f8fafc;
+            padding: 12px 16px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 500;
+            margin-top: 12px;
+            line-height: 1.5;
+            font-size: clamp(0.85rem, 2vw, 0.92rem);
+            word-break: break-all;
+        }
+
+        /* ESTILO PARA LOS CONTENEDORES DE CÓDIGOS QR */
+        .qr-admin-box {
+            display: none;
+            background: #ffffff;
+            border: 1px solid var(--borde-sutil);
+            padding: 10px;
+            border-radius: 12px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .qr-wrapper {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-wrapper img, .qr-wrapper canvas {
+            display: block;
+            border-radius: 4px;
+        }
+
+        .qr-logo-fb {
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            padding: 2px;
+        }
+
+        .qr-logo-fb svg {
+            width: 100%;
+            height: 100%;
+            fill: #1877f2;
+        }
+
+        .qr-logo-wp {
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            padding: 2px;
+        }
+
+        .qr-logo-wp svg {
+            width: 100%;
+            height: 100%;
+            fill: #25d366;
+        }
+
         .banner-tiempo {
             display: none;
             background: rgba(56, 189, 248, 0.1);
@@ -221,6 +337,7 @@
         @media (max-width: 650px) {
             body { padding: 16px 12px; }
             .contenedor-main { padding: 18px; }
+            .bloque-bloqueado-grid { flex-direction: column; }
             .tarjeta-archivo {
                 flex-direction: column;
                 align-items: stretch;
@@ -232,7 +349,7 @@
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <div class="terminal-header">
         <h1>Descargas</h1>
@@ -250,8 +367,15 @@
         </div>
 
         <div id="bannerBloqueo" class="mensaje-bloqueado">
-            ⚠️ Descargas temporalmente deshabilitadas por el administrador.<br>
-            Comunícate por WhatsApp / Messenger con el administrador.
+            <div class="bloque-bloqueado-grid">
+                <div class="columna-mensaje">
+                    ⚠️ Descargas temporalmente deshabilitadas por el administrador.<br>
+                    Comunícate por WhatsApp / Messenger con el administrador.
+                    <div id="lblInformacionAdmin" class="info-admin-box"></div>
+                </div>
+                <div id="lblQrAdminContainer" class="qr-admin-box"></div>
+                <div id="lblWpAdminContainer" class="qr-admin-box"></div>
+            </div>
         </div>
 
         <div id="listaDescargas"></div>
@@ -260,6 +384,21 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Bloquear combinaciones de teclas comunes para inspección y copiado (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+C)
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+                (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'C' || e.key === 'c'))
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Bloquear clic derecho globalmente
+        document.addEventListener('contextmenu', event => event.preventDefault());
 
         const firebaseConfig = {
             apiKey: "AIzaSyAKQzpfbj6ep-yvyT0Z7GGVQsYmZivyHNw",
@@ -279,6 +418,15 @@
         let listaArchivosCache = {};
         let timerRelojUsuario = null;
 
+        let mostrarInfoCache = false;
+        let textoInfoCache = "";
+
+        let mostrarQrCache = false;
+        let textoQrCache = "";
+
+        let mostrarWpCache = false;
+        let textoWpCache = "";
+
         // Escuchar el código de Downloader App desde Firebase
         onValue(ref(db, 'codigoDownloader'), (snapshot) => {
             const codigo = snapshot.val();
@@ -289,6 +437,123 @@
                 lblCodigo.textContent = "------";
             }
         });
+
+        // Escuchar el estado de visualización de la información
+        onValue(ref(db, 'mostrarInformacion'), (snapshot) => {
+            mostrarInfoCache = snapshot.val() || false;
+            actualizarVisibilidadInformacion();
+        });
+
+        // Escuchar la información personalizada desde Firebase
+        onValue(ref(db, 'informacion'), (snapshot) => {
+            textoInfoCache = snapshot.val() || "";
+            actualizarVisibilidadInformacion();
+        });
+
+        function actualizarVisibilidadInformacion() {
+            const lblInfo = document.getElementById("lblInformacionAdmin");
+            if (mostrarInfoCache && textoInfoCache.trim() !== "") {
+                lblInfo.textContent = textoInfoCache;
+                lblInfo.style.display = "block";
+            } else {
+                lblInfo.textContent = "";
+                lblInfo.style.display = "none";
+            }
+            actualizarVisibilidadBloqueoGeneral();
+        }
+
+        // Escuchar el estado de visualización del código QR Facebook
+        onValue(ref(db, 'mostrarQr'), (snapshot) => {
+            mostrarQrCache = snapshot.val() || false;
+            actualizarVisibilidadQr();
+        });
+
+        // Escuchar el contenido del código QR Facebook desde Firebase
+        onValue(ref(db, 'codigoQr'), (snapshot) => {
+            textoQrCache = snapshot.val() || "";
+            actualizarVisibilidadQr();
+        });
+
+        function actualizarVisibilidadQr() {
+            const contenedorQr = document.getElementById("lblQrAdminContainer");
+            contenedorQr.innerHTML = "";
+            if (mostrarQrCache && textoQrCache.trim() !== "") {
+                contenedorQr.style.display = "flex";
+                
+                const wrapper = document.createElement("div");
+                wrapper.className = "qr-wrapper";
+                contenedorQr.appendChild(wrapper);
+
+                new QRCode(wrapper, {
+                    text: textoQrCache,
+                    width: 110,
+                    height: 110,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+
+                const logoDiv = document.createElement("div");
+                logoDiv.className = "qr-logo-fb";
+                logoDiv.innerHTML = `<svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`;
+                wrapper.appendChild(logoDiv);
+            } else {
+                contenedorQr.style.display = "none";
+            }
+            actualizarVisibilidadBloqueoGeneral();
+        }
+
+        // Escuchar el estado de visualización del código QR WhatsApp
+        onValue(ref(db, 'mostrarWp'), (snapshot) => {
+            mostrarWpCache = snapshot.val() || false;
+            actualizarVisibilidadWp();
+        });
+
+        // Escuchar el contenido del código QR WhatsApp desde Firebase
+        onValue(ref(db, 'codigoWp'), (snapshot) => {
+            textoWpCache = snapshot.val() || "";
+            actualizarVisibilidadWp();
+        });
+
+        function actualizarVisibilidadWp() {
+            const contenedorWp = document.getElementById("lblWpAdminContainer");
+            contenedorWp.innerHTML = "";
+            if (mostrarWpCache && textoWpCache.trim() !== "") {
+                contenedorWp.style.display = "flex";
+                
+                const wrapper = document.createElement("div");
+                wrapper.className = "qr-wrapper";
+                contenedorWp.appendChild(wrapper);
+
+                new QRCode(wrapper, {
+                    text: textoWpCache,
+                    width: 110,
+                    height: 110,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+
+                const logoDiv = document.createElement("div");
+                logoDiv.className = "qr-logo-wp";
+                logoDiv.innerHTML = `<svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>`;
+                wrapper.appendChild(logoDiv);
+            } else {
+                contenedorWp.style.display = "none";
+            }
+            actualizarVisibilidadBloqueoGeneral();
+        }
+
+        function actualizarVisibilidadBloqueoGeneral() {
+            const bannerBloqueo = document.getElementById("bannerBloqueo");
+            const estaPermitido = estaGlobalmentePermitido();
+
+            if (!estaPermitido) {
+                bannerBloqueo.style.display = "block";
+            } else {
+                bannerBloqueo.style.display = "none";
+            }
+        }
 
         function formatearUrlDirecta(url) {
             if (!url) return "#";
@@ -314,11 +579,9 @@
         }
 
         function evaluarBannersYReloj() {
-            const estaPermitido = estaGlobalmentePermitido();
-            const bannerBloqueo = document.getElementById("bannerBloqueo");
             const bannerTiempo = document.getElementById("bannerTiempoReloj");
 
-            bannerBloqueo.style.display = estaPermitido ? "none" : "block";
+            actualizarVisibilidadBloqueoGeneral();
 
             if (configTiempoCache.habilitado) {
                 if (configTiempoCache.congeladoMs > 0) {
