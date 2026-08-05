@@ -227,18 +227,24 @@
             box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* Estilo cuando el input está deshabilitado / bloqueado */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+            margin-bottom: 0;
+        }
+
         input[type="text"]:disabled {
             background: #1e293b;
             color: var(--texto-secundario);
             cursor: not-allowed;
             border-color: var(--borde-sutil);
             opacity: 0.7;
-        }
-
-        input[type="number"] {
-            margin-bottom: 0;
-            text-align: center;
         }
 
         input:focus {
@@ -273,7 +279,6 @@
             box-shadow: 0 6px 16px var(--color-primary-glow);
         }
 
-        /* Estilo transparente/sutil para "Editar" */
         .btn-editar-codigo {
             background: rgba(244, 63, 94, 0.1); 
             border: 1px solid rgba(244, 63, 94, 0.3); 
@@ -290,7 +295,6 @@
             outline: none;
         }
 
-        /* Estilo para el botón de cancelar edición */
         .btn-cancelar-edicion {
             background: rgba(244, 63, 94, 0.1); 
             border: 1px solid rgba(244, 63, 94, 0.3); 
@@ -298,7 +302,7 @@
             margin-top: 10px;
             margin-bottom: 0;
             box-shadow: none;
-            display: none; /* Oculto por defecto, se muestra al editar */
+            display: none;
         }
 
         .btn-cancelar-edicion:hover, .btn-cancelar-edicion:focus {
@@ -335,7 +339,7 @@
         .item-archivo:hover {
             border-color: var(--borde-hover);
             background: #273548;
-            box-shadow: 0 4px 12px (0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .info-item { display: flex; flex-direction: column; overflow: hidden; flex: 1; gap: 4px; }
@@ -352,19 +356,15 @@
             display: inline-flex; align-items: center; justify-content: center;
         }
 
-        /* Botón Copiar Link (Azul/Celeste) */
         .btn-copiar { border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
         .btn-copiar:hover { background: var(--color-azul); color: #0f172a; border-color: var(--color-azul); }
 
-        /* Botón Activar (Azul) */
         .btn-activar { border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
         .btn-activar:hover { background: var(--color-azul); color: #0f172a; border-color: var(--color-azul); }
 
-        /* Botón Desactivar (Rojo) */
         .btn-desactivar { border-color: rgba(244, 63, 94, 0.3); color: #fb7185; background: rgba(244, 63, 94, 0.08); }
         .btn-desactivar:hover { background: var(--color-rojo); color: #fff; border-color: var(--color-rojo); }
 
-        /* Botón Eliminar */
         .btn-borrar { border-color: rgba(244, 63, 94, 0.3); color: #fb7185; background: rgba(244, 63, 94, 0.08); }
         .btn-borrar:hover { background: var(--color-rojo); color: #fff; border-color: var(--color-rojo); }
 
@@ -451,7 +451,7 @@
 
         <!-- PANEL DE CÓDIGO QR WHATSAPP -->
         <div class="panel-box">
-            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">CÓDIGO QR WHATSAPP:</p>
+            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">CÓDIGO QR WHATSAPP (NÚMERO DE TELÉFONO):</p>
             
             <div class="contenedor-switch" style="margin-bottom: 15px; padding-bottom: 15px;">
                 <span style="color: var(--texto-principal); font-weight: 500; font-size: 0.9rem;">MOSTRAR CÓDIGO QR: <span id="lblEstadoWp" class="estado-texto estado-off">DESACTIVADO</span></span>
@@ -461,9 +461,9 @@
                 </label>
             </div>
 
-            <input type="text" id="wpInput" placeholder="Ej. Escribe el enlace o número de WhatsApp aquí..." tabindex="0" style="text-align: left;">
+            <input type="text" id="wpInput" placeholder="Ej. 521234567890 (con código de país)" tabindex="0" style="text-align: left;">
 
-            <button class="btn-custom" id="btnGuardarWp" onclick="gestionarCodigoWp()" tabindex="0" style="margin-bottom: 0;">Guardar Código QR</button>
+            <button class="btn-custom" id="btnGuardarWp" onclick="gestionarCodigoWp()" tabindex="0" style="margin-bottom: 0;">Guardar Número de WhatsApp</button>
             <button class="btn-custom btn-cancelar-edicion" id="btnCancelarWp" onclick="cancelarEdicionWp()" tabindex="0">Cancelar Edición</button>
             <p id="estadoWp" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
         </div>
@@ -535,7 +535,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, set, onValue, remove, update, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Bloquear combinaciones de teclas de inspección y copiado (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+C)
         document.addEventListener('keydown', function(e) {
             if (
                 e.key === 'F12' ||
@@ -547,7 +546,6 @@
             }
         });
 
-        // Bloquear el menú contextual (clic derecho)
         document.addEventListener('contextmenu', event => event.preventDefault());
 
         const firebaseConfig = {
@@ -733,7 +731,7 @@
                     if (!modoEdicionActivoWp) {
                         inputWp.value = wpUltimoGuardado;
                         inputWp.disabled = true;
-                        btnWp.textContent = "Editar Código QR";
+                        btnWp.textContent = "Editar Número";
                         btnWp.className = "btn-custom btn-editar-codigo";
                         btnCancelarWp.style.display = "none";
                     }
@@ -742,7 +740,7 @@
                     modoEdicionActivoWp = false;
                     inputWp.value = "";
                     inputWp.disabled = false;
-                    btnWp.textContent = "Guardar Código QR";
+                    btnWp.textContent = "Guardar Número de WhatsApp";
                     btnWp.className = "btn-custom";
                     btnCancelarWp.style.display = "none";
                 }
@@ -993,7 +991,7 @@
                 await set(ref(db, 'codigoQr'), qrVal);
                 modoEdicionActivoQr = false;
                 inputQr.disabled = true;
-                btnQr.textContent = "Editar código qr";
+                btnQr.textContent = "Editar Código QR";
                 btnQr.className = "btn-custom btn-editar-codigo";
                 btnCancelarQr.style.display = "none";
 
@@ -1032,32 +1030,36 @@
                 modoEdicionActivoWp = true;
                 inputWp.disabled = false;
                 inputWp.focus();
-                btnWp.textContent = "Guardar Código QR";
+                btnWp.textContent = "Guardar Número de WhatsApp";
                 btnWp.className = "btn-custom btn-tiempo";
                 btnCancelarWp.style.display = "block";
                 estadoWp.textContent = "";
                 return;
             }
 
-            const wpVal = inputWp.value.trim();
+            let wpVal = inputWp.value.trim();
 
             if (wpVal === "") {
                 estadoWp.style.color = "var(--color-rojo)";
-                estadoWp.textContent = "Ingresa el código o enlace QR.";
+                estadoWp.textContent = "Ingresa el número de WhatsApp.";
                 setTimeout(() => { estadoWp.textContent = ""; }, 3000);
                 return;
             }
 
+            // Limpiar el número de espacios, guiones o símbolos +, dejando solo dígitos para la URL wa.me
+            wpVal = wpVal.replace(/\D/g, "");
+
             try {
                 await set(ref(db, 'codigoWp'), wpVal);
                 modoEdicionActivoWp = false;
+                inputWp.value = wpVal;
                 inputWp.disabled = true;
-                btnWp.textContent = "Editar Código QR";
+                btnWp.textContent = "Editar Número";
                 btnWp.className = "btn-custom btn-editar-codigo";
                 btnCancelarWp.style.display = "none";
 
                 estadoWp.style.color = "var(--color-verde)";
-                estadoWp.textContent = "¡Código QR guardado con éxito!";
+                estadoWp.textContent = "¡Número de WhatsApp guardado con éxito!";
                 setTimeout(() => { estadoWp.textContent = ""; }, 2000);
             } catch(e) {
                 estadoWp.style.color = "var(--color-rojo)";
@@ -1075,7 +1077,7 @@
             modoEdicionActivoWp = false;
             inputWp.value = wpUltimoGuardado;
             inputWp.disabled = true;
-            btnWp.textContent = "Editar Código QR";
+            btnWp.textContent = "Editar Número";
             btnWp.className = "btn-custom btn-editar-codigo";
             btnCancelarWp.style.display = "none";
             estadoWp.textContent = "";
