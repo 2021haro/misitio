@@ -26,7 +26,24 @@
             --texto-secundario: #94a3b8;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* Bloquear selección de texto globalmente */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Permitir selección y escritura solo en los campos de entrada */
+        input {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
 
         /* Estilos personalizados para la barra de desplazamiento global (Scrollbar) */
         * {
@@ -256,7 +273,7 @@
             box-shadow: 0 6px 16px var(--color-primary-glow);
         }
 
-        /* Estilo transparente/sutil (idéntico a .btn-cancelar-tiempo) para "Editar Código de la Web" */
+        /* Estilo transparente/sutil para "Editar" */
         .btn-editar-codigo {
             background: rgba(244, 63, 94, 0.1); 
             border: 1px solid rgba(244, 63, 94, 0.3); 
@@ -266,6 +283,25 @@
         }
 
         .btn-editar-codigo:hover, .btn-editar-codigo:focus {
+            background: var(--color-rojo); 
+            color: #fff; 
+            box-shadow: 0 4px 12px var(--color-rojo-glow);
+            transform: translateY(-1px);
+            outline: none;
+        }
+
+        /* Estilo para el botón de cancelar edición */
+        .btn-cancelar-edicion {
+            background: rgba(244, 63, 94, 0.1); 
+            border: 1px solid rgba(244, 63, 94, 0.3); 
+            color: #fb7185; 
+            margin-top: 10px;
+            margin-bottom: 0;
+            box-shadow: none;
+            display: none; /* Oculto por defecto, se muestra al editar */
+        }
+
+        .btn-cancelar-edicion:hover, .btn-cancelar-edicion:focus {
             background: var(--color-rojo); 
             color: #fff; 
             box-shadow: 0 4px 12px var(--color-rojo-glow);
@@ -284,7 +320,6 @@
 
         .lista-archivos { 
             margin-top: 15px; 
-            /* Se removió max-height y overflow-y para mostrar todos los elementos sin scroll interno */
         }
 
         .item-archivo {
@@ -300,7 +335,7 @@
         .item-archivo:hover {
             border-color: var(--borde-hover);
             background: #273548;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px (0, 0, 0, 0.3);
         }
 
         .info-item { display: flex; flex-direction: column; overflow: hidden; flex: 1; gap: 4px; }
@@ -347,7 +382,7 @@
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <!-- PANTALLA DE LOGIN -->
     <div id="pantallaLogin">
@@ -372,7 +407,65 @@
             <input type="text" id="codigoDownloaderInput" placeholder="Ej. 123456" tabindex="0" style="text-align: left;">
 
             <button class="btn-custom" id="btnPublicarCodigo" onclick="gestionarCodigoDownloader()" tabindex="0" style="margin-bottom: 0;">Publicar Código en la Web</button>
+            <button class="btn-custom btn-cancelar-edicion" id="btnCancelarEdicion" onclick="cancelarEdicionCodigo()" tabindex="0">Cancelar Edición</button>
             <p id="estadoSubidaCodigo" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
+        </div>
+
+        <!-- PANEL DE INFORMACIÓN -->
+        <div class="panel-box">
+            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Información:</p>
+            
+            <div class="contenedor-switch" style="margin-bottom: 15px; padding-bottom: 15px;">
+                <span style="color: var(--texto-principal); font-weight: 500; font-size: 0.9rem;">MOSTRAR INFORMACIÓN: <span id="lblEstadoInfo" class="estado-texto estado-off">DESACTIVADO</span></span>
+                <label class="switch">
+                    <input type="checkbox" id="chkMostrarInfo" onchange="cambiarEstadoMostrarInfo(this.checked)" tabindex="0">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <input type="text" id="informacionInput" placeholder="Ej. Escribe la información aquí..." tabindex="0" style="text-align: left;">
+
+            <button class="btn-custom" id="btnGuardarInformacion" onclick="gestionarInformacion()" tabindex="0" style="margin-bottom: 0;">Guardar Información</button>
+            <button class="btn-custom btn-cancelar-edicion" id="btnCancelarInformacion" onclick="cancelarEdicionInformacion()" tabindex="0">Cancelar Edición</button>
+            <p id="estadoInformacion" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
+        </div>
+
+        <!-- PANEL DE CÓDIGO QR FACEBOOK -->
+        <div class="panel-box">
+            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">CÓDIGO QR FACEBOOK:</p>
+            
+            <div class="contenedor-switch" style="margin-bottom: 15px; padding-bottom: 15px;">
+                <span style="color: var(--texto-principal); font-weight: 500; font-size: 0.9rem;">MOSTRAR CÓDIGO QR: <span id="lblEstadoQr" class="estado-texto estado-off">DESACTIVADO</span></span>
+                <label class="switch">
+                    <input type="checkbox" id="chkMostrarQr" onchange="cambiarEstadoMostrarQr(this.checked)" tabindex="0">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <input type="text" id="qrInput" placeholder="Ej. Escribe el enlace o texto del QR aquí..." tabindex="0" style="text-align: left;">
+
+            <button class="btn-custom" id="btnGuardarQr" onclick="gestionarCodigoQr()" tabindex="0" style="margin-bottom: 0;">Guardar Código QR</button>
+            <button class="btn-custom btn-cancelar-edicion" id="btnCancelarQr" onclick="cancelarEdicionQr()" tabindex="0">Cancelar Edición</button>
+            <p id="estadoQr" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
+        </div>
+
+        <!-- PANEL DE CÓDIGO QR WHATSAPP -->
+        <div class="panel-box">
+            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">CÓDIGO QR WHATSAPP:</p>
+            
+            <div class="contenedor-switch" style="margin-bottom: 15px; padding-bottom: 15px;">
+                <span style="color: var(--texto-principal); font-weight: 500; font-size: 0.9rem;">MOSTRAR CÓDIGO QR: <span id="lblEstadoWp" class="estado-texto estado-off">DESACTIVADO</span></span>
+                <label class="switch">
+                    <input type="checkbox" id="chkMostrarWp" onchange="cambiarEstadoMostrarWp(this.checked)" tabindex="0">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <input type="text" id="wpInput" placeholder="Ej. Escribe el enlace o número de WhatsApp aquí..." tabindex="0" style="text-align: left;">
+
+            <button class="btn-custom" id="btnGuardarWp" onclick="gestionarCodigoWp()" tabindex="0" style="margin-bottom: 0;">Guardar Código QR</button>
+            <button class="btn-custom btn-cancelar-edicion" id="btnCancelarWp" onclick="cancelarEdicionWp()" tabindex="0">Cancelar Edición</button>
+            <p id="estadoWp" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
         </div>
 
         <!-- 2. PANEL DE CONTROL DE DESCARGAS (INTERRUPTORES) -->
@@ -427,7 +520,7 @@
             <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Ruta o link de GitHub:</p>
             <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/releases/download/.../app.apk" tabindex="0" style="text-align: left;">
 
-            <button class="btn-custom" id="btnPublicar" onclick="guardarRegistroArchivo()" tabindex="0" style="margin-bottom: 0;">Publicar Archivo en la Web</button>
+            <button class="btn-custom" id="btnPublicar" onclick="guardarRegistroArchivo()" tabindex="0" style="margin-bottom: 0;">Guardar Archivo</button>
             <p id="estadoSubida" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
         </div>
 
@@ -441,6 +534,21 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, set, onValue, remove, update, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Bloquear combinaciones de teclas de inspección y copiado (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+C)
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+                (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'C' || e.key === 'c'))
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Bloquear el menú contextual (clic derecho)
+        document.addEventListener('contextmenu', event => event.preventDefault());
 
         const firebaseConfig = {
             apiKey: "AIzaSyAKQzpfbj6ep-yvyT0Z7GGVQsYmZivyHNw",
@@ -458,7 +566,18 @@
         let listaGlobalArchivos = {};
         let configTiempoGlobal = { habilitado: false, timestampFin: 0, congeladoMs: 0 };
         let timerCuentaRegresivaAdmin = null;
-        let modoEdicionActivo = false;
+        
+        let modoEdicionActivoCodigo = false;
+        let codigoUltimoGuardado = "";
+
+        let modoEdicionActivoInfo = false;
+        let informacionUltimaGuardada = "";
+
+        let modoEdicionActivoQr = false;
+        let qrUltimoGuardado = "";
+
+        let modoEdicionActivoWp = false;
+        let wpUltimoGuardado = "";
 
         document.getElementById("passInputLogin").addEventListener("keypress", function(event) {
             if (event.key === "Enter") verificarLogin();
@@ -508,20 +627,124 @@
             onValue(ref(db, 'codigoDownloader'), (snapshot) => {
                 const inputCodigo = document.getElementById("codigoDownloaderInput");
                 const btnCodigo = document.getElementById("btnPublicarCodigo");
+                const btnCancelar = document.getElementById("btnCancelarEdicion");
 
                 if (snapshot.exists() && snapshot.val().trim() !== "") {
-                    if (!modoEdicionActivo) {
-                        inputCodigo.value = snapshot.val();
+                    codigoUltimoGuardado = snapshot.val();
+                    if (!modoEdicionActivoCodigo) {
+                        inputCodigo.value = codigoUltimoGuardado;
                         inputCodigo.disabled = true;
-                        btnCodigo.textContent = "Editar Código de la Web";
+                        btnCodigo.textContent = "Editar Código";
                         btnCodigo.className = "btn-custom btn-editar-codigo";
+                        btnCancelar.style.display = "none";
                     }
                 } else {
-                    modoEdicionActivo = false;
+                    codigoUltimoGuardado = "";
+                    modoEdicionActivoCodigo = false;
                     inputCodigo.value = "";
                     inputCodigo.disabled = false;
                     btnCodigo.textContent = "Publicar Código en la Web";
                     btnCodigo.className = "btn-custom";
+                    btnCancelar.style.display = "none";
+                }
+            });
+
+            onValue(ref(db, 'mostrarInformacion'), (snapshot) => {
+                const estado = snapshot.val() || false;
+                document.getElementById("chkMostrarInfo").checked = estado;
+                const lbl = document.getElementById("lblEstadoInfo");
+                lbl.textContent = estado ? "ACTIVADO" : "DESACTIVADO";
+                lbl.className = `estado-texto ${estado ? 'estado-on' : 'estado-off'}`;
+            });
+
+            onValue(ref(db, 'informacion'), (snapshot) => {
+                const inputInformacion = document.getElementById("informacionInput");
+                const btnInfo = document.getElementById("btnGuardarInformacion");
+                const btnCancelarInfo = document.getElementById("btnCancelarInformacion");
+
+                if (snapshot.exists() && snapshot.val().trim() !== "") {
+                    informacionUltimaGuardada = snapshot.val();
+                    if (!modoEdicionActivoInfo) {
+                        inputInformacion.value = informacionUltimaGuardada;
+                        inputInformacion.disabled = true;
+                        btnInfo.textContent = "Editar Información";
+                        btnInfo.className = "btn-custom btn-editar-codigo";
+                        btnCancelarInfo.style.display = "none";
+                    }
+                } else {
+                    informacionUltimaGuardada = "";
+                    modoEdicionActivoInfo = false;
+                    inputInformacion.value = "";
+                    inputInformacion.disabled = false;
+                    btnInfo.textContent = "Guardar Información";
+                    btnInfo.className = "btn-custom";
+                    btnCancelarInfo.style.display = "none";
+                }
+            });
+
+            onValue(ref(db, 'mostrarQr'), (snapshot) => {
+                const estado = snapshot.val() || false;
+                document.getElementById("chkMostrarQr").checked = estado;
+                const lbl = document.getElementById("lblEstadoQr");
+                lbl.textContent = estado ? "ACTIVADO" : "DESACTIVADO";
+                lbl.className = `estado-texto ${estado ? 'estado-on' : 'estado-off'}`;
+            });
+
+            onValue(ref(db, 'codigoQr'), (snapshot) => {
+                const inputQr = document.getElementById("qrInput");
+                const btnQr = document.getElementById("btnGuardarQr");
+                const btnCancelarQr = document.getElementById("btnCancelarQr");
+
+                if (snapshot.exists() && snapshot.val().trim() !== "") {
+                    qrUltimoGuardado = snapshot.val();
+                    if (!modoEdicionActivoQr) {
+                        inputQr.value = qrUltimoGuardado;
+                        inputQr.disabled = true;
+                        btnQr.textContent = "Editar Código QR";
+                        btnQr.className = "btn-custom btn-editar-codigo";
+                        btnCancelarQr.style.display = "none";
+                    }
+                } else {
+                    qrUltimoGuardado = "";
+                    modoEdicionActivoQr = false;
+                    inputQr.value = "";
+                    inputQr.disabled = false;
+                    btnQr.textContent = "Guardar Código QR";
+                    btnQr.className = "btn-custom";
+                    btnCancelarQr.style.display = "none";
+                }
+            });
+
+            onValue(ref(db, 'mostrarWp'), (snapshot) => {
+                const estado = snapshot.val() || false;
+                document.getElementById("chkMostrarWp").checked = estado;
+                const lbl = document.getElementById("lblEstadoWp");
+                lbl.textContent = estado ? "ACTIVADO" : "DESACTIVADO";
+                lbl.className = `estado-texto ${estado ? 'estado-on' : 'estado-off'}`;
+            });
+
+            onValue(ref(db, 'codigoWp'), (snapshot) => {
+                const inputWp = document.getElementById("wpInput");
+                const btnWp = document.getElementById("btnGuardarWp");
+                const btnCancelarWp = document.getElementById("btnCancelarWp");
+
+                if (snapshot.exists() && snapshot.val().trim() !== "") {
+                    wpUltimoGuardado = snapshot.val();
+                    if (!modoEdicionActivoWp) {
+                        inputWp.value = wpUltimoGuardado;
+                        inputWp.disabled = true;
+                        btnWp.textContent = "Editar Código QR";
+                        btnWp.className = "btn-custom btn-editar-codigo";
+                        btnCancelarWp.style.display = "none";
+                    }
+                } else {
+                    wpUltimoGuardado = "";
+                    modoEdicionActivoWp = false;
+                    inputWp.value = "";
+                    inputWp.disabled = false;
+                    btnWp.textContent = "Guardar Código QR";
+                    btnWp.className = "btn-custom";
+                    btnCancelarWp.style.display = "none";
                 }
             });
 
@@ -610,20 +833,32 @@
             });
         }
 
+        window.cambiarEstadoMostrarInfo = function(estado) {
+            set(ref(db, 'mostrarInformacion'), estado);
+        }
+
+        window.cambiarEstadoMostrarQr = function(estado) {
+            set(ref(db, 'mostrarQr'), estado);
+        }
+
+        window.cambiarEstadoMostrarWp = function(estado) {
+            set(ref(db, 'mostrarWp'), estado);
+        }
+
         window.gestionarCodigoDownloader = async function() {
             const inputCodigo = document.getElementById("codigoDownloaderInput");
             const btnCodigo = document.getElementById("btnPublicarCodigo");
+            const btnCancelar = document.getElementById("btnCancelarEdicion");
             const estado = document.getElementById("estadoSubidaCodigo");
 
             if (inputCodigo.disabled) {
-                modoEdicionActivo = true;
+                modoEdicionActivoCodigo = true;
                 inputCodigo.disabled = false;
                 inputCodigo.focus();
-                btnCodigo.textContent = "Guardar Código Editado";
+                btnCodigo.textContent = "Guardar Código";
                 btnCodigo.className = "btn-custom btn-tiempo";
-                estado.style.color = "var(--color-verde)";
-                estado.textContent = "Modo edición activado. Modifica y guarda.";
-                setTimeout(() => { estado.textContent = ""; }, 3000);
+                btnCancelar.style.display = "block";
+                estado.textContent = "";
                 return;
             }
 
@@ -638,10 +873,11 @@
 
             try {
                 await set(ref(db, 'codigoDownloader'), codigo);
-                modoEdicionActivo = false;
+                modoEdicionActivoCodigo = false;
                 inputCodigo.disabled = true;
-                btnCodigo.textContent = "Editar Código de la Web";
+                btnCodigo.textContent = "Editar Código";
                 btnCodigo.className = "btn-custom btn-editar-codigo";
+                btnCancelar.style.display = "none";
 
                 estado.style.color = "var(--color-verde)";
                 estado.textContent = "¡Código guardado con éxito!";
@@ -651,6 +887,198 @@
                 estado.textContent = "Error al guardar en base de datos";
                 setTimeout(() => { estado.textContent = ""; }, 3000);
             }
+        }
+
+        window.cancelarEdicionCodigo = function() {
+            const inputCodigo = document.getElementById("codigoDownloaderInput");
+            const btnCodigo = document.getElementById("btnPublicarCodigo");
+            const btnCancelar = document.getElementById("btnCancelarEdicion");
+            const estado = document.getElementById("estadoSubidaCodigo");
+
+            modoEdicionActivoCodigo = false;
+            inputCodigo.value = codigoUltimoGuardado;
+            inputCodigo.disabled = true;
+            btnCodigo.textContent = "Editar Código";
+            btnCodigo.className = "btn-custom btn-editar-codigo";
+            btnCancelar.style.display = "none";
+            estado.textContent = "";
+        }
+
+        window.gestionarInformacion = async function() {
+            const inputInformacion = document.getElementById("informacionInput");
+            const btnInfo = document.getElementById("btnGuardarInformacion");
+            const btnCancelarInfo = document.getElementById("btnCancelarInformacion");
+            const estadoInfo = document.getElementById("estadoInformacion");
+
+            if (inputInformacion.disabled) {
+                modoEdicionActivoInfo = true;
+                inputInformacion.disabled = false;
+                inputInformacion.focus();
+                btnInfo.textContent = "Guardar Información";
+                btnInfo.className = "btn-custom btn-tiempo";
+                btnCancelarInfo.style.display = "block";
+                estadoInfo.textContent = "";
+                return;
+            }
+
+            const informacion = inputInformacion.value.trim();
+
+            if (informacion === "") {
+                estadoInfo.style.color = "var(--color-rojo)";
+                estadoInfo.textContent = "Ingresa la información.";
+                setTimeout(() => { estadoInfo.textContent = ""; }, 3000);
+                return;
+            }
+
+            try {
+                await set(ref(db, 'informacion'), informacion);
+                modoEdicionActivoInfo = false;
+                inputInformacion.disabled = true;
+                btnInfo.textContent = "Editar Información";
+                btnInfo.className = "btn-custom btn-editar-codigo";
+                btnCancelarInfo.style.display = "none";
+
+                estadoInfo.style.color = "var(--color-verde)";
+                estadoInfo.textContent = "¡Información guardada con éxito!";
+                setTimeout(() => { estadoInfo.textContent = ""; }, 2000);
+            } catch(e) {
+                estadoInfo.style.color = "var(--color-rojo)";
+                estadoInfo.textContent = "Error al guardar en base de datos";
+                setTimeout(() => { estadoInfo.textContent = ""; }, 3000);
+            }
+        }
+
+        window.cancelarEdicionInformacion = function() {
+            const inputInformacion = document.getElementById("informacionInput");
+            const btnInfo = document.getElementById("btnGuardarInformacion");
+            const btnCancelarInfo = document.getElementById("btnCancelarInformacion");
+            const estadoInfo = document.getElementById("estadoInformacion");
+
+            modoEdicionActivoInfo = false;
+            inputInformacion.value = informacionUltimaGuardada;
+            inputInformacion.disabled = true;
+            btnInfo.textContent = "Editar Información";
+            btnInfo.className = "btn-custom btn-editar-codigo";
+            btnCancelarInfo.style.display = "none";
+            estadoInfo.textContent = "";
+        }
+
+        window.gestionarCodigoQr = async function() {
+            const inputQr = document.getElementById("qrInput");
+            const btnQr = document.getElementById("btnGuardarQr");
+            const btnCancelarQr = document.getElementById("btnCancelarQr");
+            const estadoQr = document.getElementById("estadoQr");
+
+            if (inputQr.disabled) {
+                modoEdicionActivoQr = true;
+                inputQr.disabled = false;
+                inputQr.focus();
+                btnQr.textContent = "Guardar Código QR";
+                btnQr.className = "btn-custom btn-tiempo";
+                btnCancelarQr.style.display = "block";
+                estadoQr.textContent = "";
+                return;
+            }
+
+            const qrVal = inputQr.value.trim();
+
+            if (qrVal === "") {
+                estadoQr.style.color = "var(--color-rojo)";
+                estadoQr.textContent = "Ingresa el código o enlace QR.";
+                setTimeout(() => { estadoQr.textContent = ""; }, 3000);
+                return;
+            }
+
+            try {
+                await set(ref(db, 'codigoQr'), qrVal);
+                modoEdicionActivoQr = false;
+                inputQr.disabled = true;
+                btnQr.textContent = "Editar código qr";
+                btnQr.className = "btn-custom btn-editar-codigo";
+                btnCancelarQr.style.display = "none";
+
+                estadoQr.style.color = "var(--color-verde)";
+                estadoQr.textContent = "¡Código QR guardado con éxito!";
+                setTimeout(() => { estadoQr.textContent = ""; }, 2000);
+            } catch(e) {
+                estadoQr.style.color = "var(--color-rojo)";
+                estadoQr.textContent = "Error al guardar en base de datos";
+                setTimeout(() => { estadoQr.textContent = ""; }, 3000);
+            }
+        }
+
+        window.cancelarEdicionQr = function() {
+            const inputQr = document.getElementById("qrInput");
+            const btnQr = document.getElementById("btnGuardarQr");
+            const btnCancelarQr = document.getElementById("btnCancelarQr");
+            const estadoQr = document.getElementById("estadoQr");
+
+            modoEdicionActivoQr = false;
+            inputQr.value = qrUltimoGuardado;
+            inputQr.disabled = true;
+            btnQr.textContent = "Editar Código QR";
+            btnQr.className = "btn-custom btn-editar-codigo";
+            btnCancelarQr.style.display = "none";
+            estadoQr.textContent = "";
+        }
+
+        window.gestionarCodigoWp = async function() {
+            const inputWp = document.getElementById("wpInput");
+            const btnWp = document.getElementById("btnGuardarWp");
+            const btnCancelarWp = document.getElementById("btnCancelarWp");
+            const estadoWp = document.getElementById("estadoWp");
+
+            if (inputWp.disabled) {
+                modoEdicionActivoWp = true;
+                inputWp.disabled = false;
+                inputWp.focus();
+                btnWp.textContent = "Guardar Código QR";
+                btnWp.className = "btn-custom btn-tiempo";
+                btnCancelarWp.style.display = "block";
+                estadoWp.textContent = "";
+                return;
+            }
+
+            const wpVal = inputWp.value.trim();
+
+            if (wpVal === "") {
+                estadoWp.style.color = "var(--color-rojo)";
+                estadoWp.textContent = "Ingresa el código o enlace QR.";
+                setTimeout(() => { estadoWp.textContent = ""; }, 3000);
+                return;
+            }
+
+            try {
+                await set(ref(db, 'codigoWp'), wpVal);
+                modoEdicionActivoWp = false;
+                inputWp.disabled = true;
+                btnWp.textContent = "Editar Código QR";
+                btnWp.className = "btn-custom btn-editar-codigo";
+                btnCancelarWp.style.display = "none";
+
+                estadoWp.style.color = "var(--color-verde)";
+                estadoWp.textContent = "¡Código QR guardado con éxito!";
+                setTimeout(() => { estadoWp.textContent = ""; }, 2000);
+            } catch(e) {
+                estadoWp.style.color = "var(--color-rojo)";
+                estadoWp.textContent = "Error al guardar en base de datos";
+                setTimeout(() => { estadoWp.textContent = ""; }, 3000);
+            }
+        }
+
+        window.cancelarEdicionWp = function() {
+            const inputWp = document.getElementById("wpInput");
+            const btnWp = document.getElementById("btnGuardarWp");
+            const btnCancelarWp = document.getElementById("btnCancelarWp");
+            const estadoWp = document.getElementById("estadoWp");
+
+            modoEdicionActivoWp = false;
+            inputWp.value = wpUltimoGuardado;
+            inputWp.disabled = true;
+            btnWp.textContent = "Editar Código QR";
+            btnWp.className = "btn-custom btn-editar-codigo";
+            btnCancelarWp.style.display = "none";
+            estadoWp.textContent = "";
         }
 
         window.copiarLinkUrl = function(url) {
