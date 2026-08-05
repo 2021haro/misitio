@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración</title>
+    <title>Descargas</title>
     <link rel="icon" type="image/png" href="icono.png">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
             --color-primary: #6366f1;
@@ -26,7 +27,7 @@
             --texto-secundario: #94a3b8;
         }
 
-        /* Bloquear selección de texto globalmente */
+        /* Bloquear selección de texto en toda la página */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -37,7 +38,6 @@
             user-select: none;
         }
 
-        /* Permitir selección y escritura solo en los campos de entrada */
         input {
             -webkit-user-select: text;
             -moz-user-select: text;
@@ -45,7 +45,6 @@
             user-select: text;
         }
 
-        /* Estilos personalizados para la barra de desplazamiento global (Scrollbar) */
         * {
             scrollbar-width: thin;
             scrollbar-color: var(--borde-sutil) var(--fondo);
@@ -71,10 +70,6 @@
 
         body {
             background-color: var(--fondo);
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.08) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(20, 184, 166, 0.06) 0%, transparent 45%);
-            background-attachment: fixed;
             color: var(--texto-principal);
             font-family: 'Plus Jakarta Sans', sans-serif;
             padding: 40px 20px;
@@ -84,456 +79,312 @@
             min-height: 100vh;
         }
 
-        /* LOGIN MODAL */
-        #pantallaLogin {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; padding: 20px;
-        }
-
-        .box-login {
-            border: 1px solid var(--borde-sutil);
-            border-radius: 24px;
-            padding: 35px 30px; width: 100%; max-width: 420px;
-            text-align: center; background: #1e293b;
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
-        }
-
-        .box-login h2 {
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-            font-weight: 700;
-            margin-bottom: 20px; letter-spacing: -0.3px;
-            color: var(--texto-principal);
-        }
-
-        /* ADMIN PANEL */
-        #contenidoAdmin {
-            display: none; width: 100%; max-width: 850px;
-            flex-direction: column; align-items: center;
-            position: relative;
-        }
-
-        .encabezado-admin {
-            display: flex; justify-content: space-between;
-            align-items: center; width: 100%; margin-bottom: 30px;
-            flex-wrap: wrap; gap: 15px;
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            text-align: center;
         }
 
         h1 { 
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(1.3rem, 3vw, 2rem); 
-            font-weight: 800;
-            text-align: center; letter-spacing: -0.5px; flex: 1;
+            font-weight: 700;
             color: #f1f5f9;
+            font-size: clamp(1.4rem, 2.5vw, 2rem); 
+            letter-spacing: -0.3px;
         }
 
-        .btn-logout {
-            background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3);
-            color: #fb7185; padding: 10px 16px;
-            font-family: inherit; font-weight: 600;
-            font-size: clamp(0.85rem, 1.3vw, 0.95rem);
-            border-radius: 12px;
-            cursor: pointer; transition: all 0.2s ease; min-height: 42px; min-width: 44px;
-            display: inline-flex; align-items: center; justify-content: center;
-        }
-
-        .btn-logout:hover, .btn-logout:focus {
-            background: var(--color-rojo); color: #fff;
-            box-shadow: 0 4px 12px var(--color-rojo-glow); outline: none;
-        }
-
-        .panel-box {
-            background: var(--panel-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--borde-sutil);
-            border-radius: 24px;
-            padding: 25px; width: 100%; margin-bottom: 24px;
-            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.3);
-        }
-
-        .contenedor-switch {
-            display: flex; align-items: center;
-            justify-content: space-between; margin-bottom: 20px;
-            padding-bottom: 20px; border-bottom: 1px solid var(--borde-sutil);
-            flex-wrap: wrap; gap: 15px;
-        }
-
-        .switch {
-            position: relative; display: inline-block;
-            width: 52px; height: 28px;
-        }
-
-        .switch input { opacity: 0; width: 0; height: 0; }
-
-        .slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #334155; border: 1px solid var(--borde-sutil); border-radius: 28px; transition: .3s;
-        }
-
-        .slider:before {
-            position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
-            background-color: #ffffff; border-radius: 50%; transition: .3s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        /* Switch Bloqueado (Deshabilitado) */
-        .switch input:disabled + .slider {
-            cursor: not-allowed;
-            opacity: 0.4;
-        }
-
-        /* Switches en Azul/Primario cuando estan activados */
-        input:checked + .slider { border-color: var(--color-primary); background-color: var(--color-primary); }
-        input:checked + .slider:before {
-            transform: translateX(24px); background-color: #ffffff;
-        }
-
-        .switch input:focus + .slider {
-            outline: none; box-shadow: 0 0 10px var(--color-primary-glow);
-        }
-
-        /* SECCIÓN DE TIEMPO SIEMPRE VISIBLE */
-        .seccion-tiempo {
-            display: block;
+        .downloader-box {
             background: rgba(56, 189, 248, 0.05);
             border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 16px;
-            padding: 20px; margin-top: 15px;
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-bottom: 25px;
+            text-align: center;
+            width: 100%;
+            max-width: 850px;
         }
 
-        .inputs-tiempo {
-            display: flex; gap: 15px; margin-top: 12px; margin-bottom: 15px;
-            align-items: center; flex-wrap: wrap;
-        }
-
-        .campo-tiempo {
-            display: flex; flex-direction: column; flex: 1; min-width: 100px;
-        }
-
-        .campo-tiempo label { font-size: 0.75rem; font-weight: 600; margin-bottom: 6px; color: var(--texto-secundario); letter-spacing: 0.5px; text-transform: uppercase; }
-
-        input[type="number"], input[type="text"], input[type="password"] {
-            background: #0f172a; border: 1px solid var(--borde-sutil);
-            color: var(--texto-principal); padding: 14px 16px; width: 100%;
-            font-size: clamp(0.85rem, 1.5vw, 0.95rem); font-family: inherit; font-weight: 500;
-            border-radius: 12px;
-            margin-bottom: 18px; outline: none; text-align: center;
-            transition: all 0.2s ease;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
-        }
-
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        input[type="number"] {
-            -moz-appearance: textfield;
-            appearance: textfield;
-            margin-bottom: 0;
-        }
-
-        input[type="text"]:disabled {
-            background: #1e293b;
+        .downloader-box p {
             color: var(--texto-secundario);
-            cursor: not-allowed;
-            border-color: var(--borde-sutil);
-            opacity: 0.7;
-        }
-
-        input:focus {
-            box-shadow: 0 0 0 3px var(--color-primary-glow); border-color: var(--color-primary);
-            background: #1e293b;
-        }
-
-        .btn-custom {
-            display: block; width: 100%; padding: 14px; background: var(--color-primary);
-            border: 1px solid transparent; color: #ffffff;
-            font-family: inherit; font-weight: 600; font-size: clamp(0.85rem, 1.5vw, 0.95rem);
-            text-align: center; cursor: pointer; border-radius: 12px; margin-bottom: 12px;
-            transition: all 0.25s ease; min-height: 48px;
-            box-shadow: 0 4px 12px var(--color-primary-glow);
-        }
-
-        .btn-custom:hover, .btn-custom:focus {
-            background: #4f46e5;
-            box-shadow: 0 6px 16px var(--color-primary-glow); transform: translateY(-1px); outline: none;
-        }
-
-        .btn-tiempo {
-            background: var(--color-primary);
-            box-shadow: 0 4px 12px var(--color-primary-glow);
-            margin-top: 15px; margin-bottom: 0;
-            color: #ffffff;
+            font-size: 0.8rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
         }
 
-        .btn-tiempo:hover, .btn-tiempo:focus {
-            background: #4f46e5;
-            box-shadow: 0 6px 16px var(--color-primary-glow);
+        .downloader-codigo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+            font-weight: 700;
+            color: var(--color-azul);
+            letter-spacing: 1px;
         }
 
-        .btn-editar-codigo {
-            background: rgba(244, 63, 94, 0.1); 
-            border: 1px solid rgba(244, 63, 94, 0.3); 
-            color: #fb7185; 
-            margin-bottom: 0;
-            box-shadow: none;
+        .contenedor-main {
+            width: 100%;
+            max-width: 850px;
+            background: var(--panel-bg);
+            border: 1px solid var(--borde-sutil);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
 
-        .btn-editar-codigo:hover, .btn-editar-codigo:focus {
-            background: var(--color-rojo); 
-            color: #fff; 
-            box-shadow: 0 4px 12px var(--color-rojo-glow);
-            transform: translateY(-1px);
-            outline: none;
-        }
-
-        .btn-cancelar-edicion {
-            background: rgba(244, 63, 94, 0.1); 
-            border: 1px solid rgba(244, 63, 94, 0.3); 
-            color: #fb7185; 
-            margin-top: 10px;
-            margin-bottom: 0;
-            box-shadow: none;
+        .mensaje-bloqueado {
             display: none;
+            background: rgba(244, 63, 94, 0.1);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            color: #fb7185;
+            padding: 16px 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            margin-bottom: 0;
+            line-height: 1.5;
+            font-size: clamp(0.85rem, 2vw, 0.92rem);
         }
 
-        .btn-cancelar-edicion:hover, .btn-cancelar-edicion:focus {
-            background: var(--color-rojo); 
-            color: #fff; 
-            box-shadow: 0 4px 12px var(--color-rojo-glow);
-            transform: translateY(-1px);
+        .bloque-bloqueado-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .columna-mensaje {
+            flex: 1;
+            min-width: 240px;
+            text-align: center;
+        }
+
+        .info-admin-box {
+            display: none;
+            background: rgba(56, 189, 248, 0.06);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            color: #f8fafc;
+            padding: 12px 16px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 500;
+            margin-top: 12px;
+            line-height: 1.5;
+            font-size: clamp(0.85rem, 2vw, 0.92rem);
+            word-break: break-all;
+        }
+
+        .qr-admin-box {
+            display: none;
+            background: #ffffff;
+            border: 1px solid var(--borde-sutil);
+            padding: 10px;
+            border-radius: 12px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .qr-admin-box:hover {
+            transform: scale(1.03);
+        }
+
+        .qr-wrapper {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-wrapper img, .qr-wrapper canvas {
+            display: block;
+            border-radius: 4px;
+        }
+
+        .qr-logo-fb {
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            padding: 2px;
+        }
+
+        .qr-logo-fb svg {
+            width: 100%;
+            height: 100%;
+            fill: #1877f2;
+        }
+
+        .qr-logo-wp {
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            padding: 2px;
+        }
+
+        .qr-logo-wp svg {
+            width: 100%;
+            height: 100%;
+            fill: #25d366;
+        }
+
+        .banner-tiempo {
+            display: none;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
+            padding: 14px 18px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            margin-bottom: 24px;
+            font-size: clamp(0.85rem, 1.8vw, 0.92rem);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .tarjeta-archivo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 22px;
+            background: #1e293b;
+            border: 1px solid var(--borde-sutil);
+            border-radius: 14px;
+            margin-bottom: 14px;
+            gap: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .tarjeta-archivo:last-child {
+            margin-bottom: 0;
+        }
+
+        .tarjeta-archivo:hover {
+            border-color: var(--borde-hover);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: #273548;
+        }
+
+        .columna-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 4px;
+        }
+
+        .nombre-archivo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            color: #f8fafc;
+            word-break: break-all;
+            font-size: clamp(0.95rem, 2vw, 1.05rem);
+        }
+
+        .nota-archivo {
+            color: var(--texto-secundario);
+            font-size: clamp(0.8rem, 1.4vw, 0.88rem);
+            word-break: break-all;
+            line-height: 1.4;
+        }
+
+        .btn-descargar {
+            background: var(--color-primary);
+            border: 1px solid transparent;
+            color: #ffffff;
+            padding: 10px 22px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: clamp(0.85rem, 1.5vw, 0.9rem);
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        .btn-descargar:focus,
+        .btn-descargar:hover {
+            background: #4f46e5;
+            box-shadow: 0 0 12px var(--color-primary-glow);
             outline: none;
         }
 
-        .btn-cancelar-tiempo {
-            background: rgba(244, 63, 94, 0.1); border-color: rgba(244, 63, 94, 0.3); color: #fb7185; margin-top: 15px; margin-bottom: 0;
-            box-shadow: none;
-        }
-
-        .btn-cancelar-tiempo:hover, .btn-cancelar-tiempo:focus {
-            background: var(--color-rojo); color: #fff; box-shadow: 0 4px 12px var(--color-rojo-glow);
-        }
-
-        .lista-archivos { 
-            margin-top: 15px; 
-        }
-
-        .item-archivo {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 16px; background: #1e293b;
-            border: 1px solid var(--borde-sutil); border-radius: 14px;
-            margin-bottom: 12px;
-            font-size: clamp(0.85rem, 1.5vw, 0.95rem); gap: 15px;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .item-archivo:hover {
-            border-color: var(--borde-hover);
-            background: #273548;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .info-item { display: flex; flex-direction: column; overflow: hidden; flex: 1; gap: 4px; }
-        .nombre-item-admin { word-break: break-all; font-weight: 600; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: #f8fafc; }
-        .nota-item-admin { color: var(--texto-secundario); font-size: 0.85rem; word-break: break-all; width: 100%; line-height: 1.4; }
-
-        .acciones-item { display: flex; gap: 8px; flex-shrink: 0; }
-
-        .btn-accion {
-            background: #0f172a; cursor: pointer; padding: 8px 12px;
-            font-family: inherit; font-weight: 600; font-size: clamp(0.8rem, 1.2vw, 0.95rem);
-            border-radius: 10px; border: 1px solid var(--borde-sutil);
-            transition: all 0.2s ease; min-height: 38px; min-width: 38px;
-            display: inline-flex; align-items: center; justify-content: center;
-        }
-
-        .btn-copiar { border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
-        .btn-copiar:hover { background: var(--color-azul); color: #0f172a; border-color: var(--color-azul); }
-
-        .btn-activar { border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
-        .btn-activar:hover { background: var(--color-azul); color: #0f172a; border-color: var(--color-azul); }
-
-        .btn-desactivar { border-color: rgba(244, 63, 94, 0.3); color: #fb7185; background: rgba(244, 63, 94, 0.08); }
-        .btn-desactivar:hover { background: var(--color-rojo); color: #fff; border-color: var(--color-rojo); }
-
-        .btn-borrar { border-color: rgba(244, 63, 94, 0.3); color: #fb7185; background: rgba(244, 63, 94, 0.08); }
-        .btn-borrar:hover { background: var(--color-rojo); color: #fff; border-color: var(--color-rojo); }
-
-        .estado-texto { font-weight: 600; font-size: 0.9rem; }
-        .estado-on { color: var(--color-verde); }
-        .estado-off { color: var(--color-rojo); }
-
-        @media (max-width: 600px) {
-            body { padding: 20px 12px; }
-            .panel-box { padding: 18px; }
-            .encabezado-admin { flex-direction: row; gap: 12px; }
-            .item-archivo { flex-direction: column; align-items: stretch; text-align: left; }
-            .info-item { gap: 6px; margin-bottom: 10px; }
-            .acciones-item { justify-content: flex-end; width: 100%; flex-wrap: wrap; }
+        @media (max-width: 650px) {
+            body { padding: 16px 12px; }
+            .contenedor-main { padding: 18px; }
+            .bloque-bloqueado-grid { flex-direction: column; }
+            .tarjeta-archivo {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: left;
+                gap: 14px;
+                padding: 14px;
+            }
+            .btn-descargar { width: 100%; }
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
-    <!-- PANTALLA DE LOGIN -->
-    <div id="pantallaLogin">
-        <div class="box-login">
-            <h2>Contraseña</h2>
-            <input type="password" id="passInputLogin" placeholder="••••" tabindex="0">
-            <button class="btn-custom" onclick="verificarLogin()" tabindex="0" style="margin-bottom: 0;">Entrar</button>
-            <p id="msgErrorLogin" style="color: var(--color-rojo); font-weight: 600; margin-top: 15px; font-size: 0.85rem; min-height: 20px;"></p>
-        </div>
+    <div class="terminal-header">
+        <h1>Descargas</h1>
     </div>
 
-    <!-- CONTENIDO ADMIN -->
-    <div id="contenidoAdmin">
-        <div class="encabezado-admin">
-            <h1>Panel de Administración</h1>
-            <button class="btn-logout" onclick="cerrarSesion()" tabindex="0" title="Cerrar sesión">Salir</button>
+    <!-- PANEL DE CÓDIGO DE DOWNLOADER APP -->
+    <div class="downloader-box">
+        <p>Código de Downloader App :</p>
+        <div id="lblCodigoDownloader" class="downloader-codigo">------</div>
+    </div>
+
+    <div class="contenedor-main">
+        <div id="bannerTiempoReloj" class="banner-tiempo">
+            ⏳ Descargas disponibles por tiempo limitado. Finaliza en: <span id="lblRelojUsuario">--:--:--</span>
         </div>
 
-        <!-- 1. PANEL DE CÓDIGO DE DOWNLOADER APP -->
-        <div class="panel-box">
-            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Código de Downloader App:</p>
-            <input type="text" id="codigoDownloaderInput" placeholder="Ej. 123456" tabindex="0" style="text-align: left;">
-
-            <button class="btn-custom" id="btnPublicarCodigo" onclick="gestionarCodigoDownloader()" tabindex="0" style="margin-bottom: 0;">Publicar Código en la Web</button>
-            <button class="btn-custom btn-cancelar-edicion" id="btnCancelarEdicion" onclick="cancelarEdicionCodigo()" tabindex="0">Cancelar Edición</button>
-            <p id="estadoSubidaCodigo" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
-        </div>
-
-        <!-- PANEL DE INFORMACIÓN -->
-        <div class="panel-box">
-            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Información:</p>
-            
-            <div class="contenedor-switch" style="margin-bottom: 15px; padding-bottom: 15px;">
-                <span style="color: var(--texto-principal); font-weight: 500; font-size: 0.9rem;">MOSTRAR INFORMACIÓN: <span id="lblEstadoInfo" class="estado-texto estado-off">DESACTIVADO</span></span>
-                <label class="switch">
-                    <input type="checkbox" id="chkMostrarInfo" onchange="cambiarEstadoMostrarInfo(this.checked)" tabindex="0">
-                    <span class="slider"></span>
-                </label>
-            </div>
-
-            <input type="text" id="informacionInput" placeholder="Ej. Escribe la información aquí..." tabindex="0" style="text-align: left;">
-
-            <button class="btn-custom" id="btnGuardarInformacion" onclick="gestionarInformacion()" tabindex="0" style="margin-bottom: 0;">Guardar Información</button>
-            <button class="btn-custom btn-cancelar-edicion" id="btnCancelarInformacion" onclick="cancelarEdicionInformacion()" tabindex="0">Cancelar Edición</button>
-            <p id="estadoInformacion" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
-        </div>
-
-        <!-- PANEL DE CÓDIGO QR FACEBOOK -->
-        <div class="panel-box">
-            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">CÓDIGO QR FACEBOOK:</p>
-            
-            <div class="contenedor-switch" style="margin-bottom: 15px; padding-bottom: 15px;">
-                <span style="color: var(--texto-principal); font-weight: 500; font-size: 0.9rem;">MOSTRAR CÓDIGO QR: <span id="lblEstadoQr" class="estado-texto estado-off">DESACTIVADO</span></span>
-                <label class="switch">
-                    <input type="checkbox" id="chkMostrarQr" onchange="cambiarEstadoMostrarQr(this.checked)" tabindex="0">
-                    <span class="slider"></span>
-                </label>
-            </div>
-
-            <input type="text" id="qrInput" placeholder="Ej. Escribe el enlace o texto del QR aquí..." tabindex="0" style="text-align: left;">
-
-            <button class="btn-custom" id="btnGuardarQr" onclick="gestionarCodigoQr()" tabindex="0" style="margin-bottom: 0;">Guardar Código QR</button>
-            <button class="btn-custom btn-cancelar-edicion" id="btnCancelarQr" onclick="cancelarEdicionQr()" tabindex="0">Cancelar Edición</button>
-            <p id="estadoQr" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
-        </div>
-
-        <!-- PANEL DE CÓDIGO QR WHATSAPP -->
-        <div class="panel-box">
-            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">CÓDIGO QR WHATSAPP (NÚMERO DE TELÉFONO):</p>
-            
-            <div class="contenedor-switch" style="margin-bottom: 15px; padding-bottom: 15px;">
-                <span style="color: var(--texto-principal); font-weight: 500; font-size: 0.9rem;">MOSTRAR CÓDIGO QR: <span id="lblEstadoWp" class="estado-texto estado-off">DESACTIVADO</span></span>
-                <label class="switch">
-                    <input type="checkbox" id="chkMostrarWp" onchange="cambiarEstadoMostrarWp(this.checked)" tabindex="0">
-                    <span class="slider"></span>
-                </label>
-            </div>
-
-            <input type="text" id="wpInput" placeholder="Ej. 521234567890 (con código de país)" tabindex="0" style="text-align: left;">
-
-            <button class="btn-custom" id="btnGuardarWp" onclick="gestionarCodigoWp()" tabindex="0" style="margin-bottom: 0;">Guardar Número de WhatsApp</button>
-            <button class="btn-custom btn-cancelar-edicion" id="btnCancelarWp" onclick="cancelarEdicionWp()" tabindex="0">Cancelar Edición</button>
-            <p id="estadoWp" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
-        </div>
-
-        <!-- 2. PANEL DE CONTROL DE DESCARGAS (INTERRUPTORES) -->
-        <div class="panel-box">
-            <div class="contenedor-switch">
-                <span style="color: var(--texto-principal); font-weight: 500;">DESCARGAS GENERALES: <span id="lblEstadoSwitch" class="estado-texto estado-off">DESACTIVADAS</span></span>
-                <label class="switch">
-                    <input type="checkbox" id="chkHabilitarDescargas" onchange="cambiarEstadoDescargas(this.checked)" tabindex="0">
-                    <span class="slider"></span>
-                </label>
-            </div>
-
-            <div class="contenedor-switch" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
-                <span style="color: var(--texto-principal); font-weight: 500;">DESCARGAS POR TIEMPO: <span id="lblEstadoTiempo" class="estado-texto estado-off">DESACTIVADAS</span></span>
-                <label class="switch">
-                    <input type="checkbox" id="chkHabilitarTiempo" onchange="alternarModuloTiempo(this.checked)" disabled tabindex="0">
-                    <span class="slider"></span>
-                </label>
-            </div>
-
-            <div id="boxTiempoConfig" class="seccion-tiempo">
-                <div id="formTiempoInputs">
-                    <p style="color: var(--texto-secundario); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Configura el tiempo disponible:</p>
-                    <div class="inputs-tiempo">
-                        <div class="campo-tiempo">
-                            <label>Horas</label>
-                            <input type="number" id="inputHoras" min="0" max="72" value="0" tabindex="0">
-                        </div>
-                        <div class="campo-tiempo">
-                            <label>Minutos</label>
-                            <input type="number" id="inputMinutos" min="0" max="59" value="30" tabindex="0">
-                        </div>
-                    </div>
-                    <button class="btn-custom btn-tiempo" onclick="guardarTiempoDescarga()" tabindex="0">Guardar y Activar Tiempo</button>
+        <div id="bannerBloqueo" class="mensaje-bloqueado">
+            <div class="bloque-bloqueado-grid">
+                <div class="columna-mensaje">
+                    ⚠️ Descargas temporalmente deshabilitadas por el administrador.<br>
+                    Comunícate por WhatsApp / Messenger con el administrador.<br>
+                    « Solo mensajes 💬 »
+                    <div id="lblInformacionAdmin" class="info-admin-box"></div>
                 </div>
-
-                <div id="infoTiempoActivo" style="display: none; text-align: center;">
-                    <p style="color: var(--color-azul); font-weight: 700; font-size: 1rem; font-family: 'JetBrains Mono', monospace;" id="txtRelojRestante">TIEMPO RESTANTE: --:--:--</p>
-                    <button class="btn-custom btn-cancelar-tiempo" onclick="eliminarTiempoDescarga()" tabindex="0">Eliminar y Cancelar Tiempo</button>
-                </div>
+                <div id="lblQrAdminContainer" class="qr-admin-box"></div>
+                <div id="lblWpAdminContainer" class="qr-admin-box" title="Clic para chatear por WhatsApp"></div>
             </div>
         </div>
 
-        <!-- 3. PANEL DE REGISTRO / PUBLICAR ARCHIVO -->
-        <div class="panel-box">
-            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Nombre del archivo:</p>
-            <input type="text" id="nombreCustomInput" placeholder="Ej. Xuper_TV_24.3.apk" tabindex="0" style="text-align: left;">
-
-            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Nota:</p>
-            <input type="text" id="notaCustomInput" placeholder="Ej. Versión actualizada con correcciones" tabindex="0" style="text-align: left;">
-
-            <p style="margin-bottom: 8px; text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px;">Ruta o link de GitHub:</p>
-            <input type="text" id="urlArchivoInput" placeholder="Ej. https://github.com/usuario/repo/releases/download/.../app.apk" tabindex="0" style="text-align: left;">
-
-            <button class="btn-custom" id="btnPublicar" onclick="guardarRegistroArchivo()" tabindex="0" style="margin-bottom: 0;">Guardar Archivo</button>
-            <p id="estadoSubida" style="text-align: center; margin-top: 12px; font-weight: 600; font-size: 0.85rem; min-height: 20px;"></p>
-        </div>
-
-        <!-- 4. PANEL DE ARCHIVOS PUBLICADOS -->
-        <div class="panel-box" style="margin-bottom: 0;">
-            <h2 style="font-size: clamp(0.95rem, 2vw, 1.1rem); font-weight: 700; margin-bottom: 15px; color: var(--texto-principal);">Archivos Publicados:</h2>
-            <div id="contenedorListaAdmin" class="lista-archivos"></div>
-        </div>
+        <div id="listaDescargas"></div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue, remove, update, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         document.addEventListener('keydown', function(e) {
             if (
@@ -561,639 +412,206 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        let listaGlobalArchivos = {};
-        let configTiempoGlobal = { habilitado: false, timestampFin: 0, congeladoMs: 0 };
-        let timerCuentaRegresivaAdmin = null;
-        
-        let modoEdicionActivoCodigo = false;
-        let codigoUltimoGuardado = "";
+        let descargasGeneralHabilitadas = false;
+        let configTiempoCache = { habilitado: false, timestampFin: 0, congeladoMs: 0 };
+        let listaArchivosCache = {};
+        let timerRelojUsuario = null;
 
-        let modoEdicionActivoInfo = false;
-        let informacionUltimaGuardada = "";
+        let mostrarInfoCache = false;
+        let textoInfoCache = "";
 
-        let modoEdicionActivoQr = false;
-        let qrUltimoGuardado = "";
+        let mostrarQrCache = false;
+        let textoQrCache = "";
 
-        let modoEdicionActivoWp = false;
-        let wpUltimoGuardado = "";
+        let mostrarWpCache = false;
+        let numeroWpCache = "";
 
-        document.getElementById("passInputLogin").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") verificarLogin();
+        onValue(ref(db, 'codigoDownloader'), (snapshot) => {
+            const codigo = snapshot.val();
+            const lblCodigo = document.getElementById("lblCodigoDownloader");
+            if (codigo) {
+                lblCodigo.textContent = codigo;
+            } else {
+                lblCodigo.textContent = "------";
+            }
         });
 
-        window.verificarLogin = async function() {
-            const passIngresada = document.getElementById("passInputLogin").value.trim();
-            const msgError = document.getElementById("msgErrorLogin");
+        onValue(ref(db, 'mostrarInformacion'), (snapshot) => {
+            mostrarInfoCache = snapshot.val() || false;
+            actualizarVisibilidadInformacion();
+        });
 
-            if (passIngresada === "") {
-                msgError.textContent = "Ingresa la contraseña.";
-                setTimeout(() => { msgError.textContent = ""; }, 3000);
-                return;
+        onValue(ref(db, 'informacion'), (snapshot) => {
+            textoInfoCache = snapshot.val() || "";
+            actualizarVisibilidadInformacion();
+        });
+
+        function actualizarVisibilidadInformacion() {
+            const lblInfo = document.getElementById("lblInformacionAdmin");
+            if (mostrarInfoCache && textoInfoCache.trim() !== "") {
+                lblInfo.textContent = textoInfoCache;
+                lblInfo.style.display = "block";
+            } else {
+                lblInfo.textContent = "";
+                lblInfo.style.display = "none";
             }
-
-            try {
-                const snapMaestra = await get(ref(db, 'passMaestra'));
-                const passMaestraVal = snapMaestra.exists() ? String(snapMaestra.val()) : null;
-
-                if (passIngresada === passMaestraVal) {
-                    desbloquearPanel();
-                } else {
-                    msgError.textContent = "Contraseña incorrecta.";
-                    document.getElementById("passInputLogin").value = "";
-                    setTimeout(() => { msgError.textContent = ""; }, 3000);
-                }
-            } catch(e) {
-                msgError.textContent = "Error de conexión a Firebase.";
-                setTimeout(() => { msgError.textContent = ""; }, 3000);
-            }
+            actualizarVisibilidadBloqueoGeneral();
         }
 
-        window.cerrarSesion = function() {
-            sessionStorage.clear(); localStorage.clear();
-            document.getElementById("passInputLogin").value = "";
-            document.getElementById("contenidoAdmin").style.display = "none";
-            document.getElementById("pantallaLogin").style.display = "flex";
-        }
+        onValue(ref(db, 'mostrarQr'), (snapshot) => {
+            mostrarQrCache = snapshot.val() || false;
+            actualizarVisibilidadQr();
+        });
 
-        function desbloquearPanel() {
-            document.getElementById("pantallaLogin").style.display = "none";
-            document.getElementById("contenidoAdmin").style.display = "flex";
-            escucharBaseDeDatos();
-        }
+        onValue(ref(db, 'codigoQr'), (snapshot) => {
+            textoQrCache = snapshot.val() || "";
+            actualizarVisibilidadQr();
+        });
 
-        function escucharBaseDeDatos() {
-            onValue(ref(db, 'codigoDownloader'), (snapshot) => {
-                const inputCodigo = document.getElementById("codigoDownloaderInput");
-                const btnCodigo = document.getElementById("btnPublicarCodigo");
-                const btnCancelar = document.getElementById("btnCancelarEdicion");
+        function actualizarVisibilidadQr() {
+            const contenedorQr = document.getElementById("lblQrAdminContainer");
+            contenedorQr.innerHTML = "";
+            if (mostrarQrCache && textoQrCache.trim() !== "") {
+                contenedorQr.style.display = "flex";
+                contenedorQr.onclick = () => window.open(textoQrCache, '_blank');
+                
+                const wrapper = document.createElement("div");
+                wrapper.className = "qr-wrapper";
+                contenedorQr.appendChild(wrapper);
 
-                if (snapshot.exists() && snapshot.val().trim() !== "") {
-                    codigoUltimoGuardado = snapshot.val();
-                    if (!modoEdicionActivoCodigo) {
-                        inputCodigo.value = codigoUltimoGuardado;
-                        inputCodigo.disabled = true;
-                        btnCodigo.textContent = "Editar Código";
-                        btnCodigo.className = "btn-custom btn-editar-codigo";
-                        btnCancelar.style.display = "none";
-                    }
-                } else {
-                    codigoUltimoGuardado = "";
-                    modoEdicionActivoCodigo = false;
-                    inputCodigo.value = "";
-                    inputCodigo.disabled = false;
-                    btnCodigo.textContent = "Publicar Código en la Web";
-                    btnCodigo.className = "btn-custom";
-                    btnCancelar.style.display = "none";
-                }
-            });
-
-            onValue(ref(db, 'mostrarInformacion'), (snapshot) => {
-                const estado = snapshot.val() || false;
-                document.getElementById("chkMostrarInfo").checked = estado;
-                const lbl = document.getElementById("lblEstadoInfo");
-                lbl.textContent = estado ? "ACTIVADO" : "DESACTIVADO";
-                lbl.className = `estado-texto ${estado ? 'estado-on' : 'estado-off'}`;
-            });
-
-            onValue(ref(db, 'informacion'), (snapshot) => {
-                const inputInformacion = document.getElementById("informacionInput");
-                const btnInfo = document.getElementById("btnGuardarInformacion");
-                const btnCancelarInfo = document.getElementById("btnCancelarInformacion");
-
-                if (snapshot.exists() && snapshot.val().trim() !== "") {
-                    informacionUltimaGuardada = snapshot.val();
-                    if (!modoEdicionActivoInfo) {
-                        inputInformacion.value = informacionUltimaGuardada;
-                        inputInformacion.disabled = true;
-                        btnInfo.textContent = "Editar Información";
-                        btnInfo.className = "btn-custom btn-editar-codigo";
-                        btnCancelarInfo.style.display = "none";
-                    }
-                } else {
-                    informacionUltimaGuardada = "";
-                    modoEdicionActivoInfo = false;
-                    inputInformacion.value = "";
-                    inputInformacion.disabled = false;
-                    btnInfo.textContent = "Guardar Información";
-                    btnInfo.className = "btn-custom";
-                    btnCancelarInfo.style.display = "none";
-                }
-            });
-
-            onValue(ref(db, 'mostrarQr'), (snapshot) => {
-                const estado = snapshot.val() || false;
-                document.getElementById("chkMostrarQr").checked = estado;
-                const lbl = document.getElementById("lblEstadoQr");
-                lbl.textContent = estado ? "ACTIVADO" : "DESACTIVADO";
-                lbl.className = `estado-texto ${estado ? 'estado-on' : 'estado-off'}`;
-            });
-
-            onValue(ref(db, 'codigoQr'), (snapshot) => {
-                const inputQr = document.getElementById("qrInput");
-                const btnQr = document.getElementById("btnGuardarQr");
-                const btnCancelarQr = document.getElementById("btnCancelarQr");
-
-                if (snapshot.exists() && snapshot.val().trim() !== "") {
-                    qrUltimoGuardado = snapshot.val();
-                    if (!modoEdicionActivoQr) {
-                        inputQr.value = qrUltimoGuardado;
-                        inputQr.disabled = true;
-                        btnQr.textContent = "Editar Código QR";
-                        btnQr.className = "btn-custom btn-editar-codigo";
-                        btnCancelarQr.style.display = "none";
-                    }
-                } else {
-                    qrUltimoGuardado = "";
-                    modoEdicionActivoQr = false;
-                    inputQr.value = "";
-                    inputQr.disabled = false;
-                    btnQr.textContent = "Guardar Código QR";
-                    btnQr.className = "btn-custom";
-                    btnCancelarQr.style.display = "none";
-                }
-            });
-
-            onValue(ref(db, 'mostrarWp'), (snapshot) => {
-                const estado = snapshot.val() || false;
-                document.getElementById("chkMostrarWp").checked = estado;
-                const lbl = document.getElementById("lblEstadoWp");
-                lbl.textContent = estado ? "ACTIVADO" : "DESACTIVADO";
-                lbl.className = `estado-texto ${estado ? 'estado-on' : 'estado-off'}`;
-            });
-
-            onValue(ref(db, 'codigoWp'), (snapshot) => {
-                const inputWp = document.getElementById("wpInput");
-                const btnWp = document.getElementById("btnGuardarWp");
-                const btnCancelarWp = document.getElementById("btnCancelarWp");
-
-                if (snapshot.exists() && snapshot.val().trim() !== "") {
-                    wpUltimoGuardado = snapshot.val();
-                    if (!modoEdicionActivoWp) {
-                        inputWp.value = wpUltimoGuardado;
-                        inputWp.disabled = true;
-                        btnWp.textContent = "Editar Número";
-                        btnWp.className = "btn-custom btn-editar-codigo";
-                        btnCancelarWp.style.display = "none";
-                    }
-                } else {
-                    wpUltimoGuardado = "";
-                    modoEdicionActivoWp = false;
-                    inputWp.value = "";
-                    inputWp.disabled = false;
-                    btnWp.textContent = "Guardar Número de WhatsApp";
-                    btnWp.className = "btn-custom";
-                    btnCancelarWp.style.display = "none";
-                }
-            });
-
-            onValue(ref(db, 'descargasHabilitadas'), (snapshot) => {
-                const estado = snapshot.val() || false;
-                document.getElementById("chkHabilitarDescargas").checked = estado;
-                const lbl = document.getElementById("lblEstadoSwitch");
-                lbl.textContent = estado ? "ACTIVADAS" : "DESACTIVADAS";
-                lbl.className = `estado-texto ${estado ? 'estado-on' : 'estado-off'}`;
-            });
-
-            onValue(ref(db, 'configTiempo'), (snapshot) => {
-                configTiempoGlobal = snapshot.val() || { habilitado: false, timestampFin: 0, congeladoMs: 0 };
-                const chkTiempo = document.getElementById("chkHabilitarTiempo");
-                const lblTiempo = document.getElementById("lblEstadoTiempo");
-
-                chkTiempo.checked = configTiempoGlobal.habilitado;
-                lblTiempo.textContent = configTiempoGlobal.habilitado ? "ACTIVADAS" : "DESACTIVADAS";
-                lblTiempo.className = `estado-texto ${configTiempoGlobal.habilitado ? 'estado-on' : 'estado-off'}`;
-
-                if (configTiempoGlobal.habilitado) {
-                    chkTiempo.disabled = false;
-
-                    if (configTiempoGlobal.congeladoMs > 0) {
-                        document.getElementById("formTiempoInputs").style.display = "none";
-                        document.getElementById("infoTiempoActivo").style.display = "block";
-                        if (timerCuentaRegresivaAdmin) clearInterval(timerCuentaRegresivaAdmin);
-                        
-                        const totalSegs = Math.max(0, Math.floor(configTiempoGlobal.congeladoMs / 1000));
-                        const hrs = Math.floor(totalSegs / 3600);
-                        const mins = Math.floor((totalSegs % 3600) / 60);
-                        const segs = totalSegs % 60;
-                        const formato = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
-                        document.getElementById("txtRelojRestante").textContent = `TIEMPO RESTANTE (CONGELADO): ${formato}`;
-                    } else if (configTiempoGlobal.timestampFin > Date.now()) {
-                        document.getElementById("formTiempoInputs").style.display = "none";
-                        document.getElementById("infoTiempoActivo").style.display = "block";
-                        iniciarRelojAdmin(configTiempoGlobal.timestampFin);
-                    } else {
-                        document.getElementById("formTiempoInputs").style.display = "block";
-                        document.getElementById("infoTiempoActivo").style.display = "none";
-                        if (timerCuentaRegresivaAdmin) clearInterval(timerCuentaRegresivaAdmin);
-                    }
-                } else {
-                    chkTiempo.disabled = true;
-                    document.getElementById("formTiempoInputs").style.display = "block";
-                    document.getElementById("infoTiempoActivo").style.display = "none";
-                    if (timerCuentaRegresivaAdmin) clearInterval(timerCuentaRegresivaAdmin);
-                }
-            });
-
-            onValue(ref(db, 'listaArchivos'), (snapshot) => {
-                const contenedor = document.getElementById("contenedorListaAdmin");
-                contenedor.innerHTML = "";
-                listaGlobalArchivos = snapshot.val() || {};
-
-                if (Object.keys(listaGlobalArchivos).length > 0) {
-                    Object.keys(listaGlobalArchivos).forEach(id => {
-                        const item = listaGlobalArchivos[id];
-                        const div = document.createElement("div");
-                        div.className = "item-archivo";
-                        const estaPausado = item.pausado || false;
-                        const tieneNota = item.nota && item.nota.trim() !== "";
-
-                        div.innerHTML = `
-                            <div class="info-item">
-                                <div class="nombre-item-admin">
-                                    <span>${item.nombre}</span> 
-                                    ${estaPausado ? '<span style="color:#fb7185; font-size:11px; font-weight:600; background:rgba(244,63,94,0.1); padding:2px 8px; border-radius:6px;">[NO ACTIVO]</span>' : '<span style="color:#14b8a6; font-size:11px; font-weight:600; background:rgba(20,184,166,0.1); padding:2px 8px; border-radius:6px;">[ACTIVO]</span>'}
-                                </div>
-                                ${tieneNota ? `<div class="nota-item-admin">${item.nota}</div>` : ''}
-                            </div>
-                            <div class="acciones-item">
-                                <button class="btn-accion btn-copiar" onclick="copiarLinkUrl('${item.url}')" tabindex="0" title="Copiar Link del URL">🔗</button>
-                                <button class="btn-accion ${estaPausado ? 'btn-activar' : 'btn-desactivar'}" onclick="alternarPausaArchivo('${id}', ${estaPausado})" tabindex="0" title="${estaPausado ? 'Activar' : 'Desactivar'}">
-                                    ${estaPausado ? '▶️' : '⏸️'}
-                                </button>
-                                <button class="btn-accion btn-borrar" onclick="eliminarArchivo('${id}')" tabindex="0" title="Eliminar">🗑️</button>
-                            </div>
-                        `;
-                        contenedor.appendChild(div);
-                    });
-                } else {
-                    contenedor.innerHTML = "<p style='opacity:0.5; text-align:center; padding: 20px; font-size: 0.9rem; color: var(--texto-secundario);'>No hay archivos publicados.</p>";
-                }
-            });
-        }
-
-        window.cambiarEstadoMostrarInfo = function(estado) {
-            set(ref(db, 'mostrarInformacion'), estado);
-        }
-
-        window.cambiarEstadoMostrarQr = function(estado) {
-            set(ref(db, 'mostrarQr'), estado);
-        }
-
-        window.cambiarEstadoMostrarWp = function(estado) {
-            set(ref(db, 'mostrarWp'), estado);
-        }
-
-        window.gestionarCodigoDownloader = async function() {
-            const inputCodigo = document.getElementById("codigoDownloaderInput");
-            const btnCodigo = document.getElementById("btnPublicarCodigo");
-            const btnCancelar = document.getElementById("btnCancelarEdicion");
-            const estado = document.getElementById("estadoSubidaCodigo");
-
-            if (inputCodigo.disabled) {
-                modoEdicionActivoCodigo = true;
-                inputCodigo.disabled = false;
-                inputCodigo.focus();
-                btnCodigo.textContent = "Guardar Código";
-                btnCodigo.className = "btn-custom btn-tiempo";
-                btnCancelar.style.display = "block";
-                estado.textContent = "";
-                return;
-            }
-
-            const codigo = inputCodigo.value.trim();
-
-            if (codigo === "") {
-                estado.style.color = "var(--color-rojo)";
-                estado.textContent = "Ingresa el código de Downloader.";
-                setTimeout(() => { estado.textContent = ""; }, 3000);
-                return;
-            }
-
-            try {
-                await set(ref(db, 'codigoDownloader'), codigo);
-                modoEdicionActivoCodigo = false;
-                inputCodigo.disabled = true;
-                btnCodigo.textContent = "Editar Código";
-                btnCodigo.className = "btn-custom btn-editar-codigo";
-                btnCancelar.style.display = "none";
-
-                estado.style.color = "var(--color-verde)";
-                estado.textContent = "¡Código guardado con éxito!";
-                setTimeout(() => { estado.textContent = ""; }, 2000);
-            } catch(e) {
-                estado.style.color = "var(--color-rojo)";
-                estado.textContent = "Error al guardar en base de datos";
-                setTimeout(() => { estado.textContent = ""; }, 3000);
-            }
-        }
-
-        window.cancelarEdicionCodigo = function() {
-            const inputCodigo = document.getElementById("codigoDownloaderInput");
-            const btnCodigo = document.getElementById("btnPublicarCodigo");
-            const btnCancelar = document.getElementById("btnCancelarEdicion");
-            const estado = document.getElementById("estadoSubidaCodigo");
-
-            modoEdicionActivoCodigo = false;
-            inputCodigo.value = codigoUltimoGuardado;
-            inputCodigo.disabled = true;
-            btnCodigo.textContent = "Editar Código";
-            btnCodigo.className = "btn-custom btn-editar-codigo";
-            btnCancelar.style.display = "none";
-            estado.textContent = "";
-        }
-
-        window.gestionarInformacion = async function() {
-            const inputInformacion = document.getElementById("informacionInput");
-            const btnInfo = document.getElementById("btnGuardarInformacion");
-            const btnCancelarInfo = document.getElementById("btnCancelarInformacion");
-            const estadoInfo = document.getElementById("estadoInformacion");
-
-            if (inputInformacion.disabled) {
-                modoEdicionActivoInfo = true;
-                inputInformacion.disabled = false;
-                inputInformacion.focus();
-                btnInfo.textContent = "Guardar Información";
-                btnInfo.className = "btn-custom btn-tiempo";
-                btnCancelarInfo.style.display = "block";
-                estadoInfo.textContent = "";
-                return;
-            }
-
-            const informacion = inputInformacion.value.trim();
-
-            if (informacion === "") {
-                estadoInfo.style.color = "var(--color-rojo)";
-                estadoInfo.textContent = "Ingresa la información.";
-                setTimeout(() => { estadoInfo.textContent = ""; }, 3000);
-                return;
-            }
-
-            try {
-                await set(ref(db, 'informacion'), informacion);
-                modoEdicionActivoInfo = false;
-                inputInformacion.disabled = true;
-                btnInfo.textContent = "Editar Información";
-                btnInfo.className = "btn-custom btn-editar-codigo";
-                btnCancelarInfo.style.display = "none";
-
-                estadoInfo.style.color = "var(--color-verde)";
-                estadoInfo.textContent = "¡Información guardada con éxito!";
-                setTimeout(() => { estadoInfo.textContent = ""; }, 2000);
-            } catch(e) {
-                estadoInfo.style.color = "var(--color-rojo)";
-                estadoInfo.textContent = "Error al guardar en base de datos";
-                setTimeout(() => { estadoInfo.textContent = ""; }, 3000);
-            }
-        }
-
-        window.cancelarEdicionInformacion = function() {
-            const inputInformacion = document.getElementById("informacionInput");
-            const btnInfo = document.getElementById("btnGuardarInformacion");
-            const btnCancelarInfo = document.getElementById("btnCancelarInformacion");
-            const estadoInfo = document.getElementById("estadoInformacion");
-
-            modoEdicionActivoInfo = false;
-            inputInformacion.value = informacionUltimaGuardada;
-            inputInformacion.disabled = true;
-            btnInfo.textContent = "Editar Información";
-            btnInfo.className = "btn-custom btn-editar-codigo";
-            btnCancelarInfo.style.display = "none";
-            estadoInfo.textContent = "";
-        }
-
-        window.gestionarCodigoQr = async function() {
-            const inputQr = document.getElementById("qrInput");
-            const btnQr = document.getElementById("btnGuardarQr");
-            const btnCancelarQr = document.getElementById("btnCancelarQr");
-            const estadoQr = document.getElementById("estadoQr");
-
-            if (inputQr.disabled) {
-                modoEdicionActivoQr = true;
-                inputQr.disabled = false;
-                inputQr.focus();
-                btnQr.textContent = "Guardar Código QR";
-                btnQr.className = "btn-custom btn-tiempo";
-                btnCancelarQr.style.display = "block";
-                estadoQr.textContent = "";
-                return;
-            }
-
-            const qrVal = inputQr.value.trim();
-
-            if (qrVal === "") {
-                estadoQr.style.color = "var(--color-rojo)";
-                estadoQr.textContent = "Ingresa el código o enlace QR.";
-                setTimeout(() => { estadoQr.textContent = ""; }, 3000);
-                return;
-            }
-
-            try {
-                await set(ref(db, 'codigoQr'), qrVal);
-                modoEdicionActivoQr = false;
-                inputQr.disabled = true;
-                btnQr.textContent = "Editar Código QR";
-                btnQr.className = "btn-custom btn-editar-codigo";
-                btnCancelarQr.style.display = "none";
-
-                estadoQr.style.color = "var(--color-verde)";
-                estadoQr.textContent = "¡Código QR guardado con éxito!";
-                setTimeout(() => { estadoQr.textContent = ""; }, 2000);
-            } catch(e) {
-                estadoQr.style.color = "var(--color-rojo)";
-                estadoQr.textContent = "Error al guardar en base de datos";
-                setTimeout(() => { estadoQr.textContent = ""; }, 3000);
-            }
-        }
-
-        window.cancelarEdicionQr = function() {
-            const inputQr = document.getElementById("qrInput");
-            const btnQr = document.getElementById("btnGuardarQr");
-            const btnCancelarQr = document.getElementById("btnCancelarQr");
-            const estadoQr = document.getElementById("estadoQr");
-
-            modoEdicionActivoQr = false;
-            inputQr.value = qrUltimoGuardado;
-            inputQr.disabled = true;
-            btnQr.textContent = "Editar Código QR";
-            btnQr.className = "btn-custom btn-editar-codigo";
-            btnCancelarQr.style.display = "none";
-            estadoQr.textContent = "";
-        }
-
-        window.gestionarCodigoWp = async function() {
-            const inputWp = document.getElementById("wpInput");
-            const btnWp = document.getElementById("btnGuardarWp");
-            const btnCancelarWp = document.getElementById("btnCancelarWp");
-            const estadoWp = document.getElementById("estadoWp");
-
-            if (inputWp.disabled) {
-                modoEdicionActivoWp = true;
-                inputWp.disabled = false;
-                inputWp.focus();
-                btnWp.textContent = "Guardar Número de WhatsApp";
-                btnWp.className = "btn-custom btn-tiempo";
-                btnCancelarWp.style.display = "block";
-                estadoWp.textContent = "";
-                return;
-            }
-
-            let wpVal = inputWp.value.trim();
-
-            if (wpVal === "") {
-                estadoWp.style.color = "var(--color-rojo)";
-                estadoWp.textContent = "Ingresa el número de WhatsApp.";
-                setTimeout(() => { estadoWp.textContent = ""; }, 3000);
-                return;
-            }
-
-            // Limpiar el número de espacios, guiones o símbolos +, dejando solo dígitos para la URL wa.me
-            wpVal = wpVal.replace(/\D/g, "");
-
-            try {
-                await set(ref(db, 'codigoWp'), wpVal);
-                modoEdicionActivoWp = false;
-                inputWp.value = wpVal;
-                inputWp.disabled = true;
-                btnWp.textContent = "Editar Número";
-                btnWp.className = "btn-custom btn-editar-codigo";
-                btnCancelarWp.style.display = "none";
-
-                estadoWp.style.color = "var(--color-verde)";
-                estadoWp.textContent = "¡Número de WhatsApp guardado con éxito!";
-                setTimeout(() => { estadoWp.textContent = ""; }, 2000);
-            } catch(e) {
-                estadoWp.style.color = "var(--color-rojo)";
-                estadoWp.textContent = "Error al guardar en base de datos";
-                setTimeout(() => { estadoWp.textContent = ""; }, 3000);
-            }
-        }
-
-        window.cancelarEdicionWp = function() {
-            const inputWp = document.getElementById("wpInput");
-            const btnWp = document.getElementById("btnGuardarWp");
-            const btnCancelarWp = document.getElementById("btnCancelarWp");
-            const estadoWp = document.getElementById("estadoWp");
-
-            modoEdicionActivoWp = false;
-            inputWp.value = wpUltimoGuardado;
-            inputWp.disabled = true;
-            btnWp.textContent = "Editar Número";
-            btnWp.className = "btn-custom btn-editar-codigo";
-            btnCancelarWp.style.display = "none";
-            estadoWp.textContent = "";
-        }
-
-        window.copiarLinkUrl = function(url) {
-            if (!url) {
-                alert("No hay URL disponible para copiar.");
-                return;
-            }
-            navigator.clipboard.writeText(url).then(() => {
-                alert("¡Link copiado al portapapeles!");
-            }).catch(err => {
-                console.error("Error al copiar el enlace: ", err);
-            });
-        }
-
-        function tieneArchivoActivoDisponibles() {
-            const llaves = Object.keys(listaGlobalArchivos);
-            if (llaves.length === 0) return false;
-            return llaves.some(id => !listaGlobalArchivos[id].pausado);
-        }
-
-        function validarExistenciaArchivoActivo() {
-            const llaves = Object.keys(listaGlobalArchivos);
-            if (llaves.length === 0) {
-                alert("No hay archivos publicados. Debes publicar al menos uno.");
-                return false;
-            }
-            if (!tieneArchivoActivoDisponibles()) {
-                alert("Todos los archivos están desactivados. Activa al menos uno.");
-                return false;
-            }
-            return true;
-        }
-
-        function autoApagarDescargasSiNoHayActivos() {
-            if (!tieneArchivoActivoDisponibles()) {
-                const chkGen = document.getElementById("chkHabilitarDescargas").checked;
-                const chkTiempo = document.getElementById("chkHabilitarTiempo").checked;
-
-                if (chkGen || chkTiempo) {
-                    set(ref(db, 'descargasHabilitadas'), false);
-                    set(ref(db, 'configTiempo'), {
-                        habilitado: false,
-                        timestampFin: 0,
-                        congeladoMs: 0
-                    });
-                    alert("No quedan archivos activos. Se han deshabilitado las descargas automáticamente.");
-                }
-            }
-        }
-
-        window.cambiarEstadoDescargas = function(nuevoEstado) {
-            if (nuevoEstado) {
-                if (!validarExistenciaArchivoActivo()) {
-                    document.getElementById("chkHabilitarDescargas").checked = false;
-                    return;
-                }
-                set(ref(db, 'configTiempo'), {
-                    habilitado: false,
-                    timestampFin: 0,
-                    congeladoMs: 0
+                new QRCode(wrapper, {
+                    text: textoQrCache,
+                    width: 110,
+                    height: 110,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
                 });
+
+                const logoDiv = document.createElement("div");
+                logoDiv.className = "qr-logo-fb";
+                logoDiv.innerHTML = `<svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`;
+                wrapper.appendChild(logoDiv);
+            } else {
+                contenedorQr.style.display = "none";
             }
-            set(ref(db, 'descargasHabilitadas'), nuevoEstado);
+            actualizarVisibilidadBloqueoGeneral();
         }
 
-        window.alternarModuloTiempo = function(habilitado) {
-            if (!habilitado) {
-                set(ref(db, 'configTiempo'), {
-                    habilitado: false,
-                    timestampFin: 0,
-                    congeladoMs: 0
+        onValue(ref(db, 'mostrarWp'), (snapshot) => {
+            mostrarWpCache = snapshot.val() || false;
+            actualizarVisibilidadWp();
+        });
+
+        onValue(ref(db, 'codigoWp'), (snapshot) => {
+            numeroWpCache = snapshot.val() || "";
+            actualizarVisibilidadWp();
+        });
+
+        function actualizarVisibilidadWp() {
+            const contenedorWp = document.getElementById("lblWpAdminContainer");
+            contenedorWp.innerHTML = "";
+            if (mostrarWpCache && numeroWpCache.trim() !== "") {
+                contenedorWp.style.display = "flex";
+                
+                const linkWp = `https://wa.me/${numeroWpCache}`;
+                contenedorWp.onclick = () => window.open(linkWp, '_blank');
+                
+                const wrapper = document.createElement("div");
+                wrapper.className = "qr-wrapper";
+                contenedorWp.appendChild(wrapper);
+
+                new QRCode(wrapper, {
+                    text: linkWp,
+                    width: 110,
+                    height: 110,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
                 });
+
+                const logoDiv = document.createElement("div");
+                logoDiv.className = "qr-logo-wp";
+                logoDiv.innerHTML = `<svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>`;
+                wrapper.appendChild(logoDiv);
+            } else {
+                contenedorWp.style.display = "none";
+            }
+            actualizarVisibilidadBloqueoGeneral();
+        }
+
+        function actualizarVisibilidadBloqueoGeneral() {
+            const bannerBloqueo = document.getElementById("bannerBloqueo");
+            const estaPermitido = estaGlobalmentePermitido();
+
+            if (!estaPermitido) {
+                bannerBloqueo.style.display = "block";
+            } else {
+                bannerBloqueo.style.display = "none";
             }
         }
 
-        window.guardarTiempoDescarga = function() {
-            if (!validarExistenciaArchivoActivo()) return;
+        function formatearUrlDirecta(url) {
+            if (!url) return "#";
+            if (url.includes("drive.google.com")) {
+                const match = url.match(/\/d\/([^\/]+)/) || url.match(/id=([^&]+)/);
+                if (match && match[1]) return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+            }
+            if (url.includes("dropbox.com")) {
+                return url.replace("dl=0", "dl=1").replace("www.dropbox.com", "dl.dropboxusercontent.com");
+            }
+            if (url.includes("github.com") && url.includes("/blob/")) {
+                return url.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/");
+            }
+            return url;
+        }
 
-            const h = parseInt(document.getElementById("inputHoras").value) || 0;
-            const m = parseInt(document.getElementById("inputMinutos").value) || 0;
+        function estaGlobalmentePermitido() {
+            if (descargasGeneralHabilitadas) return true;
+            if (configTiempoCache.habilitado && (configTiempoCache.timestampFin > Date.now() || configTiempoCache.congeladoMs > 0)) {
+                return true;
+            }
+            return false;
+        }
 
-            if (h === 0 && m === 0) {
-                alert("Ingresa un tiempo válido (al menos 1 minuto).");
-                return;
+        function evaluarBannersYReloj() {
+            const bannerTiempo = document.getElementById("bannerTiempoReloj");
+
+            actualizarVisibilidadBloqueoGeneral();
+
+            if (configTiempoCache.habilitado) {
+                if (configTiempoCache.congeladoMs > 0) {
+                    bannerTiempo.style.display = "block";
+                    if (timerRelojUsuario) clearInterval(timerRelojUsuario);
+                    
+                    const totalSegs = Math.max(0, Math.floor(configTiempoCache.congeladoMs / 1000));
+                    const hrs = Math.floor(totalSegs / 3600);
+                    const mins = Math.floor((totalSegs % 3600) / 60);
+                    const segs = totalSegs % 60;
+                    document.getElementById("lblRelojUsuario").textContent = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')} (PAUSADO)`;
+                } else if (configTiempoCache.timestampFin > Date.now()) {
+                    bannerTiempo.style.display = "block";
+                    iniciarRelojCliente(configTiempoCache.timestampFin);
+                } else {
+                    bannerTiempo.style.display = "none";
+                    if (timerRelojUsuario) clearInterval(timerRelojUsuario);
+                }
+            } else {
+                bannerTiempo.style.display = "none";
+                if (timerRelojUsuario) clearInterval(timerRelojUsuario);
             }
 
-            const duracionMs = (h * 3600 + m * 60) * 1000;
-            const timestampFin = Date.now() + duracionMs;
-
-            set(ref(db, 'descargasHabilitadas'), false);
-            set(ref(db, 'configTiempo'), {
-                habilitado: true,
-                timestampFin: timestampFin,
-                congeladoMs: 0
-            });
+            renderizarLista();
         }
 
-        window.eliminarTiempoDescarga = function() {
-            set(ref(db, 'configTiempo'), {
-                habilitado: false,
-                timestampFin: 0,
-                congeladoMs: 0
-            });
-        }
-
-        function iniciarRelojAdmin(timestampFin) {
-            if (timerCuentaRegresivaAdmin) clearInterval(timerCuentaRegresivaAdmin);
+        function iniciarRelojCliente(timestampFin) {
+            if (timerRelojUsuario) clearInterval(timerRelojUsuario);
 
             const actualizar = () => {
                 const restante = timestampFin - Date.now();
                 if (restante <= 0) {
-                    clearInterval(timerCuentaRegresivaAdmin);
-                    eliminarTiempoDescarga();
+                    clearInterval(timerRelojUsuario);
+                    evaluarBannersYReloj();
                     return;
                 }
                 const hrs = Math.floor(restante / (1000 * 60 * 60));
@@ -1201,62 +619,97 @@
                 const segs = Math.floor((restante % (1000 * 60)) / 1000);
 
                 const formato = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
-                document.getElementById("txtRelojRestante").textContent = `TIEMPO RESTANTE: ${formato}`;
+                document.getElementById("lblRelojUsuario").textContent = formato;
             };
 
             actualizar();
-            timerCuentaRegresivaAdmin = setInterval(actualizar, 1000);
+            timerRelojUsuario = setInterval(actualizar, 1000);
         }
 
-        window.guardarRegistroArchivo = async function() {
-            const nombre = document.getElementById("nombreCustomInput").value.trim();
-            const nota = document.getElementById("notaCustomInput").value.trim();
-            const url = document.getElementById("urlArchivoInput").value.trim();
-            const estado = document.getElementById("estadoSubida");
+        onValue(ref(db, 'descargasHabilitadas'), (snapshot) => {
+            descargasGeneralHabilitadas = snapshot.val() || false;
+            evaluarBannersYReloj();
+        });
 
-            if (nombre === "" || nota === "" || url === "") {
-                estado.style.color = "var(--color-rojo)";
-                estado.textContent = "Llena los campos obligatorios (Nombre, Nota y URL).";
-                setTimeout(() => { estado.textContent = ""; }, 3000);
+        onValue(ref(db, 'configTiempo'), (snapshot) => {
+            configTiempoCache = snapshot.val() || { habilitado: false, timestampFin: 0, congeladoMs: 0 };
+            evaluarBannersYReloj();
+        });
+
+        onValue(ref(db, 'listaArchivos'), (snapshot) => {
+            listaArchivosCache = snapshot.val() || {};
+            renderizarLista();
+        });
+
+        function renderizarLista() {
+            const contenedor = document.getElementById("listaDescargas");
+            contenedor.innerHTML = "";
+            
+            const globalPermitido = estaGlobalmentePermitido();
+
+            if (!globalPermitido) {
                 return;
             }
 
-            const idTarget = Date.now();
+            const llavesActivas = Object.keys(listaArchivosCache).filter(id => {
+                const item = listaArchivosCache[id];
+                return item && !item.pausado;
+            });
 
-            try {
-                await update(ref(db, `listaArchivos/${idTarget}`), {
-                    nombre: nombre,
-                    nota: nota,
-                    url: url,
-                    pausado: false
-                });
-
-                estado.style.color = "var(--color-verde)";
-                estado.textContent = "¡Registro publicado con éxito!";
-                
-                document.getElementById("nombreCustomInput").value = "";
-                document.getElementById("notaCustomInput").value = "";
-                document.getElementById("urlArchivoInput").value = "";
-
-                setTimeout(() => { estado.textContent = ""; }, 2000);
-            } catch(e) {
-                estado.style.color = "var(--color-rojo)";
-                estado.textContent = "Error al guardar en base de datos";
-                setTimeout(() => { estado.textContent = ""; }, 3000);
+            if (llavesActivas.length === 0) {
+                contenedor.innerHTML = "<p style='text-align:center; color: var(--texto-secundario); padding: 10px 0; font-family: Plus Jakarta Sans, sans-serif;'>No hay archivos disponibles en este momento.</p>";
+                return;
             }
+
+            llavesActivas.forEach(id => {
+                const item = listaArchivosCache[id];
+                const div = document.createElement("div");
+                div.className = "tarjeta-archivo";
+
+                const tieneNota = item.nota && item.nota.trim() !== "";
+
+                div.innerHTML = `
+                    <div class="columna-info">
+                        <span class="nombre-archivo">${item.nombre}</span>
+                        ${tieneNota ? `<span class="nota-archivo">${item.nota}</span>` : ''}
+                    </div>
+                    <button onclick="window.ejecutarDescargaSegura('${id}')" class="btn-descargar" id="btnFile_${id}" tabindex="0">
+                        Descargar
+                    </button>
+                `;
+                contenedor.appendChild(div);
+            });
         }
 
-        window.alternarPausaArchivo = async function(id, estadoActual) {
-            await update(ref(db, `listaArchivos/${id}`), { pausado: !estadoActual });
-            if (!estadoActual) {
-                autoApagarDescargasSiNoHayActivos();
-            }
-        }
+        window.ejecutarDescargaSegura = async function(id) {
+            const btn = document.getElementById(`btnFile_${id}`);
+            const globalPermitido = estaGlobalmentePermitido();
+            const item = listaArchivosCache[id];
 
-        window.eliminarArchivo = async function(id) {
-            if(!confirm("¿Eliminar este registro?")) return;
-            await remove(ref(db, 'listaArchivos/' + id));
-            autoApagarDescargasSiNoHayActivos();
+            if (!globalPermitido || (item && item.pausado)) {
+                alert("Acceso denegado: Este archivo no está disponible actualmente.\n\nComunícate por WhatsApp / Messenger con el administrador.");
+                return;
+            }
+
+            if (!item || !item.url) return;
+
+            const urlFinal = formatearUrlDirecta(item.url);
+            const textoOriginal = btn.textContent;
+            btn.textContent = "Iniciando...";
+
+            const a = document.createElement("a");
+            a.href = urlFinal;
+            a.rel = "noopener noreferrer";
+            a.setAttribute("download", item.nombre);
+            a.style.display = "none";
+            document.body.appendChild(a);
+
+            a.click();
+
+            setTimeout(() => {
+                a.remove();
+                btn.textContent = textoOriginal;
+            }, 1000);
         }
     </script>
 </body>
