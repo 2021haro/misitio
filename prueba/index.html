@@ -602,8 +602,8 @@
                 return;
             }
 
-            // PEGA TU TOKEN DE GITHUB AQUÍ ENTRE LAS COMILLAS
-            const GITHUB_TOKEN = "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"; 
+            // TOKEN DE GITHUB INTEGRADO
+            const GITHUB_TOKEN = "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"; 
             const USERNAME = "2021haro";        
             const REPO = "misitio";            
             const TAG = "1.0";                 
@@ -851,32 +851,32 @@
             });
 
             onValue(ref(db, 'configTiempo'), (snapshot) => {
-                configTiempoGlobal = snapshot.val() || { habilitado: false, timestampFin: 0, congeladoMs: 0 };
+                configTiempoCache = snapshot.val() || { habilitado: false, timestampFin: 0, congeladoMs: 0 };
                 const chkTiempo = document.getElementById("chkHabilitarTiempo");
                 const lblTiempo = document.getElementById("lblEstadoTiempo");
 
-                chkTiempo.checked = configTiempoGlobal.habilitado;
-                lblTiempo.textContent = configTiempoGlobal.habilitado ? "ACTIVADAS" : "DESACTIVADAS";
-                lblTiempo.className = `estado-texto ${configTiempoGlobal.habilitado ? 'estado-on' : 'estado-off'}`;
+                chkTiempo.checked = configTiempoCache.habilitado;
+                lblTiempo.textContent = configTiempoCache.habilitado ? "ACTIVADAS" : "DESACTIVADAS";
+                lblTiempo.className = `estado-texto ${configTiempoCache.habilitado ? 'estado-on' : 'estado-off'}`;
 
-                if (configTiempoGlobal.habilitado) {
+                if (configTiempoCache.habilitado) {
                     chkTiempo.disabled = false;
 
-                    if (configTiempoGlobal.congeladoMs > 0) {
+                    if (configTiempoCache.congeladoMs > 0) {
                         document.getElementById("formTiempoInputs").style.display = "none";
                         document.getElementById("infoTiempoActivo").style.display = "block";
                         if (timerCuentaRegresivaAdmin) clearInterval(timerCuentaRegresivaAdmin);
                         
-                        const totalSegs = Math.max(0, Math.floor(configTiempoGlobal.congeladoMs / 1000));
+                        const totalSegs = Math.max(0, Math.floor(configTiempoCache.congeladoMs / 1000));
                         const hrs = Math.floor(totalSegs / 3600);
                         const mins = Math.floor((totalSegs % 3600) / 60);
                         const segs = totalSegs % 60;
                         const formato = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
                         document.getElementById("txtRelojRestante").textContent = `TIEMPO RESTANTE (CONGELADO): ${formato}`;
-                    } else if (configTiempoGlobal.timestampFin > Date.now()) {
+                    } else if (configTiempoCache.timestampFin > Date.now()) {
                         document.getElementById("formTiempoInputs").style.display = "none";
                         document.getElementById("infoTiempoActivo").style.display = "block";
-                        iniciarRelojAdmin(configTiempoGlobal.timestampFin);
+                        iniciarRelojAdmin(configTiempoCache.timestampFin);
                     } else {
                         document.getElementById("formTiempoInputs").style.display = "block";
                         document.getElementById("infoTiempoActivo").style.display = "none";
@@ -1347,7 +1347,7 @@
         }
 
         window.alternarPausaArchivo = async function(id, estadoActual) {
-            await update(ref(db, `listaArchivos/${id}`), { pausado: !estadoActual });
+            await update(ref(db, `listaArchivos/${id}`], { pausado: !estadoActual });
             if (!estadoActual) {
                 autoApagarDescargasSiNoHayActivos();
             }
