@@ -587,7 +587,7 @@
         let modoEdicionActivoWp = false;
         let wpUltimoGuardado = "";
 
-        // FUNCIÓN DE SUBIDA AUTOMÁTICA APUNTANDO DIRECTAMENTE AL TAG "1.0"
+        // FUNCIÓN DE SUBIDA AUTOMÁTICA DIRECTA AL TAG 1.0 (SIN PETICIONES PREVIAS DE BÚSQUEDA)
         window.subirAGithubReleases = async function() {
             const fileInput = document.getElementById("githubFileInput");
             const estado = document.getElementById("estadoSubida");
@@ -605,30 +605,15 @@
             const GITHUB_TOKEN = "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"; 
             const USERNAME = "2021haro";        
             const REPO = "misitio";            
-            const TAG = "1.0"; // Apuntando directo al tag exacto que vimos en tu captura
+            const TAG = "1.0"; 
 
             estado.style.color = "var(--color-azul)";
-            estado.textContent = "Buscando el Release '1.0' en GitHub...";
+            estado.textContent = `Subiendo ${file.name} a GitHub (esto puede tardar)...`;
 
             try {
-                const releaseRes = await fetch(`https://api.github.com/repos/${USERNAME}/${REPO}/releases/tags/${TAG}`, {
-                    headers: {
-                        "Authorization": `token ${GITHUB_TOKEN}`,
-                        "Accept": "application/vnd.github.v3+json"
-                    }
-                });
-
-                const releaseData = await releaseRes.json();
-                if (!releaseRes.ok) {
-                    throw new Error("No se encontró el Release '1.0' mediante la API.");
-                }
-
-                const releaseId = releaseData.id;
-
-                estado.style.color = "var(--color-azul)";
-                estado.textContent = `Subiendo ${file.name} a GitHub (esto puede tardar)...`;
-
-                const uploadUrl = `https://uploads.github.com/repos/${USERNAME}/${REPO}/releases/${releaseId}/assets?name=${encodeURIComponent(file.name)}`;
+                // En lugar de buscar el ID mediante la API (que a veces falla por los permisos del token), 
+                // subimos directo a la URL de assets utilizando el nombre del Tag.
+                const uploadUrl = `https://uploads.github.com/repos/${USERNAME}/${REPO}/releases/tags/${TAG}/assets?name=${encodeURIComponent(file.name)}`;
                 
                 const uploadRes = await fetch(uploadUrl, {
                     method: "POST",
