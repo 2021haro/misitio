@@ -587,7 +587,7 @@
         let modoEdicionActivoWp = false;
         let wpUltimoGuardado = "";
 
-        // FUNCIÓN DE SUBIDA AUTOMÁTICA A GITHUB RELEASES
+        // FUNCIÓN DE SUBIDA AUTOMÁTICA A GITHUB RELEASES (BUSCA EL LATEST RELEASE AUTOMÁTICAMENTE)
         window.subirAGithubReleases = async function() {
             const fileInput = document.getElementById("githubFileInput");
             const estado = document.getElementById("estadoSubida");
@@ -605,13 +605,13 @@
             const GITHUB_TOKEN = "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"; 
             const USERNAME = "2021haro";        
             const REPO = "misitio";            
-            const TAG = "1.0";                 
 
             estado.style.color = "var(--color-azul)";
-            estado.textContent = "Buscando el Release en GitHub...";
+            estado.textContent = "Buscando el último Release en GitHub...";
 
             try {
-                const releaseRes = await fetch(`https://api.github.com/repos/${USERNAME}/${REPO}/releases/tags/${TAG}`, {
+                // Obtiene el Release más reciente (Latest) de forma automática sin importar el número de versión
+                const releaseRes = await fetch(`https://api.github.com/repos/${USERNAME}/${REPO}/releases/latest`, {
                     headers: {
                         "Authorization": `token ${GITHUB_TOKEN}`,
                         "Accept": "application/vnd.github.v3+json"
@@ -620,7 +620,7 @@
 
                 const releaseData = await releaseRes.json();
                 if (!releaseRes.ok) {
-                    throw new Error("No se encontró el Release '" + TAG + "'. Créalo al menos una vez en GitHub.");
+                    throw new Error("No se encontró ningún Release activo. Créalo al menos una vez en GitHub.");
                 }
 
                 const releaseId = releaseData.id;
