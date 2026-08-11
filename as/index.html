@@ -76,7 +76,7 @@
     }
 
     .page-section h2 {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
         color: #ffffff;
     }
 
@@ -85,13 +85,39 @@
         text-align: justify;
     }
 
-    /* Contenedor específico para la sección Paginas */
+    .paginas-layout {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .paginas-form-container {
         width: 100%;
         display: flex;
         flex-direction: column;
         gap: 20px;
         align-items: center;
+    }
+
+    /* Contenedor específico para mantener el subtítulo alineado exactamente sobre la primera columna */
+    .column-wrapper {
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .section-subtitle {
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 600;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 15px;
     }
 
     .form-group {
@@ -133,7 +159,7 @@
         background-color: #81c784;
     }
 
-    /* Estructura en línea horizontal para PC y TV con el botón a la derecha */
+    /* Adaptación fluida y responsiva para PC, Tablet, TV y pantallas grandes */
     @media (min-width: 768px) {
         .paginas-form-container {
             flex-direction: row;
@@ -145,7 +171,18 @@
             margin: 0 auto;
         }
 
+        .column-wrapper {
+            flex: 1;
+            max-width: 320px;
+            margin-bottom: 0;
+            align-items: flex-start;
+        }
+
         .form-group {
+            max-width: 100%;
+        }
+
+        .form-group-second {
             flex: 1;
             max-width: 320px;
             margin-bottom: 0;
@@ -155,6 +192,12 @@
             height: 42px;
             margin-bottom: 0;
             flex-shrink: 0;
+        }
+
+        .section-subtitle {
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 15px;
         }
     }
 
@@ -300,20 +343,26 @@
 <div class="content-container">
     <div id="seccion1" class="page-section active-page">
         <h2>btn1</h2>
-        <p>El Viaje Silencioso de las Ideas: Historia, Evolución y Futuro del Pensamiento HumanoIntroducción al Pensamiento ColectivoLa historia de la humanidad no es únicamente una crónica de imperios, guerras y descubrimientos materiales, sino fundamentalmente un registro fascinante del desarrollo de las ideas. Desde las primeras marcas dejadas en las paredes de las cavernas oscuras hasta la complejidad vertiginosa de las redes de información globales en la actualidad, el pensamiento humano ha recorrido un camino largo y sinuoso. Este viaje intelectual define lo que somos como especie, moldeando la cultura, la ciencia, el arte y la filosofía.Cada concepto que hoy consideramos fundamental —desde la justicia y la democracia hasta las leyes de la física cuántica— nació en la mente de un individuo o como producto de un diálogo comunitario, para luego expandirse y transformarse con el paso de las generaciones. Comprender este proceso nos permite valorar la fragilidad y la robustez del conocimiento humano, así como anticipar los desafíos que enfrentamos en un mundo hiperconectado.Los Orígenes: La Chispa de la ConcienciaEn los albores de la civilización, el ser humano se enfrentaba a un entorno hostil y desconocido. Los fenómenos naturales, como las tormentas, las sequías y los eclipses, eran interpretados a través de un manto de misticismo y mitología. En este contexto, el pensamiento mítico cumplió una función vital: otorgar orden y sentido al caos circundante. Los mitos no eran meras fantasías, sino intentos genuinos de explicar el origen del cosmos y el lugar del hombre dentro de él.Con el surgimiento de la agricultura y la consolidación de las primeras ciudades-estado, especialmente en Mesopotamia y Egipto, la necesidad de administrar recursos impulsó un avance tecnológico revolucionario: la escritura. Este hito permitió exteriorizar el pensamiento. Las ideas ya no dependían exclusivamente de la frágil memoria oral; podían ser grabadas en tablillas de arcilla y preservadas a través del tiempo. La escritura democratizó el saber acumulado y sentó las bases para el surgimiento de la historia documentada.  La Revolución de la Razón en la AntigüedadEl siguiente gran punto de inflexión ocurrió en la Grecia clásica, donde un grupo de pensadores comenzó a cuestionar las explicaciones tradicionales basadas en la intervención de los dioses. Filósofos como Sócrates, Platón y Aristóteles introdujeron el uso sistemático de la lógica, la dialéctica y la observación empírica. Este giro hacia el racionalismo permitió el nacimiento de la filosofía y sentó las bases del método científico.Paralelamente, en otras regiones del mundo, como en la India con el budismo y en China con el confucianismo y el taoísmo, se desarrollaban profundas reflexiones éticas y espirituales centradas en la armonía interior, el deber social y la naturaleza del sufrimiento. Aunque los caminos geográficos y culturales eran diversos, la humanidad compartía una misma inquietud fundamental: descifrar las reglas que rigen la existencia y alcanzar una vida plena y justa.Oscurantismo, Renacimiento y la Explosión de la ImprentaTras la caída del Imperio Romano, Europa atravesó un periodo en el que el conocimiento se resguardó principalmente en los monasterios. Sin embargo, el mundo islámico vivió una época dorada de esplendor científico y filosófico, traduciendo, preservando y expandiendo el legado griego y persa, además de realizar aportes capitales en matemáticas, medicina y astronomía.La posterior llegada del Renacimiento en Europa supuso un redescubrimiento apasionado de los clásicos, acompañado de un cambio radical en la percepción del ser humano, que pasó a colocarse en el centro del análisis intelectual (el humanismo).No obstante, el verdadero catalizador de la modernidad fue la invención de la imprenta de tipos móviles por Johannes Gutenberg en el siglo XV. Por primera vez, los libros podían producirse en masa de manera rápida y económica. Las ideas ya no eran un privilegio exclusivo de una élite reducida de clérigos y monarcas. La Reforma Protestante, la Revolución Científica liderada por figuras como Copérnico, Galileo y Newton, y posteriormente la Ilustración, no habrían sido posibles sin este flujo libre y acelerado de información.La Era Contemporánea: Del Papel al AlgoritmoEl siglo XX transformó por completo la naturaleza del pensamiento y la comunicación. La aparición de los medios masivos de comunicación —la radio, la televisión y la prensa escrita a gran escala— conectó a sociedades enteras en tiempo real. Las ideologías políticas, los movimientos sociales y los descubrimientos científicos se propagaron con una velocidad sin precedentes, moldeando los destinos de millones de personas y provocando tanto avances monumentales como conflictos devastadores.Hoy en día, nos encontramos inmersos en la revolución digital. Internet y la inteligencia artificial han vuelto a redefinir las reglas del juego intelectual. El conocimiento ya no solo se almacena en bibliotecas físicas, sino que habita en una nube global accesible desde cualquier dispositivo.«La tecnología actual nos otorga un acceso instantáneo a la suma de todo el saber humano, pero el verdadero desafío contemporáneo radica en nuestra capacidad para discernir la verdad en medio del ruido y la saturación informativa».Conclusión: El Futuro del Entendimiento HumanoA lo largo de este recorrido, queda claro que el motor de la evolución humana ha sido siempre nuestra insaciable curiosidad. Cada vez que una nueva herramienta —desde la arcilla hasta el silicio— ha transformado nuestra forma de registrar y transmitir ideas, la sociedad se ha visto obligada a adaptarse y madurar.El futuro del pensamiento no dependerá exclusivamente de cuánta información seamos capaces de almacenar o procesar mediante algoritmos avanzados, sino de cómo utilicemos esa sabiduría para resolver problemas globales apremiantes, fomentar la empatía intercultural y preservar la dignidad humana. En última instancia, la tecnología es tan solo el vehículo; el destino, como siempre ha sido, depende única y exclusivamente de la profundidad, la creatividad y la ética de nuestras propias mentes.</p>
+        <p>El Viaje Silencioso de las Ideas: Historia, Evolución y Futuro del Pensamiento HumanoIntroducción al Pensamiento ColectivoLa historia de la humanidad no es únicamente una crónica de imperios, guerras y descubrimientos materiales, sino fundamentalmente un registro fascinante del desarrollo de las ideas. Desde las primeras marcas dejadas en las paredes de las cavernas oscuras hasta la complejidad vertiginosa de las redes de información globales en la actualidad, el pensamiento humano ha recorrido un camino largo y sinuoso. Este viaje intelectual define lo que somos como especie, moldeando la cultura, la ciencia, el arte y la filosofía.Cada concepto que hoy consideramos fundamental —desde la justicia y la democracia hasta las leyes de la física cuántica— nació en la mente de un individuo o como producto de un diálogo comunitario, para luego expandirse y transformarse con el paso de las generaciones. Comprender este proceso nos permite valorar la fragilidad y la robustez del conocimiento humano, así como anticipar los desafíos que enfrentamos en un mundo hiperconectado.Los Orígenes: La Chispa de la ConcienciaEn los albores de la civilización, el ser humano se enfrentaba a un entorno hostil y desconocido. Los fenómenos naturales, como las tormentas, las sequías y los eclipses, eran interpretados a través de un manto de misticismo y mitología. En este contexto, el pensamiento mítico cumplió una función vital: otorgar orden y sentido al caos circundante. Los mitos no eran meras fantasías, sino intentos genuinos de explicar el origen del cosmos y el lugar del hombre dentro de él.Con el surgimiento de la agricultura y la consolidación de las primeras ciudades-estado, especialmente en Mesopotamia y Egipto, la necesidad de administrar recursos impulsó un avance tecnológico revolucionario: la escritura. Este hito permitió exteriorizar el pensamiento. Las ideas ya no dependían exclusivamente de la frágil memoria oral; podían ser grabadas en tablillas de arcilla y preservadas a través del tiempo. La escritura democratizó el saber acumulado y sentó las bases para el surgimiento de la historia documentada.  La Revolución de la Razón en la AntigüedadEl siguiente gran punto de inflexión ocurrió en la Grecia clásica, donde un grupo de pensadores comenzó a cuestionar las explicaciones tradicionales basadas en la intervención de los dioses. Filósofos como Sócrates, Platón y Aristóteles introdujeron el uso sistemático de la lógica, la dialéctica y la observación empírica. Este giro hacia el racionalismo permitió el nacimiento de la filosofía y sentó las bases del método científico.Paralelamente, en otras regiones del mundo, como en la India con el budismo y en China con el confucianismo y el taoísmo, se desarrollaban profundas reflexiones éticas y espirituales centradas en la armonía interior, el deber social y la naturaleza del sufrimiento. Aunque los caminos geográficos y culturales eran diversidad, la humanidad compartía una misma inquietud fundamental: descifrar las reglas que rigen la existencia y alcanzar una vida plena y justa.Oscurantismo, Renacimiento y la Explosión de la ImprentaTras la caída del Imperio Romano, Europa atravesó un periodo en el que el conocimiento se resguardó principalmente en los monasterios. Sin embargo, el mundo islámico vivió una época dorada de esplendor científico y filosófico, traduciendo, preservando y expandiendo el legado griego y persa, además de realizar aportes capitales en matemáticas, medicina y astronomía.La posterior llegada del Renacimiento en Europa supuso un redescubrimiento apasionado de los clásicos, acompañado de un cambio radical en la percepción del ser humano, que pasó a colocarse en el centro del análisis intelectual (el humanismo).No obstante, el verdadero catalizador de la modernidad fue la invención de la imprenta de tipos móviles por Johannes Gutenberg en el siglo XV. Por primera vez, los libros podían producirse en masa de manera rápida y económica. Las ideas ya no eran un privilegio exclusivo de una élite reducida de clérigos y monarcas. La Reforma Protestante, la Revolución Científica liderada por figuras como Copérnico, Galileo y Newton, y posteriormente la Ilustración, no habrían sido posibles sin este flujo libre y acelerado de información.La Era Contemporánea: Del Papel al AlgoritmoEl siglo XX transformó por completo la naturaleza del pensamiento y la comunicación. La aparición de los medios masivos de comunicación —la radio, la televisión y la prensa escrita a gran escala— conectó a sociedades enteras en tiempo real. Las ideologías políticas, los movimientos sociales y los descubrimientos científicos se propagaron con una velocidad sin precedentes, moldeando los destinos de millones de personas y provocando tanto avances monumentales como conflictos devastadores.Hoy en día, nos encontramos inmersos en la revolución digital. Internet y la inteligencia artificial han vuelto a redefinir las reglas del juego intelectual. El conocimiento ya no solo se almacena en bibliotecas físicas, sino que habita en una nube global accesible desde cualquier dispositivo.«La tecnología actual nos otorga un acceso instantáneo a la suma de todo el saber humano, pero el verdadero desafío contemporáneo radica en nuestra capacidad para discernir la verdad en medio del ruido y la saturación informativa».Conclusión: El Futuro del Entendimiento HumanoA lo largo de este recorrido, queda claro que el motor de la evolución humana ha sido siempre nuestra insaciable curiosidad. Cada vez que una nueva herramienta —desde la arcilla hasta el silicio— ha transformado nuestra forma de registrar y transmitir ideas, la sociedad se ha visto obligada a adaptarse y madurar.El futuro del pensamiento no dependerá exclusivamente de cuánta información seamos capaces de almacenar o procesar mediante algoritmos avanzados, sino de cómo utilicemos esa sabiduría para resolver problemas globales apremiantes, fomentar la empatía intercultural y preservar la dignidad humana. En última instancia, la tecnología es tan solo el vehículo; el destino, como siempre ha sido, depende única y exclusivamente de la profundidad, la creatividad y la ética de nuestras propias mentes.</p>
     </div>
     <div id="seccion2" class="page-section">
         <h2>Paginas</h2>
-        <div class="paginas-form-container">
-            <div class="form-group">
-                <label for="input1">Primer Label:</label>
-                <input type="text" id="input1" value="Texto del primer label">
+        <div class="paginas-layout">
+            <div class="paginas-form-container">
+                <!-- Envoltorio que mantiene el subtítulo "Guardar" y el primer input agrupados de forma responsiva -->
+                <div class="column-wrapper">
+                    <div class="section-subtitle">Guardar</div>
+                    <div class="form-group">
+                        <label for="input1">Primer Label:</label>
+                        <input type="text" id="input1" value="Texto del primer label">
+                    </div>
+                </div>
+                <div class="form-group form-group-second">
+                    <label for="input2">Segundo Label:</label>
+                    <input type="text" id="input2" value="Texto del segundo label">
+                </div>
+                <button class="btn-guardar" onclick="alert('Guardado con éxito')">guardar</button>
             </div>
-            <div class="form-group">
-                <label for="input2">Segundo Label:</label>
-                <input type="text" id="input2" value="Texto del segundo label">
-            </div>
-            <button class="btn-guardar" onclick="alert('Guardado con éxito')">guardar</button>
         </div>
     </div>
     <div id="seccion3" class="page-section">
