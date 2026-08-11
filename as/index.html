@@ -92,14 +92,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 30px;
+        gap: 15px;
     }
 
     .paginas-form-container {
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
         align-items: center;
     }
 
@@ -117,7 +117,7 @@
         font-weight: 600;
         width: 100%;
         text-align: left;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
 
     .form-group {
@@ -159,7 +159,55 @@
         background-color: #81c784;
     }
 
-    /* Estilos del Datagrid con columnas Estado, Nombre, URL */
+    .switch-pills {
+        position: relative;
+        display: flex;
+        width: 100%;
+        max-width: 320px;
+        background-color: #0e1621;
+        border-radius: 40px;
+        padding: 4px;
+        border: 1px solid #2b3d4f;
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+        margin: 5px 0 10px 0;
+    }
+
+    .switch-pills button {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: #708499;
+        padding: 8px 0;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        z-index: 2;
+        transition: color 0.3s ease;
+        outline: none;
+        text-align: center;
+    }
+
+    .switch-pills button.active {
+        color: #17212b;
+    }
+
+    .pill-indicator {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: calc(50% - 4px);
+        height: calc(100% - 8px);
+        background-color: #64b5f6;
+        border-radius: 35px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .switch-pills[data-active="sugerencias"] .pill-indicator {
+        transform: translateX(100%);
+    }
+
     .datagrid-container {
         width: 100%;
         max-width: 1100px;
@@ -168,7 +216,7 @@
         overflow: hidden;
         border: 1px solid #2b3d4f;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     .custom-datagrid {
@@ -193,6 +241,10 @@
         color: #b0c4de;
     }
 
+    .custom-datagrid tr {
+        cursor: pointer;
+    }
+
     .custom-datagrid tr:last-child td {
         border-bottom: none;
     }
@@ -202,16 +254,45 @@
         color: #ffffff;
     }
 
+    .custom-datagrid tr.selected-row td {
+        background-color: rgba(100, 181, 246, 0.15);
+        color: #ffffff;
+    }
+
     .custom-datagrid a {
         color: #64b5f6;
         text-decoration: none;
+        word-break: break-all;
     }
 
     .custom-datagrid a:hover {
         text-decoration: underline;
     }
 
-    /* Adaptación fluida y responsiva para PC, Tablet, TV y pantallas grandes */
+    .status-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        vertical-align: middle;
+        flex-shrink: 0;
+    }
+
+    .status-cell {
+        width: 40px;
+        text-align: center;
+    }
+
+    .status-active {
+        background-color: #4caf50;
+        box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+    }
+
+    .status-inactive {
+        background-color: #f44336;
+        box-shadow: 0 0 8px rgba(244, 67, 54, 0.6);
+    }
+
     @media (min-width: 768px) {
         .paginas-form-container {
             flex-direction: row;
@@ -381,6 +462,264 @@
         color: #b0c4de;
     }
 
+    .row-context-menu {
+        position: absolute;
+        background-color: #17212b;
+        padding: 8px;
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        z-index: 40;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        min-width: 180px;
+    }
+
+    .row-context-item-first {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .row-context-item-first button.menu-action-btn {
+        flex: 1;
+    }
+
+    .menu-close-x {
+        background: transparent;
+        border: none;
+        color: #708499;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 8px;
+        margin-right: 6px;
+        border-radius: 50%;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+    }
+
+    .menu-close-x:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+    }
+
+    .row-context-menu button.menu-action-btn {
+        background: transparent;
+        border: none;
+        color: #708499;
+        padding: 10px 20px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 14px;
+        text-align: left;
+        width: 100%;
+    }
+
+    .row-context-menu button.menu-action-btn:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+        color: #b0c4de;
+    }
+
+    /* Estilos del Modal */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        padding: 15px;
+    }
+
+    .modal-container {
+        background-color: #17212b;
+        width: 100%;
+        max-width: 450px;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+        border: 1px solid #2b3d4f;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        animation: modalScale 0.25s ease;
+    }
+
+    @keyframes modalScale {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+        background-color: #2b3d4f;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .modal-close-x {
+        background: transparent;
+        border: none;
+        color: #708499;
+        font-size: 18px;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .modal-close-x:hover {
+        color: #ffffff;
+    }
+
+    .modal-body {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        color: #b0c4de;
+        font-size: 14px;
+    }
+
+    .modal-info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background-color: #0e1621;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #2b3d4f;
+    }
+
+    .modal-info-label {
+        font-size: 12px;
+        color: #64b5f6;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .modal-info-value {
+        font-size: 15px;
+        color: #ffffff;
+        word-break: break-all;
+    }
+
+    .modal-footer {
+        padding: 12px 20px;
+        background-color: #17212b;
+        border-top: 1px solid #2b3d4f;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .modal-btn-editar {
+        background-color: #2b3d4f;
+        color: #64b5f6;
+        border: 1px solid #64b5f6;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+        transition: all 0.3s;
+    }
+
+    .modal-btn-editar:hover {
+        background-color: #64b5f6;
+        color: #ffffff;
+    }
+
+    .modal-btn-eliminar {
+        background-color: rgba(244, 67, 54, 0.1);
+        color: #f44336;
+        border: 1px solid #f44336;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+        transition: all 0.3s;
+    }
+
+    .modal-btn-eliminar:hover {
+        background-color: #f44336;
+        color: #ffffff;
+    }
+
+    /* Estilo tipo píldora interactiva para el campo de Estado sin fondo de tarjeta extra */
+    .modal-status-pill {
+        position: relative;
+        display: inline-flex;
+        width: 100%;
+        max-width: 160px;
+        background-color: #17212b;
+        border-radius: 30px;
+        padding: 3px;
+        border: 1px solid #2b3d4f;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        margin-top: 4px;
+    }
+
+    .modal-status-pill button {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: #708499;
+        padding: 6px 0;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        z-index: 2;
+        transition: color 0.3s ease;
+        outline: none;
+        text-align: center;
+    }
+
+    .modal-status-pill button.active {
+        color: #17212b;
+    }
+
+    .modal-status-indicator {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: calc(50% - 3px);
+        height: calc(100% - 6px);
+        background-color: #64b5f6;
+        border-radius: 25px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .modal-status-pill[data-status="Inactivo"] .modal-status-indicator {
+        transform: translateX(100%);
+    }
+
+    @media (max-width: 767px) {
+        .content-container {
+            padding: 15px;
+        }
+        body {
+            padding: 5px;
+            padding-bottom: 85px;
+        }
+    }
+
     @media (min-width: 768px) {
         .nav-item {
             font-size: 13px;
@@ -392,10 +731,54 @@
 
 <button class="btn-notif" onclick="alert('Notificaciones')">🔔</button>
 
+<!-- Menú contextual con el botón X junto a 'Ver' y sin la opción 'Eliminar' -->
+<div class="row-context-menu" id="rowContextMenu">
+    <div class="row-context-item-first">
+        <button class="menu-action-btn" onclick="openViewModal()">Ver</button>
+        <button class="menu-close-x" onclick="closeContextMenu(event)">✕</button>
+    </div>
+    <button class="menu-action-btn" onclick="alert('Editar registro seleccionado')">Editar</button>
+    <button class="menu-action-btn" id="btnToggleStatus" onclick="toggleRowStatus()">Activar</button>
+</div>
+
+<!-- Modal para ver información completa de la fila con Editar a la izquierda y Eliminar a la derecha -->
+<div class="modal-overlay" id="viewModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <span>Detalles del Registro</span>
+            <button class="modal-close-x" onclick="closeViewModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <!-- Contenedor de Estado limpio sin caja contenedora extra -->
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+                <span class="modal-info-label">Estado</span>
+                <div class="modal-status-pill" id="modalStatusPill" data-status="Activo">
+                    <div class="modal-status-indicator"></div>
+                    <button type="button" class="active" onclick="setModalStatus('Activo', this)">Activo</button>
+                    <button type="button" onclick="setModalStatus('Inactivo', this)">Inactivo</button>
+                </div>
+            </div>
+            
+            <div class="modal-info-item">
+                <span class="modal-info-label">Nombre</span>
+                <span class="modal-info-value" id="modalName">--</span>
+            </div>
+            <div class="modal-info-item">
+                <span class="modal-info-label">URL Completa</span>
+                <span class="modal-info-value" id="modalUrl">--</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn-editar" onclick="alert('Acción de editar desde el modal')">Editar</button>
+            <button class="modal-btn-eliminar" onclick="alert('Acción de eliminar desde el modal')">Eliminar</button>
+        </div>
+    </div>
+</div>
+
 <div class="content-container">
     <div id="seccion1" class="page-section active-page">
         <h2>Botón 1</h2>
-        <p>El Viaje Silencioso de las Ideas: Historia, Evolución y Futuro del Pensamiento Humano. Introducción al Pensamiento Colectivo: La historia de la humanidad no es únicamente una crónica de imperios, guerras y descubrimientos materiales, sino fundamentalmente un registro fascinante del desarrollo de las ideas. Desde las primeras marcas dejadas en las paredes de las cavernas oscuras hasta la complejidad vertiginosa de las redes de información globales en la actualidad, el pensamiento humano ha recorrido un camino largo y sinuoso. Este viaje intelectual define lo que somos como especie, moldeando la cultura, la ciencia, el arte y la filosofía. Cada concepto que hoy consideramos fundamental —desde la justicia y la democracia hasta las leyes de la física cuántica— nació en la mente de un individuo o como producto de un diálogo comunitario, para luego expandirse y transformarse con el paso de las generaciones. Comprender este proceso nos permite valorar la fragilidad y la robustez del conocimiento humano, así como anticipar los desafíos que enfrentamos en un mundo hiperconectado. Los Orígenes: La Chispa de la Conciencia: En los albores de la civilización, el ser humano se enfrentaba a un entorno hostil y desconocido. Los fenómenos naturales, como las tormentas, las sequías y los eclipses, eran interpretados a través de un manto de misticismo y mitología. En este contexto, el pensamiento mítico cumplió una función vital: otorgar orden y sentido al caos circundante. Los mitos no eran meras fantasías, sino intentos genuinos de explicar el origen del cosmos y el lugar del hombre dentro de él. Con el surgimiento de la agricultura y la consolidación de las primeras ciudades-estado, especialmente en Mesopotamia y Egipto, la necesidad de administrar recursos impulsó un avance tecnológico revolucionario: la escritura. Este hito permitió exteriorizar el pensamiento. Las ideas ya no dependían exclusivamente de la frágil memoria oral; podían ser grabadas en tablillas de arcilla y preservadas a través del tiempo. La escritura democratizó el saber acumulado y sentó las bases para el surgimiento de la historia documentada. La Revolución de la Razón en la Antigüedad: El siguiente gran punto de inflexión ocurrió en la Grecia clásica, donde un grupo de pensadores comenzó a cuestionar las explicaciones tradicionales basadas en la intervención de los dioses. Filósofos como Sócrates, Platón y Aristóteles introdujeron el uso sistemático de la lógica, la dialéctica y la observación empírica. Este giro hacia el racionalismo permitió el nacimiento de la filosofía y sentó las bases del método científico. Paralelamente, en otras regiones del mundo, como en la India con el budismo y en China con el confucianismo y el taoísmo, se desarrollaban profundas reflexiones éticas y espirituales centradas en la armonía interior, el deber social y la naturaleza del sufrimiento. Aunque los caminos geográficos y culturales eran diversos, la humanidad compartía una misma inquietud fundamental: descifrar las reglas que rigen la existencia y alcanzar una vida plena y justa. Oscurantismo, Renacimiento y la Explosión de la Imprenta: Tras la caída del Imperio Romano, Europa atravesó un periodo en el que el conocimiento se resguardó principalmente en los monasterios. Sin embargo, el mundo islámico vivió una época dorada de esplendor científico y filosófico, traduciendo, preservando y expandiendo el legado griego y persa, además de realizar aportes capitales en matemáticas, medicina y astronomía. La posterior llegada del Renacimiento en Europa supuso un redescubrimiento apasionado de los clásicos, acompañado de un cambio radical en la percepción del ser humano, que pasó a colocarse en el centro del análisis intelectual (el humanismo). No obstante, el verdadero catalizador de la modernidad fue la invención de la imprenta de tipos móviles por Johannes Gutenberg en el siglo XV. Por primera vez, los libros podían producirse en masa de manera rápida y económica. Las ideas ya no eran un privilegio exclusivo de una élite reducida de clérigos y monarcas. La Reforma Protestante, la Revolución Científica liderada por figuras como Copérnico, Galileo y Newton, y posteriormente la Ilustración, no habría sido posibles sin este flujo libre y acelerado de información. La Era Contemporánea: Del Papel al Algoritmo: El siglo XX transformó por completo la naturaleza del pensamiento y la comunicación. La aparición de los medios masivos de communication —la radio, la televisión y la prensa escrita a gran escala— conectó a sociedades enteras en tiempo real. Las ideologías políticas, los movimientos sociales y los descubrimientos científicos se propagaron con una velocidad sin precedentes, moldeando los destinos de millones de personas y provocando tanto avances monumentales como conflictos devastadores. Hoy en día, nos encontramos inmersos en la revolución digital. Internet y la inteligencia artificial han vuelto a redefinir las reglas del juego intelectual. El conocimiento ya no solo se almacena en bibliotecas físicas, sino que habita en una nube global accesible desde cualquier dispositivo. «La tecnología actual nos otorga un acceso instantáneo a la suma de todo el saber humano, pero el verdadero desafío contemporáneo radica en nuestra capacidad para discernir la verdad en medio del ruido y la saturación informativa». Conclusión: El Futuro del Entendimiento Humano: A lo largo de este recorrido, queda claro que el motor de la evolución humana ha sido siempre nuestra insaciable curiosidad. Cada vez que una nueva herramienta —desde la arcilla hasta el silicio— ha transformado nuestra forma de registrar y transmitir ideas, la sociedad se ha visto obligada a adaptarse y madurar. El futuro del pensamiento no dependerá exclusivamente de cuánta información seamos capaces de almacenar o procesar mediante algoritmos avanzados, sino de cómo utilicemos esa sabiduría para resolver problemas globales apremiantes, fomentar la empatía intercultural y preservar la dignidad humana. En última instancia, la tecnología es tan solo el vehículo; el destino, como siempre ha sido, depende única y exclusivamente de la profundidad, la creatividad y la ética de nuestras propias mentes.</p>
+        <p>El Viaje Silencioso de las Ideas: Historia, Evolución y Futuro del Pensamiento Humano. Introducción al Pensamiento Colectivo: La historia de la humanidad no es únicamente una crónica de imperios, guerras y descubrimientos materiales, sino fundamentalmente un registro fascinante del desarrollo de las ideas. Desde las primeras marcas dejadas en las paredes de las cavernas oscuras hasta la complejidad vertiginosa de las redes de información globales en la actualidad, el pensamiento humano ha recorrido un camino largo y sinuoso. Este viaje intelectual define lo que somos como especie, moldeando la cultura, la ciencia, el arte y la filosofía. Cada concepto que hoy consideramos fundamental —desde la justicia y la democracia hasta las leyes de la física cuántica— nació en la mente de un individuo o como producto de un diálogo comunitario, para luego expandirse y transformarse con el paso de las generaciones. Comprender este proceso nos permite valorar la fragilidad y la robustez del conocimiento humano, así como anticipar los desafíos que enfrentamos en un mundo hiperconectado. Los Orígenes: La Chispa de la Conciencia: En los albores de la civilización, el ser humano se enfrentaba a un entorno hostil y desconocido. Los fenómenos naturales, como las tormentas, las sequías y los eclipses, eran interpretados a través de un manto de misticismo y mitología. En este contexto, el pensamiento mítico cumplió una función vital: otorgar orden y sentido al caos circundante. Los mitos no eran meras fantasías, sino intentos genuinos de explicar el origen del cosmos y el lugar del hombre dentro de él. Con el surgimiento de la agricultura y la consolidación de las primeras ciudades-estado, especialmente en Mesopotamia y Egipto, la necesidad de administrar recursos impulsó un avance tecnológico revolucionario: la escritura. Este hito permitió exteriorizar el pensamiento. Las ideas ya no dependían exclusivamente de la frágil memoria oral; podían ser grabadas en tablillas de arcilla y preservadas a través del tiempo. La escritura democratizó el saber acumulado y sentó las bases para el surgimiento de la historia documentada. La Revolución de la Razón en la Antigüedad: El siguiente gran punto de inflexión ocurrió en la Grecia clásica, donde un grupo de pensadores comenzó a cuestionar las explicaciones tradicionales basadas en la intervención de los dioses. Filósofos como Sócrates, Platón y Aristóteles introdujeron el uso sistemático de la lógica, la dialéctica y la observación empírica. Este giro hacia el racionalismo permitió el nacimiento de la filosofía y sentó las bases del método científico. Paralelamente, en otras regiones del mundo, como en la India con el budismo y en China con el confucianismo y el taoísmo, se desarrollaban profundas reflexiones éticas y espirituales centradas en la armonía interior, el deber social y la naturaleza del sufrimiento. Aunque los caminos geográficos y culturales eran diversos, la humanidad compartía una misma inquietud fundamental: descifrar las reglas que rigen la existencia y alcanzar una vida plena y justa. Oscurantismo, Renacimiento y la Explosión de la Imprenta: Tras la caída del Imperio Romano, Europa atravesó un periodo en el que el conocimiento se resguardó principalmente en los monasterios. Sin embargo, el mundo islámico vivió una época dorada de esplendor científico y filosófico, traduciendo, preservando y expandiendo el legado griego y persa, además de realizar aportes capitales en matemáticas, medicina y astronomía. La posterior llegada del Renacimiento en Europa supuso un redescubrimiento apasionado de los clásicos, acompañado de un cambio radical en la percepción del ser humano, que pasó a colocarse en el centro del análisis intelectual (el humanismo). No obstante, el verdadero catalizador de la modernidad fue la invención de la imprenta de tipos móviles por Johannes Gutenberg en el siglo XV. Por primera vez, los libros podían producirse en masa de manera rápida y económica. Las ideas ya no eran un privilegio exclusivo de una élite reducida de clérigos y monarcas. La Reforma Protestante, la Revolución Científica liderada por figuras como Copérnico, Galileo y Newton, y posteriormente la Ilustración, no habría sido posibles sin este flujo libre y acelerado de información. La Era Contemporánea: Del Papel al Algoritmo: El siglo XX transformó por completo la naturaleza del pensamiento y la comunicación. La aparición de los medios masivos de comunicación —la radio, la televisión y la prensa escrita a gran escala— conectó a sociedades enteras en tiempo real. Las ideologías políticas, los movimientos sociales y los descubrimientos científicos se propagaron con una velocidad sin precedentes, moldeando los destinos de millones de personas y provocando tanto avances monumentales como conflictos devastadores. Hoy en día, nos encontramos inmersos en la revolución digital. Internet y la inteligencia artificial han vuelto a redefinir las reglas del juego intelectual. El conocimiento ya no solo se almacena en bibliotecas físicas, sino que habita en una nube global accesible desde cualquier dispositivo. «La tecnología actual nos otorga un acceso instantáneo a la suma de todo el saber humano, pero el verdadero desafío contemporáneo radica en nuestra capacidad para discernir la verdad en medio del ruido y la saturación informativa». Conclusión: El Futuro del Entendimiento Humano: A lo largo de este recorrido, queda claro que el motor de la evolución humana ha sido siempre nuestra insaciable curiosidad. Cada vez que una nueva herramienta —desde la arcilla hasta el silicio— ha transformado nuestra forma de registrar y transmitir ideas, la sociedad se ha visto obligada a adaptarse y madurar. El futuro del pensamiento no dependerá exclusivamente de cuánta información seamos capaces de almacenar o procesar mediante algoritmos avanzados, sino de cómo utilicemos esa sabiduría para resolver problemas globales apremiantes, fomentar la empatía intercultural y preservar la dignidad humana. En última instancia, la tecnología es tan solo el vehículo; el destino, como siempre ha sido, depende única y exclusivamente de la profundidad, la creatividad y la ética de nuestras propias mentes.</p>
     </div>
     <div id="seccion2" class="page-section">
         <h2>Páginas</h2>
@@ -415,37 +798,123 @@
                 <button class="btn-guardar" onclick="alert('Guardado con éxito')">Guardar</button>
             </div>
 
-            <!-- Datagrid con columnas Estado, Nombre y URL (20 registros) -->
+            <div class="switch-pills" id="switchPills" data-active="actuales">
+                <div class="pill-indicator"></div>
+                <button type="button" class="active" onclick="switchTab('actuales', this)">Actuales</button>
+                <button type="button" onclick="switchTab('sugerencias', this)">Sugerencias</button>
+            </div>
+
+            <!-- Datagrid -->
             <div class="datagrid-container">
-                <table class="custom-datagrid">
+                <table class="custom-datagrid" id="miDatagrid">
                     <thead>
                         <tr>
-                            <th>Estado</th>
+                            <th class="status-cell"></th>
                             <th>Nombre</th>
                             <th>URL</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Activo</td><td>Registro Alfa</td><td><a href="#" target="_blank">https://ejemplo.com/alfa</a></td></tr>
-                        <tr><td>Pendiente</td><td>Registro Beta</td><td><a href="#" target="_blank">https://ejemplo.com/beta</a></td></tr>
-                        <tr><td>Completado</td><td>Registro Gamma</td><td><a href="#" target="_blank">https://ejemplo.com/gamma</a></td></tr>
-                        <tr><td>Activo</td><td>Registro Delta</td><td><a href="#" target="_blank">https://ejemplo.com/delta</a></td></tr>
-                        <tr><td>Pendiente</td><td>Registro Épsilon</td><td><a href="#" target="_blank">https://ejemplo.com/epsilon</a></td></tr>
-                        <tr><td>Completado</td><td>Registro Zeta</td><td><a href="#" target="_blank">https://ejemplo.com/zeta</a></td></tr>
-                        <tr><td>Activo</td><td>Registro Eta</td><td><a href="#" target="_blank">https://ejemplo.com/eta</a></td></tr>
-                        <tr><td>Inactivo</td><td>Registro Theta</td><td><a href="#" target="_blank">https://ejemplo.com/theta</a></td></tr>
-                        <tr><td>Completado</td><td>Registro Iota</td><td><a href="#" target="_blank">https://ejemplo.com/iota</a></td></tr>
-                        <tr><td>Activo</td><td>Registro Kappa</td><td><a href="#" target="_blank">https://ejemplo.com/kappa</a></td></tr>
-                        <tr><td>Pendiente</td><td>Registro Lambda</td><td><a href="#" target="_blank">https://ejemplo.com/lambda</a></td></tr>
-                        <tr><td>Completado</td><td>Registro Mu</td><td><a href="#" target="_blank">https://ejemplo.com/mu</a></td></tr>
-                        <tr><td>Activo</td><td>Registro Nu</td><td><a href="#" target="_blank">https://ejemplo.com/nu</a></td></tr>
-                        <tr><td>Pendiente</td><td>Registro Xi</td><td><a href="#" target="_blank">https://ejemplo.com/xi</a></td></tr>
-                        <tr><td>Completado</td><td>Registro Ómicron</td><td><a href="#" target="_blank">https://ejemplo.com/omicron</a></td></tr>
-                        <tr><td>Inactivo</td><td>Registro Pi</td><td><a href="#" target="_blank">https://ejemplo.com/pi</a></td></tr>
-                        <tr><td>Activo</td><td>Registro Rho</td><td><a href="#" target="_blank">https://ejemplo.com/rho</a></td></tr>
-                        <tr><td>Completado</td><td>Registro Sigma</td><td><a href="#" target="_blank">https://ejemplo.com/sigma</a></td></tr>
-                        <tr><td>Pendiente</td><td>Registro Tau</td><td><a href="#" target="_blank">https://ejemplo.com/tau</a></td></tr>
-                        <tr><td>Completado</td><td>Registro Ómega</td><td><a href="#" target="_blank">https://ejemplo.com/omega</a></td></tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Alfa</td>
+                            <td><a href="https://ejemplo.com/alfa" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/alfa</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
+                            <td>Registro Beta</td>
+                            <td><a href="https://ejemplo.com/beta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/beta</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Gamma</td>
+                            <td><a href="https://ejemplo.com/gamma" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/gamma</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Delta</td>
+                            <td><a href="https://ejemplo.com/delta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/delta</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
+                            <td>Registro Épsilon</td>
+                            <td><a href="https://ejemplo.com/epsilon" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/epsilon</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Zeta</td>
+                            <td><a href="https://ejemplo.com/zeta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/zeta</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Eta</td>
+                            <td><a href="https://ejemplo.com/eta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/eta</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
+                            <td>Registro Theta</td>
+                            <td><a href="https://ejemplo.com/theta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/theta</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Iota</td>
+                            <td><a href="https://ejemplo.com/iota" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/iota</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Kappa</td>
+                            <td><a href="https://ejemplo.com/kappa" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/kappa</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
+                            <td>Registro Lambda</td>
+                            <td><a href="https://ejemplo.com/lambda" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/lambda</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Mu</td>
+                            <td><a href="https://ejemplo.com/mu" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/mu</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Nu</td>
+                            <td><a href="https://ejemplo.com/nu" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/nu</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
+                            <td>Registro Xi</td>
+                            <td><a href="https://ejemplo.com/xi" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/xi</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Ómicron</td>
+                            <td><a href="https://ejemplo.com/omicron" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/omicron</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
+                            <td>Registro Pi</td>
+                            <td><a href="https://ejemplo.com/pi" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/pi</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Rho</td>
+                            <td><a href="https://ejemplo.com/rho" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/rho</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Sigma</td>
+                            <td><a href="https://ejemplo.com/sigma" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/sigma</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
+                            <td>Registro Tau</td>
+                            <td><a href="https://ejemplo.com/tau" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/tau</a></td>
+                        </tr>
+                        <tr onclick="selectRow(event, this)">
+                            <td class="status-cell"><span class="status-dot status-active"></span></td>
+                            <td>Registro Ómega</td>
+                            <td><a href="https://ejemplo.com/omega" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/omega</a></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -485,6 +954,8 @@
 </nav>
 
 <script>
+    let currentRow = null;
+
     function switchPage(sectionId, clickedButton) {
         const sections = document.querySelectorAll('.page-section');
         sections.forEach(sec => sec.classList.remove('active-page'));
@@ -496,16 +967,151 @@
         window.scrollTo(0, 0);
     }
 
+    function switchTab(tabName, buttonElement) {
+        const container = document.getElementById('switchPills');
+        container.setAttribute('data-active', tabName);
+
+        const buttons = container.querySelectorAll('button');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        buttonElement.classList.add('active');
+    }
+
+    function setModalStatus(statusName, buttonElement) {
+        const container = document.getElementById('modalStatusPill');
+        container.setAttribute('data-status', statusName);
+
+        const buttons = container.querySelectorAll('button');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        buttonElement.classList.add('active');
+    }
+
     function toggleMenu(event) {
         event.stopPropagation();
         const menu = document.getElementById('fabMenu');
+        const rowMenu = document.getElementById('rowContextMenu');
+        rowMenu.style.display = 'none';
         menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
     }
 
-    document.addEventListener('click', () => {
-        const menu = document.getElementById('fabMenu');
-        if (menu.style.display === 'flex') {
-            menu.style.display = 'none';
+    function selectRow(event, rowElement) {
+        event.stopPropagation();
+        
+        const rows = document.querySelectorAll('.custom-datagrid tbody tr');
+        rows.forEach(r => r.classList.remove('selected-row'));
+
+        rowElement.classList.add('selected-row');
+        currentRow = rowElement;
+
+        const dot = rowElement.querySelector('.status-dot');
+        const btnToggle = document.getElementById('btnToggleStatus');
+        if (dot && dot.classList.contains('status-active')) {
+            btnToggle.textContent = 'Desactivar';
+        } else {
+            btnToggle.textContent = 'Activar';
+        }
+
+        document.getElementById('fabMenu').style.display = 'none';
+
+        const rowMenu = document.getElementById('rowContextMenu');
+        const rect = rowElement.getBoundingClientRect();
+        let posX = event.clientX;
+        let posY = rect.bottom + window.scrollY + 5;
+
+        const screenWidth = window.innerWidth;
+        const menuWidth = 190;
+        if (posX + menuWidth > screenWidth - 20) {
+            posX = screenWidth - menuWidth - 20;
+        }
+
+        rowMenu.style.left = posX + 'px';
+        rowMenu.style.top = posY + 'px';
+        rowMenu.style.display = 'flex';
+    }
+
+    function toggleRowStatus() {
+        if (!currentRow) return;
+        const dot = currentRow.querySelector('.status-dot');
+        if (dot) {
+            if (dot.classList.contains('status-active')) {
+                dot.classList.remove('status-active');
+                dot.classList.add('status-inactive');
+                document.getElementById('btnToggleStatus').textContent = 'Activar';
+                alert('Registro desactivado');
+            } else {
+                dot.classList.remove('status-inactive');
+                dot.classList.add('status-active');
+                document.getElementById('btnToggleStatus').textContent = 'Desactivar';
+                alert('Registro activado');
+            }
+        }
+    }
+
+    function closeContextMenu(event) {
+        if (event) event.stopPropagation();
+        const rowMenu = document.getElementById('rowContextMenu');
+        rowMenu.style.display = 'none';
+        const rows = document.querySelectorAll('.custom-datagrid tbody tr');
+        rows.forEach(r => r.classList.remove('selected-row'));
+        currentRow = null;
+    }
+
+    // Funciones para el Modal de Ver
+    function openViewModal() {
+        if (!currentRow) return;
+
+        // Ocultar menú contextual
+        document.getElementById('rowContextMenu').style.display = 'none';
+
+        // Extraer datos completos de la fila seleccionada
+        const dot = currentRow.querySelector('.status-dot');
+        const isActive = dot && dot.classList.contains('status-active');
+        const statusText = isActive ? 'Activo' : 'Inactivo';
+
+        // Configurar la píldora de estado dentro del modal según el estado del registro
+        const pillContainer = document.getElementById('modalStatusPill');
+        pillContainer.setAttribute('data-status', statusText);
+        const pillButtons = pillContainer.querySelectorAll('button');
+        pillButtons.forEach(btn => {
+            if (btn.textContent.trim() === statusText) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        const cells = currentRow.querySelectorAll('td');
+        const nameText = cells[1] ? cells[1].textContent.trim() : '';
+        const urlAnchor = currentRow.querySelector('a');
+        const urlText = urlAnchor ? urlAnchor.href : '';
+
+        // Inyectar en el modal
+        document.getElementById('modalName').textContent = nameText;
+        document.getElementById('modalUrl').textContent = urlText;
+
+        // Mostrar modal
+        document.getElementById('viewModal').style.display = 'flex';
+    }
+
+    function closeViewModal() {
+        document.getElementById('viewModal').style.display = 'none';
+        const rows = document.querySelectorAll('.custom-datagrid tbody tr');
+        rows.forEach(r => r.classList.remove('selected-row'));
+        currentRow = null;
+    }
+
+    document.addEventListener('click', (e) => {
+        const fabMenu = document.getElementById('fabMenu');
+        const rowMenu = document.getElementById('rowContextMenu');
+        
+        if (fabMenu.style.display === 'flex') {
+            fabMenu.style.display = 'none';
+        }
+
+        if (rowMenu.style.display === 'flex') {
+            rowMenu.style.display = 'none';
+            const rows = document.querySelectorAll('.custom-datagrid tbody tr');
+            rows.forEach(r => r.classList.remove('selected-row'));
+            currentRow = null;
         }
     });
 </script>
