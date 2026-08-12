@@ -731,14 +731,14 @@
 
 <button class="btn-notif" onclick="alert('Notificaciones')">🔔</button>
 
-<!-- Menú contextual con el botón X junto a 'Ver' y sin la opción 'Eliminar' -->
+<!-- Menú contextual con las posiciones de Eliminar y Activar/Desactivar intercambiadas -->
 <div class="row-context-menu" id="rowContextMenu">
     <div class="row-context-item-first">
         <button class="menu-action-btn" onclick="openViewModal()">Ver</button>
         <button class="menu-close-x" onclick="closeContextMenu(event)">✕</button>
     </div>
-    <button class="menu-action-btn" onclick="alert('Editar registro seleccionado')">Editar</button>
     <button class="menu-action-btn" id="btnToggleStatus" onclick="toggleRowStatus()">Activar</button>
+    <button class="menu-action-btn" onclick="alert('Eliminar registro seleccionado')">Eliminar</button>
 </div>
 
 <!-- Modal para ver información completa de la fila con Editar a la izquierda y Eliminar a la derecha -->
