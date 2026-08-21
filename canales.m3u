@@ -1,9 +1,5 @@
 #EXTM3U
 #EXTINF:-1 tvg-id="" tvg-name="Acceso Total 24/7" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="La Casa De Los Famosos México 4",Acceso Total 24/7 CAM 1
-https://redpointt.duckdns.org:49842/hls/canal.m3u8
+https://redpointt.duckdns.org:43195/hls/canal.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="Toda la Casa 24/7" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="La Casa De Los Famosos México 4",Toda la Casa 24/7 CAM 2
-https://redpointt.duckdns.org:49842/hls/canal2.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="Canal 1 (C1)" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="La Casa De Los Famosos México 4",Canal 1 (C1)
-https://vsd123.okcdn.ru/hls/18596955425443.m3u8/sig/r9wRAXY9WcU/expires/1787281844701/srcIp/187.209.26.167/urls/176.112.172.105/clientType/0/srcAg/CHROME/mid/16616358354595/18596955425443_high/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="Canal 2 (C2)" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="La Casa De Los Famosos México 4",Canal 2 (C2)
-https://vsd123.okcdn.ru/hls/18597049207459.m3u8/sig/Huu9OiP3eo8/expires/1787281993261/srcIp/187.209.26.167/urls/178.237.29.198/clientType/0/srcAg/CHROME/mid/16616419499683/18597049207459_high/index.m3u8
+https://redpointt.duckdns.org:43195/hls/canal2.m3u8
