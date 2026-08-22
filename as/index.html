@@ -3,8 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sitio Dinámico - Scroll Global</title>
+<title>JAHF</title>
 <style>
+    /* GUÍA DE COLORES Y ESTRUCTURA APLICADA:
+     --------------------------------------------------
+     1. #17212b -> Fondo general de la página y pestañas inferiores.
+     2. #0e1621 -> Fondo del panel contenedor de "GUARDAR" y de los campos (inputs).
+     3. #64b5f6 -> Color de los bordes del panel y de los inputs, así como textos flotantes.
+     4. #2b3d4f -> Color de fondo secundario (cabeceras, notificaciones, etc.).
+     5. #708499 -> Color de texto inactivo.
+     6. #ffffff -> Color del texto blanco general.
+    */
+
+    :root {
+        --bg-general: #17212b;
+        --bg-container: #0e1621;
+        --border-color: #64b5f6;
+        --bg-secondary: #2b3d4f;
+        --text-inactive: #708499;
+        --text-main: #ffffff;
+        --text-sub: #b0c4de;
+    }
+
+    [data-theme="light"] {
+        --bg-general: #f0f2f5;
+        --bg-container: #ffffff;
+        --border-color: #4a90e2;
+        --bg-secondary: #e4e6eb;
+        --text-inactive: #65676b;
+        --text-main: #050505;
+        --text-sub: #4b4f56;
+    }
+
     * {
         box-sizing: border-box;
         margin: 0;
@@ -13,8 +43,8 @@
 
     body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background-color: #0e1621;
-        color: #ffffff;
+        background-color: var(--bg-general); /* 1. Fondo general */
+        color: var(--text-main);
         min-height: 100vh;
         overflow-y: auto;
         display: flex;
@@ -22,6 +52,7 @@
         align-items: center;
         padding: 10px;
         padding-bottom: 90px;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .btn-notif {
@@ -30,34 +61,58 @@
         right: 20px;
         width: 35px;
         height: 35px;
-        background-color: #2b3d4f;
+        background-color: var(--bg-secondary); /* 4. Fondo de notificaciones */
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
         border: none;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         z-index: 30;
     }
 
     .btn-notif:hover {
-        transform: scale(1.1);
-        background-color: #3b5065;
+        transform: scale(1.1) rotate(15deg);
+        background-color: #81c784;
+    }
+
+    .btn-theme {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        width: 35px;
+        height: 35px;
+        background-color: var(--bg-secondary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        z-index: 30;
+    }
+
+    .btn-theme:hover {
+        transform: scale(1.1) rotate(-15deg);
+        background-color: #81c784;
     }
 
     .content-container {
         width: 100%;
         max-width: 1200px;
         min-height: calc(100vh - 20px);
-        background-color: #17212b;
+        background-color: var(--bg-container);
         border-radius: 20px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         display: flex;
         flex-direction: column;
         z-index: 10;
         padding: 30px;
+        transition: background-color 0.3s ease;
     }
 
     .page-section {
@@ -67,7 +122,7 @@
         align-items: center;
         justify-content: flex-start;
         text-align: center;
-        color: #708499;
+        color: var(--text-inactive); /* 5. Texto inactivo */
         font-size: 18px;
     }
 
@@ -76,8 +131,8 @@
     }
 
     .page-section h2 {
-        margin-bottom: 20px;
-        color: #ffffff;
+        margin-bottom: 10px;
+        color: var(--text-main);
     }
 
     .page-section p {
@@ -95,12 +150,38 @@
         gap: 15px;
     }
 
+    /* Panel contenedor principal "GUARDAR" con el color y borde dinámicos */
     .paginas-form-container {
+        position: relative;
         width: 100%;
+        max-width: 950px;
+        background-color: var(--bg-container) !important; /* 2. Fondo del panel principal */
+        border: 1px solid var(--border-color);            /* 3. Borde azul uniforme */
+        border-radius: 12px;
+        padding: 26px 30px 18px 30px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.35);
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
         align-items: center;
+        margin: 20px auto 0 auto;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Etiqueta flotante superior "GUARDAR" */
+    .section-subtitle {
+        position: absolute;
+        top: -11px;
+        left: 24px;
+        background-color: var(--bg-container) !important; /* 2. Mismo color del fondo para cortar el borde */
+        padding: 0 8px;
+        color: var(--border-color);                        /* 3. Color del texto flotante */
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        z-index: 2;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .column-wrapper {
@@ -108,44 +189,56 @@
         max-width: 400px;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
     }
 
-    .section-subtitle {
-        color: #ffffff;
-        font-size: 18px;
-        font-weight: 600;
-        width: 100%;
-        text-align: left;
-        margin-bottom: 10px;
-    }
-
+    /* Campos de entrada con fondo y borde dinámicos */
     .form-group {
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
         max-width: 400px;
+        background-color: var(--bg-container) !important; /* 2. Fondo de los inputs internos */
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);            /* 3. Borde azul uniforme */
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        gap: 4px;
+        margin-top: 5px;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
+    /* Etiquetas flotantes de los campos ("PRIMER CAMPO", "SEGUNDO CAMPO") */
     .form-group label {
-        color: #ffffff;
-        font-size: 14px;
-        margin-bottom: 5px;
+        position: absolute;
+        top: -10px;
+        left: 14px;
+        background-color: var(--bg-container) !important; /* 2. Mismo color del fondo para cortar el borde del input */
+        padding: 0 6px;
+        font-size: 11px;
+        color: var(--border-color);                        /* 3. Color del texto flotante */
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        z-index: 2;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .form-group input {
         width: 100%;
-        padding: 10px;
-        border-radius: 10px;
-        border: 1px solid #2b3d4f;
-        background-color: #0e1621;
-        color: #ffffff;
+        padding: 4px 0 2px 0;
+        border-radius: 0;
+        border: none;
+        background-color: transparent;
+        color: var(--text-main);                        /* 6. Texto blanco/principal */
         outline: none;
+        font-size: 15px;
     }
 
     .btn-guardar {
-        background-color: #64b5f6;
+        background-color: #64b5f6; /* 3. Color de acento original */
         color: #ffffff;
         border: none;
         padding: 10px 25px;
@@ -153,10 +246,12 @@
         cursor: pointer;
         font-weight: bold;
         transition: background-color 0.3s;
+        display: block;
+        margin: 0 auto;
     }
 
     .btn-guardar:hover {
-        background-color: #81c784;
+        background-color: #81c784; /* Color hover original exacto */
     }
 
     .switch-pills {
@@ -164,19 +259,20 @@
         display: flex;
         width: 100%;
         max-width: 320px;
-        background-color: #0e1621;
+        background-color: var(--bg-general);
         border-radius: 40px;
         padding: 4px;
-        border: 1px solid #2b3d4f;
+        border: 1px solid var(--bg-secondary);
         box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
         margin: 5px 0 10px 0;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     .switch-pills button {
         flex: 1;
         background: transparent;
         border: none;
-        color: #708499;
+        color: var(--text-inactive);
         padding: 8px 0;
         font-size: 14px;
         font-weight: 600;
@@ -188,7 +284,7 @@
     }
 
     .switch-pills button.active {
-        color: #17212b;
+        color: var(--bg-container);
     }
 
     .pill-indicator {
@@ -197,9 +293,9 @@
         left: 4px;
         width: calc(50% - 4px);
         height: calc(100% - 8px);
-        background-color: #64b5f6;
+        background-color: var(--border-color);
         border-radius: 35px;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
         z-index: 1;
         box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
@@ -208,15 +304,17 @@
         transform: translateX(100%);
     }
 
+    /* --- ESTILO DATAGRID MODERNO CLÁSICO --- */
     .datagrid-container {
         width: 100%;
         max-width: 1100px;
-        background-color: #0e1621;
-        border-radius: 15px;
+        background-color: var(--bg-container) !important; 
+        border-radius: 12px;
         overflow: hidden;
-        border: 1px solid #2b3d4f;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        border: 1px solid var(--border-color) !important;  
+        box-shadow: 0 6px 20px rgba(0,0,0,0.35);
         margin-top: 5px;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     .custom-datagrid {
@@ -224,21 +322,27 @@
         border-collapse: collapse;
         text-align: left;
         font-size: 14px;
-        color: #ffffff;
+        color: var(--text-main);
     }
 
     .custom-datagrid th {
-        background-color: #2b3d4f;
-        color: #64b5f6;
-        padding: 14px 18px;
+        background-color: var(--bg-container);
+        color: var(--border-color);
+        padding: 16px 20px;
         font-weight: 600;
-        border-bottom: 1px solid #17212b;
+        border-bottom: 1px solid var(--border-color);
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
     .custom-datagrid td {
-        padding: 12px 18px;
-        border-bottom: 1px solid rgba(43, 61, 79, 0.4);
-        color: #b0c4de;
+        padding: 14px 20px;
+        border-bottom: 1px solid rgba(100, 181, 246, 0.15);
+        color: var(--text-sub);
+        background-color: var(--bg-container);
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .custom-datagrid tr {
@@ -250,19 +354,22 @@
     }
 
     .custom-datagrid tr:hover td {
-        background-color: rgba(100, 181, 246, 0.05);
-        color: #ffffff;
+        background-color: var(--bg-general);
+        color: var(--text-main);
     }
 
     .custom-datagrid tr.selected-row td {
         background-color: rgba(100, 181, 246, 0.15);
-        color: #ffffff;
+        color: var(--text-main);
+        border-bottom-color: rgba(100, 181, 246, 0.4);
     }
 
     .custom-datagrid a {
-        color: #64b5f6;
+        color: var(--border-color);
         text-decoration: none;
         word-break: break-all;
+        font-weight: 500;
+        transition: color 0.3s ease;
     }
 
     .custom-datagrid a:hover {
@@ -279,7 +386,7 @@
     }
 
     .status-cell {
-        width: 40px;
+        width: 50px;
         text-align: center;
     }
 
@@ -292,27 +399,30 @@
         background-color: #f44336;
         box-shadow: 0 0 8px rgba(244, 67, 54, 0.6);
     }
+    /* ------------------------------------------------------------- */
 
     @media (min-width: 768px) {
         .paginas-form-container {
             flex-direction: row;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
             justify-content: center;
-            align-items: flex-end;
-            gap: 25px;
+            align-items: center;
+            gap: 20px;
             max-width: 1100px;
-            margin: 0 auto;
+            margin: 20px auto 0 auto;
+            padding: 26px 30px 18px 30px;
         }
 
         .column-wrapper {
             flex: 1;
             max-width: 320px;
             margin-bottom: 0;
-            align-items: flex-start;
+            align-items: center;
         }
 
         .form-group {
             max-width: 100%;
+            margin-top: 0;
         }
 
         .form-group-second {
@@ -322,15 +432,10 @@
         }
 
         .btn-guardar {
-            height: 42px;
-            margin-bottom: 0;
+            height: 52px;
+            margin: 0;
             flex-shrink: 0;
-        }
-
-        .section-subtitle {
-            width: 100%;
-            max-width: 320px;
-            margin-bottom: 15px;
+            align-self: center;
         }
     }
 
@@ -339,7 +444,7 @@
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        background-color: #17212b;
+        background-color: var(--bg-container);
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -350,6 +455,7 @@
         max-width: 500px;
         z-index: 30;
         border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: background-color 0.3s ease;
     }
 
     .nav-item {
@@ -358,7 +464,7 @@
         align-items: center;
         justify-content: center;
         text-decoration: none;
-        color: #708499;
+        color: var(--text-inactive);
         font-size: 11px;
         cursor: pointer;
         padding: 8px 12px;
@@ -372,20 +478,20 @@
     }
 
     .nav-item:hover {
-        background-color: rgba(255, 255, 255, 0.08);
+        background-color: rgba(100, 181, 246, 0.1);
         transform: translateY(-2px);
-        color: #b0c4de;
+        color: var(--text-sub);
     }
 
     .nav-item.active {
-        background-color: #2b3d4f;
-        color: #64b5f6;
+        background-color: var(--bg-secondary);
+        color: var(--border-color);
     }
 
     .icon-placeholder {
         width: 24px;
         height: 24px;
-        background-color: #708499;
+        background-color: var(--text-inactive);
         border-radius: 50%;
         margin-bottom: 4px;
         transition: all 0.3s ease;
@@ -393,11 +499,11 @@
 
     .nav-item:hover .icon-placeholder {
         transform: scale(1.1);
-        background-color: #b0c4de;
+        background-color: var(--text-sub);
     }
 
     .nav-item.active .icon-placeholder {
-        background-color: #64b5f6;
+        background-color: var(--border-color);
     }
 
     .fab {
@@ -406,21 +512,21 @@
         right: 30px;
         width: 50px;
         height: 50px;
-        background-color: #64b5f6;
+        background-color: #64b5f6; /* 3. Color original exacto */
         border-radius: 50%;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
         border: none;
         z-index: 30;
     }
 
     .fab:hover {
-        transform: scale(1.1);
-        background-color: #81c784;
+        transform: scale(1.1) rotate(90deg);
+        background-color: #81c784; /* Color hover original exacto */
     }
 
     .fab::before {
@@ -430,11 +536,12 @@
         font-weight: bold;
     }
 
+    /* --- MENÚ FLOTANTE CON TAMAÑO VERTICAL REDUCIDO --- */
     .fab-menu {
         position: fixed;
         bottom: 160px;
         right: 30px; 
-        background-color: #17212b;
+        background-color: var(--bg-container);
         padding: 8px;
         border-radius: 20px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.4);
@@ -443,28 +550,46 @@
         gap: 5px;
         z-index: 30;
         border: 1px solid rgba(255, 255, 255, 0.05);
+        width: auto;
+        min-width: 140px;
+        transition: background-color 0.3s ease;
     }
 
-    .fab-menu button {
+    .fab-menu-item-first {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .fab-menu button.menu-action-btn {
         background: transparent;
         border: none;
-        color: #708499;
+        color: var(--text-inactive);
         padding: 10px 20px;
         border-radius: 15px;
         cursor: pointer;
         transition: all 0.2s;
-        font-size: 13px;
+        font-size: 14px;
         text-align: left;
+        width: 100%;
+        white-space: nowrap;
     }
 
-    .fab-menu button:hover {
-        background-color: rgba(255, 255, 255, 0.08);
-        color: #b0c4de;
+    .fab-menu-item-first button.menu-action-btn {
+        width: 100%;
     }
 
+    .fab-menu button.menu-action-btn:hover {
+        background-color: rgba(100, 181, 246, 0.1);
+        color: var(--text-sub);
+    }
+
+    /* --- MENÚ CONTEXTUAL DEL DATAGRID CON TAMAÑO VERTICAL REDUCIDO --- */
     .row-context-menu {
         position: absolute;
-        background-color: #17212b;
+        background-color: var(--bg-container);
         padding: 8px;
         border-radius: 20px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.4);
@@ -473,46 +598,57 @@
         gap: 5px;
         z-index: 40;
         border: 1px solid rgba(255, 255, 255, 0.05);
-        min-width: 180px;
+        width: auto;
+        min-width: 140px;
+        transition: background-color 0.3s ease;
     }
 
     .row-context-item-first {
+        position: relative;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
         width: 100%;
     }
 
     .row-context-item-first button.menu-action-btn {
         flex: 1;
+        width: 100%;
     }
 
     .menu-close-x {
-        background: transparent;
-        border: none;
-        color: #708499;
-        font-size: 14px;
+        position: absolute;
+        top: -36px;
+        right: -32px;
+        background: var(--bg-secondary);
+        border: 2px solid var(--bg-container);
+        color: var(--text-inactive);
+        font-size: 16px;
         font-weight: bold;
         cursor: pointer;
-        padding: 8px;
-        margin-right: 6px;
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        margin: 0;
         border-radius: 50%;
-        transition: all 0.2s;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s, color 0.2s;
         display: flex;
         align-items: center;
         justify-content: center;
         line-height: 1;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
     .menu-close-x:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: #ffffff;
+        transform: scale(1.1) rotate(90deg);
+        background-color: rgba(100, 181, 246, 0.2);
+        color: var(--text-main);
     }
 
     .row-context-menu button.menu-action-btn {
         background: transparent;
         border: none;
-        color: #708499;
+        color: var(--text-inactive);
         padding: 10px 20px;
         border-radius: 15px;
         cursor: pointer;
@@ -520,11 +656,12 @@
         font-size: 14px;
         text-align: left;
         width: 100%;
+        white-space: nowrap;
     }
 
     .row-context-menu button.menu-action-btn:hover {
-        background-color: rgba(255, 255, 255, 0.08);
-        color: #b0c4de;
+        background-color: rgba(100, 181, 246, 0.1);
+        color: var(--text-sub);
     }
 
     /* Estilos del Modal */
@@ -543,16 +680,17 @@
     }
 
     .modal-container {
-        background-color: #17212b;
+        background-color: var(--bg-container);
         width: 100%;
         max-width: 450px;
         border-radius: 15px;
         box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-        border: 1px solid #2b3d4f;
+        border: 1px solid var(--bg-secondary);
         display: flex;
         flex-direction: column;
         overflow: hidden;
         animation: modalScale 0.25s ease;
+        transition: background-color 0.3s ease;
     }
 
     @keyframes modalScale {
@@ -561,27 +699,29 @@
     }
 
     .modal-header {
-        background-color: #2b3d4f;
+        background-color: var(--bg-secondary);
         padding: 15px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #ffffff;
+        color: var(--text-main);
         font-weight: 600;
         font-size: 16px;
+        transition: background-color 0.3s ease;
     }
 
     .modal-close-x {
         background: transparent;
         border: none;
-        color: #708499;
+        color: var(--text-inactive);
         font-size: 18px;
         cursor: pointer;
-        transition: color 0.2s;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s;
     }
 
     .modal-close-x:hover {
-        color: #ffffff;
+        transform: scale(1.15) rotate(90deg);
+        color: var(--text-main);
     }
 
     .modal-body {
@@ -589,7 +729,7 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
-        color: #b0c4de;
+        color: var(--text-sub);
         font-size: 14px;
     }
 
@@ -597,39 +737,41 @@
         display: flex;
         flex-direction: column;
         gap: 4px;
-        background-color: #0e1621;
+        background-color: var(--bg-general);
         padding: 12px;
         border-radius: 10px;
-        border: 1px solid #2b3d4f;
+        border: 1px solid var(--bg-secondary);
+        transition: background-color 0.3s ease;
     }
 
     .modal-info-label {
         font-size: 12px;
-        color: #64b5f6;
+        color: var(--border-color);
         font-weight: 600;
         text-transform: uppercase;
     }
 
     .modal-info-value {
         font-size: 15px;
-        color: #ffffff;
+        color: var(--text-main);
         word-break: break-all;
     }
 
     .modal-footer {
         padding: 12px 20px;
-        background-color: #17212b;
-        border-top: 1px solid #2b3d4f;
+        background-color: var(--bg-container);
+        border-top: 1px solid var(--bg-secondary);
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 10px;
+        transition: background-color 0.3s ease;
     }
 
     .modal-btn-editar {
-        background-color: #2b3d4f;
-        color: #64b5f6;
-        border: 1px solid #64b5f6;
+        background-color: var(--bg-secondary);
+        color: var(--border-color);
+        border: 1px solid var(--border-color);
         padding: 10px 20px;
         border-radius: 10px;
         cursor: pointer;
@@ -639,7 +781,7 @@
     }
 
     .modal-btn-editar:hover {
-        background-color: #64b5f6;
+        background-color: var(--border-color);
         color: #ffffff;
     }
 
@@ -660,25 +802,25 @@
         color: #ffffff;
     }
 
-    /* Estilo tipo píldora interactiva para el campo de Estado sin fondo de tarjeta extra */
     .modal-status-pill {
         position: relative;
         display: inline-flex;
         width: 100%;
         max-width: 160px;
-        background-color: #17212b;
+        background-color: var(--bg-container);
         border-radius: 30px;
         padding: 3px;
-        border: 1px solid #2b3d4f;
+        border: 1px solid var(--bg-secondary);
         box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
         margin-top: 4px;
+        transition: background-color 0.3s ease;
     }
 
     .modal-status-pill button {
         flex: 1;
         background: transparent;
         border: none;
-        color: #708499;
+        color: var(--text-inactive);
         padding: 6px 0;
         font-size: 13px;
         font-weight: 600;
@@ -690,7 +832,7 @@
     }
 
     .modal-status-pill button.active {
-        color: #17212b;
+        color: var(--bg-container);
     }
 
     .modal-status-indicator {
@@ -699,9 +841,9 @@
         left: 3px;
         width: calc(50% - 3px);
         height: calc(100% - 6px);
-        background-color: #64b5f6;
+        background-color: var(--border-color);
         border-radius: 25px;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
         z-index: 1;
         box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
@@ -729,9 +871,9 @@
 </head>
 <body>
 
+<button class="btn-theme" id="themeBtn" onclick="toggleTheme()">☀️</button>
 <button class="btn-notif" onclick="alert('Notificaciones')">🔔</button>
 
-<!-- Menú contextual con las posiciones de Eliminar y Activar/Desactivar intercambiadas -->
 <div class="row-context-menu" id="rowContextMenu">
     <div class="row-context-item-first">
         <button class="menu-action-btn" onclick="openViewModal()">Ver</button>
@@ -741,7 +883,6 @@
     <button class="menu-action-btn" onclick="alert('Eliminar registro seleccionado')">Eliminar</button>
 </div>
 
-<!-- Modal para ver información completa de la fila con Editar a la izquierda y Eliminar a la derecha -->
 <div class="modal-overlay" id="viewModal">
     <div class="modal-container">
         <div class="modal-header">
@@ -749,7 +890,6 @@
             <button class="modal-close-x" onclick="closeViewModal()">✕</button>
         </div>
         <div class="modal-body">
-            <!-- Contenedor de Estado limpio sin caja contenedora extra -->
             <div style="display: flex; flex-direction: column; gap: 4px;">
                 <span class="modal-info-label">Estado</span>
                 <div class="modal-status-pill" id="modalStatusPill" data-status="Activo">
@@ -760,11 +900,11 @@
             </div>
             
             <div class="modal-info-item">
-                <span class="modal-info-label">Nombre</span>
+                <span class="modal-info-label">Primer campo</span>
                 <span class="modal-info-value" id="modalName">--</span>
             </div>
             <div class="modal-info-item">
-                <span class="modal-info-label">URL Completa</span>
+                <span class="modal-info-label">Segundo campo</span>
                 <span class="modal-info-value" id="modalUrl">--</span>
             </div>
         </div>
@@ -778,21 +918,21 @@
 <div class="content-container">
     <div id="seccion1" class="page-section active-page">
         <h2>Botón 1</h2>
-        <p>El Viaje Silencioso de las Ideas: Historia, Evolución y Futuro del Pensamiento Humano. Introducción al Pensamiento Colectivo: La historia de la humanidad no es únicamente una crónica de imperios, guerras y descubrimientos materiales, sino fundamentalmente un registro fascinante del desarrollo de las ideas. Desde las primeras marcas dejadas en las paredes de las cavernas oscuras hasta la complejidad vertiginosa de las redes de información globales en la actualidad, el pensamiento humano ha recorrido un camino largo y sinuoso. Este viaje intelectual define lo que somos como especie, moldeando la cultura, la ciencia, el arte y la filosofía. Cada concepto que hoy consideramos fundamental —desde la justicia y la democracia hasta las leyes de la física cuántica— nació en la mente de un individuo o como producto de un diálogo comunitario, para luego expandirse y transformarse con el paso de las generaciones. Comprender este proceso nos permite valorar la fragilidad y la robustez del conocimiento humano, así como anticipar los desafíos que enfrentamos en un mundo hiperconectado. Los Orígenes: La Chispa de la Conciencia: En los albores de la civilización, el ser humano se enfrentaba a un entorno hostil y desconocido. Los fenómenos naturales, como las tormentas, las sequías y los eclipses, eran interpretados a través de un manto de misticismo y mitología. En este contexto, el pensamiento mítico cumplió una función vital: otorgar orden y sentido al caos circundante. Los mitos no eran meras fantasías, sino intentos genuinos de explicar el origen del cosmos y el lugar del hombre dentro de él. Con el surgimiento de la agricultura y la consolidación de las primeras ciudades-estado, especialmente en Mesopotamia y Egipto, la necesidad de administrar recursos impulsó un avance tecnológico revolucionario: la escritura. Este hito permitió exteriorizar el pensamiento. Las ideas ya no dependían exclusivamente de la frágil memoria oral; podían ser grabadas en tablillas de arcilla y preservadas a través del tiempo. La escritura democratizó el saber acumulado y sentó las bases para el surgimiento de la historia documentada. La Revolución de la Razón en la Antigüedad: El siguiente gran punto de inflexión ocurrió en la Grecia clásica, donde un grupo de pensadores comenzó a cuestionar las explicaciones tradicionales basadas en la intervención de los dioses. Filósofos como Sócrates, Platón y Aristóteles introdujeron el uso sistemático de la lógica, la dialéctica y la observación empírica. Este giro hacia el racionalismo permitió el nacimiento de la filosofía y sentó las bases del método científico. Paralelamente, en otras regiones del mundo, como en la India con el budismo y en China con el confucianismo y el taoísmo, se desarrollaban profundas reflexiones éticas y espirituales centradas en la armonía interior, el deber social y la naturaleza del sufrimiento. Aunque los caminos geográficos y culturales eran diversos, la humanidad compartía una misma inquietud fundamental: descifrar las reglas que rigen la existencia y alcanzar una vida plena y justa. Oscurantismo, Renacimiento y la Explosión de la Imprenta: Tras la caída del Imperio Romano, Europa atravesó un periodo en el que el conocimiento se resguardó principalmente en los monasterios. Sin embargo, el mundo islámico vivió una época dorada de esplendor científico y filosófico, traduciendo, preservando y expandiendo el legado griego y persa, además de realizar aportes capitales en matemáticas, medicina y astronomía. La posterior llegada del Renacimiento en Europa supuso un redescubrimiento apasionado de los clásicos, acompañado de un cambio radical en la percepción del ser humano, que pasó a colocarse en el centro del análisis intelectual (el humanismo). No obstante, el verdadero catalizador de la modernidad fue la invención de la imprenta de tipos móviles por Johannes Gutenberg en el siglo XV. Por primera vez, los libros podían producirse en masa de manera rápida y económica. Las ideas ya no eran un privilegio exclusivo de una élite reducida de clérigos y monarcas. La Reforma Protestante, la Revolución Científica liderada por figuras como Copérnico, Galileo y Newton, y posteriormente la Ilustración, no habría sido posibles sin este flujo libre y acelerado de información. La Era Contemporánea: Del Papel al Algoritmo: El siglo XX transformó por completo la naturaleza del pensamiento y la comunicación. La aparición de los medios masivos de comunicación —la radio, la televisión y la prensa escrita a gran escala— conectó a sociedades enteras en tiempo real. Las ideologías políticas, los movimientos sociales y los descubrimientos científicos se propagaron con una velocidad sin precedentes, moldeando los destinos de millones de personas y provocando tanto avances monumentales como conflictos devastadores. Hoy en día, nos encontramos inmersos en la revolución digital. Internet y la inteligencia artificial han vuelto a redefinir las reglas del juego intelectual. El conocimiento ya no solo se almacena en bibliotecas físicas, sino que habita en una nube global accesible desde cualquier dispositivo. «La tecnología actual nos otorga un acceso instantáneo a la suma de todo el saber humano, pero el verdadero desafío contemporáneo radica en nuestra capacidad para discernir la verdad en medio del ruido y la saturación informativa». Conclusión: El Futuro del Entendimiento Humano: A lo largo de este recorrido, queda claro que el motor de la evolución humana ha sido siempre nuestra insaciable curiosidad. Cada vez que una nueva herramienta —desde la arcilla hasta el silicio— ha transformado nuestra forma de registrar y transmitir ideas, la sociedad se ha visto obligada a adaptarse y madurar. El futuro del pensamiento no dependerá exclusivamente de cuánta información seamos capaces de almacenar o procesar mediante algoritmos avanzados, sino de cómo utilicemos esa sabiduría para resolver problemas globales apremiantes, fomentar la empatía intercultural y preservar la dignidad humana. En última instancia, la tecnología es tan solo el vehículo; el destino, como siempre ha sido, depende única y exclusivamente de la profundidad, la creatividad y la ética de nuestras propias mentes.</p>
+        <p>El Viaje Silencioso de las Ideas</p>
     </div>
     <div id="seccion2" class="page-section">
         <h2>Páginas</h2>
         <div class="paginas-layout">
             <div class="paginas-form-container">
+                <div class="section-subtitle">GUARDAR</div>
                 <div class="column-wrapper">
-                    <div class="section-subtitle">Guardar</div>
                     <div class="form-group">
-                        <label for="input1">Primer campo:</label>
+                        <label for="input1">Primer campo</label>
                         <input type="text" id="input1" value="Texto del primer campo">
                     </div>
                 </div>
                 <div class="form-group form-group-second">
-                    <label for="input2">Segundo campo:</label>
+                    <label for="input2">Segundo campo</label>
                     <input type="text" id="input2" value="Texto del segundo campo">
                 </div>
                 <button class="btn-guardar" onclick="alert('Guardado con éxito')">Guardar</button>
@@ -804,14 +944,13 @@
                 <button type="button" onclick="switchTab('sugerencias', this)">Sugerencias</button>
             </div>
 
-            <!-- Datagrid -->
             <div class="datagrid-container">
                 <table class="custom-datagrid" id="miDatagrid">
                     <thead>
                         <tr>
                             <th class="status-cell"></th>
-                            <th>Nombre</th>
-                            <th>URL</th>
+                            <th>Primer campo</th>
+                            <th>Segundo campo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -930,8 +1069,11 @@
 
 <button class="fab" id="fabBtn" onclick="toggleMenu(event)"></button>
 <div class="fab-menu" id="fabMenu">
-    <button onclick="alert('Opción 1')">Menú Botón 1</button>
-    <button onclick="alert('Opción 2')">Menú Diálogo 2</button>
+    <div class="fab-menu-item-first">
+        <button class="menu-action-btn" onclick="alert('Opción 1')">Menú Botón 1</button>
+        <button class="menu-close-x" onclick="closeFabMenu(event)">✕</button>
+    </div>
+    <button class="menu-action-btn" onclick="alert('Opción 2')">Menú Diálogo 2</button>
 </div>
 
 <nav class="bottom-nav">
@@ -955,6 +1097,18 @@
 
 <script>
     let currentRow = null;
+
+    function toggleTheme() {
+        const htmlElement = document.documentElement;
+        const themeBtn = document.getElementById('themeBtn');
+        if (htmlElement.getAttribute('data-theme') === 'light') {
+            htmlElement.removeAttribute('data-theme');
+            themeBtn.textContent = '☀️';
+        } else {
+            htmlElement.setAttribute('data-theme', 'light');
+            themeBtn.textContent = '🌙';
+        }
+    }
 
     function switchPage(sectionId, clickedButton) {
         const sections = document.querySelectorAll('.page-section');
@@ -993,6 +1147,11 @@
         menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
     }
 
+    function closeFabMenu(event) {
+        if (event) event.stopPropagation();
+        document.getElementById('fabMenu').style.display = 'none';
+    }
+
     function selectRow(event, rowElement) {
         event.stopPropagation();
         
@@ -1018,7 +1177,7 @@
         let posY = rect.bottom + window.scrollY + 5;
 
         const screenWidth = window.innerWidth;
-        const menuWidth = 190;
+        const menuWidth = 140;
         if (posX + menuWidth > screenWidth - 20) {
             posX = screenWidth - menuWidth - 20;
         }
@@ -1055,19 +1214,15 @@
         currentRow = null;
     }
 
-    // Funciones para el Modal de Ver
     function openViewModal() {
         if (!currentRow) return;
 
-        // Ocultar menú contextual
         document.getElementById('rowContextMenu').style.display = 'none';
 
-        // Extraer datos completos de la fila seleccionada
         const dot = currentRow.querySelector('.status-dot');
         const isActive = dot && dot.classList.contains('status-active');
         const statusText = isActive ? 'Activo' : 'Inactivo';
 
-        // Configurar la píldora de estado dentro del modal según el estado del registro
         const pillContainer = document.getElementById('modalStatusPill');
         pillContainer.setAttribute('data-status', statusText);
         const pillButtons = pillContainer.querySelectorAll('button');
@@ -1084,11 +1239,9 @@
         const urlAnchor = currentRow.querySelector('a');
         const urlText = urlAnchor ? urlAnchor.href : '';
 
-        // Inyectar en el modal
         document.getElementById('modalName').textContent = nameText;
         document.getElementById('modalUrl').textContent = urlText;
 
-        // Mostrar modal
         document.getElementById('viewModal').style.display = 'flex';
     }
 
