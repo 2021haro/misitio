@@ -5,34 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JAHF</title>
 <style>
-    /* GUÍA DE COLORES Y ESTRUCTURA APLICADA:
-     --------------------------------------------------
-     1. #17212b -> Fondo general de la página y pestañas inferiores.
-     2. #0e1621 -> Fondo del panel contenedor de "GUARDAR" y de los campos (inputs).
-     3. #64b5f6 -> Color de los bordes del panel y de los inputs, así como textos flotantes.
-     4. #2b3d4f -> Color de fondo secundario (cabeceras, notificaciones, etc.).
-     5. #708499 -> Color de texto inactivo.
-     6. #ffffff -> Color del texto blanco general.
+    /* GUÍA DE COLORES Y ESTRUCTURA APLICADA (Basada en tus capturas):
+    --------------------------------------------------
+    Modo Claro:
+    - Fondo: #FFFFFF
+    - Superficie (Contenedores): #F5F5F5
+    - Primario: #2196F3
+    - Secundario: #FF9800
+    - Texto: #212121
+
+    Modo Oscuro:
+    - Fondo: #121212
+    - Superficie (Contenedores): #1e1e1e
+    - Primario: #67b0eb
+    - Secundario: #eda945
+    - Texto: #dedede
     */
 
     :root {
-        --bg-general: #17212b;
-        --bg-container: #0e1621;
-        --border-color: #64b5f6;
-        --bg-secondary: #2b3d4f;
-        --text-inactive: #708499;
-        --text-main: #ffffff;
-        --text-sub: #b0c4de;
+        --bg-general: #FFFFFF;
+        --bg-container: #F5F5F5;
+        --border-color: #2196F3;
+        --bg-secondary: #FF9800;
+        --text-inactive: #757575;
+        --text-main: #212121;
+        --text-sub: #424242;
     }
 
-    [data-theme="light"] {
-        --bg-general: #f0f2f5;
-        --bg-container: #ffffff;
-        --border-color: #4a90e2;
-        --bg-secondary: #e4e6eb;
-        --text-inactive: #65676b;
-        --text-main: #050505;
-        --text-sub: #4b4f56;
+    [data-theme="dark"] {
+        --bg-general: #121212;
+        --bg-container: #1e1e1e;
+        --border-color: #67b0eb;
+        --bg-secondary: #eda945;
+        --text-inactive: #888888;
+        --text-main: #dedede;
+        --text-sub: #b0b0b0;
     }
 
     * {
@@ -43,7 +50,7 @@
 
     body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background-color: var(--bg-general); /* 1. Fondo general */
+        background-color: var(--bg-general);
         color: var(--text-main);
         min-height: 100vh;
         overflow-y: auto;
@@ -61,21 +68,23 @@
         right: 20px;
         width: 35px;
         height: 35px;
-        background-color: var(--bg-secondary); /* 4. Fondo de notificaciones */
+        background-color: var(--bg-container);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
-        border: none;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         z-index: 30;
     }
 
     .btn-notif:hover {
         transform: scale(1.1) rotate(15deg);
-        background-color: #81c784;
+        background-color: var(--border-color);
+        color: #ffffff;
     }
 
     .btn-theme {
@@ -84,21 +93,23 @@
         left: 20px;
         width: 35px;
         height: 35px;
-        background-color: var(--bg-secondary);
+        background-color: var(--bg-container);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
-        border: none;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         z-index: 30;
     }
 
     .btn-theme:hover {
         transform: scale(1.1) rotate(-15deg);
-        background-color: #81c784;
+        background-color: var(--border-color);
+        color: #ffffff;
     }
 
     .content-container {
@@ -107,7 +118,7 @@
         min-height: calc(100vh - 20px);
         background-color: var(--bg-container);
         border-radius: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         display: flex;
         flex-direction: column;
         z-index: 10;
@@ -122,7 +133,7 @@
         align-items: center;
         justify-content: flex-start;
         text-align: center;
-        color: var(--text-inactive); /* 5. Texto inactivo */
+        color: var(--text-inactive);
         font-size: 18px;
     }
 
@@ -150,16 +161,15 @@
         gap: 15px;
     }
 
-    /* Panel contenedor principal "GUARDAR" con el color y borde dinámicos */
     .paginas-form-container {
         position: relative;
         width: 100%;
         max-width: 950px;
-        background-color: var(--bg-container) !important; /* 2. Fondo del panel principal */
-        border: 1px solid var(--border-color);            /* 3. Borde azul uniforme */
+        background-color: var(--bg-general) !important;
+        border: 1px solid var(--border-color);
         border-radius: 12px;
         padding: 26px 30px 18px 30px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
         display: flex;
         flex-direction: column;
         gap: 12px;
@@ -168,14 +178,13 @@
         transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
-    /* Etiqueta flotante superior "GUARDAR" */
     .section-subtitle {
         position: absolute;
         top: -11px;
         left: 24px;
-        background-color: var(--bg-container) !important; /* 2. Mismo color del fondo para cortar el borde */
+        background-color: var(--bg-general) !important;
         padding: 0 8px;
-        color: var(--border-color);                        /* 3. Color del texto flotante */
+        color: var(--border-color);
         font-size: 12px;
         font-weight: 700;
         letter-spacing: 0.5px;
@@ -192,7 +201,6 @@
         align-items: center;
     }
 
-    /* Campos de entrada con fondo y borde dinámicos */
     .form-group {
         position: relative;
         display: flex;
@@ -200,25 +208,24 @@
         align-items: flex-start;
         width: 100%;
         max-width: 400px;
-        background-color: var(--bg-container) !important; /* 2. Fondo de los inputs internos */
+        background-color: var(--bg-container) !important;
         padding: 12px 14px;
         border-radius: 12px;
-        border: 1px solid var(--border-color);            /* 3. Borde azul uniforme */
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         gap: 4px;
         margin-top: 5px;
         transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
-    /* Etiquetas flotantes de los campos ("PRIMER CAMPO", "SEGUNDO CAMPO") */
     .form-group label {
         position: absolute;
         top: -10px;
         left: 14px;
-        background-color: var(--bg-container) !important; /* 2. Mismo color del fondo para cortar el borde del input */
+        background-color: var(--bg-container) !important;
         padding: 0 6px;
         font-size: 11px;
-        color: var(--border-color);                        /* 3. Color del texto flotante */
+        color: var(--border-color);
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -232,13 +239,13 @@
         border-radius: 0;
         border: none;
         background-color: transparent;
-        color: var(--text-main);                        /* 6. Texto blanco/principal */
+        color: var(--text-main);
         outline: none;
         font-size: 15px;
     }
 
     .btn-guardar {
-        background-color: #64b5f6; /* 3. Color de acento original */
+        background-color: var(--border-color);
         color: #ffffff;
         border: none;
         padding: 10px 25px;
@@ -251,7 +258,7 @@
     }
 
     .btn-guardar:hover {
-        background-color: #81c784; /* Color hover original exacto */
+        background-color: var(--bg-secondary);
     }
 
     .switch-pills {
@@ -262,8 +269,8 @@
         background-color: var(--bg-general);
         border-radius: 40px;
         padding: 4px;
-        border: 1px solid var(--bg-secondary);
-        box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+        border: 1px solid var(--border-color);
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.15);
         margin: 5px 0 10px 0;
         transition: background-color 0.3s ease, border-color 0.3s ease;
     }
@@ -284,7 +291,7 @@
     }
 
     .switch-pills button.active {
-        color: var(--bg-container);
+        color: var(--bg-general);
     }
 
     .pill-indicator {
@@ -297,22 +304,21 @@
         border-radius: 35px;
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
         z-index: 1;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     .switch-pills[data-active="sugerencias"] .pill-indicator {
         transform: translateX(100%);
     }
 
-    /* --- ESTILO DATAGRID MODERNO CLÁSICO --- */
     .datagrid-container {
         width: 100%;
         max-width: 1100px;
-        background-color: var(--bg-container) !important; 
+        background-color: var(--bg-general) !important; 
         border-radius: 12px;
         overflow: hidden;
         border: 1px solid var(--border-color) !important;  
-        box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
         margin-top: 5px;
         transition: background-color 0.3s ease, border-color 0.3s ease;
     }
@@ -326,7 +332,7 @@
     }
 
     .custom-datagrid th {
-        background-color: var(--bg-container);
+        background-color: var(--bg-general);
         color: var(--border-color);
         padding: 16px 20px;
         font-weight: 600;
@@ -339,9 +345,9 @@
 
     .custom-datagrid td {
         padding: 14px 20px;
-        border-bottom: 1px solid rgba(100, 181, 246, 0.15);
+        border-bottom: 1px solid rgba(33, 150, 243, 0.15);
         color: var(--text-sub);
-        background-color: var(--bg-container);
+        background-color: var(--bg-general);
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 
@@ -354,14 +360,14 @@
     }
 
     .custom-datagrid tr:hover td {
-        background-color: var(--bg-general);
+        background-color: var(--bg-container);
         color: var(--text-main);
     }
 
     .custom-datagrid tr.selected-row td {
-        background-color: rgba(100, 181, 246, 0.15);
+        background-color: rgba(33, 150, 243, 0.2);
         color: var(--text-main);
-        border-bottom-color: rgba(100, 181, 246, 0.4);
+        border-bottom-color: var(--border-color);
     }
 
     .custom-datagrid a {
@@ -399,7 +405,6 @@
         background-color: #f44336;
         box-shadow: 0 0 8px rgba(244, 67, 54, 0.6);
     }
-    /* ------------------------------------------------------------- */
 
     @media (min-width: 768px) {
         .paginas-form-container {
@@ -450,11 +455,11 @@
         align-items: center;
         padding: 8px 10px;
         border-radius: 40px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         width: 95%;
         max-width: 500px;
         z-index: 30;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
         transition: background-color 0.3s ease;
     }
 
@@ -478,32 +483,26 @@
     }
 
     .nav-item:hover {
-        background-color: rgba(100, 181, 246, 0.1);
+        background-color: rgba(33, 150, 243, 0.15);
         transform: translateY(-2px);
         color: var(--text-sub);
     }
 
     .nav-item.active {
         background-color: var(--bg-secondary);
-        color: var(--border-color);
+        color: #ffffff;
     }
 
     .icon-placeholder {
-        width: 24px;
-        height: 24px;
-        background-color: var(--text-inactive);
-        border-radius: 50%;
+        width: 22px;
+        height: 22px;
         margin-bottom: 4px;
+        object-fit: contain;
         transition: all 0.3s ease;
     }
 
     .nav-item:hover .icon-placeholder {
         transform: scale(1.1);
-        background-color: var(--text-sub);
-    }
-
-    .nav-item.active .icon-placeholder {
-        background-color: var(--border-color);
     }
 
     .fab {
@@ -512,9 +511,9 @@
         right: 30px;
         width: 50px;
         height: 50px;
-        background-color: #64b5f6; /* 3. Color original exacto */
+        background-color: var(--border-color);
         border-radius: 50%;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -526,7 +525,7 @@
 
     .fab:hover {
         transform: scale(1.1) rotate(90deg);
-        background-color: #81c784; /* Color hover original exacto */
+        background-color: var(--bg-secondary);
     }
 
     .fab::before {
@@ -536,7 +535,6 @@
         font-weight: bold;
     }
 
-    /* --- MENÚ FLOTANTE CON TAMAÑO VERTICAL REDUCIDO --- */
     .fab-menu {
         position: fixed;
         bottom: 160px;
@@ -544,12 +542,12 @@
         background-color: var(--bg-container);
         padding: 8px;
         border-radius: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         display: none; 
         flex-direction: column;
         gap: 5px;
         z-index: 30;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
         width: auto;
         min-width: 140px;
         transition: background-color 0.3s ease;
@@ -582,22 +580,21 @@
     }
 
     .fab-menu button.menu-action-btn:hover {
-        background-color: rgba(100, 181, 246, 0.1);
-        color: var(--text-sub);
+        background-color: rgba(33, 150, 243, 0.15);
+        color: var(--text-main);
     }
 
-    /* --- MENÚ CONTEXTUAL DEL DATAGRID CON TAMAÑO VERTICAL REDUCIDO --- */
     .row-context-menu {
         position: absolute;
         background-color: var(--bg-container);
         padding: 8px;
         border-radius: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         display: none;
         flex-direction: column;
         gap: 5px;
         z-index: 40;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
         width: auto;
         min-width: 140px;
         transition: background-color 0.3s ease;
@@ -622,7 +619,7 @@
         right: -32px;
         background: var(--bg-secondary);
         border: 2px solid var(--bg-container);
-        color: var(--text-inactive);
+        color: #ffffff;
         font-size: 16px;
         font-weight: bold;
         cursor: pointer;
@@ -636,13 +633,12 @@
         align-items: center;
         justify-content: center;
         line-height: 1;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
 
     .menu-close-x:hover {
         transform: scale(1.1) rotate(90deg);
-        background-color: rgba(100, 181, 246, 0.2);
-        color: var(--text-main);
+        background-color: var(--border-color);
     }
 
     .row-context-menu button.menu-action-btn {
@@ -660,11 +656,10 @@
     }
 
     .row-context-menu button.menu-action-btn:hover {
-        background-color: rgba(100, 181, 246, 0.1);
-        color: var(--text-sub);
+        background-color: rgba(33, 150, 243, 0.15);
+        color: var(--text-main);
     }
 
-    /* Estilos del Modal */
     .modal-overlay {
         position: fixed;
         top: 0;
@@ -684,8 +679,8 @@
         width: 100%;
         max-width: 450px;
         border-radius: 15px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-        border: 1px solid var(--bg-secondary);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+        border: 1px solid var(--border-color);
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -699,7 +694,7 @@
     }
 
     .modal-header {
-        background-color: var(--bg-secondary);
+        background-color: var(--bg-general);
         padding: 15px 20px;
         display: flex;
         align-items: center;
@@ -707,6 +702,7 @@
         color: var(--text-main);
         font-weight: 600;
         font-size: 16px;
+        border-bottom: 1px solid var(--border-color);
         transition: background-color 0.3s ease;
     }
 
@@ -740,7 +736,7 @@
         background-color: var(--bg-general);
         padding: 12px;
         border-radius: 10px;
-        border: 1px solid var(--bg-secondary);
+        border: 1px solid var(--border-color);
         transition: background-color 0.3s ease;
     }
 
@@ -760,7 +756,7 @@
     .modal-footer {
         padding: 12px 20px;
         background-color: var(--bg-container);
-        border-top: 1px solid var(--bg-secondary);
+        border-top: 1px solid var(--border-color);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -769,9 +765,9 @@
     }
 
     .modal-btn-editar {
-        background-color: var(--bg-secondary);
-        color: var(--border-color);
-        border: 1px solid var(--border-color);
+        background-color: var(--border-color);
+        color: #ffffff;
+        border: none;
         padding: 10px 20px;
         border-radius: 10px;
         cursor: pointer;
@@ -781,8 +777,7 @@
     }
 
     .modal-btn-editar:hover {
-        background-color: var(--border-color);
-        color: #ffffff;
+        background-color: var(--bg-secondary);
     }
 
     .modal-btn-eliminar {
@@ -807,11 +802,11 @@
         display: inline-flex;
         width: 100%;
         max-width: 160px;
-        background-color: var(--bg-container);
+        background-color: var(--bg-general);
         border-radius: 30px;
         padding: 3px;
-        border: 1px solid var(--bg-secondary);
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        border: 1px solid var(--border-color);
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         margin-top: 4px;
         transition: background-color 0.3s ease;
     }
@@ -832,7 +827,7 @@
     }
 
     .modal-status-pill button.active {
-        color: var(--bg-container);
+        color: #ffffff;
     }
 
     .modal-status-indicator {
@@ -845,7 +840,7 @@
         border-radius: 25px;
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
         z-index: 1;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
     .modal-status-pill[data-status="Inactivo"] .modal-status-indicator {
@@ -1081,10 +1076,12 @@
         <div class="icon-placeholder"></div>
         <span>Botón 1</span>
     </button>
+    
     <button class="nav-item" onclick="switchPage('seccion2', this)">
-        <div class="icon-placeholder"></div>
+        <img src="pagina-web.png" alt="Icono Páginas" class="icon-placeholder">
         <span>Páginas</span>
     </button>
+
     <button class="nav-item" onclick="switchPage('seccion3', this)">
         <div class="icon-placeholder"></div>
         <span>Botón 3</span>
@@ -1101,11 +1098,11 @@
     function toggleTheme() {
         const htmlElement = document.documentElement;
         const themeBtn = document.getElementById('themeBtn');
-        if (htmlElement.getAttribute('data-theme') === 'light') {
+        if (htmlElement.getAttribute('data-theme') === 'dark') {
             htmlElement.removeAttribute('data-theme');
             themeBtn.textContent = '☀️';
         } else {
-            htmlElement.setAttribute('data-theme', 'light');
+            htmlElement.setAttribute('data-theme', 'dark');
             themeBtn.textContent = '🌙';
         }
     }
