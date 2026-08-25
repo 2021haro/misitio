@@ -5,24 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JAHF</title>
 
- <link rel="icon" type="image/png" href="icono.png">
+<link rel="icon" type="image/svg+xml" href="gemini-svg.svg">
     
 <style>
-    /* GUÍA DE COLORES Y ESTRUCTURA APLICADA (Basada en tus capturas):
+    /* GUÍA DE COLORES Y ESTRUCTURA APLICADA:
     --------------------------------------------------
     Modo Claro:
-    - Fondo: #FFFFFF
+    - Fondo:                       #FFFFFF
     - Superficie (Contenedores): #F5F5F5
-    - Primario: #2196F3
-    - Secundario: #FF9800
-    - Texto: #212121
-
+    - Primario:                    #2196F3
+    - Secundario:                  #FF9800
+    - Texto:                       #212121
+    - Estado Activo (Verde):       #4caf50
+    - Estado Inactivo (Rojo):      #f44336
+    - Filtro Todos:                #2196F3
+    - Filtro Activos (Verde):      #4caf50
+    - Filtro Inactivos (Rojo):     #f44336
+         
     Modo Oscuro:
-    - Fondo: #121212
+    - Fondo:                       #121212
     - Superficie (Contenedores): #1e1e1e
-    - Primario: #67b0eb
-    - Secundario: #eda945
-    - Texto: #dedede
+    - Primario:                    #67b0eb
+    - Secundario:                  #eda945
+    - Texto:                       #dedede
+    - Estado Activo (Verde):       #4caf50
+    - Estado Inactivo (Rojo):      #f44336
+    - Filtro Todos:                #67b0eb
+    - Filtro Activos (Verde):      #4caf50
+    - Filtro Inactivos (Rojo):     #f44336
     */
 
     :root {
@@ -84,10 +94,21 @@
         z-index: 30;
     }
 
+    .btn-notif svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--text-main);
+        transition: stroke 0.3s ease;
+    }
+
     .btn-notif:hover {
         transform: scale(1.1) rotate(15deg);
         background-color: var(--border-color);
         color: #ffffff;
+    }
+
+    .btn-notif:hover svg {
+        stroke: #ffffff;
     }
 
     .btn-theme {
@@ -109,35 +130,85 @@
         z-index: 30;
     }
 
+    .btn-theme svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--text-main);
+        fill: none;
+        transition: stroke 0.3s ease, fill 0.3s ease, transform 0.5s ease;
+    }
+
     .btn-theme:hover {
         transform: scale(1.1) rotate(-15deg);
         background-color: var(--border-color);
         color: #ffffff;
     }
 
-    .content-container {
-        width: 100%;
-        max-width: 1200px;
-        min-height: calc(100vh - 20px);
+    .btn-theme:hover svg {
+        stroke: #ffffff;
+    }
+
+    .btn-fullscreen {
+        position: fixed;
+        top: 65px;
+        left: 20px;
+        width: 35px;
+        height: 35px;
         background-color: var(--bg-container);
-        border-radius: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        border-radius: 50%;
         display: flex;
-        flex-direction: column;
-        z-index: 10;
-        padding: 30px;
-        transition: background-color 0.3s ease;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        z-index: 30;
+    }
+
+    .btn-fullscreen svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--text-main);
+        fill: none;
+        transition: stroke 0.3s ease;
+    }
+
+    /* Ocultar dinámicamente un icono según el estado de pantalla completa */
+    .btn-fullscreen .icon-minimize {
+        display: none;
+    }
+
+    .btn-fullscreen.is-fullscreen .icon-maximize {
+        display: none;
+    }
+
+    .btn-fullscreen.is-fullscreen .icon-minimize {
+        display: block;
+    }
+
+    .btn-fullscreen:hover {
+        transform: scale(1.1);
+        background-color: var(--border-color);
+        color: #ffffff;
+    }
+
+    .btn-fullscreen:hover svg {
+        stroke: #ffffff;
     }
 
     .page-section {
         display: none;
         width: 100%;
+        max-width: 1200px;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
         text-align: center;
         color: var(--text-inactive);
         font-size: 18px;
+        padding: 20px;
     }
 
     .page-section.active-page {
@@ -145,8 +216,128 @@
     }
 
     .page-section h2 {
-        margin-bottom: 10px;
+        margin-bottom: 0px;
         color: var(--text-main);
+    }
+
+    .future-space {
+        width: 100%;
+        max-width: 1100px;
+        height: 120px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    /* Contenedor relativo para posicionar la lupa a la izquierda */
+    .search-container {
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        align-items: center;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 10px 16px 10px 40px; /* Padding izquierdo ampliado para dejar espacio al icono */
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        background-color: var(--bg-container);
+        color: var(--text-main);
+        font-size: 14px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        border-color: var(--bg-secondary);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* Icono de búsqueda a la izquierda */
+    .search-icon {
+        position: absolute;
+        left: 12px;
+        width: 18px;
+        height: 18px;
+        pointer-events: none;
+        color: var(--text-inactive);
+        transition: color 0.3s ease;
+    }
+
+    .search-input:focus + .search-icon {
+        color: var(--border-color);
+    }
+
+    /* Estilos para el filtro de píldoras debajo del input */
+    .filter-pills {
+        position: relative;
+        display: flex;
+        width: 100%;
+        max-width: 360px;
+        background-color: var(--bg-general);
+        border-radius: 40px;
+        padding: 3px;
+        border: 1px solid var(--border-color);
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .filter-pills button {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: var(--text-inactive);
+        padding: 6px 0;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        z-index: 2;
+        transition: color 0.3s ease;
+        outline: none;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .filter-pills button.active {
+        color: #ffffff !important;
+    }
+
+    .filter-pill-indicator {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: calc(33.33% - 2px);
+        height: calc(100% - 6px);
+        background-color: var(--border-color);
+        border-radius: 35px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+        z-index: 1;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .filter-pills[data-filter="todos"] .filter-pill-indicator {
+        transform: translateX(0%);
+        background-color: var(--border-color);
+    }
+
+    .filter-pills[data-filter="activos"] .filter-pill-indicator {
+        transform: translateX(100%);
+        background-color: #4caf50;
+    }
+
+    .filter-pills[data-filter="inactivos"] .filter-pill-indicator {
+        transform: translateX(200%);
+        background-color: #f44336;
     }
 
     .page-section p {
@@ -161,90 +352,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 15px;
-    }
-
-    .paginas-form-container {
-        position: relative;
-        width: 100%;
-        max-width: 950px;
-        background-color: var(--bg-general) !important;
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        padding: 26px 30px 18px 30px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        align-items: center;
-        margin: 20px auto 0 auto;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
-    }
-
-    .section-subtitle {
-        position: absolute;
-        top: -11px;
-        left: 24px;
-        background-color: var(--bg-general) !important;
-        padding: 0 8px;
-        color: var(--border-color);
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        z-index: 2;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .column-wrapper {
-        width: 100%;
-        max-width: 400px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .form-group {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-        max-width: 400px;
-        background-color: var(--bg-container) !important;
-        padding: 12px 14px;
-        border-radius: 12px;
-        border: 1px solid var(--border-color);
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        gap: 4px;
-        margin-top: 5px;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
-    }
-
-    .form-group label {
-        position: absolute;
-        top: -10px;
-        left: 14px;
-        background-color: var(--bg-container) !important;
-        padding: 0 6px;
-        font-size: 11px;
-        color: var(--border-color);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        z-index: 2;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .form-group input {
-        width: 100%;
-        padding: 4px 0 2px 0;
-        border-radius: 0;
-        border: none;
-        background-color: transparent;
-        color: var(--text-main);
-        outline: none;
-        font-size: 15px;
+        gap: 0px;
     }
 
     .btn-guardar {
@@ -294,7 +402,7 @@
     }
 
     .switch-pills button.active {
-        color: var(--bg-general);
+        color: #ffffff !important;
     }
 
     .pill-indicator {
@@ -303,15 +411,21 @@
         left: 4px;
         width: calc(50% - 4px);
         height: calc(100% - 8px);
-        background-color: var(--border-color);
+        background-color: #4caf50;
         border-radius: 35px;
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
         z-index: 1;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    .switch-pills[data-active="sugerencias"] .pill-indicator {
+    .switch-pills[data-active="activo"] .pill-indicator {
+        transform: translateX(0%);
+        background-color: #4caf50;
+    }
+
+    .switch-pills[data-active="inactivo"] .pill-indicator {
         transform: translateX(100%);
+        background-color: #f44336;
     }
 
     .datagrid-container {
@@ -322,7 +436,7 @@
         overflow: hidden;
         border: 1px solid var(--border-color) !important;  
         box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        margin-top: 5px;
+        margin-top: 0px;
         transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
@@ -410,107 +524,91 @@
     }
 
     @media (min-width: 768px) {
-        .paginas-form-container {
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            max-width: 1100px;
-            margin: 20px auto 0 auto;
-            padding: 26px 30px 18px 30px;
-        }
-
-        .column-wrapper {
-            flex: 1;
-            max-width: 320px;
-            margin-bottom: 0;
-            align-items: center;
-        }
-
-        .form-group {
-            max-width: 100%;
-            margin-top: 0;
-        }
-
-        .form-group-second {
-            flex: 1;
-            max-width: 320px;
-            margin-bottom: 0;
-        }
-
-        .btn-guardar {
-            height: 52px;
-            margin: 0;
-            flex-shrink: 0;
-            align-self: center;
+        .nav-item {
+            font-size: 14px;
         }
     }
 
+    /* Estilo de píldora deslizante para la barra de navegación inferior */
     .bottom-nav {
         position: fixed;
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        background-color: var(--bg-container);
+        background-color: var(--bg-general);
         display: flex;
-        justify-content: center;
         align-items: center;
-        gap: 2px;
-        padding: 6px 10px;
+        padding: 4px;
         border-radius: 40px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        width: auto;
-        max-width: 380px;
+        width: 95%;
+        max-width: 500px;
         z-index: 30;
         border: 1px solid var(--border-color);
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .bottom-pill-indicator {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: calc(25% - 4px);
+        height: calc(100% - 8px);
+        background-color: var(--border-color);
+        border-radius: 35px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+        z-index: 1;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .bottom-nav[data-active="seccion1"] .bottom-pill-indicator {
+        transform: translateX(0%);
+    }
+    .bottom-nav[data-active="seccion2"] .bottom-pill-indicator {
+        transform: translateX(100%);
+    }
+    .bottom-nav[data-active="seccion3"] .bottom-pill-indicator {
+        transform: translateX(200%);
+    }
+    .bottom-nav[data-active="seccion4"] .bottom-pill-indicator {
+        transform: translateX(300%);
     }
 
     .nav-item {
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-decoration: none;
+        color: var(--text-inactive);
+        font-size: 14px;
         cursor: pointer;
-        padding: 6px;
-        border-radius: 30px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        width: 50px;
-        height: 50px;
+        padding: 8px 0;
+        border-radius: 35px;
+        transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-align: center;
+        flex: 1;
         border: none;
         background: transparent;
         outline: none;
-        position: relative;
+        z-index: 2;
     }
 
     .nav-item:hover {
-        background-color: rgba(33, 150, 243, 0.15);
-        transform: translateY(-2px);
+        color: var(--text-sub);
     }
 
-    /* ESTILO AMPLIADO CUANDO EL BOTÓN ESTÁ SELECCIONADO */
     .nav-item.active {
-        background-color: var(--border-color);
-        width: 62px;
-        height: 62px;
-        margin: -6px -6px;
-        z-index: 5;
-        box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+        color: #ffffff !important;
     }
 
     .icon-placeholder {
-        width: 40px;
-        height: 40px;
-        margin-bottom: 0;
+        width: 22px;
+        height: 22px;
+        margin-bottom: 4px;
         object-fit: contain;
         transition: all 0.3s ease;
-    }
-
-    .nav-item.active .icon-placeholder {
-        width: 46px;
-        height: 46px;
     }
 
     .nav-item:hover .icon-placeholder {
@@ -520,7 +618,7 @@
     .fab {
         position: fixed;
         bottom: 100px;
-        right: 30px;
+        right: 20px;
         width: 50px;
         height: 50px;
         background-color: var(--border-color);
@@ -550,7 +648,7 @@
     .fab-menu {
         position: fixed;
         bottom: 160px;
-        right: 30px; 
+        right: 38px;
         background-color: var(--bg-container);
         padding: 8px;
         border-radius: 20px;
@@ -597,7 +695,7 @@
     }
 
     .row-context-menu {
-        position: absolute;
+        position: fixed;
         background-color: var(--bg-container);
         padding: 8px;
         border-radius: 20px;
@@ -742,27 +840,48 @@
     }
 
     .modal-info-item {
+        position: relative;
         display: flex;
         flex-direction: column;
-        gap: 4px;
         background-color: var(--bg-general);
-        padding: 12px;
-        border-radius: 10px;
+        padding: 12px 14px;
+        border-radius: 12px;
         border: 1px solid var(--border-color);
-        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        gap: 4px;
+        margin-top: 5px;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     .modal-info-label {
-        font-size: 12px;
+        position: absolute;
+        top: -10px;
+        left: 14px;
+        background-color: var(--bg-general) !important;
+        padding: 0 6px;
+        font-size: 11px;
         color: var(--border-color);
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
+        z-index: 2;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .modal-info-value {
         font-size: 15px;
         color: var(--text-main);
         word-break: break-all;
+    }
+
+    .modal-input-field {
+        width: 100%;
+        padding: 4px 0 2px 0;
+        border: none;
+        background-color: transparent;
+        color: var(--text-main);
+        outline: none;
+        font-size: 15px;
     }
 
     .modal-footer {
@@ -809,60 +928,7 @@
         color: #ffffff;
     }
 
-    .modal-status-pill {
-        position: relative;
-        display: inline-flex;
-        width: 100%;
-        max-width: 160px;
-        background-color: var(--bg-general);
-        border-radius: 30px;
-        padding: 3px;
-        border: 1px solid var(--border-color);
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        margin-top: 4px;
-        transition: background-color 0.3s ease;
-    }
-
-    .modal-status-pill button {
-        flex: 1;
-        background: transparent;
-        border: none;
-        color: var(--text-inactive);
-        padding: 6px 0;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-        z-index: 2;
-        transition: color 0.3s ease;
-        outline: none;
-        text-align: center;
-    }
-
-    .modal-status-pill button.active {
-        color: #ffffff;
-    }
-
-    .modal-status-indicator {
-        position: absolute;
-        top: 3px;
-        left: 3px;
-        width: calc(50% - 3px);
-        height: calc(100% - 6px);
-        background-color: var(--border-color);
-        border-radius: 25px;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
-        z-index: 1;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    .modal-status-pill[data-status="Inactivo"] .modal-status-indicator {
-        transform: translateX(100%);
-    }
-
     @media (max-width: 767px) {
-        .content-container {
-            padding: 15px;
-        }
         body {
             padding: 5px;
             padding-bottom: 85px;
@@ -872,8 +938,35 @@
 </head>
 <body>
 
-<button class="btn-theme" id="themeBtn" onclick="toggleTheme()">☀️</button>
-<button class="btn-notif" onclick="alert('Notificaciones')">🔔</button>
+<button class="btn-theme" id="themeBtn" onclick="toggleTheme()" title="Tema oscuro">
+    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+</button>
+<button class="btn-fullscreen" id="fullscreenBtn" onclick="toggleFullscreen()" title="Maximizar">
+    <!-- Icono Maximizar -->
+    <svg class="icon-maximize" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+    </svg>
+    <!-- Icono Minimizar -->
+    <svg class="icon-minimize" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 14h6m0 0v6m0-6L3 21m17-11h-6m0 0V4m0 6l7-7"></path>
+    </svg>
+</button>
+<button class="btn-notif" onclick="alert('Notificaciones')" title="Notificaciones">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+    </svg>
+</button>
 
 <div class="row-context-menu" id="rowContextMenu">
     <div class="row-context-item-first">
@@ -884,233 +977,299 @@
     <button class="menu-action-btn" onclick="alert('Eliminar registro seleccionado')">Eliminar</button>
 </div>
 
+<!-- Modal Dinámico -->
 <div class="modal-overlay" id="viewModal">
     <div class="modal-container">
         <div class="modal-header">
-            <span>Detalles del Registro</span>
+            <span id="modalTitle">Detalles de Página</span>
             <button class="modal-close-x" onclick="closeViewModal()">✕</button>
         </div>
         <div class="modal-body">
-            <div style="display: flex; flex-direction: column; gap: 4px;">
-                <span class="modal-info-label">Estado</span>
-                <div class="modal-status-pill" id="modalStatusPill" data-status="Activo">
-                    <div class="modal-status-indicator"></div>
-                    <button type="button" class="active" onclick="setModalStatus('Activo', this)">Activo</button>
-                    <button type="button" onclick="setModalStatus('Inactivo', this)">Inactivo</button>
+            <div class="modal-info-item">
+                <span class="modal-info-label" id="labelName">Sitio</span>
+                <div id="modalContentName">
+                    <span class="modal-info-value" id="modalName">--</span>
                 </div>
             </div>
-            
             <div class="modal-info-item">
-                <span class="modal-info-label">Primer campo</span>
-                <span class="modal-info-value" id="modalName">--</span>
+                <span class="modal-info-label" id="labelUrl">Url</span>
+                <div id="modalContentUrl">
+                    <span class="modal-info-value" id="modalUrl">--</span>
+                </div>
             </div>
-            <div class="modal-info-item">
-                <span class="modal-info-label">Segundo campo</span>
-                <span class="modal-info-value" id="modalUrl">--</span>
+            <!-- Campo deslizante Activo / Inactivo -->
+            <div class="modal-info-item" style="align-items: center;">
+                <span class="modal-info-label">Estado</span>
+                <div class="switch-pills" id="modalSwitchStatus" data-active="activo">
+                    <div class="pill-indicator"></div>
+                    <button type="button" class="active" onclick="switchModalStatus('activo', this)">Activo</button>
+                    <button type="button" onclick="switchModalStatus('inactivo', this)">Inactivo</button>
+                </div>
             </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" id="modalFooter">
             <button class="modal-btn-editar" onclick="alert('Acción de editar desde el modal')">Editar</button>
             <button class="modal-btn-eliminar" onclick="alert('Acción de eliminar desde el modal')">Eliminar</button>
         </div>
     </div>
 </div>
 
-<div class="content-container">
-    <div id="seccion1" class="page-section active-page">
-        <h2>Botón 1</h2>
-        <p>El Viaje Silencioso de las Ideas</p>
-    </div>
-    <div id="seccion2" class="page-section">
-        <h2>Páginas</h2>
-        <div class="paginas-layout">
-            <div class="paginas-form-container">
-                <div class="section-subtitle">GUARDAR</div>
-                <div class="column-wrapper">
-                    <div class="form-group">
-                        <label for="input1">Primer campo</label>
-                        <input type="text" id="input1" value="Texto del primer campo">
-                    </div>
-                </div>
-                <div class="form-group form-group-second">
-                    <label for="input2">Segundo campo</label>
-                    <input type="text" id="input2" value="Texto del segundo campo">
-                </div>
-                <button class="btn-guardar" onclick="alert('Guardado con éxito')">Guardar</button>
-            </div>
-
-            <div class="switch-pills" id="switchPills" data-active="actuales">
-                <div class="pill-indicator"></div>
-                <button type="button" class="active" onclick="switchTab('actuales', this)">Actuales</button>
-                <button type="button" onclick="switchTab('sugerencias', this)">Sugerencias</button>
-            </div>
-
-            <div class="datagrid-container">
-                <table class="custom-datagrid" id="miDatagrid">
-                    <thead>
-                        <tr>
-                            <th class="status-cell"></th>
-                            <th>Primer campo</th>
-                            <th>Segundo campo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Alfa</td>
-                            <td><a href="https://ejemplo.com/alfa" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/alfa</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
-                            <td>Registro Beta</td>
-                            <td><a href="https://ejemplo.com/beta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/beta</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Gamma</td>
-                            <td><a href="https://ejemplo.com/gamma" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/gamma</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Delta</td>
-                            <td><a href="https://ejemplo.com/delta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/delta</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
-                            <td>Registro Épsilon</td>
-                            <td><a href="https://ejemplo.com/epsilon" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/epsilon</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Zeta</td>
-                            <td><a href="https://ejemplo.com/zeta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/zeta</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Eta</td>
-                            <td><a href="https://ejemplo.com/eta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/eta</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
-                            <td>Registro Theta</td>
-                            <td><a href="https://ejemplo.com/theta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/theta</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Iota</td>
-                            <td><a href="https://ejemplo.com/iota" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/iota</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Kappa</td>
-                            <td><a href="https://ejemplo.com/kappa" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/kappa</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
-                            <td>Registro Lambda</td>
-                            <td><a href="https://ejemplo.com/lambda" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/lambda</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Mu</td>
-                            <td><a href="https://ejemplo.com/mu" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/mu</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Nu</td>
-                            <td><a href="https://ejemplo.com/nu" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/nu</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
-                            <td>Registro Xi</td>
-                            <td><a href="https://ejemplo.com/xi" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/xi</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Ómicron</td>
-                            <td><a href="https://ejemplo.com/omicron" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/omicron</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
-                            <td>Registro Pi</td>
-                            <td><a href="https://ejemplo.com/pi" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/pi</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Rho</td>
-                            <td><a href="https://ejemplo.com/rho" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/rho</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Sigma</td>
-                            <td><a href="https://ejemplo.com/sigma" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/sigma</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-inactive"></span></td>
-                            <td>Registro Tau</td>
-                            <td><a href="https://ejemplo.com/tau" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/tau</a></td>
-                        </tr>
-                        <tr onclick="selectRow(event, this)">
-                            <td class="status-cell"><span class="status-dot status-active"></span></td>
-                            <td>Registro Ómega</td>
-                            <td><a href="https://ejemplo.com/omega" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/omega</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+<div id="seccion1" class="page-section active-page">
+    <h2>Botón 1</h2>
+    <p>El Viaje Silencioso de las Ideas</p>
+</div>
+<div id="seccion2" class="page-section">
+    <h2>Páginas</h2>
+    <div class="future-space">
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Buscar por nombre de sitio..." onkeyup="filterTable()">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </div>
+        
+        <!-- Píldora de filtros: Todos / Activos / Inactivos -->
+        <div class="filter-pills" id="filterPills" data-filter="todos">
+            <div class="filter-pill-indicator"></div>
+            <button type="button" class="active" onclick="setFilter('todos', this)">
+                <svg style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:2px;" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <span>Todos</span>
+            </button>
+            <button type="button" onclick="setFilter('activos', this)">
+                <svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+                <span>Activos</span>
+            </button>
+            <button type="button" onclick="setFilter('inactivos', this)">
+                <svg style="width:16px;height:16px;fill:none;stroke:#f44336;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+                <span>Inactivos</span>
+            </button>
         </div>
     </div>
-    <div id="seccion3" class="page-section">
-        <h2>Botón 3</h2>
+    <div class="paginas-layout">
+        <div class="datagrid-container">
+            <table class="custom-datagrid" id="miDatagrid">
+                <thead>
+                    <tr>
+                        <th class="status-cell"></th>
+                        <th>Sitio</th>
+                        <th>Url</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Alfa</td>
+                        <td><a href="https://ejemplo.com/alfa" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/alfa</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#f44336;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg></td>
+                        <td>Registro Beta</td>
+                        <td><a href="https://ejemplo.com/beta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/beta</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Gamma</td>
+                        <td><a href="https://ejemplo.com/gamma" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/gamma</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Delta</td>
+                        <td><a href="https://ejemplo.com/delta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/delta</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#f44336;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg></td>
+                        <td>Registro Épsilon</td>
+                        <td><a href="https://ejemplo.com/epsilon" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/epsilon</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Zeta</td>
+                        <td><a href="https://ejemplo.com/zeta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/zeta</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Eta</td>
+                        <td><a href="https://ejemplo.com/eta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/eta</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#f44336;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg></td>
+                        <td>Registro Theta</td>
+                        <td><a href="https://ejemplo.com/theta" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/theta</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Iota</td>
+                        <td><a href="https://ejemplo.com/iota" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/iota</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Kappa</td>
+                        <td><a href="https://ejemplo.com/kappa" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/kappa</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#f44336;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg></td>
+                        <td>Registro Lambda</td>
+                        <td><a href="https://ejemplo.com/lambda" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/lambda</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Mu</td>
+                        <td><a href="https://ejemplo.com/mu" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/mu</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Nu</td>
+                        <td><a href="https://ejemplo.com/nu" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/nu</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#f44336;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg></td>
+                        <td>Registro Xi</td>
+                        <td><a href="https://ejemplo.com/xi" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/xi</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Ómicron</td>
+                        <td><a href="https://ejemplo.com/omicron" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/omicron</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#f44336;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg></td>
+                        <td>Registro Pi</td>
+                        <td><a href="https://ejemplo.com/pi" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/pi</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Rho</td>
+                        <td><a href="https://ejemplo.com/rho" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/rho</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Sigma</td>
+                        <td><a href="https://ejemplo.com/sigma" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/sigma</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#f44336;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg></td>
+                        <td>Registro Tau</td>
+                        <td><a href="https://ejemplo.com/tau" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/tau</a></td>
+                    </tr>
+                    <tr onclick="selectRow(event, this)">
+                        <td class="status-cell"><svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></td>
+                        <td>Registro Ómega</td>
+                        <td><a href="https://ejemplo.com/omega" target="_blank" onclick="event.stopPropagation()">https://ejemplo.com/omega</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div id="seccion4" class="page-section">
-        <h2>Botón 4</h2>
-    </div>
+</div>
+<div id="seccion3" class="page-section">
+    <h2>Botón 3</h2>
+</div>
+<div id="seccion4" class="page-section">
+    <h2>Botón 4</h2>
 </div>
 
 <button class="fab" id="fabBtn" onclick="toggleMenu(event)"></button>
 <div class="fab-menu" id="fabMenu">
     <div class="fab-menu-item-first">
-        <button class="menu-action-btn" onclick="alert('Opción 1')">Menú Botón 1</button>
+        <button class="menu-action-btn" onclick="openSaveModal()">Agregar Página</button>
         <button class="menu-close-x" onclick="closeFabMenu(event)">✕</button>
     </div>
     <button class="menu-action-btn" onclick="alert('Opción 2')">Menú Diálogo 2</button>
 </div>
 
-<nav class="bottom-nav">
+<nav class="bottom-nav" id="bottomNav" data-active="seccion1">
+    <div class="bottom-pill-indicator"></div>
     <button class="nav-item active" onclick="switchPage('seccion1', this)">
-        <img src="./pagina-web.png" alt="Icono Páginas" class="icon-placeholder">
+        <div class="icon-placeholder"></div>
+        <span>Botón 1</span>
     </button>
+    
     <button class="nav-item" onclick="switchPage('seccion2', this)">
         <img src="./pagina-web.png" alt="Icono Páginas" class="icon-placeholder">
+        <span>Páginas</span>
     </button>
+
     <button class="nav-item" onclick="switchPage('seccion3', this)">
-        <img src="./pagina-web.png" alt="Icono Páginas" class="icon-placeholder">
+        <div class="icon-placeholder"></div>
+        <span>Botón 3</span>
     </button>
     <button class="nav-item" onclick="switchPage('seccion4', this)">
-        <img src="./pagina-web.png" alt="Icono Páginas" class="icon-placeholder">
+        <div class="icon-placeholder"></div>
+        <span>Botón 4</span>
     </button>
 </nav>
 
 <script>
     let currentRow = null;
+    let currentFilterStatus = 'todos';
 
     function toggleTheme() {
         const htmlElement = document.documentElement;
         const themeBtn = document.getElementById('themeBtn');
+        const svg = themeBtn.querySelector('svg');
+        
         if (htmlElement.getAttribute('data-theme') === 'dark') {
             htmlElement.removeAttribute('data-theme');
-            themeBtn.textContent = '☀️';
+            themeBtn.setAttribute('title', 'Tema oscuro');
+            svg.innerHTML = `
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            `;
         } else {
             htmlElement.setAttribute('data-theme', 'dark');
-            themeBtn.textContent = '🌙';
+            themeBtn.setAttribute('title', 'Tema claro');
+            svg.innerHTML = `
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            `;
         }
     }
+
+    function toggleFullscreen() {
+        const btn = document.getElementById('fullscreenBtn');
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().then(() => {
+                btn.classList.add('is-fullscreen');
+                btn.setAttribute('title', 'Minimizar');
+            }).catch(err => {
+                alert(`Error al intentar activar pantalla completa: ${err.message}`);
+            });
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen().then(() => {
+                    btn.classList.remove('is-fullscreen');
+                    btn.setAttribute('title', 'Maximizar');
+                });
+            }
+        }
+    }
+
+    // Sincronizar estado visual y tooltip si se sale de pantalla completa mediante la tecla ESC
+    document.addEventListener('fullscreenchange', () => {
+        const btn = document.getElementById('fullscreenBtn');
+        if (!document.fullscreenElement) {
+            btn.classList.remove('is-fullscreen');
+            btn.setAttribute('title', 'Maximizar');
+        } else {
+            btn.classList.add('is-fullscreen');
+            btn.setAttribute('title', 'Minimizar');
+        }
+    });
 
     function switchPage(sectionId, clickedButton) {
         const sections = document.querySelectorAll('.page-section');
         sections.forEach(sec => sec.classList.remove('active-page'));
         document.getElementById(sectionId).classList.add('active-page');
+
+        const bottomNav = document.getElementById('bottomNav');
+        bottomNav.setAttribute('data-active', sectionId);
 
         const items = document.querySelectorAll('.nav-item');
         items.forEach(item => item.classList.remove('active'));
@@ -1118,22 +1277,71 @@
         window.scrollTo(0, 0);
     }
 
-    function switchTab(tabName, buttonElement) {
-        const container = document.getElementById('switchPills');
-        container.setAttribute('data-active', tabName);
+    function setFilter(status, buttonElement) {
+        currentFilterStatus = status;
+        const container = document.getElementById('filterPills');
+        container.setAttribute('data-filter', status);
 
         const buttons = container.querySelectorAll('button');
         buttons.forEach(btn => btn.classList.remove('active'));
         buttonElement.classList.add('active');
+
+        filterTable();
     }
 
-    function setModalStatus(statusName, buttonElement) {
-        const container = document.getElementById('modalStatusPill');
-        container.setAttribute('data-status', statusName);
+    function filterTable() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById('miDatagrid');
+        const tr = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < tr.length; i++) {
+            const tdSitio = tr[i].getElementsByTagName('td')[1];
+            const statusCell = tr[i].getElementsByTagName('td')[0];
+            
+            if (tdSitio && statusCell) {
+                const txtValue = tdSitio.textContent || tdSitio.innerText;
+                const svgIcon = statusCell.querySelector('svg');
+                
+                const matchesText = txtValue.toLowerCase().indexOf(filter) > -1;
+                let matchesStatus = true;
+
+                if (currentFilterStatus === 'activos') {
+                    matchesStatus = svgIcon && svgIcon.querySelector('path').getAttribute('d').includes('m9 12');
+                } else if (currentFilterStatus === 'inactivos') {
+                    matchesStatus = svgIcon && svgIcon.querySelector('path').getAttribute('d').includes('m15 9');
+                }
+
+                if (matchesText && matchesStatus) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function switchModalStatus(statusName, buttonElement) {
+        const container = document.getElementById('modalSwitchStatus');
+        container.setAttribute('data-active', statusName);
 
         const buttons = container.querySelectorAll('button');
         buttons.forEach(btn => btn.classList.remove('active'));
         buttonElement.classList.add('active');
+
+        if (currentRow) {
+            const statusCell = currentRow.querySelector('.status-cell');
+            const btnToggle = document.getElementById('btnToggleStatus');
+            if (statusCell) {
+                if (statusName === 'activo') {
+                    statusCell.innerHTML = `<svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>`;
+                    if (btnToggle) btnToggle.textContent = 'Desactivar';
+                } else {
+                    statusCell.innerHTML = `<svg style="width:16px;height:16px;fill:none;stroke:#f44336;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>`;
+                    if (btnToggle) btnToggle.textContent = 'Activar';
+                }
+            }
+        }
     }
 
     function toggleMenu(event) {
@@ -1158,9 +1366,10 @@
         rowElement.classList.add('selected-row');
         currentRow = rowElement;
 
-        const dot = rowElement.querySelector('.status-dot');
+        const statusCell = rowElement.querySelector('.status-cell');
         const btnToggle = document.getElementById('btnToggleStatus');
-        if (dot && dot.classList.contains('status-active')) {
+        const svgIcon = statusCell ? statusCell.querySelector('svg') : null;
+        if (svgIcon && svgIcon.querySelector('path').getAttribute('d').includes('m9 12')) {
             btnToggle.textContent = 'Desactivar';
         } else {
             btnToggle.textContent = 'Activar';
@@ -1169,9 +1378,11 @@
         document.getElementById('fabMenu').style.display = 'none';
 
         const rowMenu = document.getElementById('rowContextMenu');
+        rowMenu.style.display = 'none';
+
         const rect = rowElement.getBoundingClientRect();
         let posX = event.clientX;
-        let posY = rect.bottom + window.scrollY + 5;
+        let posY = rect.bottom + 5;
 
         const screenWidth = window.innerWidth;
         const menuWidth = 140;
@@ -1186,17 +1397,39 @@
 
     function toggleRowStatus() {
         if (!currentRow) return;
-        const dot = currentRow.querySelector('.status-dot');
-        if (dot) {
-            if (dot.classList.contains('status-active')) {
-                dot.classList.remove('status-active');
-                dot.classList.add('status-inactive');
-                document.getElementById('btnToggleStatus').textContent = 'Activar';
+        const statusCell = currentRow.querySelector('.status-cell');
+        const btnToggle = document.getElementById('btnToggleStatus');
+        const modalContainer = document.getElementById('modalSwitchStatus');
+        
+        if (statusCell) {
+            const svgIcon = statusCell.querySelector('svg');
+            const isActive = svgIcon && svgIcon.querySelector('path').getAttribute('d').includes('m9 12');
+
+            if (isActive) {
+                statusCell.innerHTML = `<svg style="width:16px;height:16px;fill:none;stroke:#f44336;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>`;
+                btnToggle.textContent = 'Activar';
+                
+                if (modalContainer) {
+                    modalContainer.setAttribute('data-active', 'inactivo');
+                    const modalButtons = modalContainer.querySelectorAll('button');
+                    modalButtons.forEach((b, index) => {
+                        if (index === 1) b.classList.add('active');
+                        else b.classList.remove('active');
+                    });
+                }
                 alert('Registro desactivado');
             } else {
-                dot.classList.remove('status-inactive');
-                dot.classList.add('status-active');
-                document.getElementById('btnToggleStatus').textContent = 'Desactivar';
+                statusCell.innerHTML = `<svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>`;
+                btnToggle.textContent = 'Desactivar';
+
+                if (modalContainer) {
+                    modalContainer.setAttribute('data-active', 'activo');
+                    const modalButtons = modalContainer.querySelectorAll('button');
+                    modalButtons.forEach((b, index) => {
+                        if (index === 0) b.classList.add('active');
+                        else b.classList.remove('active');
+                    });
+                }
                 alert('Registro activado');
             }
         }
@@ -1214,30 +1447,76 @@
     function openViewModal() {
         if (!currentRow) return;
 
-        document.getElementById('rowContextMenu').style.display = 'none';
+        const rowMenu = document.getElementById('rowContextMenu');
+        rowMenu.style.display = 'none';
+        rowMenu.style.left = '-9999px';
+        rowMenu.style.top = '-9999px';
 
-        const dot = currentRow.querySelector('.status-dot');
-        const isActive = dot && dot.classList.contains('status-active');
-        const statusText = isActive ? 'Activo' : 'Inactivo';
-
-        const pillContainer = document.getElementById('modalStatusPill');
-        pillContainer.setAttribute('data-status', statusText);
-        const pillButtons = pillContainer.querySelectorAll('button');
-        pillButtons.forEach(btn => {
-            if (btn.textContent.trim() === statusText) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
+        document.getElementById('modalTitle').textContent = 'Detalles de Página';
+        
+        document.getElementById('labelName').textContent = 'Sitio';
+        document.getElementById('labelUrl').textContent = 'Url';
 
         const cells = currentRow.querySelectorAll('td');
         const nameText = cells[1] ? cells[1].textContent.trim() : '';
         const urlAnchor = currentRow.querySelector('a');
         const urlText = urlAnchor ? urlAnchor.href : '';
 
-        document.getElementById('modalName').textContent = nameText;
-        document.getElementById('modalUrl').textContent = urlText;
+        const statusCell = currentRow.querySelector('.status-cell');
+        const svgIcon = statusCell ? statusCell.querySelector('svg') : null;
+        const statusVal = (svgIcon && svgIcon.querySelector('path').getAttribute('d').includes('m15 9')) ? 'inactivo' : 'activo';
+        const modalSwitch = document.getElementById('modalSwitchStatus');
+        modalSwitch.setAttribute('data-active', statusVal);
+        const modalBtns = modalSwitch.querySelectorAll('button');
+        modalBtns.forEach((b, index) => {
+            if ((statusVal === 'activo' && index === 0) || (statusVal === 'inactivo' && index === 1)) {
+                b.classList.add('active');
+            } else {
+                b.classList.remove('active');
+            }
+        });
+
+        document.getElementById('modalContentName').innerHTML = `
+            <input type="text" id="modalInput1" class="modal-input-field" value="${nameText}" placeholder="Ej. Sitio">
+        `;
+        document.getElementById('modalContentUrl').innerHTML = `
+            <input type="text" id="modalInput2" class="modal-input-field" value="${urlText}" placeholder="Ej. http://sitio.com">
+        `;
+
+        document.getElementById('modalFooter').innerHTML = `
+            <button class="modal-btn-editar" onclick="alert('Acción de editar desde el modal')">Editar</button>
+            <button class="modal-btn-eliminar" onclick="alert('Acción de eliminar desde el modal')">Eliminar</button>
+        `;
+
+        document.getElementById('viewModal').style.display = 'flex';
+    }
+
+    function openSaveModal() {
+        document.getElementById('fabMenu').style.display = 'none';
+
+        document.getElementById('modalTitle').textContent = 'Agregar Página';
+
+        document.getElementById('labelName').textContent = 'Sitio';
+        document.getElementById('labelUrl').textContent = 'Url';
+
+        const modalSwitch = document.getElementById('modalSwitchStatus');
+        modalSwitch.setAttribute('data-active', 'activo');
+        const modalBtns = modalSwitch.querySelectorAll('button');
+        modalBtns.forEach((b, index) => {
+            if (index === 0) b.classList.add('active');
+            else b.classList.remove('active');
+        });
+
+        document.getElementById('modalContentName').innerHTML = `
+            <input type="text" id="modalInput1" class="modal-input-field" placeholder="Ej. Sitio">
+        `;
+        document.getElementById('modalContentUrl').innerHTML = `
+            <input type="text" id="modalInput2" class="modal-input-field" placeholder="Ej. http://sitio.com">
+        `;
+
+        document.getElementById('modalFooter').innerHTML = `
+            <button class="btn-guardar" style="width: 100%; margin: 0;" onclick="alert('Guardado con éxito desde el modal'); closeViewModal();">Guardar</button>
+        `;
 
         document.getElementById('viewModal').style.display = 'flex';
     }
