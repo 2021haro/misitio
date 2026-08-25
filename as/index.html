@@ -411,6 +411,10 @@
         transition: color 0.3s ease;
         outline: none;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
     }
 
     /* Estilo Outline para switch-pills cuando está seleccionado */
@@ -935,8 +939,8 @@
         background-color: rgba(244, 67, 54, 0.1);
         color: #f44336;
         border: 1px solid #f44336;
-        padding: 8px 22px;
-        border-radius: 35px;
+        padding: 10px 20px;
+        border-radius: 10px;
         cursor: pointer;
         font-weight: bold;
         font-size: 14px;
@@ -1024,8 +1028,14 @@
                 <span class="modal-info-label">Estado</span>
                 <div class="switch-pills" id="modalSwitchStatus" data-active="activo">
                     <div class="pill-indicator"></div>
-                    <button type="button" class="active" onclick="switchModalStatus('activo', this)">Activo</button>
-                    <button type="button" onclick="switchModalStatus('inactivo', this)">Inactivo</button>
+                    <button type="button" class="active" onclick="switchModalStatus('activo', this)">
+                        <svg style="width:16px;height:16px;fill:none;stroke:#4caf50;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+                        <span>Activo</span>
+                    </button>
+                    <button type="button" onclick="switchModalStatus('inactivo', this)">
+                        <svg style="width:16px;height:16px;fill:none;stroke:#f44336;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+                        <span>Inactivo</span>
+                    </button>
                 </div>
             </div>
         </div>
