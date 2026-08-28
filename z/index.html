@@ -1366,49 +1366,13 @@ function changeSection(section, button) {
         `;
     } else if (section === "pc") {
         statsContainer.className = "stats";
-        statsContainer.style.marginLeft = "20px";
-        statsContainer.style.marginRight = "auto";
-        statsContainer.innerHTML = `
-            <div class="stat">
-                <div class="stat-icon">
-                    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                </div>
-                <div>
-                    <span class="stat-label">Apps PC</span>
-                    <strong class="stat-number" id="pcCount">${items.filter(x => x.type === "pc").length}</strong>
-                </div>
-            </div>
-        `;
+        statsContainer.innerHTML = "";
     } else if (section === "android") {
         statsContainer.className = "stats";
-        statsContainer.style.marginLeft = "20px";
-        statsContainer.style.marginRight = "auto";
-        statsContainer.innerHTML = `
-            <div class="stat">
-                <div class="stat-icon">
-                    <svg class="android-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg>
-                </div>
-                <div>
-                    <span class="stat-label">Apps Android</span>
-                    <strong class="stat-number" id="androidCount">${items.filter(x => x.type === "android").length}</strong>
-                </div>
-            </div>
-        `;
+        statsContainer.innerHTML = "";
     } else if (section === "pages") {
         statsContainer.className = "stats";
-        statsContainer.style.marginLeft = "20px";
-        statsContainer.style.marginRight = "auto";
-        statsContainer.innerHTML = `
-            <div class="stat">
-                <div class="stat-icon">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                </div>
-                <div>
-                    <span class="stat-label">Páginas</span>
-                    <strong class="stat-number" id="pageCount">${items.filter(x => x.type === "page").length}</strong>
-                </div>
-            </div>
-        `;
+        statsContainer.innerHTML = "";
     }
  
     updateActions();  
