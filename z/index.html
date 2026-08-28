@@ -1,1 +1,1842 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAHF Dashboard</title>
 
+<style>
+:root{
+    --primary:#2563eb;
+    --primary-hover:#1d4ed8;
+    --primary-light:#eff6ff;
+    --bg:#f5f7fb;
+    --card:#fff;
+    --border:#e5e7eb;
+    --text:#111827;
+    --muted:#64748b;
+    --success:#16a34a;
+    --danger:#dc2626;
+}
+
+[data-theme="dark"]{
+    --bg:#0b1120;
+    --card:#111827;
+    --border:#263244;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --primary-light:#172554;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:'Samsung Sans','SamsungOne',Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+
+/* ================= TOPBAR (RESPONSIVA) ================= */
+
+.topbar{
+    position:sticky;
+    top:0;
+    width:100%;
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 20px;
+    z-index:100;
+    gap:15px;
+}
+
+.nav{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    flex-wrap:wrap;
+    flex: 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-title{
+    display:none;
+}
+
+.nav-item{
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    padding:8px 12px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    font-weight:bold;
+    text-align:left;
+    white-space:nowrap;
+}
+
+.nav-item:hover{
+    background:var(--bg);
+    color:var(--text);
+}
+
+.nav-item:hover svg {
+    stroke: var(--text);
+}
+
+.nav-item.active{
+    background:var(--primary-light);
+    color:var(--primary);
+}
+
+.nav-item.active svg {
+    stroke: var(--primary);
+}
+
+.nav-icon{
+    font-size:15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--muted);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nav-item:hover .nav-icon svg,
+.nav-item.active .nav-icon svg {
+    stroke: var(--primary);
+}
+
+.nav-item .android-icon {
+    stroke: var(--muted);
+    fill: none;
+}
+
+.nav-item:hover .android-icon {
+    stroke: var(--text);
+    fill: none;
+}
+
+.nav-item.active .android-icon {
+    stroke: var(--primary);
+    fill: none;
+}
+
+.storage-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-shrink:0;
+    margin-left: auto;
+}
+
+.storage{
+    padding:6px 10px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    width:160px;
+}
+
+.storage-head{
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    margin-bottom:3px;
+}
+
+.progress{
+    height:5px;
+    background:var(--border);
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress div{
+    width:68%;
+    height:100%;
+    background:var(--primary);
+}
+
+.storage small{
+    display:none;
+}
+
+
+/* ================= MAIN ================= */
+
+.main{
+    min-height:calc(100vh - 70px);
+}
+
+.header{
+    display:none;
+}
+
+.floating-menu-btn{
+    display:none;
+}
+
+.content{
+    padding:28px;
+    max-width:1900px;
+    margin:auto;
+}
+
+
+/* ================= ESTADISTICAS ================= */
+
+.stats{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 0;
+    margin-left: 20px;
+    margin-right: auto;
+}
+
+.stat{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:8px 12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width: 170px;
+}
+
+.stat-icon{
+    width: 32px;
+    height: 32px;
+    background:var(--primary-light);
+    color:var(--primary);
+    border-radius: 8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.stat-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--primary);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.stat-icon svg.android-icon {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.stat-label{
+    display:block;
+    color:var(--muted);
+    font-size: 10px;
+    margin-bottom: 1px;
+}
+
+.stat-number{
+    font-size: 16px;
+    line-height: 1.1;
+}
+
+
+/* ================= TITULO ================= */
+
+.section-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:18px;
+    flex-wrap: wrap;
+}
+
+.section-title {
+    flex-shrink: 0;
+}
+
+.section-title h2{
+    font-size:20px;
+}
+
+.section-title p{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:5px;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-shrink: 0;
+}
+
+.btn{
+    min-height:42px;
+    padding:0 15px;
+    border-radius:10px;
+    border:0;
+    font-size:12px;
+    font-weight:bold;
+    white-space:nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-primary:hover{
+    background:var(--primary-hover);
+}
+
+.btn-secondary{
+    background:var(--card);
+    color:var(--text);
+    border:1px solid var(--border);
+}
+
+.btn-secondary svg {
+    stroke: var(--text);
+}
+
+
+/* ================= TABLA ================= */
+
+.grid-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.toolbar{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    gap:10px;
+}
+
+.search{
+    flex:1;
+    position:relative;
+}
+
+.search span{
+    position:absolute;
+    left:13px;
+    top:50%;
+    transform:translateY(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.search span svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--muted);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.search input{
+    width:100%;
+    height:42px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--bg);
+    color:var(--text);
+    padding:0 12px 0 37px;
+    outline:none;
+    font-size:12px;
+}
+
+.filter{
+    height:42px;
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text);
+    border-radius:10px;
+    padding:0 12px;
+    font-size:12px;
+}
+
+.table-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:900px;
+    border-collapse:collapse;
+}
+
+th{
+    background:var(--bg);
+    color:var(--muted);
+    font-size:12px;
+    text-transform:uppercase;
+    padding:14px 17px;
+    text-align:left;
+}
+
+td{
+    padding:14px 17px;
+    border-top:1px solid var(--border);
+    font-size:12px;
+}
+
+tbody tr:hover{
+    background:var(--bg);
+}
+
+.file{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.file-icon{
+    width:36px;
+    height:36px;
+    border-radius:9px;
+    background:var(--primary-light);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.file-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--primary);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.file-icon svg.android-icon {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.file-info strong{
+    display:block;
+}
+
+.file-info small{
+    display:block;
+    color:var(--muted);
+    margin-top:3px;
+    font-size:12px;
+}
+
+.badge{
+    display:inline-flex;
+    padding:5px 9px;
+    border-radius:50px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.badge-pc{
+    background:var(--primary-light);
+    color:var(--primary);
+}
+
+.badge-android{
+    background:rgba(22,163,74,.1);
+    color:#16a34a;
+}
+
+.badge-page{
+    background:rgba(8,145,178,.1);
+    color:#0891b2;
+}
+
+.badge-active{
+    background:rgba(22,163,74,.1);
+    color:var(--success);
+}
+
+.badge-inactive{
+    background:rgba(217,119,6,.1);
+    color:#d97706;
+}
+
+.row-actions{
+    display:flex;
+    gap:6px;
+}
+
+.icon-btn{
+    width:32px;
+    height:32px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--text);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.icon-btn:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.icon-btn:hover svg {
+    stroke: var(--primary);
+}
+
+.note-button{
+    border:0;
+    background:none;
+    color:var(--primary);
+    font-size:12px;
+    font-weight:bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.note-button svg {
+    width: 13px;
+    height: 13px;
+    stroke: var(--primary);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.url{
+    color:var(--primary);
+    text-decoration:none;
+    max-width:300px;
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    font-size:12px;
+}
+
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.6);
+    backdrop-filter:blur(5px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:1000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:550px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+}
+
+.modal-header{
+    padding:18px 20px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.modal-header h3{
+    font-size:16px;
+}
+
+.close{
+    border:0;
+    background:none;
+    color:var(--muted);
+    font-size:24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--muted);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.close:hover svg {
+    stroke: var(--text);
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.form-control{
+    width:100%;
+    min-height:43px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--bg);
+    color:var(--text);
+    padding:10px 12px;
+    outline:none;
+    font-size:12px;
+}
+
+.form-control:focus{
+    border-color:var(--primary);
+}
+
+textarea.form-control{
+    min-height:90px;
+    resize:vertical;
+}
+
+
+/* ================= DROPZONE COMPACTA ================= */
+
+.dropzone{
+    border:2px dashed #dbe2ec;
+    border-radius:13px;
+    padding:18px 15px;
+    min-height:105px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    transition:.2s;
+    background:var(--card);
+}
+
+.dropzone:hover{
+    border-color:var(--primary);
+    background:var(--primary-light);
+}
+
+.dropzone.dragover{
+    border-color:var(--primary);
+    background:var(--primary-light);
+}
+
+.dropzone-icon{
+    font-size:25px;
+    line-height:1;
+    margin-bottom:7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropzone-icon svg {
+    width: 28px;
+    height: 28px;
+    stroke: var(--primary);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.dropzone strong{
+    display:block;
+    font-size:12px;
+    line-height:1.3;
+}
+
+.dropzone p{
+    margin-top:4px;
+    color:var(--primary);
+    font-size:12px;
+    line-height:1.3;
+}
+
+.selected-files{
+    margin-top:7px;
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+}
+
+.current-file{
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px;
+    margin-bottom:14px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.current-file strong{
+    display:block;
+    color:var(--text);
+    margin-bottom:3px;
+}
+
+
+/* ================= FOOTER MODAL ================= */
+
+.modal-footer{
+    padding:14px 20px;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+}
+
+
+/* ================= TOAST ================= */
+
+.toast-container{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:2000;
+}
+
+.toast{
+    background:var(--card);
+    color:var(--text);
+    border:1px solid var(--border);
+    padding:13px 16px;
+    border-radius:10px;
+    margin-top:8px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    font-size:12px;
+}
+
+
+/* ================= RESPONSIVO ================= */
+
+@media(min-width: 1400px){
+    .content{
+        padding:40px 60px;
+    }
+}
+
+/* TABLET - max 1100px */
+@media(max-width: 1100px) and (min-width: 801px){
+    .section-header.dashboard-section{
+        flex-wrap: wrap;
+        justify-content: flex-start !important;
+    }
+    .section-header.dashboard-section .section-title{
+        text-align: left;
+        width: auto;
+        flex: 0 1 auto;
+        order: 1;
+    }
+    .section-header.dashboard-section .stats{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        justify-content: flex-start !important;
+        width: auto;
+        flex: 0 0 auto;
+        flex-wrap: nowrap !important;
+        gap: 12px !important;
+        order: 2;
+    }
+    .section-header.dashboard-section .stat {
+        width: 150px !important;
+        flex: 0 0 150px !important;
+        padding: 10px 14px !important;
+    }
+    .section-header.dashboard-section .actions{
+        order: 3;
+    }
+}
+
+@media(max-width: 900px){
+    .topbar{
+        flex-direction:column;
+        align-items:stretch;
+        padding:10px 15px;
+    }
+    .nav{
+        position: static;
+        transform: none;
+        justify-content:center;
+    }
+    .storage-box{
+        justify-content:space-between;
+        width:100%;
+        margin-left: 0;
+    }
+    .storage{
+        flex:1;
+    }
+}
+
+/* MÓVIL - max 800px - SOLO PARA DASHBOARD: ESTADÍSTICAS EN FILA */
+@media(max-width: 800px){
+    .section-header.dashboard-section .stats{
+        flex-direction: row !important;
+        align-items: stretch !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        gap: 8px !important;
+        width: 100% !important;
+        flex-wrap: nowrap !important;
+        overflow-x: visible !important;
+        padding: 0 !important;
+    }
+    .section-header.dashboard-section .stat {
+        width: auto !important;
+        max-width: 100% !important;
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        padding: 10px 8px !important;
+        gap: 8px !important;
+    }
+    .section-header.dashboard-section .stat > div:last-child{
+        min-width: 0;
+        overflow: hidden;
+    }
+    .section-header.dashboard-section .stat-number {
+        font-size: 15px !important;
+        white-space: nowrap;
+    }
+    .section-header.dashboard-section .stat-icon {
+        width: 30px !important;
+        height: 30px !important;
+        flex-shrink: 0 !important;
+    }
+    .section-header.dashboard-section .stat-icon svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+    .section-header.dashboard-section .stat-label {
+        font-size: 10px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+
+    .section-header.dashboard-section{
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .section-header.dashboard-section .section-title{
+        flex: 1 1 180px;
+        min-width: 180px;
+        order: 1;
+    }
+    .section-header.dashboard-section .section-title h2 {
+        font-size: 18px;
+        text-align: left;
+    }
+    .section-header.dashboard-section .section-title p {
+        font-size: 11px;
+        text-align: left;
+    }
+    .section-header.dashboard-section .actions{
+        flex: 1 1 260px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+        order: 3;
+    }
+    .section-header.dashboard-section .actions .btn {
+        flex: 1 0 auto;
+        min-width: 100px;
+        justify-content: center;
+        font-size: 11px;
+        padding: 0 12px;
+        min-height: 38px;
+    }
+    .section-header.dashboard-section .stats {
+        flex: 1 1 260px;
+        order: 2;
+    }
+
+    .section-header:not(.dashboard-section){
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .section-header:not(.dashboard-section) .section-title{
+        flex: 1 1 180px;
+        min-width: 180px;
+    }
+    .section-header:not(.dashboard-section) .stats{
+        margin-left: 0;
+        margin-right: 0;
+        flex: 1 1 180px;
+    }
+    .section-header:not(.dashboard-section) .stat {
+        width: 100%;
+        max-width: 100%;
+        padding: 12px 16px;
+    }
+    .section-header:not(.dashboard-section) .actions{
+        flex: 1 1 200px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+    .section-header:not(.dashboard-section) .actions .btn{
+        flex: 1 0 auto;
+        min-width: 100px;
+        justify-content: center;
+        font-size: 11px;
+        padding: 0 12px;
+        min-height: 38px;
+    }
+
+    .toolbar{
+        flex-direction:column;
+    }
+    .filter{
+        width:100%;
+    }
+    .table-container {
+        overflow-x: auto;
+    }
+    table {
+        min-width: 700px;
+    }
+    .content {
+        padding: 16px;
+    }
+}
+
+@media (min-width: 100vh) and (max-width: 1399px), (hover: none) and (pointer: coarse) {
+    button, input, select, .nav-item, .icon-btn, .btn {
+        outline-offset: 3px;
+    }
+    button:focus-visible, input:focus-visible, select:focus-visible {
+        outline: 3px solid var(--primary);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- ================= TOPBAR ================= -->
+
+<header class="topbar" id="sidebar">
+
+    <nav class="nav">
+
+        <button class="nav-item active" onclick="changeSection('dashboard',this)">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></span>
+            Dashboard
+        </button>
+
+        <button class="nav-item" onclick="changeSection('pc',this)">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
+            PC
+        </button>
+
+        <button class="nav-item" onclick="changeSection('android',this)">
+            <span class="nav-icon"><svg class="android-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg></span>
+            Android
+        </button>
+
+        <button class="nav-item" onclick="changeSection('pages',this)">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
+            Páginas
+        </button>
+
+    </nav>
+
+    <div class="storage-box">
+
+        <div>
+            <button class="btn btn-secondary" onclick="toggleTheme()" id="themeButton" title="Noche">
+                <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </div>
+
+        <div class="storage">
+
+            <div class="storage-head">
+                <span>Almacenamiento</span>
+                <strong>68%</strong>
+            </div>
+
+            <div class="progress">
+                <div></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+<section class="content">
+
+<!-- ================= SECTION ================= -->
+
+<div class="section-header" id="sectionHeader">
+
+    <div class="section-title">
+        <h2 id="sectionTitle">Contenido reciente</h2>
+        <p id="sectionDescription">Administra todas tus aplicaciones y páginas.</p>
+    </div>
+
+    <!-- ================= STATS ================= -->
+    <div class="stats" id="statsContainer">
+
+        <div class="stat">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </div>
+            <div>
+                <span class="stat-label">Apps PC</span>
+                <strong class="stat-number" id="pcCount">0</strong>
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">
+                <svg class="android-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg>
+            </div>
+            <div>
+                <span class="stat-label">Apps Android</span>
+                <strong class="stat-number" id="androidCount">0</strong>
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            </div>
+            <div>
+                <span class="stat-label">Páginas</span>
+                <strong class="stat-number" id="pageCount">0</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="actions" id="sectionActions"></div>
+
+</div>
+
+
+<!-- ================= TABLE ================= -->
+
+<div class="grid-card">
+
+    <div class="toolbar">
+
+        <div class="search">
+            <span><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+            <input type="text" id="searchInput" placeholder="Buscar aplicaciones, páginas..." oninput="renderTable()">
+        </div>
+
+        <select id="statusFilter" class="filter" onchange="renderTable()">
+            <option value="all">Todos</option>
+            <option value="active">Activos</option>
+            <option value="inactive">Inactivos</option>
+        </select>
+
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr id="tableHeader"></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- ================= MODAL PC / ANDROID ================= -->
+
+<div class="modal" id="fileModal">
+<div class="modal-box">
+
+    <div class="modal-header">
+        <h3 id="fileModalTitle">Subir archivo</h3>
+        <button class="close" onclick="closeModal('fileModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label>Nombre del archivo</label>
+            <input id="fileName" class="form-control" type="text" placeholder="Ej. Mi aplicación">
+        </div>
+
+        <div class="current-file" id="currentFileBox" style="display:none"></div>
+
+        <div class="form-group">
+            <label>Archivo</label>
+            <div class="dropzone" id="dropzone">
+                <div class="dropzone-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path><polyline points="12 13 12 17"></polyline><polyline points="10 15 12 13 14 15"></polyline></svg>
+                </div>
+                <strong>Arrastra tu archivo aquí</strong>
+                <p>o haz clic para seleccionarlo</p>
+                <input type="file" id="fileInput" hidden>
+            </div>
+            <div class="selected-files" id="selectedFiles"></div>
+        </div>
+
+        <div class="form-group">
+            <label>Nota</label>
+            <textarea id="fileNote" class="form-control" placeholder="Escribe una descripción o nota para este archivo..."></textarea>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('fileModal')">Cancelar</button>
+        <button class="btn btn-primary" id="saveFileButton" onclick="saveFile()">Subir Archivo</button>
+    </div>
+
+</div>
+</div>
+
+
+<!-- ================= MODAL PAGINAS ================= -->
+
+<div class="modal" id="pageModal">
+<div class="modal-box">
+
+    <div class="modal-header">
+        <h3 id="pageModalTitle">Agregar página</h3>
+        <button class="close" onclick="closeModal('pageModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Nombre del sitio</label>
+            <input id="siteName" class="form-control" placeholder="Ej. Mi página web">
+        </div>
+        <div class="form-group">
+            <label>URL</label>
+            <input id="siteUrl" class="form-control" type="url" placeholder="https://ejemplo.com">
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('pageModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="savePage()">Guardar página</button>
+    </div>
+
+</div>
+</div>
+
+
+<!-- ================= MODAL NOTA ================= -->
+
+<div class="modal" id="noteModal">
+<div class="modal-box">
+    <div class="modal-header">
+        <h3>Nota</h3>
+        <button class="close" onclick="closeModal('noteModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div id="noteContent" style="white-space:pre-wrap; line-height:1.7; font-size:12px; color:var(--muted);"></div>
+    </div>
+</div>
+</div>
+
+
+<div class="toast-container" id="toastContainer"></div>
+
+
+<script>
+const defaultItems = [
+    // PC - 5 registros
+    { id: 101, name: "Google Chrome Setup", originalName: "chrome_installer.exe", type: "pc", size: "85.2 MB", date: "27 Ago 2026", status: "active", note: "Navegador web de Google." },
+    { id: 102, name: "Mozilla Firefox", originalName: "firefox_setup.exe", type: "pc", size: "58.4 MB", date: "27 Ago 2026", status: "active", note: "Navegador web libre y de código abierto." },
+    { id: 103, name: "VLC Media Player", originalName: "vlc_3.0.18_win64.exe", type: "pc", size: "42.1 MB", date: "26 Ago 2026", status: "active", note: "Reproductor multimedia multiformato." },
+    { id: 104, name: "Visual Studio Code", originalName: "VSCodeUserSetup-x64.exe", type: "pc", size: "94.7 MB", date: "25 Ago 2026", status: "active", note: "Editor de código fuente ligero y potente." },
+    { id: 105, name: "Spotify Desktop", originalName: "SpotifySetup.exe", type: "pc", size: "86.1 MB", date: "22 Ago 2026", status: "active", note: "Reproductor de música en streaming." },
+
+    // Android - 5 registros
+    { id: 201, name: "WhatsApp Messenger", originalName: "WhatsApp_v2.23.16.76.apk", type: "android", size: "65.4 MB", date: "27 Ago 2026", status: "active", note: "Mensajería instantánea y llamadas HD." },
+    { id: 202, name: "Telegram Official", originalName: "Telegram_v9.7.0.apk", type: "android", size: "68.2 MB", date: "27 Ago 2026", status: "active", note: "Cliente oficial de Telegram con funciones extra." },
+    { id: 203, name: "YouTube Vanced", originalName: "ReVanced_Manager_v1.4.3.apk", type: "android", size: "15.8 MB", date: "26 Ago 2026", status: "active", note: "Parcheador para ver videos de YT sin publicidad." },
+    { id: 204, name: "Netflix Mobile", originalName: "Netflix_v8.76.0.apk", type: "android", size: "92.0 MB", date: "25 Ago 2026", status: "active", note: "Plataforma de películas y series en streaming." },
+    { id: 205, name: "Spotify Premium", originalName: "Spotify_v8.8.48.523.apk", type: "android", size: "75.1 MB", date: "26 Ago 2026", status: "active", note: "Música sin anuncios y reproducción en alta calidad." },
+
+    // Páginas - 5 registros
+    { id: 301, name: "CloudPanel Home", type: "page", date: "27 Ago 2026", status: "active", url: "https://cloudpanel.io" },
+    { id: 302, name: "GitHub Repositories", type: "page", date: "26 Ago 2026", status: "active", url: "https://github.com" },
+    { id: 303, name: "Vercel Dashboard", type: "page", date: "26 Ago 2026", status: "active", url: "https://vercel.com/dashboard" },
+    { id: 304, name: "Firebase Console", type: "page", date: "25 Ago 2026", status: "active", url: "https://console.firebase.google.com" },
+    { id: 305, name: "ChatGPT OpenAI", type: "page", date: "21 Ago 2026", status: "active", url: "https://chat.openai.com" }
+];  
+ 
+let savedItems = JSON.parse(localStorage.getItem("cloudpanel_items"));  
+let items = (!savedItems || savedItems.length === 0) ? defaultItems : savedItems;  
+ 
+let currentSection = "dashboard";  
+let editingId = null;  
+let uploadType = "pc";  
+let selectedFile = null;  
+ 
+const sections = {  
+    dashboard: { title: "Dashboard", sectionTitle: "Contenido reciente", description: "Administra todas tus aplicaciones y páginas.", searchPlaceholder: "Buscar aplicaciones, páginas..." },  
+    pc: { title: "PC", sectionTitle: "PC", description: "Gestiona las aplicaciones para PC.", searchPlaceholder: "Buscar aplicaciones..." },  
+    android: { title: "Android", sectionTitle: "Android", description: "Gestiona las aplicaciones para Android.", searchPlaceholder: "Buscar aplicaciones..." },  
+    pages: { title: "Páginas", sectionTitle: "Páginas", description: "Gestiona las Páginas.", searchPlaceholder: "Buscar páginas..." }  
+};  
+ 
+function saveData() {  
+    localStorage.setItem("cloudpanel_items", JSON.stringify(items));  
+}  
+
+function updateSectionClass() {
+    const sectionHeader = document.getElementById("sectionHeader");
+    sectionHeader.classList.remove("dashboard-section");
+    if (currentSection === "dashboard") {
+        sectionHeader.classList.add("dashboard-section");
+    }
+}
+ 
+function changeSection(section, button) {  
+    currentSection = section;  
+    document.querySelectorAll(".nav-item").forEach(x => x.classList.remove("active"));  
+    button.classList.add("active");  
+    document.getElementById("sectionTitle").textContent = sections[section].sectionTitle;  
+    document.getElementById("sectionDescription").textContent = sections[section].description;  
+    document.getElementById("searchInput").placeholder = sections[section].searchPlaceholder;  
+     
+    const statsContainer = document.getElementById("statsContainer");  
+
+    updateSectionClass();
+
+    if (section === "dashboard") {
+        statsContainer.className = "stats";
+        statsContainer.style.marginLeft = "20px";
+        statsContainer.style.marginRight = "auto";
+        statsContainer.innerHTML = `
+            <div class="stat">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </div>
+                <div>
+                    <span class="stat-label">Apps PC</span>
+                    <strong class="stat-number" id="pcCount">${items.filter(x => x.type === "pc").length}</strong>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">
+                    <svg class="android-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg>
+                </div>
+                <div>
+                    <span class="stat-label">Apps Android</span>
+                    <strong class="stat-number" id="androidCount">${items.filter(x => x.type === "android").length}</strong>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+                <div>
+                    <span class="stat-label">Páginas</span>
+                    <strong class="stat-number" id="pageCount">${items.filter(x => x.type === "page").length}</strong>
+                </div>
+            </div>
+        `;
+    } else if (section === "pc") {
+        statsContainer.className = "stats";
+        statsContainer.style.marginLeft = "20px";
+        statsContainer.style.marginRight = "auto";
+        statsContainer.innerHTML = `
+            <div class="stat">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </div>
+                <div>
+                    <span class="stat-label">Apps PC</span>
+                    <strong class="stat-number" id="pcCount">${items.filter(x => x.type === "pc").length}</strong>
+                </div>
+            </div>
+        `;
+    } else if (section === "android") {
+        statsContainer.className = "stats";
+        statsContainer.style.marginLeft = "20px";
+        statsContainer.style.marginRight = "auto";
+        statsContainer.innerHTML = `
+            <div class="stat">
+                <div class="stat-icon">
+                    <svg class="android-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg>
+                </div>
+                <div>
+                    <span class="stat-label">Apps Android</span>
+                    <strong class="stat-number" id="androidCount">${items.filter(x => x.type === "android").length}</strong>
+                </div>
+            </div>
+        `;
+    } else if (section === "pages") {
+        statsContainer.className = "stats";
+        statsContainer.style.marginLeft = "20px";
+        statsContainer.style.marginRight = "auto";
+        statsContainer.innerHTML = `
+            <div class="stat">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+                <div>
+                    <span class="stat-label">Páginas</span>
+                    <strong class="stat-number" id="pageCount">${items.filter(x => x.type === "page").length}</strong>
+                </div>
+            </div>
+        `;
+    }
+ 
+    updateActions();  
+    renderTable();  
+}  
+ 
+function updateActions() {  
+    const box = document.getElementById("sectionActions");  
+    if (currentSection === "pc") {  
+        box.innerHTML = `<button class="btn btn-primary" onclick="openFileModal('pc')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir Archivo</button>`;  
+    } else if (currentSection === "android") {  
+        box.innerHTML = `<button class="btn btn-primary" onclick="openFileModal('android')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir APK</button>`;  
+    } else if (currentSection === "pages") {  
+        box.innerHTML = `<button class="btn btn-primary" onclick="openPageModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Agregar URL</button>`;  
+    } else {  
+        box.innerHTML = `  
+            <button class="btn btn-primary" onclick="openFileModal('pc')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir Archivo</button>  
+            <button class="btn btn-secondary" onclick="openFileModal('android')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir APK</button>  
+            <button class="btn btn-secondary" onclick="openPageModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Agregar URL</button>  
+        `;  
+    }  
+}  
+ 
+function getVisibleItems() {  
+    if (currentSection === "pc") return items.filter(x => x.type === "pc");  
+    if (currentSection === "android") return items.filter(x => x.type === "android");  
+    if (currentSection === "pages") return items.filter(x => x.type === "page");  
+    return items;  
+}  
+ 
+function renderTable() {  
+    const body = document.getElementById("tableBody");  
+    const header = document.getElementById("tableHeader");  
+    const search = document.getElementById("searchInput").value.toLowerCase();  
+    const status = document.getElementById("statusFilter").value;  
+ 
+    let data = getVisibleItems().filter(item => {  
+        const found = item.name.toLowerCase().includes(search) ||  
+                      (item.url || "").toLowerCase().includes(search) ||  
+                      (item.note || "").toLowerCase().includes(search);  
+        const statusOk = (status === "all" || item.status === status);  
+        return found && statusOk;  
+    });  
+ 
+    if (currentSection === "pages") {  
+        header.innerHTML = `<th>Nombre</th><th>Plataforma</th><th>URL</th><th>Fecha</th><th>Estado</th><th>Acciones</th>`;  
+    } else {  
+        header.innerHTML = `<th>Nombre</th><th>Plataforma</th><th>Tamaño</th><th>Fecha</th><th>Nota</th><th>Estado</th><th>Acciones</th>`;  
+    }  
+ 
+    if (!data.length) {  
+        body.innerHTML = `  
+            <tr>  
+                <td colspan="${currentSection === "pages" ? 6 : 7}">  
+                    <div style="text-align:center; padding:50px; color:var(--muted);">  
+                        <svg style="width:32px;height:32px;stroke:var(--muted);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;margin-bottom:10px;" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg><br>  
+                        No se encontraron registros.  
+                    </div>  
+                </td>  
+            </tr>  
+        `;  
+        return;  
+    }  
+ 
+    body.innerHTML = data.map(createRow).join("");  
+}  
+ 
+function createRow(item) {  
+    let icon = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`;  
+    let platform = "Página";  
+    let badge = "badge-page";  
+ 
+    if (item.type === "pc") {  
+        icon = `<svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`;  
+        platform = "PC";  
+        badge = "badge-pc";  
+    } else if (item.type === "android") {  
+        icon = `<svg class="android-icon android-row-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg>`;  
+        platform = "Android";  
+        badge = "badge-android";  
+    }  
+ 
+    const statusClass = (item.status === "active") ? "badge-active" : "badge-inactive";  
+    const statusText = (item.status === "active") ? "Activo" : "Inactivo";  
+ 
+    if (item.type === "page") {  
+        return `  
+        <tr>  
+            <td>  
+                <div class="file">  
+                    <div class="file-icon">${icon}</div>  
+                    <div class="file-info"><strong>${escapeHTML(item.name)}</strong></div>  
+                </div>  
+            </td>  
+            <td><span class="badge ${badge}">${platform}</span></td>  
+            <td><a class="url" href="${escapeHTML(item.url)}" target="_blank">${escapeHTML(item.url)}</a></td>  
+            <td>${item.date}</td>  
+            <td><span class="badge ${statusClass}">${statusText}</span></td>  
+            <td>  
+                <div class="row-actions">  
+                    <button class="icon-btn" onclick="openPage(${item.id})"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>  
+                    <button class="icon-btn" onclick="editItem(${item.id})"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>  
+                    <button class="icon-btn" onclick="toggleStatus(${item.id})"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></button>  
+                    <button class="icon-btn" onclick="deleteItem(${item.id})"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>  
+                </div>  
+            </td>  
+        </tr>`;  
+    }  
+ 
+    return `  
+    <tr>  
+        <td>  
+            <div class="file">  
+                <div class="file-icon">${icon}</div>  
+                <div class="file-info">  
+                    <strong>${escapeHTML(item.name)}</strong>  
+                    <small>${escapeHTML(item.originalName || "")}</small>  
+                </div>  
+            </div>  
+        </td>  
+        <td><span class="badge ${badge}">${platform}</span></td>  
+        <td>${item.size || "—"}</td>  
+        <td>${item.date}</td>  
+        <td>  
+            ${item.note ? `<button class="note-button" onclick="showNote(${item.id})"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Ver nota</button>` : `<span style="color:var(--muted)">Sin nota</span>`}  
+        </td>  
+        <td><span class="badge ${statusClass}">${statusText}</span></td>  
+        <td>  
+            <div class="row-actions">  
+                <button class="icon-btn" title="Descargar" onclick="downloadItem(${item.id})"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button>  
+                <button class="icon-btn" title="Editar" onclick="editItem(${item.id})"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>  
+                <button class="icon-btn" title="Estado" onclick="toggleStatus(${item.id})"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></button>  
+                <button class="icon-btn" title="Eliminar" onclick="deleteItem(${item.id})"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>  
+            </div>  
+        </td>  
+    </tr>`;  
+}  
+ 
+function openFileModal(type, id = null) {  
+    uploadType = type;  
+    editingId = id;  
+    selectedFile = null;  
+    document.getElementById("fileInput").value = "";  
+    document.getElementById("selectedFiles").innerHTML = "";  
+ 
+    if (id) {  
+        const item = items.find(x => x.id === id);  
+        document.getElementById("fileModalTitle").textContent = (type === "android") ? "Editar App Android" : "Editar App PC";  
+        document.getElementById("fileName").value = item.name;  
+        document.getElementById("fileNote").value = item.note || "";  
+        document.getElementById("currentFileBox").style.display = "block";  
+        document.getElementById("currentFileBox").innerHTML = `<strong>Archivo actual</strong>${escapeHTML(item.originalName || item.name)}<br>${item.size || ""}`;  
+        document.getElementById("saveFileButton").textContent = "Guardar cambios";  
+    } else {  
+        document.getElementById("fileModalTitle").textContent = (type === "android") ? "Subir App Android" : "Subir App PC";  
+        document.getElementById("fileName").value = "";  
+        document.getElementById("fileNote").value = "";  
+        document.getElementById("currentFileBox").style.display = "none";  
+        document.getElementById("saveFileButton").textContent = "Subir Archivo";  
+    }  
+    document.getElementById("fileModal").classList.add("show");  
+}  
+ 
+const fileInput = document.getElementById("fileInput");  
+const dropzone = document.getElementById("dropzone");  
+ 
+dropzone.onclick = () => fileInput.click();  
+fileInput.onchange = () => { selectedFile = fileInput.files[0] || null; showSelectedFile(); };  
+dropzone.ondragover = e => { e.preventDefault(); dropzone.classList.add("dragover"); };  
+dropzone.ondragleave = () => dropzone.classList.remove("dragover");  
+dropzone.ondrop = e => {  
+    e.preventDefault();  
+    dropzone.classList.remove("dragover");  
+    selectedFile = e.dataTransfer.files[0] || null;  
+    showSelectedFile();  
+};  
+ 
+function showSelectedFile() {  
+    if (!selectedFile) {  
+        document.getElementById("selectedFiles").innerHTML = "";  
+        return;  
+    }  
+    document.getElementById("selectedFiles").innerHTML = `📄 ${escapeHTML(selectedFile.name)} — ${formatBytes(selectedFile.size)}`;  
+}  
+ 
+function saveFile() {  
+    const name = document.getElementById("fileName").value.trim();  
+    const note = document.getElementById("fileNote").value.trim();  
+ 
+    if (!name) { toast("Escribe un nombre para el archivo."); return; }  
+ 
+    if (editingId) {  
+        const item = items.find(x => x.id === editingId);  
+        item.name = name;  
+        item.note = note;  
+        if (selectedFile) {  
+            if (uploadType === "android" && !selectedFile.name.toLowerCase().endsWith(".apk")) {  
+                toast("Para Android debes seleccionar un archivo APK.");  
+                return;  
+            }  
+            item.originalName = selectedFile.name;  
+            item.size = formatBytes(selectedFile.size);  
+        }  
+        saveData();  
+        updateStats();  
+        renderTable();  
+        closeModal("fileModal");  
+        toast("Archivo actualizado correctamente.");  
+        return;  
+    }  
+ 
+    if (!selectedFile) { toast("Selecciona un archivo."); return; }  
+    if (uploadType === "android" && !selectedFile.name.toLowerCase().endsWith(".apk")) {  
+        toast("Para Android debes seleccionar un archivo APK.");  
+        return;  
+    }  
+ 
+    items.unshift({  
+        id: Date.now(),  
+        name: name,  
+        originalName: selectedFile.name,  
+        type: uploadType,  
+        size: formatBytes(selectedFile.size),  
+        date: getToday(),  
+        status: "active",  
+        note: note  
+    });  
+ 
+    saveData();  
+    updateStats();  
+    renderTable();  
+    closeModal("fileModal");  
+    toast("Archivo agregado correctamente.");  
+}  
+ 
+function openPageModal(id = null) {  
+    editingId = id;  
+    if (id) {  
+        const item = items.find(x => x.id === id);  
+        document.getElementById("pageModalTitle").textContent = "Editar página";  
+        document.getElementById("siteName").value = item.name;  
+        document.getElementById("siteUrl").value = item.url;  
+    } else {  
+        document.getElementById("pageModalTitle").textContent = "Agregar página";  
+        document.getElementById("siteName").value = "";  
+        document.getElementById("siteUrl").value = "";  
+    }  
+    document.getElementById("pageModal").classList.add("show");  
+}  
+ 
+function savePage() {  
+    const name = document.getElementById("siteName").value.trim();  
+    const url = document.getElementById("siteUrl").value.trim();  
+ 
+    if (!name) { toast("Escribe el nombre del sitio."); return; }  
+    if (!url) { toast("Escribe la URL."); return; }  
+ 
+    try {  
+        const test = new URL(url);  
+        if (test.protocol !== "http:" && test.protocol !== "https:") throw new Error();  
+    } catch {  
+        toast("Introduce una URL válida.");  
+        return;  
+    }  
+ 
+    if (editingId) {  
+        const item = items.find(x => x.id === editingId);  
+        item.name = name;  
+        item.url = url;  
+        saveData();  
+        updateStats();  
+        renderTable();  
+        closeModal("pageModal");  
+        toast("Página actualizada correctamente.");  
+        return;  
+    }  
+ 
+    items.unshift({  
+        id: Date.now(),  
+        name: name,  
+        type: "page",  
+        date: getToday(),  
+        status: "active",  
+        url: url  
+    });  
+ 
+    saveData();  
+    updateStats();  
+    renderTable();  
+    closeModal("pageModal");  
+    toast("Página agregada correctamente.");  
+}  
+ 
+function editItem(id) {  
+    const item = items.find(x => x.id === id);  
+    if (item.type === "page") openPageModal(id);  
+    else openFileModal(item.type, id);  
+}  
+ 
+function downloadItem(id) {  
+    const item = items.find(x => x.id === id);  
+    if (item) {  
+        toast(`Iniciando descarga de "${item.name}"...`);  
+        const dummyContent = `Simulación del contenido de descarga para: ${item.name} (${item.originalName || item.name})`;  
+        const blob = new Blob([dummyContent], { type: 'application/octet-stream' });  
+        const url = URL.createObjectURL(blob);  
+        const a = document.createElement('a');  
+        a.href = url;  
+        a.download = item.originalName || `${item.name}.${item.type === 'android' ? 'apk' : 'exe'}`;  
+        document.body.appendChild(a);  
+        a.click();  
+        document.body.removeChild(a);  
+        URL.revokeObjectURL(url);  
+    }  
+}  
+ 
+function showNote(id) {  
+    const item = items.find(x => x.id === id);  
+    document.getElementById("noteContent").textContent = item.note || "Este archivo no tiene ninguna nota.";  
+    document.getElementById("noteModal").classList.add("show");  
+}  
+ 
+function toggleStatus(id) {  
+    const item = items.find(x => x.id === id);  
+    item.status = (item.status === "active") ? "inactive" : "active";  
+    saveData();  
+    renderTable();  
+    toast("Estado actualizado.");  
+}  
+ 
+function deleteItem(id) {  
+    const item = items.find(x => x.id === id);   
+    if (!item) return;  
+    if (!confirm(`¿Eliminar "${item.name}"?`)) return;  
+    items = items.filter(x => x.id !== id);  
+    saveData();  
+    updateStats();  
+    renderTable();  
+    toast("Registro eliminado.");  
+}  
+ 
+function openPage(id) {  
+    const item = items.find(x => x.id === id);  
+    if (item && item.url) window.open(item.url, "_blank");  
+}  
+ 
+function updateStats() {  
+    const pcElem = document.getElementById("pcCount");
+    const androidElem = document.getElementById("androidCount");
+    const pageElem = document.getElementById("pageCount");
+
+    if (pcElem) pcElem.textContent = items.filter(x => x.type === "pc").length;  
+    if (androidElem) androidElem.textContent = items.filter(x => x.type === "android").length;  
+    if (pageElem) pageElem.textContent = items.filter(x => x.type === "page").length;  
+}  
+ 
+fileInput.addEventListener('change', () => {  
+    if (fileInput.files.length > 0) {  
+        selectedFile = fileInput.files[0];  
+        showSelectedFile();  
+    }  
+});  
+
+function closeModal(id) {  
+    document.getElementById(id).classList.remove("show");  
+    editingId = null;  
+    selectedFile = null;  
+}  
+ 
+function toggleTheme() {  
+    const dark = document.body.dataset.theme === "dark";  
+    const btn = document.getElementById("themeButton");  
+    if (dark) {  
+        delete document.body.dataset.theme;  
+        localStorage.setItem("cloudpanel-theme", "light");  
+        btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;  
+        btn.title = "Noche";  
+    } else {  
+        document.body.dataset.theme = "dark";  
+        localStorage.setItem("cloudpanel-theme", "dark");  
+        btn.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;  
+        btn.title = "Día";  
+    }  
+}  
+ 
+if (localStorage.getItem("cloudpanel-theme") === "dark") {  
+    document.body.dataset.theme = "dark";  
+    const btn = document.getElementById("themeButton");  
+    btn.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;  
+    btn.title = "Día";  
+}  
+ 
+function toast(message) {  
+    const container = document.getElementById("toastContainer");  
+    const element = document.createElement("div");  
+    element.className = "toast";  
+    element.textContent = message;  
+    container.appendChild(element);  
+    setTimeout(() => element.remove(), 3000);  
+}  
+ 
+function formatBytes(bytes) {  
+    if (bytes === 0) return "0 Bytes";  
+    const units = ["Bytes", "KB", "MB", "GB"];  
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));  
+    return parseFloat((bytes / Math.pow(1024, i)).toFixed(1)) + " " + units[i];  
+}  
+ 
+function getToday() {  
+    const d = new Date();  
+    const months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];  
+    return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();  
+}  
+ 
+function escapeHTML(value) {  
+    return String(value).replace(/[&<>"']/g, c => ({  
+        "&": "&amp;",  
+        "<": "&lt;",  
+        ">": "&gt;",  
+        '"': "&quot;",  
+        "'": "&#039;"  
+    })[c]);  
+}  
+
+updateSectionClass();
+ 
+updateActions();  
+updateStats();  
+renderTable();  
+</script>  
+
+</body>  
+</html>
