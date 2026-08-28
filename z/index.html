@@ -235,7 +235,8 @@ button{
     display:flex;
     align-items:center;
     gap:10px;
-    width: 170px;
+    width: auto;
+    flex: 0 0 auto;
 }
 
 .stat-icon{
@@ -838,9 +839,9 @@ textarea.form-control{
         order: 2;
     }
     .section-header.dashboard-section .stat {
-        width: 150px !important;
-        flex: 0 0 150px !important;
-        padding: 10px 14px !important;
+        width: auto !important;
+        flex: 0 0 auto !important;
+        padding: 8px 12px !important;
     }
     .section-header.dashboard-section .actions{
         order: 3;
@@ -884,10 +885,10 @@ textarea.form-control{
     .section-header.dashboard-section .stat {
         width: auto !important;
         max-width: 100% !important;
-        flex: 1 1 0 !important;
+        flex: 0 0 auto !important;
         min-width: 0 !important;
-        padding: 10px 8px !important;
-        gap: 8px !important;
+        padding: 8px 10px !important;
+        gap: 6px !important;
     }
     .section-header.dashboard-section .stat > div:last-child{
         min-width: 0;
@@ -967,9 +968,10 @@ textarea.form-control{
         flex: 1 1 180px;
     }
     .section-header:not(.dashboard-section) .stat {
-        width: 100%;
+        width: auto;
         max-width: 100%;
-        padding: 12px 16px;
+        flex: 0 0 auto;
+        padding: 8px 12px;
     }
     .section-header:not(.dashboard-section) .actions{
         flex: 1 1 200px;
