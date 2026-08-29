@@ -63,26 +63,46 @@ button{
     border-bottom:1px solid var(--border);
     display:flex;
     align-items:center;
-    justify-content:space-between;
     padding:12px 20px;
     z-index:100;
     gap:15px;
 }
 
+.brand{
+    font-size:16px;
+    font-weight:bold;
+    color:var(--text);
+    white-space:nowrap;
+}
+
+.hamburger-btn{
+    display:none;
+    width:38px;
+    height:38px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--card);
+    color:var(--text);
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.hamburger-btn svg{
+    width:18px;
+    height:18px;
+    stroke:var(--text);
+    stroke-width:2;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
 .nav{
     display:flex;
     align-items:center;
-    justify-content:center;
     gap:6px;
     flex-wrap:wrap;
-    flex: 1;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.nav-title{
-    display:none;
 }
 
 .nav-item{
@@ -155,12 +175,44 @@ button{
     fill: none;
 }
 
-.storage-box{
+.topbar-actions{
     display:flex;
     align-items:center;
     gap:12px;
     flex-shrink:0;
     margin-left: auto;
+}
+
+.btn-icon{
+    width:38px;
+    height:38px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--card);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.btn-icon svg{
+    width:16px;
+    height:16px;
+    stroke:var(--text);
+    stroke-width:2;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.btn-icon:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.btn-icon:hover svg{
+    stroke:var(--primary);
 }
 
 .storage{
@@ -191,6 +243,106 @@ button{
 }
 
 .storage small{
+    display:none;
+}
+
+
+/* ================= MENÚ HAMBURGUESA (DRAWER) ================= */
+
+.drawer-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.55);
+    backdrop-filter:blur(2px);
+    z-index:290;
+    display:none;
+}
+
+.drawer-overlay.show{
+    display:block;
+}
+
+.drawer{
+    position:fixed;
+    top:0;
+    left:0;
+    height:100vh;
+    width:280px;
+    max-width:82vw;
+    background:var(--card);
+    border-right:1px solid var(--border);
+    z-index:300;
+    transform:translateX(-100%);
+    transition:transform .25s ease;
+    display:flex;
+    flex-direction:column;
+    padding:18px;
+    gap:20px;
+    overflow-y:auto;
+}
+
+.drawer.open{
+    transform:translateX(0);
+}
+
+.drawer-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.close-btn{
+    width:36px;
+    height:36px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    background:var(--card);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.close-btn svg{
+    width:16px;
+    height:16px;
+    stroke:var(--text);
+    stroke-width:2;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.drawer-nav{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.drawer-nav .nav-item{
+    width:100%;
+    justify-content:flex-start;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px 14px;
+}
+
+.drawer-footer{
+    margin-top:auto;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+}
+
+.drawer-footer .storage{
+    width:100%;
+}
+
+/* Por defecto (PC/TV) el drawer nunca se muestra */
+.drawer,
+.drawer-overlay{
     display:none;
 }
 
@@ -816,6 +968,61 @@ textarea.form-control{
     }
 }
 
+/* ===== MÓVIL Y TABLET (hasta 1100px): menú hamburguesa ===== */
+@media(max-width: 1100px){
+    .topbar{
+        display:grid;
+        grid-template-columns: 44px 1fr 44px;
+        align-items:center;
+        gap:10px;
+        padding:12px 16px;
+    }
+    .hamburger-btn{
+        display:flex;
+        grid-column:1;
+    }
+    .brand{
+        grid-column:2;
+        text-align:center;
+    }
+    .nav{
+        display:none;
+    }
+    .topbar-actions{
+        grid-column:3;
+        margin-left:0;
+        justify-content:flex-end;
+    }
+    .topbar-actions .settings-btn,
+    .topbar-actions .storage{
+        display:none;
+    }
+    .drawer,
+    .drawer-overlay{
+        display:none;
+    }
+    .drawer-overlay.show{
+        display:block;
+    }
+    .drawer.open{
+        display:flex;
+    }
+}
+
+/* ===== PC Y TV (desde 1101px): barra horizontal completa ===== */
+@media(min-width: 1101px){
+    .hamburger-btn{
+        display:none;
+    }
+    .nav{
+        display:flex;
+    }
+    .drawer,
+    .drawer-overlay{
+        display:none !important;
+    }
+}
+
 /* TABLET - max 1100px */
 @media(max-width: 1100px) and (min-width: 801px){
     .section-header.dashboard-section{
@@ -845,27 +1052,6 @@ textarea.form-control{
     }
     .section-header.dashboard-section .actions{
         order: 3;
-    }
-}
-
-@media(max-width: 900px){
-    .topbar{
-        flex-direction:column;
-        align-items:stretch;
-        padding:10px 15px;
-    }
-    .nav{
-        position: static;
-        transform: none;
-        justify-content:center;
-    }
-    .storage-box{
-        justify-content:space-between;
-        width:100%;
-        margin-left: 0;
-    }
-    .storage{
-        flex:1;
     }
 }
 
@@ -1022,56 +1208,119 @@ textarea.form-control{
 
 <!-- ================= TOPBAR ================= -->
 
-<header class="topbar" id="sidebar">
+<header class="topbar" id="topbar">
 
-    <nav class="nav">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="openMobileMenu()" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
 
-        <button class="nav-item active" onclick="changeSection('dashboard',this)">
+    <div class="brand">JAHF</div>
+
+    <nav class="nav" id="desktopNav">
+
+        <button class="nav-item active" data-section="dashboard" onclick="changeSection('dashboard')">
             <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></span>
             Dashboard
         </button>
 
-        <button class="nav-item" onclick="changeSection('pc',this)">
+        <button class="nav-item" data-section="pc" onclick="changeSection('pc')">
             <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
             PC
         </button>
 
-        <button class="nav-item" onclick="changeSection('android',this)">
+        <button class="nav-item" data-section="android" onclick="changeSection('android')">
             <span class="nav-icon"><svg class="android-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg></span>
             Android
         </button>
 
-        <button class="nav-item" onclick="changeSection('pages',this)">
+        <button class="nav-item" data-section="pages" onclick="changeSection('pages')">
             <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
             Páginas
         </button>
 
     </nav>
 
-    <div class="storage-box">
+    <div class="topbar-actions">
 
-        <div>
-            <button class="btn btn-secondary" onclick="toggleTheme()" id="themeButton" title="Noche">
-                <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            </button>
-        </div>
+        <button class="btn-icon theme-btn" onclick="toggleTheme()" id="themeButton" title="Noche">
+            <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+
+        <button class="btn-icon settings-btn" onclick="openSettings()" title="Ajustes">
+            <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
+        </button>
 
         <div class="storage">
-
             <div class="storage-head">
                 <span>Almacenamiento</span>
                 <strong>68%</strong>
             </div>
-
             <div class="progress">
                 <div></div>
             </div>
-
         </div>
 
     </div>
 
 </header>
+
+
+<!-- ================= MENÚ HAMBURGUESA (MÓVIL / TABLET) ================= -->
+
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeMobileMenu()"></div>
+
+<aside class="drawer" id="mobileDrawer">
+
+    <div class="drawer-header">
+        <button class="close-btn" onclick="closeMobileMenu()" aria-label="Cerrar menú">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <div class="brand">JAHF</div>
+    </div>
+
+    <nav class="drawer-nav" id="mobileNav">
+
+        <button class="nav-item active" data-section="dashboard" onclick="changeSection('dashboard')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></span>
+            Dashboard
+        </button>
+
+        <button class="nav-item" data-section="pc" onclick="changeSection('pc')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
+            PC
+        </button>
+
+        <button class="nav-item" data-section="android" onclick="changeSection('android')">
+            <span class="nav-icon"><svg class="android-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg></span>
+            Android
+        </button>
+
+        <button class="nav-item" data-section="pages" onclick="changeSection('pages')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
+            Páginas
+        </button>
+
+    </nav>
+
+    <div class="drawer-footer">
+
+        <button class="btn-icon settings-btn" onclick="openSettings()" title="Ajustes">
+            <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
+        </button>
+
+        <div class="storage">
+            <div class="storage-head">
+                <span>Almacenamiento</span>
+                <strong>68%</strong>
+            </div>
+            <div class="progress">
+                <div></div>
+            </div>
+        </div>
+
+    </div>
+
+</aside>
 
 
 <!-- ================= MAIN ================= -->
@@ -1319,10 +1568,11 @@ function updateSectionClass() {
     }
 }
  
-function changeSection(section, button) {  
+function changeSection(section) {  
     currentSection = section;  
-    document.querySelectorAll(".nav-item").forEach(x => x.classList.remove("active"));  
-    button.classList.add("active");  
+    document.querySelectorAll(".nav-item[data-section]").forEach(x => {
+        x.classList.toggle("active", x.dataset.section === section);
+    });
     document.getElementById("sectionTitle").textContent = sections[section].sectionTitle;  
     document.getElementById("sectionDescription").textContent = sections[section].description;  
     document.getElementById("searchInput").placeholder = sections[section].searchPlaceholder;  
@@ -1330,6 +1580,8 @@ function changeSection(section, button) {
     const statsContainer = document.getElementById("statsContainer");  
 
     updateSectionClass();
+
+    closeMobileMenu();
 
     if (section === "dashboard") {
         statsContainer.className = "stats";
@@ -1741,6 +1993,28 @@ function closeModal(id) {
     editingId = null;  
     selectedFile = null;  
 }  
+
+function openMobileMenu() {
+    document.getElementById("mobileDrawer").classList.add("open");
+    document.getElementById("drawerOverlay").classList.add("show");
+    document.body.style.overflow = "hidden";
+}
+
+function closeMobileMenu() {
+    document.getElementById("mobileDrawer").classList.remove("open");
+    document.getElementById("drawerOverlay").classList.remove("show");
+    document.body.style.overflow = "";
+}
+
+function openSettings() {
+    toast("Los ajustes estarán disponibles próximamente.");
+}
+
+window.addEventListener("resize", () => {
+    if (window.innerWidth > 1100) {
+        closeMobileMenu();
+    }
+});
  
 function toggleTheme() {  
     const dark = document.body.dataset.theme === "dark";  
