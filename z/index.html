@@ -775,6 +775,16 @@ tbody tr:hover{
     border-radius:18px;
 }
 
+.modal-box-lg{
+    max-width:550px;
+}
+
+@media(min-width: 1101px){
+    .modal-box-lg{
+        max-width:680px;
+    }
+}
+
 .modal-header{
     padding:18px 20px;
     border-bottom:1px solid var(--border);
@@ -927,6 +937,112 @@ textarea.form-control{
     display:block;
     color:var(--text);
     margin-bottom:3px;
+}
+
+
+/* ================= CONFIGURACIÓN ================= */
+
+.config-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:14px;
+}
+
+@media(min-width: 1101px){
+    .config-grid{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.config-item{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    background:var(--bg);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.config-item-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.config-item-head label.config-label{
+    font-size:12px;
+    font-weight:bold;
+    color:var(--primary);
+}
+
+.config-password-box{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    background:var(--bg);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.config-password-box strong{
+    font-size:13px;
+    color:var(--text);
+}
+
+.btn-block{
+    width:100%;
+    justify-content:center;
+}
+
+.modal-footer.split{
+    justify-content:space-between;
+}
+
+.switch{
+    position:relative;
+    display:inline-block;
+    width:40px;
+    height:22px;
+    flex-shrink:0;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.switch-slider{
+    position:absolute;
+    cursor:pointer;
+    inset:0;
+    background:var(--border);
+    border-radius:999px;
+    transition:.2s;
+}
+
+.switch-slider:before{
+    content:"";
+    position:absolute;
+    height:16px;
+    width:16px;
+    left:3px;
+    top:3px;
+    background:#fff;
+    border-radius:50%;
+    transition:.2s;
+    box-shadow:0 1px 2px rgba(0,0,0,.25);
+}
+
+.switch input:checked + .switch-slider{
+    background:var(--primary);
+}
+
+.switch input:checked + .switch-slider:before{
+    transform:translateX(18px);
 }
 
 
@@ -1521,6 +1637,110 @@ textarea.form-control{
 </div>
 
 
+<!-- ================= MODAL CONFIGURACIÓN ================= -->
+
+<div class="modal" id="settingsModal">
+<div class="modal-box modal-box-lg">
+
+    <div class="modal-header">
+        <h3>Configuración</h3>
+        <button class="close" onclick="closeModal('settingsModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="config-grid">
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Código Downloader</label>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" placeholder="Ej. 12434567...">
+                <button class="btn btn-secondary btn-block" onclick="toast('Función de editar próximamente.')">Editar</button>
+            </div>
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Información</label>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" placeholder="Ej. Información, nota, precio etc...">
+                <button class="btn btn-secondary btn-block" onclick="toast('Función de editar próximamente.')">Editar</button>
+            </div>
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Código QR Facebook</label>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" placeholder="URL el perfil de Facebook">
+                <button class="btn btn-secondary btn-block" onclick="toast('Función de editar próximamente.')">Editar</button>
+            </div>
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Código QR WhatsApp</label>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" placeholder="Ej. núm. teléfono">
+                <button class="btn btn-secondary btn-block" onclick="toast('Función de editar próximamente.')">Editar</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-footer split">
+        <button class="btn btn-secondary" onclick="openPasswordModal()">Contraseña</button>
+        <button class="btn btn-primary" onclick="closeModal('settingsModal')">Aceptar</button>
+    </div>
+
+</div>
+</div>
+
+
+<!-- ================= MODAL CONTRASEÑA ================= -->
+
+<div class="modal" id="passwordModal">
+<div class="modal-box">
+
+    <div class="modal-header">
+        <h3>Contraseña</h3>
+        <button class="close" onclick="closeModal('passwordModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="config-password-box">
+            <strong>Cambiar Contraseña</strong>
+            <input type="password" id="currentPassword" class="form-control" placeholder="Contraseña actual...">
+            <input type="password" id="newPassword" class="form-control" placeholder="Nueva contraseña...">
+        </div>
+    </div>
+
+    <div class="modal-footer split">
+        <button class="btn btn-secondary" onclick="closeModal('passwordModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="savePassword()">Guardar</button>
+    </div>
+
+</div>
+</div>
+
+
 <div class="toast-container" id="toastContainer"></div>
 
 
@@ -2018,7 +2238,27 @@ function closeMobileMenu() {
 }
 
 function openSettings() {
-    toast("La configuración estará disponible próximamente.");
+    document.getElementById("settingsModal").classList.add("show");
+}
+
+function openPasswordModal() {
+    closeModal("settingsModal");
+    document.getElementById("passwordModal").classList.add("show");
+}
+
+function savePassword() {
+    const current = document.getElementById("currentPassword").value.trim();
+    const next = document.getElementById("newPassword").value.trim();
+
+    if (!current || !next) {
+        toast("Completa ambos campos de contraseña.");
+        return;
+    }
+
+    document.getElementById("currentPassword").value = "";
+    document.getElementById("newPassword").value = "";
+    closeModal("passwordModal");
+    toast("Contraseña actualizada correctamente.");
 }
 
 const FULLSCREEN_ICON_ENTER = `<svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>`;
