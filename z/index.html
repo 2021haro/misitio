@@ -997,6 +997,85 @@ textarea.form-control{
     justify-content:center;
 }
 
+.modal-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.modal-section-title{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    color:var(--text);
+    margin-bottom:12px;
+}
+
+.modal-divider{
+    border:none;
+    border-top:1px solid var(--border);
+    margin:16px 0;
+}
+
+.time-presets{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:14px;
+}
+
+.time-preset-btn{
+    flex:1 1 auto;
+    min-width:56px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--card);
+    color:var(--text);
+    padding:8px 10px;
+    font-size:12px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.time-preset-btn:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.time-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:12px;
+}
+
+.time-grid label{
+    display:block;
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:6px;
+}
+
+.form-control-center{
+    text-align:center;
+}
+
+.timer-display{
+    width:100%;
+    min-height:43px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--bg);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
 .hidden{
     display:none !important;
 }
@@ -1762,6 +1841,134 @@ textarea.form-control{
 </div>
 
 
+<!-- ================= MODAL AJUSTES PC ================= -->
+
+<div class="modal" id="pcAjustesModal">
+<div class="modal-box">
+
+    <div class="modal-header">
+        <h3>Ajustes</h3>
+        <button class="close" onclick="closeModal('pcAjustesModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="modal-row">
+            <span class="modal-section-title" style="margin-bottom:0;">Descargas siempre activas</span>
+            <label class="switch">
+                <input type="checkbox" id="pcDescargasToggle" checked onchange="toggleDescargasNormales('pc')">
+                <span class="switch-slider"></span>
+            </label>
+        </div>
+
+        <hr class="modal-divider">
+
+        <span class="modal-section-title">Descargas por tiempo</span>
+
+        <div id="pcTimerSetup">
+            <div class="time-presets">
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 5)">5 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 10)">10 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 15)">15 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 20)">20 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 25)">25 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 30)">30 min</button>
+            </div>
+            <div class="time-grid">
+                <div>
+                    <label>Hora</label>
+                    <input type="number" min="0" id="pcHora" class="form-control form-control-center" placeholder="00">
+                </div>
+                <div>
+                    <label>Minutos</label>
+                    <input type="number" min="0" max="59" id="pcMinutos" class="form-control form-control-center" placeholder="00">
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="startTimedDownload('pc')">Iniciar</button>
+        </div>
+
+        <div id="pcTimerRunning" class="hidden">
+            <div class="timer-display" id="pcTimeRemaining">Tiempo restante 00:00:00</div>
+            <button class="btn btn-secondary btn-block" onclick="stopTimedDownload('pc')">Terminar</button>
+        </div>
+
+    </div>
+
+    <div class="modal-footer split">
+        <button class="btn btn-secondary" onclick="closeModal('pcAjustesModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="closeModal('pcAjustesModal')">Aceptar</button>
+    </div>
+
+</div>
+</div>
+
+
+<!-- ================= MODAL AJUSTES ANDROID ================= -->
+
+<div class="modal" id="androidAjustesModal">
+<div class="modal-box">
+
+    <div class="modal-header">
+        <h3>Ajustes</h3>
+        <button class="close" onclick="closeModal('androidAjustesModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="modal-row">
+            <span class="modal-section-title" style="margin-bottom:0;">Descargas siempre activas</span>
+            <label class="switch">
+                <input type="checkbox" id="androidDescargasToggle" checked onchange="toggleDescargasNormales('android')">
+                <span class="switch-slider"></span>
+            </label>
+        </div>
+
+        <hr class="modal-divider">
+
+        <span class="modal-section-title">Descargas por tiempo</span>
+
+        <div id="androidTimerSetup">
+            <div class="time-presets">
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 5)">5 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 10)">10 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 15)">15 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 20)">20 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 25)">25 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 30)">30 min</button>
+            </div>
+            <div class="time-grid">
+                <div>
+                    <label>Hora</label>
+                    <input type="number" min="0" id="androidHora" class="form-control form-control-center" placeholder="00">
+                </div>
+                <div>
+                    <label>Minutos</label>
+                    <input type="number" min="0" max="59" id="androidMinutos" class="form-control form-control-center" placeholder="00">
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="startTimedDownload('android')">Iniciar</button>
+        </div>
+
+        <div id="androidTimerRunning" class="hidden">
+            <div class="timer-display" id="androidTimeRemaining">Tiempo restante 00:00:00</div>
+            <button class="btn btn-secondary btn-block" onclick="stopTimedDownload('android')">Terminar</button>
+        </div>
+
+    </div>
+
+    <div class="modal-footer split">
+        <button class="btn btn-secondary" onclick="closeModal('androidAjustesModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="closeModal('androidAjustesModal')">Aceptar</button>
+    </div>
+
+</div>
+</div>
+
+
 <div class="toast-container" id="toastContainer"></div>
 
 
@@ -1884,10 +2091,10 @@ function updateActions() {
     const gearIcon = `<svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>`;
     if (currentSection === "pc") {  
         box.innerHTML = `<button class="btn btn-primary" onclick="openFileModal('pc')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir Archivo</button>
-            <button class="btn btn-secondary" onclick="openSettings()" title="Configuración">${gearIcon} Ajustes</button>`;  
+            <button class="btn btn-secondary" onclick="openAjustesModal('pc')" title="Ajustes">${gearIcon} Ajustes</button>`;  
     } else if (currentSection === "android") {  
         box.innerHTML = `<button class="btn btn-primary" onclick="openFileModal('android')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir APK</button>
-            <button class="btn btn-secondary" onclick="openSettings()" title="Configuración">${gearIcon} Ajustes</button>`;  
+            <button class="btn btn-secondary" onclick="openAjustesModal('android')" title="Ajustes">${gearIcon} Ajustes</button>`;  
     } else if (currentSection === "pages") {  
         box.innerHTML = `<button class="btn btn-primary" onclick="openPageModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Agregar URL</button>
             <button class="btn btn-secondary" onclick="openSettings()" title="Configuración">${gearIcon} Ajustes</button>`;  
@@ -2256,6 +2463,91 @@ function closeMobileMenu() {
     document.getElementById("mobileDrawer").classList.remove("open");
     document.getElementById("drawerOverlay").classList.remove("show");
     document.body.style.overflow = "";
+}
+
+const timedDownloadState = {
+    pc: { interval: null, remaining: 0 },
+    android: { interval: null, remaining: 0 }
+};
+
+function openAjustesModal(prefix) {
+    document.getElementById(prefix + "AjustesModal").classList.add("show");
+}
+
+function toggleDescargasNormales(prefix) {
+    const toggle = document.getElementById(prefix + "DescargasToggle");
+    // Si el usuario activa las descargas normales mientras hay una descarga
+    // por tiempo corriendo, se detiene la descarga por tiempo (mutuamente excluyentes).
+    if (toggle.checked && timedDownloadState[prefix].interval) {
+        stopTimedDownload(prefix, false);
+    }
+}
+
+function formatTime(totalSeconds) {
+    const h = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+    const m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+    const s = String(totalSeconds % 60).padStart(2, "0");
+    return `${h}:${m}:${s}`;
+}
+
+function startTimedDownload(prefix, presetMinutes) {
+    let totalSeconds;
+
+    if (presetMinutes) {
+        totalSeconds = presetMinutes * 60;
+        document.getElementById(prefix + "Hora").value = 0;
+        document.getElementById(prefix + "Minutos").value = presetMinutes;
+    } else {
+        const horaInput = document.getElementById(prefix + "Hora");
+        const minInput = document.getElementById(prefix + "Minutos");
+        const hours = parseInt(horaInput.value) || 0;
+        const minutes = parseInt(minInput.value) || 0;
+        totalSeconds = (hours * 3600) + (minutes * 60);
+
+        if (totalSeconds <= 0) {
+            toast("Ingresa una hora o minutos válidos.");
+            return;
+        }
+    }
+
+    // Las descargas normales y por tiempo no pueden estar activas a la vez.
+    const toggle = document.getElementById(prefix + "DescargasToggle");
+    toggle.checked = false;
+
+    document.getElementById(prefix + "TimerSetup").classList.add("hidden");
+    document.getElementById(prefix + "TimerRunning").classList.remove("hidden");
+
+    timedDownloadState[prefix].remaining = totalSeconds;
+    document.getElementById(prefix + "TimeRemaining").textContent = "Tiempo restante " + formatTime(totalSeconds);
+
+    clearInterval(timedDownloadState[prefix].interval);
+    timedDownloadState[prefix].interval = setInterval(() => {
+        timedDownloadState[prefix].remaining--;
+        if (timedDownloadState[prefix].remaining <= 0) {
+            stopTimedDownload(prefix, true);
+            return;
+        }
+        document.getElementById(prefix + "TimeRemaining").textContent = "Tiempo restante " + formatTime(timedDownloadState[prefix].remaining);
+    }, 1000);
+}
+
+function stopTimedDownload(prefix, finished) {
+    clearInterval(timedDownloadState[prefix].interval);
+    timedDownloadState[prefix].interval = null;
+    timedDownloadState[prefix].remaining = 0;
+
+    document.getElementById(prefix + "TimerRunning").classList.add("hidden");
+    document.getElementById(prefix + "TimerSetup").classList.remove("hidden");
+    document.getElementById(prefix + "Hora").value = "";
+    document.getElementById(prefix + "Minutos").value = "";
+
+    const toggle = document.getElementById(prefix + "DescargasToggle");
+    toggle.disabled = false;
+    toggle.checked = true;
+
+    if (finished) {
+        toast("Descarga por tiempo finalizada.");
+    }
 }
 
 function openSettings() {
