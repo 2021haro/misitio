@@ -267,6 +267,7 @@ button{
     top:0;
     left:0;
     height:100vh;
+    height:100dvh;
     width:280px;
     max-width:82vw;
     background:var(--card);
@@ -277,6 +278,7 @@ button{
     display:flex;
     flex-direction:column;
     padding:18px;
+    padding-bottom:max(18px, env(safe-area-inset-bottom));
     gap:20px;
     overflow-y:auto;
 }
@@ -851,8 +853,8 @@ textarea.form-control{
 .dropzone{
     border:2px dashed #dbe2ec;
     border-radius:13px;
-    padding:18px 15px;
-    min-height:105px;
+    padding:10px 15px;
+    min-height:70px;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -873,17 +875,17 @@ textarea.form-control{
 }
 
 .dropzone-icon{
-    font-size:25px;
+    font-size:20px;
     line-height:1;
-    margin-bottom:7px;
+    margin-bottom:4px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .dropzone-icon svg {
-    width: 28px;
-    height: 28px;
+    width: 20px;
+    height: 20px;
     stroke: var(--primary);
     stroke-width: 2;
     fill: none;
@@ -994,6 +996,7 @@ textarea.form-control{
         justify-content:flex-end;
     }
     .topbar-actions .settings-btn,
+    .topbar-actions .fullscreen-btn,
     .topbar-actions .storage{
         display:none;
     }
@@ -1246,7 +1249,11 @@ textarea.form-control{
             <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         </button>
 
-        <button class="btn-icon settings-btn" onclick="openSettings()" title="Ajustes">
+        <button class="btn-icon fullscreen-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="Pantalla completa">
+            <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </button>
+
+        <button class="btn-icon settings-btn" onclick="openSettings()" title="Configuración">
             <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
         </button>
 
@@ -1304,7 +1311,7 @@ textarea.form-control{
 
     <div class="drawer-footer">
 
-        <button class="btn-icon settings-btn" onclick="openSettings()" title="Ajustes">
+        <button class="btn-icon settings-btn" onclick="openSettings()" title="Configuración">
             <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
         </button>
 
@@ -1633,12 +1640,16 @@ function changeSection(section) {
  
 function updateActions() {  
     const box = document.getElementById("sectionActions");  
+    const gearIcon = `<svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>`;
     if (currentSection === "pc") {  
-        box.innerHTML = `<button class="btn btn-primary" onclick="openFileModal('pc')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir Archivo</button>`;  
+        box.innerHTML = `<button class="btn btn-primary" onclick="openFileModal('pc')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir Archivo</button>
+            <button class="btn btn-secondary" onclick="openSettings()" title="Configuración">${gearIcon} Ajustes</button>`;  
     } else if (currentSection === "android") {  
-        box.innerHTML = `<button class="btn btn-primary" onclick="openFileModal('android')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir APK</button>`;  
+        box.innerHTML = `<button class="btn btn-primary" onclick="openFileModal('android')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir APK</button>
+            <button class="btn btn-secondary" onclick="openSettings()" title="Configuración">${gearIcon} Ajustes</button>`;  
     } else if (currentSection === "pages") {  
-        box.innerHTML = `<button class="btn btn-primary" onclick="openPageModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Agregar URL</button>`;  
+        box.innerHTML = `<button class="btn btn-primary" onclick="openPageModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Agregar URL</button>
+            <button class="btn btn-secondary" onclick="openSettings()" title="Configuración">${gearIcon} Ajustes</button>`;  
     } else {  
         box.innerHTML = `  
             <button class="btn btn-primary" onclick="openFileModal('pc')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir Archivo</button>  
@@ -2007,8 +2018,29 @@ function closeMobileMenu() {
 }
 
 function openSettings() {
-    toast("Los ajustes estarán disponibles próximamente.");
+    toast("La configuración estará disponible próximamente.");
 }
+
+const FULLSCREEN_ICON_ENTER = `<svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>`;
+const FULLSCREEN_ICON_EXIT = `<svg viewBox="0 0 24 24"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>`;
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+    } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+    }
+}
+
+function updateFullscreenIcon() {
+    const btn = document.getElementById("fullscreenBtn");
+    if (!btn) return;
+    const isFullscreen = !!document.fullscreenElement;
+    btn.innerHTML = isFullscreen ? FULLSCREEN_ICON_EXIT : FULLSCREEN_ICON_ENTER;
+    btn.title = isFullscreen ? "Salir de pantalla completa" : "Pantalla completa";
+}
+
+document.addEventListener("fullscreenchange", updateFullscreenIcon);
 
 window.addEventListener("resize", () => {
     if (window.innerWidth > 1100) {
