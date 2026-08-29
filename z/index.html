@@ -1076,6 +1076,47 @@ textarea.form-control{
     margin-bottom:12px;
 }
 
+.pages-order-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:14px;
+    max-height:230px;
+    overflow-y:auto;
+}
+
+.drag-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 12px;
+    background:var(--card);
+    font-size:12px;
+    font-weight:bold;
+    color:var(--text);
+    cursor:grab;
+}
+
+.drag-row.dragging{
+    opacity:.5;
+}
+
+.drag-handle{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1;
+    user-select:none;
+}
+
+.pages-order-empty{
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+    padding:14px 0;
+}
+
 .hidden{
     display:none !important;
 }
@@ -1969,6 +2010,51 @@ textarea.form-control{
 </div>
 
 
+<!-- ================= MODAL AJUSTES PÁGINAS ================= -->
+
+<div class="modal" id="pagesAjustesModal">
+<div class="modal-box">
+
+    <div class="modal-header">
+        <h3>Ajustes</h3>
+        <button class="close" onclick="cancelPagesAjustes()">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="modal-row">
+            <span class="modal-section-title" style="margin-bottom:0;">Orden normal de páginas</span>
+            <label class="switch">
+                <input type="checkbox" id="pagesOrdenNormalToggle" checked onchange="togglePagesOrderMode('normal')">
+                <span class="switch-slider"></span>
+            </label>
+        </div>
+
+        <hr class="modal-divider">
+
+        <div class="modal-row">
+            <span class="modal-section-title" style="margin-bottom:0;">Orden personalizado de páginas</span>
+            <label class="switch">
+                <input type="checkbox" id="pagesOrdenPersonalizadoToggle" onchange="togglePagesOrderMode('custom')">
+                <span class="switch-slider"></span>
+            </label>
+        </div>
+
+        <div id="pagesCustomOrderList" class="hidden"></div>
+
+    </div>
+
+    <div class="modal-footer split">
+        <button class="btn btn-secondary" onclick="cancelPagesAjustes()">Cancelar</button>
+        <button class="btn btn-primary" onclick="acceptPagesAjustes()">Aceptar</button>
+    </div>
+
+</div>
+</div>
+
+
 <div class="toast-container" id="toastContainer"></div>
 
 
@@ -2003,6 +2089,10 @@ let currentSection = "dashboard";
 let editingId = null;  
 let uploadType = "pc";  
 let selectedFile = null;  
+
+let pagesOrderSettings = JSON.parse(localStorage.getItem("jahf_pages_order")) || { mode: "normal", order: [] };
+let pagesOrderSettingsBackup = null;
+let draggedRow = null;
  
 const sections = {  
     dashboard: { title: "Dashboard", sectionTitle: "Contenido reciente", description: "Administra todas tus aplicaciones y páginas.", searchPlaceholder: "Buscar aplicaciones, páginas..." },  
@@ -2097,7 +2187,7 @@ function updateActions() {
             <button class="btn btn-secondary" onclick="openAjustesModal('android')" title="Ajustes">${gearIcon} Ajustes</button>`;  
     } else if (currentSection === "pages") {  
         box.innerHTML = `<button class="btn btn-primary" onclick="openPageModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Agregar URL</button>
-            <button class="btn btn-secondary" onclick="openSettings()" title="Configuración">${gearIcon} Ajustes</button>`;  
+            <button class="btn btn-secondary" onclick="openPagesAjustesModal()" title="Ajustes">${gearIcon} Ajustes</button>`;  
     } else {  
         box.innerHTML = `  
             <button class="btn btn-primary" onclick="openFileModal('pc')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir Archivo</button>  
@@ -2110,7 +2200,18 @@ function updateActions() {
 function getVisibleItems() {  
     if (currentSection === "pc") return items.filter(x => x.type === "pc");  
     if (currentSection === "android") return items.filter(x => x.type === "android");  
-    if (currentSection === "pages") return items.filter(x => x.type === "page");  
+    if (currentSection === "pages") {
+        const pages = items.filter(x => x.type === "page");
+        if (pagesOrderSettings.mode === "custom" && pagesOrderSettings.order && pagesOrderSettings.order.length) {
+            const orderIds = pagesOrderSettings.order;
+            return [...pages].sort((a, b) => {
+                const posA = orderIds.indexOf(a.id);
+                const posB = orderIds.indexOf(b.id);
+                return (posA === -1 ? Infinity : posA) - (posB === -1 ? Infinity : posB);
+            });
+        }
+        return pages;
+    }
     return items;  
 }  
  
@@ -2552,6 +2653,140 @@ function stopTimedDownload(prefix, finished) {
 
 function openSettings() {
     document.getElementById("settingsModal").classList.add("show");
+}
+
+function openPagesAjustesModal() {
+    pagesOrderSettingsBackup = JSON.parse(JSON.stringify(pagesOrderSettings));
+
+    const isCustom = pagesOrderSettings.mode === "custom";
+    document.getElementById("pagesOrdenNormalToggle").checked = !isCustom;
+    document.getElementById("pagesOrdenPersonalizadoToggle").checked = isCustom;
+
+    const listEl = document.getElementById("pagesCustomOrderList");
+    if (isCustom) {
+        listEl.classList.remove("hidden");
+        renderPagesOrderList();
+    } else {
+        listEl.classList.add("hidden");
+    }
+
+    document.getElementById("pagesAjustesModal").classList.add("show");
+}
+
+function togglePagesOrderMode(which) {
+    const normalToggle = document.getElementById("pagesOrdenNormalToggle");
+    const customToggle = document.getElementById("pagesOrdenPersonalizadoToggle");
+
+    if (which === "normal" && normalToggle.checked) {
+        customToggle.checked = false;
+    } else if (which === "custom" && customToggle.checked) {
+        normalToggle.checked = false;
+    }
+
+    // Si el usuario apaga el único que estaba activo, el otro vuelve a activarse
+    // (siempre debe haber un modo de orden seleccionado).
+    if (!normalToggle.checked && !customToggle.checked) {
+        if (which === "normal") {
+            customToggle.checked = true;
+        } else {
+            normalToggle.checked = true;
+        }
+    }
+
+    const listEl = document.getElementById("pagesCustomOrderList");
+    if (customToggle.checked) {
+        listEl.classList.remove("hidden");
+        renderPagesOrderList();
+    } else {
+        listEl.classList.add("hidden");
+    }
+}
+
+function renderPagesOrderList() {
+    const container = document.getElementById("pagesCustomOrderList");
+    const activePages = items.filter(x => x.type === "page" && x.status === "active");
+    const orderIds = pagesOrderSettings.order || [];
+
+    const sorted = [...activePages].sort((a, b) => {
+        const posA = orderIds.indexOf(a.id);
+        const posB = orderIds.indexOf(b.id);
+        return (posA === -1 ? Infinity : posA) - (posB === -1 ? Infinity : posB);
+    });
+
+    if (!sorted.length) {
+        container.innerHTML = `<div class="pages-order-empty">No hay páginas activas para ordenar.</div>`;
+        return;
+    }
+
+    container.innerHTML = `<div class="pages-order-list" id="pagesOrderDragList">` +
+        sorted.map(p => `
+            <div class="drag-row" draggable="true" data-id="${p.id}">
+                <span class="drag-handle">⠿</span>
+                <span class="drag-row-name">${escapeHTML(p.name)}</span>
+            </div>
+        `).join("") +
+        `</div>`;
+
+    attachDragHandlers();
+}
+
+function attachDragHandlers() {
+    const rows = document.querySelectorAll("#pagesOrderDragList .drag-row");
+    rows.forEach(row => {
+        row.addEventListener("dragstart", () => {
+            draggedRow = row;
+            row.classList.add("dragging");
+        });
+        row.addEventListener("dragend", () => {
+            row.classList.remove("dragging");
+            draggedRow = null;
+            persistOrderFromDOM();
+        });
+        row.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            if (!draggedRow) return;
+            const list = document.getElementById("pagesOrderDragList");
+            const afterElement = getDragAfterElement(list, e.clientY);
+            if (afterElement == null) {
+                list.appendChild(draggedRow);
+            } else {
+                list.insertBefore(draggedRow, afterElement);
+            }
+        });
+    });
+}
+
+function getDragAfterElement(container, y) {
+    const rows = [...container.querySelectorAll(".drag-row:not(.dragging)")];
+    return rows.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset, element: child };
+        }
+        return closest;
+    }, { offset: -Infinity, element: null }).element;
+}
+
+function persistOrderFromDOM() {
+    const list = document.getElementById("pagesOrderDragList");
+    if (!list) return;
+    pagesOrderSettings.order = [...list.querySelectorAll(".drag-row")].map(r => Number(r.dataset.id));
+}
+
+function cancelPagesAjustes() {
+    if (pagesOrderSettingsBackup) {
+        pagesOrderSettings = JSON.parse(JSON.stringify(pagesOrderSettingsBackup));
+    }
+    closeModal("pagesAjustesModal");
+}
+
+function acceptPagesAjustes() {
+    pagesOrderSettings.mode = document.getElementById("pagesOrdenPersonalizadoToggle").checked ? "custom" : "normal";
+    localStorage.setItem("jahf_pages_order", JSON.stringify(pagesOrderSettings));
+    closeModal("pagesAjustesModal");
+    if (currentSection === "pages") renderTable();
+    toast("Orden de páginas actualizado.");
 }
 
 const configOriginalValues = {};
