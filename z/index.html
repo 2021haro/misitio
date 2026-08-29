@@ -997,6 +997,17 @@ textarea.form-control{
     justify-content:center;
 }
 
+.hidden{
+    display:none !important;
+}
+
+.form-control:disabled{
+    background:var(--border);
+    color:var(--muted);
+    cursor:not-allowed;
+    opacity:.7;
+}
+
 .modal-footer.split{
     justify-content:space-between;
 }
@@ -1660,8 +1671,10 @@ textarea.form-control{
                         <span class="switch-slider"></span>
                     </label>
                 </div>
-                <input type="text" class="form-control" placeholder="Ej. 12434567...">
-                <button class="btn btn-secondary btn-block" onclick="toast('Función de editar próximamente.')">Editar</button>
+                <input type="text" class="form-control" id="cfg-downloader" placeholder="Ej. 12434567..." disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('downloader')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('downloader')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('downloader')">Cancelar</button>
             </div>
 
             <div class="config-item">
@@ -1672,8 +1685,10 @@ textarea.form-control{
                         <span class="switch-slider"></span>
                     </label>
                 </div>
-                <input type="text" class="form-control" placeholder="Ej. Información, nota, precio etc...">
-                <button class="btn btn-secondary btn-block" onclick="toast('Función de editar próximamente.')">Editar</button>
+                <input type="text" class="form-control" id="cfg-info" placeholder="Ej. Información, nota, precio etc..." disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('info')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('info')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('info')">Cancelar</button>
             </div>
 
             <div class="config-item">
@@ -1684,8 +1699,10 @@ textarea.form-control{
                         <span class="switch-slider"></span>
                     </label>
                 </div>
-                <input type="text" class="form-control" placeholder="URL el perfil de Facebook">
-                <button class="btn btn-secondary btn-block" onclick="toast('Función de editar próximamente.')">Editar</button>
+                <input type="text" class="form-control" id="cfg-fbqr" placeholder="URL el perfil de Facebook" disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('fbqr')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('fbqr')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('fbqr')">Cancelar</button>
             </div>
 
             <div class="config-item">
@@ -1696,8 +1713,10 @@ textarea.form-control{
                         <span class="switch-slider"></span>
                     </label>
                 </div>
-                <input type="text" class="form-control" placeholder="Ej. núm. teléfono">
-                <button class="btn btn-secondary btn-block" onclick="toast('Función de editar próximamente.')">Editar</button>
+                <input type="text" class="form-control" id="cfg-waqr" placeholder="Ej. núm. teléfono" disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('waqr')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('waqr')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('waqr')">Cancelar</button>
             </div>
 
         </div>
@@ -1725,9 +1744,11 @@ textarea.form-control{
     </div>
 
     <div class="modal-body">
-        <div class="config-password-box">
-            <strong>Cambiar Contraseña</strong>
+        <label style="display:block; font-size:13px; font-weight:bold; color:var(--text); margin-bottom:10px;">Cambiar Contraseña</label>
+        <div class="form-group">
             <input type="password" id="currentPassword" class="form-control" placeholder="Contraseña actual...">
+        </div>
+        <div class="form-group">
             <input type="password" id="newPassword" class="form-control" placeholder="Nueva contraseña...">
         </div>
     </div>
@@ -2239,6 +2260,41 @@ function closeMobileMenu() {
 
 function openSettings() {
     document.getElementById("settingsModal").classList.add("show");
+}
+
+const configOriginalValues = {};
+
+function editConfigItem(key) {
+    const input = document.getElementById("cfg-" + key);
+    const item = input.closest(".config-item");
+    configOriginalValues[key] = input.value;
+    input.disabled = false;
+    input.focus();
+    item.querySelector(".cfg-edit-btn").classList.add("hidden");
+    item.querySelector(".cfg-save-btn").classList.remove("hidden");
+    item.querySelector(".cfg-cancel-btn").classList.remove("hidden");
+}
+
+function saveConfigItem(key) {
+    const input = document.getElementById("cfg-" + key);
+    const item = input.closest(".config-item");
+    input.disabled = true;
+    item.querySelector(".cfg-edit-btn").classList.remove("hidden");
+    item.querySelector(".cfg-save-btn").classList.add("hidden");
+    item.querySelector(".cfg-cancel-btn").classList.add("hidden");
+    toast("Cambios guardados.");
+}
+
+function cancelConfigItem(key) {
+    const input = document.getElementById("cfg-" + key);
+    const item = input.closest(".config-item");
+    if (configOriginalValues[key] !== undefined) {
+        input.value = configOriginalValues[key];
+    }
+    input.disabled = true;
+    item.querySelector(".cfg-edit-btn").classList.remove("hidden");
+    item.querySelector(".cfg-save-btn").classList.add("hidden");
+    item.querySelector(".cfg-cancel-btn").classList.add("hidden");
 }
 
 function openPasswordModal() {
