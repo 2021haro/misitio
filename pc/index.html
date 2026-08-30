@@ -1,1 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Descargas PC - JAHF</title>
 
+<style>
+:root{
+    --primary:#2563eb;
+    --primary-hover:#1d4ed8;
+    --primary-light:#eff6ff;
+    --bg:#f5f7fb;
+    --card:#fff;
+    --border:#e5e7eb;
+    --text:#111827;
+    --muted:#64748b;
+    --success:#16a34a;
+    --warning:#b45309;
+    --warning-bg:rgba(245,158,11,.08);
+    --warning-border:rgba(245,158,11,.35);
+}
+
+[data-theme="dark"]{
+    --bg:#0b1120;
+    --card:#111827;
+    --border:#263244;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --primary-light:#172554;
+    --warning:#fbbf24;
+    --warning-bg:rgba(251,191,36,.08);
+    --warning-border:rgba(251,191,36,.35);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:'Samsung Sans','SamsungOne',Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button{
+    cursor:pointer;
+    font:inherit;
+}
+
+/* ===== TOPBAR ===== */
+.topbar{
+    position:sticky;
+    top:0;
+    width:100%;
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 20px;
+    gap:12px;
+    z-index:100;
+}
+
+.brand{
+    font-size:16px;
+    font-weight:bold;
+    color:var(--text);
+    white-space:nowrap;
+}
+
+.brand small{
+    display:block;
+    font-size:11px;
+    font-weight:normal;
+    color:var(--muted);
+    margin-top:2px;
+}
+
+.topbar-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.downloader-badge{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:8px 14px;
+    font-size:12px;
+    font-weight:bold;
+    color:var(--primary);
+    background:var(--primary-light);
+    white-space:nowrap;
+}
+
+.btn-icon{
+    width:38px;
+    height:38px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--card);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.btn-icon svg{
+    width:16px;
+    height:16px;
+    stroke:var(--text);
+    stroke-width:2;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.btn-icon:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.btn-icon:hover svg{
+    stroke:var(--primary);
+}
+
+/* ===== CONTENT ===== */
+.content{
+    max-width:640px;
+    margin:0 auto;
+    padding:32px 20px 60px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:8px;
+}
+
+.page-title h1{
+    font-size:20px;
+}
+
+.page-title p{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:6px;
+}
+
+.warning-banner{
+    border:1px solid var(--warning-border);
+    background:var(--warning-bg);
+    color:var(--warning);
+    border-radius:14px;
+    padding:20px;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+    line-height:1.7;
+}
+
+.warning-banner em{
+    font-style:normal;
+    color:var(--muted);
+    font-weight:normal;
+    font-size:12px;
+}
+
+.info-card{
+    border:1px solid var(--primary);
+    background:var(--primary-light);
+    border-radius:14px;
+    padding:18px;
+    font-size:13px;
+    color:var(--text);
+    text-align:center;
+    line-height:1.6;
+}
+
+.qr-card{
+    border:1px solid var(--border);
+    background:var(--card);
+    border-radius:14px;
+    padding:20px;
+    text-align:center;
+}
+
+.qr-card-title{
+    font-size:12px;
+    font-weight:bold;
+    color:var(--muted);
+    margin-bottom:12px;
+    text-transform:uppercase;
+    letter-spacing:.3px;
+}
+
+.qr-card img{
+    width:160px;
+    height:160px;
+    border-radius:10px;
+    background:#fff;
+    padding:8px;
+}
+
+.qr-card small{
+    display:block;
+    margin-top:10px;
+    color:var(--muted);
+    font-size:11px;
+    word-break:break-all;
+}
+
+.empty-state{
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+    padding:30px 0;
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">Descargas<small>Aplicaciones para PC</small></div>
+    <div class="topbar-right">
+        <div class="downloader-badge" id="downloaderBadge" style="display:none;"></div>
+        <button class="btn-icon" onclick="toggleTheme()" id="themeButton" title="Tema">
+            <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+    </div>
+</header>
+
+<main class="content">
+    <div class="page-title">
+        <h1>Descargas para PC</h1>
+        <p>Aplicaciones y programas disponibles para descargar.</p>
+    </div>
+    <div id="mainContent"></div>
+</main>
+
+<script>
+const STORAGE_KEY = "jahf_ajustes_pc";
+
+function defaultSettings(){
+    return {
+        descargasSiempreActivas: true,
+        descargasPorTiempoActiva: false,
+        downloader: { enabled: false, value: "" },
+        info: { enabled: false, value: "" },
+        fbqr: { enabled: false, value: "" },
+        waqr: { enabled: false, value: "" }
+    };
+}
+
+function loadSettings(){
+    try{
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        return Object.assign(defaultSettings(), saved || {});
+    }catch(e){
+        return defaultSettings();
+    }
+}
+
+function escapeHTML(value){
+    return String(value).replace(/[&<>"']/g, c => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[c]);
+}
+
+function qrImageUrl(data){
+    return "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(data);
+}
+
+function render(){
+    const s = loadSettings();
+
+    const badge = document.getElementById("downloaderBadge");
+    if (s.downloader && s.downloader.enabled && s.downloader.value) {
+        badge.style.display = "block";
+        badge.textContent = "Código Downloader: " + s.downloader.value;
+    } else {
+        badge.style.display = "none";
+    }
+
+    const main = document.getElementById("mainContent");
+    let html = "";
+
+    const downloadsEnabled = !!s.descargasSiempreActivas || !!s.descargasPorTiempoActiva;
+    if (!downloadsEnabled) {
+        html += `<div class="warning-banner">⚠️ Descargas temporalmente deshabilitadas por el administrador.<br>Comunícate por WhatsApp / Messenger con el administrador.<br><em>«Solo mensajes»</em></div>`;
+    }
+
+    let anyExtra = false;
+
+    if (s.info && s.info.enabled && s.info.value) {
+        anyExtra = true;
+        html += `<div class="info-card">${escapeHTML(s.info.value)}</div>`;
+    }
+
+    if (s.fbqr && s.fbqr.enabled && s.fbqr.value) {
+        anyExtra = true;
+        html += `<div class="qr-card">
+            <div class="qr-card-title">Código QR de Facebook</div>
+            <img src="${qrImageUrl(s.fbqr.value)}" alt="Código QR de Facebook">
+            <small>${escapeHTML(s.fbqr.value)}</small>
+        </div>`;
+    }
+
+    if (s.waqr && s.waqr.enabled && s.waqr.value) {
+        anyExtra = true;
+        html += `<div class="qr-card">
+            <div class="qr-card-title">Código QR de WhatsApp</div>
+            <img src="${qrImageUrl(s.waqr.value)}" alt="Código QR de WhatsApp">
+            <small>${escapeHTML(s.waqr.value)}</small>
+        </div>`;
+    }
+
+    if (downloadsEnabled && !anyExtra) {
+        html += `<div class="empty-state">No hay información adicional configurada.</div>`;
+    }
+
+    main.innerHTML = html;
+}
+
+function toggleTheme(){
+    const dark = document.body.dataset.theme === "dark";
+    const btn = document.getElementById("themeButton");
+    if (dark){
+        delete document.body.dataset.theme;
+        localStorage.setItem("cloudpanel-theme", "light");
+        btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+    } else {
+        document.body.dataset.theme = "dark";
+        localStorage.setItem("cloudpanel-theme", "dark");
+        btn.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    }
+}
+
+if (localStorage.getItem("cloudpanel-theme") === "dark") {
+    document.body.dataset.theme = "dark";
+    document.getElementById("themeButton").innerHTML = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+}
+
+// Si el panel de ajustes se edita en otra pestaña del mismo navegador, esta página se actualiza sola.
+window.addEventListener("storage", (e) => {
+    if (e.key === STORAGE_KEY) render();
+});
+
+render();
+</script>
+
+</body>
+</html>
