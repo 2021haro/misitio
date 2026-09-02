@@ -5,181 +5,330 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cast JHAF</title>
 
-<!-- SDK oficial de Google Cast Application Framework (CAF) para receptores -->
-<script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+<!-- Librería oficial de Google Cast Sender -->
+<script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
 
 <style>
-  html, body {
+  * { box-sizing: border-box; }
+
+  body {
     margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    overflow: hidden;
+    min-height: 100vh;
     font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-  }
-
-  cast-media-player {
-    width: 100%;
-    height: 100%;
-  }
-
-  /* Pantalla de espera (splash) mientras no hay contenido reproduciéndose */
-  #splash {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
+    background: radial-gradient(circle at top, #1a1a2e 0%, #000000 100%);
+    color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
-    color: #ffffff;
-    z-index: 9999;
-    transition: opacity 0.6s ease;
-  }
-
-  #splash.hidden {
-    opacity: 0;
-    pointer-events: none;
+    padding: 40px 20px;
   }
 
   .logo {
-    font-size: 64px;
+    font-size: 42px;
     font-weight: 800;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     background: linear-gradient(90deg, #4facfe, #00f2fe);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
   }
 
   .subtitle {
-    font-size: 20px;
-    color: #cccccc;
-    letter-spacing: 2px;
-  }
-
-  .cast-icon {
-    margin-top: 40px;
-    width: 90px;
-    height: 90px;
-    opacity: 0.85;
-    animation: pulse 2s infinite ease-in-out;
-  }
-
-  @keyframes pulse {
-    0%   { transform: scale(1);   opacity: 0.6; }
-    50%  { transform: scale(1.08); opacity: 1;   }
-    100% { transform: scale(1);   opacity: 0.6; }
-  }
-
-  .status {
-    margin-top: 30px;
+    color: #999;
     font-size: 14px;
-    color: #888;
     letter-spacing: 1px;
+    margin-bottom: 30px;
     text-transform: uppercase;
+  }
+
+  .card {
+    background: #16213e;
+    border-radius: 16px;
+    padding: 30px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    color: #aaa;
+    margin-bottom: 6px;
+    margin-top: 18px;
+  }
+
+  input[type="text"], select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #2a2a4a;
+    background: #0f0f23;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+  }
+
+  input[type="text"]:focus, select:focus {
+    border-color: #4facfe;
+  }
+
+  input[type="file"] {
+    width: 100%;
+    margin-top: 6px;
+    color: #ccc;
+    font-size: 13px;
+  }
+
+  .divider {
+    text-align: center;
+    color: #555;
+    font-size: 12px;
+    margin: 18px 0;
+    text-transform: uppercase;
+  }
+
+  .cast-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 26px;
+    gap: 12px;
+  }
+
+  google-cast-launcher {
+    width: 40px;
+    height: 40px;
+    --connected-color: #4facfe;
+    --disconnected-color: #ffffff;
+    cursor: pointer;
+  }
+
+  button {
+    flex: 1;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    border: none;
+    color: #001;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  button:hover { transform: translateY(-1px); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  #status {
+    margin-top: 20px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: #0f0f23;
+    font-size: 13px;
+    color: #8fd3ff;
+    text-align: center;
+    min-height: 18px;
+  }
+
+  .controls {
+    display: none;
+    margin-top: 18px;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .controls.active { display: flex; }
+
+  .controls button {
+    flex: none;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    font-size: 18px;
+    border-radius: 50%;
+  }
+
+  footer {
+    margin-top: 30px;
+    color: #555;
+    font-size: 12px;
+    text-align: center;
   }
 </style>
 </head>
 <body>
 
-  <!-- Reproductor de medios de Google Cast: aquí se renderiza automáticamente
-       el video, audio o imagen que llega desde el celular o Chrome -->
-  <cast-media-player id="player"></cast-media-player>
+  <div class="logo">CAST JHAF</div>
+  <div class="subtitle">Emisor de contenido a Google Cast — 100% gratis</div>
 
-  <!-- Pantalla de espera / marca -->
-  <div id="splash">
-    <div class="logo">CAST JHAF</div>
-    <div class="subtitle">Receptor de contenido Google Cast</div>
+  <div class="card">
 
-    <svg class="cast-icon" viewBox="0 0 24 24" fill="#4facfe" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm18-7H5v1.63c3.96 1.28 7.09 4.41 8.37 8.37H19V7zM1 10v2c4.97 0 9 4.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-    </svg>
+    <label for="mediaUrl">URL del video, audio o imagen</label>
+    <input type="text" id="mediaUrl" placeholder="https://ejemplo.com/video.mp4">
 
-    <div class="status" id="statusText">Esperando conexión…</div>
+    <div class="divider">— o —</div>
+
+    <label for="fileInput">Selecciona un archivo de tu celular / PC</label>
+    <input type="file" id="fileInput" accept="video/*,audio/*,image/*">
+
+    <label for="mediaType">Tipo de contenido</label>
+    <select id="mediaType">
+      <option value="video/mp4">Video (MP4)</option>
+      <option value="video/webm">Video (WebM)</option>
+      <option value="audio/mpeg">Audio (MP3)</option>
+      <option value="image/jpeg">Imagen (JPG/PNG)</option>
+    </select>
+
+    <div class="cast-row">
+      <google-cast-launcher id="castButton"></google-cast-launcher>
+      <button id="playBtn" disabled>▶ Transmitir a TV</button>
+    </div>
+
+    <div class="controls" id="controls">
+      <button id="pauseBtn">⏸</button>
+      <button id="stopBtn">⏹</button>
+      <button id="volUpBtn">🔊</button>
+      <button id="volDownBtn">🔉</button>
+    </div>
+
+    <div id="status">Esperando conexión con un dispositivo Cast…</div>
   </div>
+
+  <footer>
+    Usa el Receptor Multimedia Predeterminado de Google — sin registro, sin costo.
+  </footer>
 
 <script>
   // ============================================================
-  //  CAST JHAF – Receptor personalizado de Google Cast
+  //  CAST JHAF — Emisor (sender) gratuito de Google Cast
+  //  Usa DEFAULT_MEDIA_RECEIVER_APP_ID: no requiere registro ni pago
   // ============================================================
 
-  const context = cast.framework.CastReceiverContext.getInstance();
-  const playerManager = context.getPlayerManager();
-  const splash = document.getElementById('splash');
-  const statusText = document.getElementById('statusText');
+  let castSession = null;
+  let localFileUrl = null;
 
-  // --- Mostrar/ocultar splash según el estado de reproducción ---
-  playerManager.addEventListener(
-    cast.framework.events.EventType.PLAYER_LOAD_COMPLETE,
-    () => {
-      splash.classList.add('hidden');
+  const statusEl   = document.getElementById('status');
+  const playBtn    = document.getElementById('playBtn');
+  const urlInput   = document.getElementById('mediaUrl');
+  const fileInput  = document.getElementById('fileInput');
+  const typeSelect = document.getElementById('mediaType');
+  const controls   = document.getElementById('controls');
+
+  function setStatus(text) {
+    statusEl.textContent = text;
+  }
+
+  // --- Se llama automáticamente cuando la librería de Cast está lista ---
+  window['__onGCastApiAvailable'] = function (isAvailable) {
+    if (isAvailable) {
+      initializeCastApi();
+    } else {
+      setStatus('Este navegador no soporta Google Cast. Usa Chrome.');
     }
-  );
+  };
 
-  playerManager.addEventListener(
-    cast.framework.events.EventType.MEDIA_STATUS,
-    (event) => {
-      const state = playerManager.getPlayerState();
-      if (state === cast.framework.PlayerState.PLAYING) {
-        splash.classList.add('hidden');
-        statusText.textContent = 'Reproduciendo';
-      } else if (state === cast.framework.PlayerState.PAUSED) {
-        statusText.textContent = 'En pausa';
-      } else if (state === cast.framework.PlayerState.IDLE) {
-        splash.classList.remove('hidden');
-        statusText.textContent = 'Esperando conexión…';
+  function initializeCastApi() {
+    const context = cast.framework.CastContext.getInstance();
+
+    context.setOptions({
+      receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
+      autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+    });
+
+    // --- Escucha cambios en el estado de la sesión (conectado/desconectado) ---
+    context.addEventListener(
+      cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
+      (event) => {
+        switch (event.sessionState) {
+          case cast.framework.SessionState.SESSION_STARTED:
+          case cast.framework.SessionState.SESSION_RESUMED:
+            castSession = context.getCurrentSession();
+            playBtn.disabled = false;
+            setStatus('✅ Conectado a: ' + castSession.getCastDevice().friendlyName);
+            break;
+          case cast.framework.SessionState.SESSION_ENDED:
+            castSession = null;
+            playBtn.disabled = true;
+            controls.classList.remove('active');
+            setStatus('Sesión finalizada. Esperando conexión…');
+            break;
+        }
       }
-    }
-  );
+    );
+  }
 
-  // --- Interceptor de carga: permite loguear o modificar la solicitud
-  //     de reproducción antes de que se cargue el contenido enviado
-  //     desde el celular o Chrome ---
-  playerManager.setMessageInterceptor(
-    cast.framework.messages.MessageType.LOAD,
-    (loadRequestData) => {
-      console.log('Cast JHAF: solicitud de carga recibida', loadRequestData);
-      statusText.textContent = 'Cargando contenido…';
-      return loadRequestData;
-    }
-  );
+  // --- Si el usuario selecciona un archivo local, lo convierte en URL utilizable ---
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (!file) return;
 
-  // --- Evento: sender (celular / Chrome) se conecta ---
-  context.addEventListener(
-    cast.framework.system.EventType.SENDER_CONNECTED,
-    (event) => {
-      console.log('Cast JHAF: dispositivo conectado', event.senderId);
-      statusText.textContent = 'Dispositivo conectado';
-    }
-  );
+    localFileUrl = URL.createObjectURL(file);
+    urlInput.value = '(archivo local seleccionado: ' + file.name + ')';
 
-  // --- Evento: sender se desconecta ---
-  context.addEventListener(
-    cast.framework.system.EventType.SENDER_DISCONNECTED,
-    (event) => {
-      console.log('Cast JHAF: dispositivo desconectado', event.senderId);
-      if (context.getSenders().length === 0) {
-        statusText.textContent = 'Esperando conexión…';
+    // Autodetecta el tipo de contenido
+    if (file.type) {
+      const opt = [...typeSelect.options].find(o => o.value === file.type);
+      if (opt) typeSelect.value = file.type;
+    }
+
+    setStatus('Archivo listo: ' + file.name + ' — nota: solo se reproduce en dispositivos de la misma red local mientras esta pestaña esté abierta.');
+  });
+
+  // --- Botón: transmitir contenido ---
+  playBtn.addEventListener('click', () => {
+    if (!castSession) {
+      setStatus('Primero conéctate a un dispositivo Cast (icono de la izquierda).');
+      return;
+    }
+
+    const mediaUrl = localFileUrl || urlInput.value.trim();
+    if (!mediaUrl) {
+      setStatus('Escribe una URL o selecciona un archivo primero.');
+      return;
+    }
+
+    const mediaInfo = new chrome.cast.media.MediaInfo(mediaUrl, typeSelect.value);
+    mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
+    mediaInfo.metadata.title = 'Cast JHAF';
+
+    const request = new chrome.cast.media.LoadRequest(mediaInfo);
+
+    castSession.loadMedia(request).then(
+      () => {
+        setStatus('▶ Transmitiendo con éxito');
+        controls.classList.add('active');
+      },
+      (errorCode) => {
+        setStatus('❌ Error al transmitir: ' + errorCode);
       }
-    }
-  );
+    );
+  });
 
-  // --- Opciones del receptor ---
-  const options = new cast.framework.CastReceiverOptions();
-  options.maxInactivity = 3600; // segundos antes de cerrar por inactividad
-  options.disableIdleTimeout = false;
+  // --- Controles de reproducción remota ---
+  document.getElementById('pauseBtn').addEventListener('click', () => {
+    if (!castSession) return;
+    const media = castSession.getMediaSession();
+    if (media) media.pause(new chrome.cast.media.PauseRequest(), () => setStatus('⏸ Pausado'), (e) => setStatus('Error: ' + e));
+  });
 
-  // Habilita el "shaka player" para mejor soporte de formatos (HLS, DASH, etc.)
-  options.useShakaForHls = true;
+  document.getElementById('stopBtn').addEventListener('click', () => {
+    if (!castSession) return;
+    const media = castSession.getMediaSession();
+    if (media) media.stop(new chrome.cast.media.StopRequest(), () => setStatus('⏹ Detenido'), (e) => setStatus('Error: ' + e));
+  });
 
-  // --- Iniciar el receptor ---
-  context.start(options);
+  document.getElementById('volUpBtn').addEventListener('click', () => {
+    if (!castSession) return;
+    const vol = new chrome.cast.Volume(Math.min(1, (castSession.getVolume() || 0.5) + 0.1));
+    castSession.setVolume(vol, () => setStatus('🔊 Volumen +'), (e) => setStatus('Error: ' + e));
+  });
 
-  console.log('Cast JHAF: receptor iniciado correctamente ✅');
+  document.getElementById('volDownBtn').addEventListener('click', () => {
+    if (!castSession) return;
+    const vol = new chrome.cast.Volume(Math.max(0, (castSession.getVolume() || 0.5) - 0.1));
+    castSession.setVolume(vol, () => setStatus('🔉 Volumen -'), (e) => setStatus('Error: ' + e));
+  });
 </script>
 
 </body>
