@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reproductor Doble M3U Flotante</title>
+    <!-- HLS.js para compatibilidad de transmisiones m3u8 -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         * {
@@ -21,20 +22,34 @@
             overflow: hidden;
         }
 
-        /* Contenedor Principal Dividido para 2 Transmisiones */
+        /* Contenedor Principal Adaptativo para PC, Tablet, Móvil y TV */
         .players-wrapper {
             position: relative;
             width: 100%;
             height: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
+            grid-template-rows: 100%;
             background-color: #000000;
         }
 
-        @media (max-width: 768px) {
+        /* Diseño Vertical para Móviles y Pantallas Estrechas en modo retrato */
+        @media (max-width: 768px) and (orientation: portrait) {
             .players-wrapper {
-                grid-template-columns: 1fr;
+                grid-template-columns: 100%;
                 grid-template-rows: 1fr 1fr;
+            }
+        }
+
+        /* Optimización de tamaño para TV y pantallas gigantes */
+        @media (min-width: 1920px) {
+            .floating-btn {
+                width: 70px !important;
+                height: 70px !important;
+            }
+            .floating-btn svg {
+                width: 32px !important;
+                height: 32px !important;
             }
         }
 
@@ -50,7 +65,7 @@
             cursor: pointer;
         }
 
-        /* Contenedor estricto ceñido al tamaño exacto de la imagen del video para que el marco blanco quede únicamente en su orilla */
+        /* Contenedor estricto flexible que se ajusta milimétricamente al tamaño exacto de la imagen del video */
         .video-wrapper {
             position: relative;
             display: inline-flex;
@@ -62,7 +77,7 @@
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
-        /* Marco blanco brillante únicamente en los bordes de la transmisión activa con audio */
+        /* El marco blanco se dibuja EXCLUSIVAMENTE alrededor de los bordes exactos del video activo */
         .player-box.active-audio .video-wrapper {
             border-color: #ffffff;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
@@ -73,22 +88,10 @@
             display: block;
             max-width: 100%;
             max-height: 100%;
-            width: auto;
-            height: auto;
-            transition: object-fit 0.3s ease;
-        }
-
-        /* Modos de visualización precisos */
-        video.mode-normal {
-            object-fit: fill;
-        }
-
-        video.mode-16-9 {
-            object-fit: cover;
-        }
-
-        video.mode-full {
+            width: 100%;
+            height: 100%;
             object-fit: contain;
+            transition: object-fit 0.3s ease;
         }
 
         /* Mensaje cuando no hay transmisión cargada */
@@ -111,7 +114,7 @@
             opacity: 0.6;
         }
 
-        /* Botón Flotante Superior Derecho (Abrir Modal) con transición para ocultarse */
+        /* Botones Flotantes Generales */
         .floating-btn {
             position: fixed;
             z-index: 10;
@@ -130,6 +133,7 @@
             transition: background 0.2s, transform 0.2s, opacity 0.4s ease, visibility 0.4s ease;
             opacity: 1;
             visibility: visible;
+            outline: none;
         }
 
         .floating-btn.hidden {
@@ -138,9 +142,10 @@
             pointer-events: none;
         }
 
-        .floating-btn:hover {
+        .floating-btn:hover, .floating-btn:focus {
             background: rgba(51, 65, 85, 0.95);
             transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         #btn-open-modal {
@@ -148,14 +153,20 @@
             right: 20px;
         }
 
-        /* Estilos del Modal */
+        /* Botón Reiniciar Transmisiones (Esquina Superior Izquierda) */
+        #btn-reset-streams {
+            top: 20px;
+            left: 20px;
+        }
+
+        /* Estilos Adaptativos del Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(5px);
             display: flex;
             justify-content: center;
@@ -164,6 +175,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.25s ease, visibility 0.25s;
+            padding: 15px;
         }
 
         .modal-overlay.active {
@@ -174,9 +186,9 @@
         .modal-content {
             background: #1e293b;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px;
+            padding: 25px;
             border-radius: 16px;
-            width: 90%;
+            width: 100%;
             max-width: 450px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
             transform: scale(0.95);
@@ -188,7 +200,7 @@
         }
 
         .modal-content h3 {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-size: 1.25rem;
             font-weight: 600;
             color: #f1f5f9;
@@ -201,7 +213,7 @@
         }
 
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .input-group label {
@@ -213,7 +225,7 @@
 
         .modal-content input {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 14px;
             background: #0f172a;
             border: 1px solid #334155;
             border-radius: 8px;
@@ -231,6 +243,7 @@
             display: flex;
             justify-content: flex-end;
             gap: 10px;
+            margin-top: 20px;
         }
 
         .modal-actions button {
@@ -264,7 +277,9 @@
 </head>
 <body>
 
+    <!-- Contenedor Principal Dividido -->
     <div class="players-wrapper">
+        <!-- Reproductor 1 -->
         <div class="player-box" id="box-1">
             <div id="placeholder-1" class="no-stream" style="display: none;">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
@@ -273,10 +288,11 @@
                 <p>Stream 1 sin configurar</p>
             </div>
             <div class="video-wrapper">
-                <video id="video-1" class="mode-normal" autoplay playsinline muted></video>
+                <video id="video-1" autoplay playsinline muted></video>
             </div>
         </div>
 
+        <!-- Reproductor 2 -->
         <div class="player-box" id="box-2">
             <div id="placeholder-2" class="no-stream" style="display: none;">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
@@ -285,15 +301,22 @@
                 <p>Stream 2 sin configurar</p>
             </div>
             <div class="video-wrapper">
-                <video id="video-2" class="mode-normal" autoplay playsinline muted></video>
+                <video id="video-2" autoplay playsinline muted></video>
             </div>
         </div>
     </div>
 
-    <button id="btn-open-modal" class="floating-btn" title="Configurar URLs">
+    <!-- Botón Flotante Superior Izquierdo (Reiniciar Transmisiones) -->
+    <button id="btn-reset-streams" class="floating-btn" title="Reiniciar Transmisiones" aria-label="Reiniciar Transmisiones">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.65-5.65"/></svg>
+    </button>
+
+    <!-- Botón Flotante Superior Derecho (Abrir Modal) -->
+    <button id="btn-open-modal" class="floating-btn" title="Configurar URLs" aria-label="Configurar URLs">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
     </button>
 
+    <!-- Modal para ingresar ambas URLs -->
     <div id="url-modal" class="modal-overlay">
         <div class="modal-content">
             <h3>Configurar Transmisiones</h3>
@@ -319,6 +342,7 @@
     <script>
         const modal = document.getElementById('url-modal');
         const btnOpenModal = document.getElementById('btn-open-modal');
+        const btnResetStreams = document.getElementById('btn-reset-streams');
         const btnCancel = document.getElementById('btn-cancel');
         const btnApply = document.getElementById('btn-apply');
         
@@ -355,6 +379,14 @@
             input1.focus();
         });
 
+        // Botón Reiniciar Transmisiones
+        btnResetStreams.addEventListener('click', () => {
+            const u1 = input1.value.trim() || defaultUrl1;
+            const u2 = input2.value.trim() || defaultUrl2;
+            loadStream(u1, 1);
+            loadStream(u2, 2);
+        });
+
         // Cerrar Modal
         const closeModal = () => {
             modal.classList.remove('active');
@@ -375,6 +407,10 @@
 
             closeModal();
         });
+
+        // Permitir presionar Enter dentro de los inputs del modal
+        input1.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnApply.click(); });
+        input2.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnApply.click(); });
 
         // Función para cargar un stream en específico (1 o 2)
         function loadStream(url, id) {
@@ -410,7 +446,7 @@
             }
         }
 
-        // Lógica de Audio Exclusivo (El marco blanco se aplica ceñido estrictamente al contorno de la transmisión activa)
+        // Lógica de Audio Exclusivo (El marco blanco se aplica alrededor del video activo)
         function setActiveAudio(targetId) {
             if (targetId === 1) {
                 video1.muted = false;
@@ -435,31 +471,36 @@
         let inactivityTimer = null;
 
         function resetInactivityTimer() {
-            // Mostrar el botón si se detecta un clic
-            btnOpenModal.classList.remove('hidden');
+            btnOpenManagerVisibility(false);
 
-            // Limpiar temporizador anterior
             if (inactivityTimer) {
                 clearTimeout(inactivityTimer);
             }
 
-            // Si el modal está abierto, no ocultar el botón
             if (modal.classList.contains('active')) return;
 
-            // Iniciar cuenta regresiva de 10 segundos
             inactivityTimer = setTimeout(() => {
                 if (!modal.classList.contains('active')) {
-                    btnOpenModal.classList.add('hidden');
+                    btnOpenManagerVisibility(true);
                 }
             }, 10000);
         }
 
-        // Escuchar clics en toda la ventana para reiniciar el temporizador
+        function btnOpenManagerVisibility(hide) {
+            if (hide) {
+                btnOpenModal.classList.add('hidden');
+                btnResetStreams.classList.add('hidden');
+            } else {
+                btnOpenModal.classList.remove('hidden');
+                btnResetStreams.classList.remove('hidden');
+            }
+        }
+
         window.addEventListener('click', resetInactivityTimer);
         window.addEventListener('mousemove', resetInactivityTimer);
         window.addEventListener('keydown', resetInactivityTimer);
+        window.addEventListener('touchstart', resetInactivityTimer);
 
-        // Iniciar el temporizador al cargar la página
         resetInactivityTimer();
     </script>
 </body>
