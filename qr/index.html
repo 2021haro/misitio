@@ -16,7 +16,7 @@
         body, html {
             width: 100%;
             height: 100%;
-            background-color: #0f172a;
+            background-color: #000000;
             color: #f8fafc;
             overflow: hidden;
         }
@@ -28,7 +28,7 @@
             height: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            background-color: #000;
+            background-color: #000000;
         }
 
         @media (max-width: 768px) {
@@ -45,16 +45,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #050b14;
+            background-color: #000000;
             overflow: hidden;
             cursor: pointer;
         }
 
-        .player-box:hover .player-overlay-info {
-            opacity: 1;
-        }
-
-        /* Contenedor estricto que envuelve únicamente al elemento de video para delimitar el marco exactamente en su orilla */
+        /* Contenedor estricto ceñido al tamaño exacto de la imagen del video para que el marco blanco quede únicamente en su orilla */
         .video-wrapper {
             position: relative;
             display: inline-flex;
@@ -66,7 +62,7 @@
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
-        /* El marco blanco se dibuja únicamente en las orillas exactas del video activo con audio */
+        /* Marco blanco brillante únicamente en los bordes de la transmisión activa con audio */
         .player-box.active-audio .video-wrapper {
             border-color: #ffffff;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
@@ -77,47 +73,22 @@
             display: block;
             max-width: 100%;
             max-height: 100%;
-            width: 100%;
-            height: 100%;
+            width: auto;
+            height: auto;
             transition: object-fit 0.3s ease;
         }
 
-        /* Modos de visualización solicitados */
+        /* Modos de visualización precisos */
         video.mode-normal {
-            object-fit: contain; /* Como viene la transmisión por defecto (sin recortes ni deformaciones) */
+            object-fit: fill;
         }
 
         video.mode-16-9 {
-            object-fit: cover; /* Proporción panorámica 16:9 ideal llenando el espacio */
+            object-fit: cover;
         }
 
         video.mode-full {
-            object-fit: contain; /* Se ve completa la imagen dentro del espacio sin deformar ni estirar */
-            background-color: #000;
-        }
-
-        /* Indicador visual flotante en cada reproductor */
-        .player-overlay-info {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(15, 23, 42, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 500;
-            backdrop-filter: blur(4px);
-            opacity: 0.7;
-            transition: opacity 0.2s;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .player-box.active-audio .player-overlay-info {
-            border-color: #ffffff;
-            color: #ffffff;
-            font-weight: 600;
+            object-fit: contain;
         }
 
         /* Mensaje cuando no hay transmisión cargada */
@@ -140,7 +111,7 @@
             opacity: 0.6;
         }
 
-        /* Botones Flotantes Generales */
+        /* Botón Flotante Superior Derecho (Abrir Modal) con transición para ocultarse */
         .floating-btn {
             position: fixed;
             z-index: 10;
@@ -156,7 +127,15 @@
             cursor: pointer;
             backdrop-filter: blur(8px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            transition: background 0.2s, transform 0.2s;
+            transition: background 0.2s, transform 0.2s, opacity 0.4s ease, visibility 0.4s ease;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .floating-btn.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
 
         .floating-btn:hover {
@@ -164,70 +143,9 @@
             transform: scale(1.05);
         }
 
-        /* Botón Configurar URL (Esquina Superior Derecha) */
         #btn-open-modal {
             top: 20px;
             right: 20px;
-        }
-
-        /* Contenedor del Botón de Modo de Visualización y su Panel (Esquina Inferior Derecha) */
-        .view-mode-wrapper {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 10;
-        }
-
-        #btn-view-mode {
-            position: relative;
-            bottom: auto;
-            right: auto;
-        }
-
-        /* Panel de Opciones de Visualización */
-        .view-mode-panel {
-            position: absolute;
-            bottom: 65px;
-            right: 0;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            min-width: 160px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-        }
-
-        .view-mode-panel.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .view-mode-panel button {
-            background: transparent;
-            border: none;
-            color: #cbd5e1;
-            padding: 10px 14px;
-            text-align: left;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .view-mode-panel button:hover, 
-        .view-mode-panel button.selected {
-            background: #2563eb;
-            color: #fff;
         }
 
         /* Estilos del Modal */
@@ -348,28 +266,26 @@
 
     <div class="players-wrapper">
         <div class="player-box" id="box-1">
-            <div class="player-overlay-info" id="info-1">Stream 1 (Silenciado)</div>
-            <div id="placeholder-1" class="no-stream">
+            <div id="placeholder-1" class="no-stream" style="display: none;">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0 0 13.5 5.25h-9A2.25 2.25 0 0 0 2.25 7.5v9A2.25 2.25 0 0 0 4.5 18.75Z" />
                 </svg>
                 <p>Stream 1 sin configurar</p>
             </div>
             <div class="video-wrapper">
-                <video id="video-1" class="mode-normal" autoplay playsinline muted style="display: none;"></video>
+                <video id="video-1" class="mode-normal" autoplay playsinline muted></video>
             </div>
         </div>
 
         <div class="player-box" id="box-2">
-            <div class="player-overlay-info" id="info-2">Stream 2 (Silenciado)</div>
-            <div id="placeholder-2" class="no-stream">
+            <div id="placeholder-2" class="no-stream" style="display: none;">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0 0 13.5 5.25h-9A2.25 2.25 0 0 0 2.25 7.5v9A2.25 2.25 0 0 0 4.5 18.75Z" />
                 </svg>
                 <p>Stream 2 sin configurar</p>
             </div>
             <div class="video-wrapper">
-                <video id="video-2" class="mode-normal" autoplay playsinline muted style="display: none;"></video>
+                <video id="video-2" class="mode-normal" autoplay playsinline muted></video>
             </div>
         </div>
     </div>
@@ -377,18 +293,6 @@
     <button id="btn-open-modal" class="floating-btn" title="Configurar URLs">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
     </button>
-
-    <div class="view-mode-wrapper">
-        <button id="btn-view-mode" class="floating-btn" title="Modo de visualización">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        </button>
-        
-        <div id="view-mode-panel" class="view-mode-panel">
-            <button type="button" data-mode="normal" class="selected">Normal</button>
-            <button type="button" data-mode="16-9">16:9</button>
-            <button type="button" data-mode="full">Full (Imagen Completa)</button>
-        </div>
-    </div>
 
     <div id="url-modal" class="modal-overlay">
         <div class="modal-content">
@@ -423,20 +327,27 @@
 
         const box1 = document.getElementById('box-1');
         const box2 = document.getElementById('box-2');
-        const info1 = document.getElementById('info-1');
-        const info2 = document.getElementById('info-2');
 
         const video1 = document.getElementById('video-1');
         const video2 = document.getElementById('video-2');
         const placeholder1 = document.getElementById('placeholder-1');
         const placeholder2 = document.getElementById('placeholder-2');
 
-        const btnViewMode = document.getElementById('btn-view-mode');
-        const viewModePanel = document.getElementById('view-mode-panel');
-        const modeButtons = viewModePanel.querySelectorAll('button');
-
         let hls1 = null;
         let hls2 = null;
+
+        // URLs predeterminadas solicitadas
+        const defaultUrl1 = "https://queputasteimporta.duckdns.org:53127/hls/canal.m3u8";
+        const defaultUrl2 = "https://queputasteimporta.duckdns.org:53127/hls/canal2.m3u8";
+
+        input1.value = defaultUrl1;
+        input2.value = defaultUrl2;
+
+        // Iniciar de inmediato con las URLs predeterminadas al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            loadStream(defaultUrl1, 1);
+            loadStream(defaultUrl2, 2);
+        });
 
         // Abrir Modal
         btnOpenModal.addEventListener('click', () => {
@@ -454,7 +365,7 @@
             if (e.target === modal) closeModal();
         });
 
-        // Aplicar URLs
+        // Aplicar URLs desde el modal
         btnApply.addEventListener('click', () => {
             const u1 = input1.value.trim();
             const u2 = input2.value.trim();
@@ -499,22 +410,18 @@
             }
         }
 
-        // Lógica de Audio Exclusivo (Aplica el marco blanco exactamente en las orillas del video activo)
+        // Lógica de Audio Exclusivo (El marco blanco se aplica ceñido estrictamente al contorno de la transmisión activa)
         function setActiveAudio(targetId) {
             if (targetId === 1) {
                 video1.muted = false;
                 video2.muted = true;
                 box1.classList.add('active-audio');
                 box2.classList.remove('active-audio');
-                info1.textContent = "Stream 1 (Con Audio)";
-                info2.textContent = "Stream 2 (Silenciado)";
             } else {
                 video1.muted = true;
                 video2.muted = false;
                 box1.classList.remove('active-audio');
                 box2.classList.add('active-audio');
-                info1.textContent = "Stream 1 (Silenciado)";
-                info2.textContent = "Stream 2 (Con Audio)";
             }
         }
 
@@ -524,46 +431,36 @@
         // Por defecto asignar audio a la primera transmisión al iniciar
         setActiveAudio(1);
 
-        // Control del Panel Flotante de Modo de Visualización
-        btnViewMode.addEventListener('click', (e) => {
-            e.stopPropagation();
-            viewModePanel.classList.toggle('active');
-        });
+        // Temporizador de inactividad de 10 segundos para ocultar el botón de URL
+        let inactivityTimer = null;
 
-        // Ocultar panel si se hace clic fuera
-        document.addEventListener('click', (e) => {
-            if (!viewModePanel.contains(e.target) && e.target !== btnViewMode) {
-                viewModePanel.classList.remove('active');
+        function resetInactivityTimer() {
+            // Mostrar el botón si se detecta un clic
+            btnOpenModal.classList.remove('hidden');
+
+            // Limpiar temporizador anterior
+            if (inactivityTimer) {
+                clearTimeout(inactivityTimer);
             }
-        });
 
-        // Cambiar modo de visualización global (Normal, 16:9, Full)
-        modeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                modeButtons.forEach(btn => btn.classList.remove('selected'));
-                button.classList.add('selected');
+            // Si el modal está abierto, no ocultar el botón
+            if (modal.classList.contains('active')) return;
 
-                const mode = button.getAttribute('data-mode');
-                
-                // Limpiar clases previas de modo en ambos videos
-                video1.classList.remove('mode-normal', 'mode-16-9', 'mode-full');
-                video2.classList.remove('mode-normal', 'mode-16-9', 'mode-full');
-
-                // Aplicar la nueva clase de ajuste seguro
-                if (mode === '16-9') {
-                    video1.classList.add('mode-16-9');
-                    video2.classList.add('mode-16-9');
-                } else if (mode === 'full') {
-                    video1.classList.add('mode-full');
-                    video2.classList.add('mode-full');
-                } else {
-                    video1.classList.add('mode-normal');
-                    video2.classList.add('mode-normal');
+            // Iniciar cuenta regresiva de 10 segundos
+            inactivityTimer = setTimeout(() => {
+                if (!modal.classList.contains('active')) {
+                    btnOpenModal.classList.add('hidden');
                 }
+            }, 10000);
+        }
 
-                viewModePanel.classList.remove('active');
-            });
-        });
+        // Escuchar clics en toda la ventana para reiniciar el temporizador
+        window.addEventListener('click', resetInactivityTimer);
+        window.addEventListener('mousemove', resetInactivityTimer);
+        window.addEventListener('keydown', resetInactivityTimer);
+
+        // Iniciar el temporizador al cargar la página
+        resetInactivityTimer();
     </script>
 </body>
 </html>
