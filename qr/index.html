@@ -1,335 +1,569 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cast JHAF</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor Doble M3U Flotante</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
 
-<!-- Librería oficial de Google Cast Sender -->
-<script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow: hidden;
+        }
 
-<style>
-  * { box-sizing: border-box; }
+        /* Contenedor Principal Dividido para 2 Transmisiones */
+        .players-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background-color: #000;
+        }
 
-  body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-    background: radial-gradient(circle at top, #1a1a2e 0%, #000000 100%);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
-  }
+        @media (max-width: 768px) {
+            .players-wrapper {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+            }
+        }
 
-  .logo {
-    font-size: 42px;
-    font-weight: 800;
-    letter-spacing: 3px;
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 4px;
-  }
+        .player-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #050b14;
+            overflow: hidden;
+            cursor: pointer;
+        }
 
-  .subtitle {
-    color: #999;
-    font-size: 14px;
-    letter-spacing: 1px;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-  }
+        .player-box:hover .player-overlay-info {
+            opacity: 1;
+        }
 
-  .card {
-    background: #16213e;
-    border-radius: 16px;
-    padding: 30px;
-    width: 100%;
-    max-width: 480px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  }
+        /* Contenedor estricto que envuelve únicamente al elemento de video para delimitar el marco exactamente en su orilla */
+        .video-wrapper {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%;
+            max-height: 100%;
+            border: 3px solid transparent;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
 
-  label {
-    display: block;
-    font-size: 13px;
-    color: #aaa;
-    margin-bottom: 6px;
-    margin-top: 18px;
-  }
+        /* El marco blanco se dibuja únicamente en las orillas exactas del video activo con audio */
+        .player-box.active-audio .video-wrapper {
+            border-color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+            z-index: 3;
+        }
 
-  input[type="text"], select {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 8px;
-    border: 1px solid #2a2a4a;
-    background: #0f0f23;
-    color: #fff;
-    font-size: 14px;
-    outline: none;
-  }
+        video {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            width: 100%;
+            height: 100%;
+            transition: object-fit 0.3s ease;
+        }
 
-  input[type="text"]:focus, select:focus {
-    border-color: #4facfe;
-  }
+        /* Modos de visualización solicitados */
+        video.mode-normal {
+            object-fit: contain; /* Como viene la transmisión por defecto (sin recortes ni deformaciones) */
+        }
 
-  input[type="file"] {
-    width: 100%;
-    margin-top: 6px;
-    color: #ccc;
-    font-size: 13px;
-  }
+        video.mode-16-9 {
+            object-fit: cover; /* Proporción panorámica 16:9 ideal llenando el espacio */
+        }
 
-  .divider {
-    text-align: center;
-    color: #555;
-    font-size: 12px;
-    margin: 18px 0;
-    text-transform: uppercase;
-  }
+        video.mode-full {
+            object-fit: contain; /* Se ve completa la imagen dentro del espacio sin deformar ni estirar */
+            background-color: #000;
+        }
 
-  .cast-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 26px;
-    gap: 12px;
-  }
+        /* Indicador visual flotante en cada reproductor */
+        .player-overlay-info {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            z-index: 5;
+        }
 
-  google-cast-launcher {
-    width: 40px;
-    height: 40px;
-    --connected-color: #4facfe;
-    --disconnected-color: #ffffff;
-    cursor: pointer;
-  }
+        .player-box.active-audio .player-overlay-info {
+            border-color: #ffffff;
+            color: #ffffff;
+            font-weight: 600;
+        }
 
-  button {
-    flex: 1;
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
-    border: none;
-    color: #001;
-    font-weight: 700;
-    font-size: 15px;
-    padding: 14px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: transform 0.15s ease, opacity 0.15s ease;
-  }
+        /* Mensaje cuando no hay transmisión cargada */
+        .no-stream {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: #94a3b8;
+            text-align: center;
+            padding: 20px;
+            z-index: 2;
+        }
 
-  button:hover { transform: translateY(-1px); }
-  button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+        .no-stream svg {
+            width: 48px;
+            height: 48px;
+            stroke: currentColor;
+            opacity: 0.6;
+        }
 
-  #status {
-    margin-top: 20px;
-    padding: 12px 14px;
-    border-radius: 8px;
-    background: #0f0f23;
-    font-size: 13px;
-    color: #8fd3ff;
-    text-align: center;
-    min-height: 18px;
-  }
+        /* Botones Flotantes Generales */
+        .floating-btn {
+            position: fixed;
+            z-index: 10;
+            background: rgba(30, 41, 59, 0.85);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: background 0.2s, transform 0.2s;
+        }
 
-  .controls {
-    display: none;
-    margin-top: 18px;
-    gap: 10px;
-    justify-content: center;
-  }
+        .floating-btn:hover {
+            background: rgba(51, 65, 85, 0.95);
+            transform: scale(1.05);
+        }
 
-  .controls.active { display: flex; }
+        /* Botón Configurar URL (Esquina Superior Derecha) */
+        #btn-open-modal {
+            top: 20px;
+            right: 20px;
+        }
 
-  .controls button {
-    flex: none;
-    width: 46px;
-    height: 46px;
-    padding: 0;
-    font-size: 18px;
-    border-radius: 50%;
-  }
+        /* Contenedor del Botón de Modo de Visualización y su Panel (Esquina Inferior Derecha) */
+        .view-mode-wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10;
+        }
 
-  footer {
-    margin-top: 30px;
-    color: #555;
-    font-size: 12px;
-    text-align: center;
-  }
-</style>
+        #btn-view-mode {
+            position: relative;
+            bottom: auto;
+            right: auto;
+        }
+
+        /* Panel de Opciones de Visualización */
+        .view-mode-panel {
+            position: absolute;
+            bottom: 65px;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 160px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+        }
+
+        .view-mode-panel.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .view-mode-panel button {
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            padding: 10px 14px;
+            text-align: left;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .view-mode-panel button:hover, 
+        .view-mode-panel button.selected {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        /* Estilos del Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            transform: scale(0.95);
+            transition: transform 0.25s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h3 {
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .modal-content p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px 14px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .modal-content input:focus {
+            border-color: #3b82f6;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal-actions button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s;
+        }
+
+        .btn-cancel {
+            background: #334155;
+            color: #cbd5e1;
+        }
+
+        .btn-cancel:hover {
+            background: #475569;
+        }
+
+        .btn-apply {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        .btn-apply:hover {
+            background: #1d4ed8;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="logo">CAST JHAF</div>
-  <div class="subtitle">Emisor de contenido a Google Cast — 100% gratis</div>
+    <div class="players-wrapper">
+        <div class="player-box" id="box-1">
+            <div class="player-overlay-info" id="info-1">Stream 1 (Silenciado)</div>
+            <div id="placeholder-1" class="no-stream">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0 0 13.5 5.25h-9A2.25 2.25 0 0 0 2.25 7.5v9A2.25 2.25 0 0 0 4.5 18.75Z" />
+                </svg>
+                <p>Stream 1 sin configurar</p>
+            </div>
+            <div class="video-wrapper">
+                <video id="video-1" class="mode-normal" autoplay playsinline muted style="display: none;"></video>
+            </div>
+        </div>
 
-  <div class="card">
-
-    <label for="mediaUrl">URL del video, audio o imagen</label>
-    <input type="text" id="mediaUrl" placeholder="https://ejemplo.com/video.mp4">
-
-    <div class="divider">— o —</div>
-
-    <label for="fileInput">Selecciona un archivo de tu celular / PC</label>
-    <input type="file" id="fileInput" accept="video/*,audio/*,image/*">
-
-    <label for="mediaType">Tipo de contenido</label>
-    <select id="mediaType">
-      <option value="video/mp4">Video (MP4)</option>
-      <option value="video/webm">Video (WebM)</option>
-      <option value="audio/mpeg">Audio (MP3)</option>
-      <option value="image/jpeg">Imagen (JPG/PNG)</option>
-    </select>
-
-    <div class="cast-row">
-      <google-cast-launcher id="castButton"></google-cast-launcher>
-      <button id="playBtn" disabled>▶ Transmitir a TV</button>
+        <div class="player-box" id="box-2">
+            <div class="player-overlay-info" id="info-2">Stream 2 (Silenciado)</div>
+            <div id="placeholder-2" class="no-stream">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0 0 13.5 5.25h-9A2.25 2.25 0 0 0 2.25 7.5v9A2.25 2.25 0 0 0 4.5 18.75Z" />
+                </svg>
+                <p>Stream 2 sin configurar</p>
+            </div>
+            <div class="video-wrapper">
+                <video id="video-2" class="mode-normal" autoplay playsinline muted style="display: none;"></video>
+            </div>
+        </div>
     </div>
 
-    <div class="controls" id="controls">
-      <button id="pauseBtn">⏸</button>
-      <button id="stopBtn">⏹</button>
-      <button id="volUpBtn">🔊</button>
-      <button id="volDownBtn">🔉</button>
+    <button id="btn-open-modal" class="floating-btn" title="Configurar URLs">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+    </button>
+
+    <div class="view-mode-wrapper">
+        <button id="btn-view-mode" class="floating-btn" title="Modo de visualización">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </button>
+        
+        <div id="view-mode-panel" class="view-mode-panel">
+            <button type="button" data-mode="normal" class="selected">Normal</button>
+            <button type="button" data-mode="16-9">16:9</button>
+            <button type="button" data-mode="full">Full (Imagen Completa)</button>
+        </div>
     </div>
 
-    <div id="status">Esperando conexión con un dispositivo Cast…</div>
-  </div>
+    <div id="url-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Configurar Transmisiones</h3>
+            <p>Ingresa los enlaces para las dos pantallas simultáneas:</p>
+            
+            <div class="input-group">
+                <label for="url-1">URL Transmisión 1:</label>
+                <input type="text" id="url-1" placeholder="https://ejemplo.com/stream1.m3u8" autocomplete="off">
+            </div>
 
-  <footer>
-    Usa el Receptor Multimedia Predeterminado de Google — sin registro, sin costo.
-  </footer>
+            <div class="input-group">
+                <label for="url-2">URL Transmisión 2:</label>
+                <input type="text" id="url-2" placeholder="https://ejemplo.com/stream2.m3u8" autocomplete="off">
+            </div>
 
-<script>
-  // ============================================================
-  //  CAST JHAF — Emisor (sender) gratuito de Google Cast
-  //  Usa DEFAULT_MEDIA_RECEIVER_APP_ID: no requiere registro ni pago
-  // ============================================================
+            <div class="modal-actions">
+                <button type="button" id="btn-cancel" class="btn-cancel">Cancelar</button>
+                <button type="button" id="btn-apply" class="btn-apply">Aplicar</button>
+            </div>
+        </div>
+    </div>
 
-  let castSession = null;
-  let localFileUrl = null;
+    <script>
+        const modal = document.getElementById('url-modal');
+        const btnOpenModal = document.getElementById('btn-open-modal');
+        const btnCancel = document.getElementById('btn-cancel');
+        const btnApply = document.getElementById('btn-apply');
+        
+        const input1 = document.getElementById('url-1');
+        const input2 = document.getElementById('url-2');
 
-  const statusEl   = document.getElementById('status');
-  const playBtn    = document.getElementById('playBtn');
-  const urlInput   = document.getElementById('mediaUrl');
-  const fileInput  = document.getElementById('fileInput');
-  const typeSelect = document.getElementById('mediaType');
-  const controls   = document.getElementById('controls');
+        const box1 = document.getElementById('box-1');
+        const box2 = document.getElementById('box-2');
+        const info1 = document.getElementById('info-1');
+        const info2 = document.getElementById('info-2');
 
-  function setStatus(text) {
-    statusEl.textContent = text;
-  }
+        const video1 = document.getElementById('video-1');
+        const video2 = document.getElementById('video-2');
+        const placeholder1 = document.getElementById('placeholder-1');
+        const placeholder2 = document.getElementById('placeholder-2');
 
-  // --- Se llama automáticamente cuando la librería de Cast está lista ---
-  window['__onGCastApiAvailable'] = function (isAvailable) {
-    if (isAvailable) {
-      initializeCastApi();
-    } else {
-      setStatus('Este navegador no soporta Google Cast. Usa Chrome.');
-    }
-  };
+        const btnViewMode = document.getElementById('btn-view-mode');
+        const viewModePanel = document.getElementById('view-mode-panel');
+        const modeButtons = viewModePanel.querySelectorAll('button');
 
-  function initializeCastApi() {
-    const context = cast.framework.CastContext.getInstance();
+        let hls1 = null;
+        let hls2 = null;
 
-    context.setOptions({
-      receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
-      autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
-    });
+        // Abrir Modal
+        btnOpenModal.addEventListener('click', () => {
+            modal.classList.add('active');
+            input1.focus();
+        });
 
-    // --- Escucha cambios en el estado de la sesión (conectado/desconectado) ---
-    context.addEventListener(
-      cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
-      (event) => {
-        switch (event.sessionState) {
-          case cast.framework.SessionState.SESSION_STARTED:
-          case cast.framework.SessionState.SESSION_RESUMED:
-            castSession = context.getCurrentSession();
-            playBtn.disabled = false;
-            setStatus('✅ Conectado a: ' + castSession.getCastDevice().friendlyName);
-            break;
-          case cast.framework.SessionState.SESSION_ENDED:
-            castSession = null;
-            playBtn.disabled = true;
-            controls.classList.remove('active');
-            setStatus('Sesión finalizada. Esperando conexión…');
-            break;
+        // Cerrar Modal
+        const closeModal = () => {
+            modal.classList.remove('active');
+        };
+
+        btnCancel.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        // Aplicar URLs
+        btnApply.addEventListener('click', () => {
+            const u1 = input1.value.trim();
+            const u2 = input2.value.trim();
+
+            if (u1) loadStream(u1, 1);
+            if (u2) loadStream(u2, 2);
+
+            closeModal();
+        });
+
+        // Función para cargar un stream en específico (1 o 2)
+        function loadStream(url, id) {
+            const video = id === 1 ? video1 : video2;
+            const placeholder = id === 1 ? placeholder1 : placeholder2;
+            let hlsRef = id === 1 ? hls1 : hls2;
+
+            placeholder.style.display = 'none';
+            video.style.display = 'block';
+
+            if (hlsRef) {
+                hlsRef.destroy();
+                hlsRef = null;
+            }
+
+            if (url.includes('.m3u8') && Hls.isSupported()) {
+                hlsRef = new Hls();
+                hlsRef.loadSource(url);
+                hlsRef.attachMedia(video);
+                hlsRef.on(Hls.Events.MANIFEST_PARSED, () => {
+                    video.play().catch(err => console.log("Autoplay bloqueado:", err));
+                });
+                if (id === 1) hls1 = hlsRef; else hls2 = hlsRef;
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+                video.addEventListener('loadedmetadata', () => {
+                    video.play().catch(err => console.log("Autoplay bloqueado:", err));
+                });
+            } else {
+                video.src = url;
+                video.load();
+                video.play().catch(err => console.log("Autoplay bloqueado:", err));
+            }
         }
-      }
-    );
-  }
 
-  // --- Si el usuario selecciona un archivo local, lo convierte en URL utilizable ---
-  fileInput.addEventListener('change', () => {
-    const file = fileInput.files[0];
-    if (!file) return;
+        // Lógica de Audio Exclusivo (Aplica el marco blanco exactamente en las orillas del video activo)
+        function setActiveAudio(targetId) {
+            if (targetId === 1) {
+                video1.muted = false;
+                video2.muted = true;
+                box1.classList.add('active-audio');
+                box2.classList.remove('active-audio');
+                info1.textContent = "Stream 1 (Con Audio)";
+                info2.textContent = "Stream 2 (Silenciado)";
+            } else {
+                video1.muted = true;
+                video2.muted = false;
+                box1.classList.remove('active-audio');
+                box2.classList.add('active-audio');
+                info1.textContent = "Stream 1 (Silenciado)";
+                info2.textContent = "Stream 2 (Con Audio)";
+            }
+        }
 
-    localFileUrl = URL.createObjectURL(file);
-    urlInput.value = '(archivo local seleccionado: ' + file.name + ')';
+        box1.addEventListener('click', () => setActiveAudio(1));
+        box2.addEventListener('click', () => setActiveAudio(2));
 
-    // Autodetecta el tipo de contenido
-    if (file.type) {
-      const opt = [...typeSelect.options].find(o => o.value === file.type);
-      if (opt) typeSelect.value = file.type;
-    }
+        // Por defecto asignar audio a la primera transmisión al iniciar
+        setActiveAudio(1);
 
-    setStatus('Archivo listo: ' + file.name + ' — nota: solo se reproduce en dispositivos de la misma red local mientras esta pestaña esté abierta.');
-  });
+        // Control del Panel Flotante de Modo de Visualización
+        btnViewMode.addEventListener('click', (e) => {
+            e.stopPropagation();
+            viewModePanel.classList.toggle('active');
+        });
 
-  // --- Botón: transmitir contenido ---
-  playBtn.addEventListener('click', () => {
-    if (!castSession) {
-      setStatus('Primero conéctate a un dispositivo Cast (icono de la izquierda).');
-      return;
-    }
+        // Ocultar panel si se hace clic fuera
+        document.addEventListener('click', (e) => {
+            if (!viewModePanel.contains(e.target) && e.target !== btnViewMode) {
+                viewModePanel.classList.remove('active');
+            }
+        });
 
-    const mediaUrl = localFileUrl || urlInput.value.trim();
-    if (!mediaUrl) {
-      setStatus('Escribe una URL o selecciona un archivo primero.');
-      return;
-    }
+        // Cambiar modo de visualización global (Normal, 16:9, Full)
+        modeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                modeButtons.forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
 
-    const mediaInfo = new chrome.cast.media.MediaInfo(mediaUrl, typeSelect.value);
-    mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
-    mediaInfo.metadata.title = 'Cast JHAF';
+                const mode = button.getAttribute('data-mode');
+                
+                // Limpiar clases previas de modo en ambos videos
+                video1.classList.remove('mode-normal', 'mode-16-9', 'mode-full');
+                video2.classList.remove('mode-normal', 'mode-16-9', 'mode-full');
 
-    const request = new chrome.cast.media.LoadRequest(mediaInfo);
+                // Aplicar la nueva clase de ajuste seguro
+                if (mode === '16-9') {
+                    video1.classList.add('mode-16-9');
+                    video2.classList.add('mode-16-9');
+                } else if (mode === 'full') {
+                    video1.classList.add('mode-full');
+                    video2.classList.add('mode-full');
+                } else {
+                    video1.classList.add('mode-normal');
+                    video2.classList.add('mode-normal');
+                }
 
-    castSession.loadMedia(request).then(
-      () => {
-        setStatus('▶ Transmitiendo con éxito');
-        controls.classList.add('active');
-      },
-      (errorCode) => {
-        setStatus('❌ Error al transmitir: ' + errorCode);
-      }
-    );
-  });
-
-  // --- Controles de reproducción remota ---
-  document.getElementById('pauseBtn').addEventListener('click', () => {
-    if (!castSession) return;
-    const media = castSession.getMediaSession();
-    if (media) media.pause(new chrome.cast.media.PauseRequest(), () => setStatus('⏸ Pausado'), (e) => setStatus('Error: ' + e));
-  });
-
-  document.getElementById('stopBtn').addEventListener('click', () => {
-    if (!castSession) return;
-    const media = castSession.getMediaSession();
-    if (media) media.stop(new chrome.cast.media.StopRequest(), () => setStatus('⏹ Detenido'), (e) => setStatus('Error: ' + e));
-  });
-
-  document.getElementById('volUpBtn').addEventListener('click', () => {
-    if (!castSession) return;
-    const vol = new chrome.cast.Volume(Math.min(1, (castSession.getVolume() || 0.5) + 0.1));
-    castSession.setVolume(vol, () => setStatus('🔊 Volumen +'), (e) => setStatus('Error: ' + e));
-  });
-
-  document.getElementById('volDownBtn').addEventListener('click', () => {
-    if (!castSession) return;
-    const vol = new chrome.cast.Volume(Math.max(0, (castSession.getVolume() || 0.5) - 0.1));
-    castSession.setVolume(vol, () => setStatus('🔉 Volumen -'), (e) => setStatus('Error: ' + e));
-  });
-</script>
-
+                viewModePanel.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
