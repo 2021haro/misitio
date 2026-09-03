@@ -464,6 +464,35 @@
 
 
         /* ============================================================
+           MODO ENFOQUE (2 CLICS RÁPIDOS)
+
+           Cuando una transmisión entra en modo enfoque, ocupa todo
+           el espacio disponible y la otra se oculta.
+           ============================================================ */
+
+        .players-wrapper.focus-mode {
+
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+
+        }
+
+
+        .players-wrapper.focus-mode .player-box {
+
+            display: none;
+
+        }
+
+
+        .players-wrapper.focus-mode .player-box.focused {
+
+            display: flex;
+
+        }
+
+
+        /* ============================================================
            MÓVILES VERTICAL
            ============================================================ */
 
@@ -523,6 +552,10 @@
             overflow: hidden;
 
             cursor: pointer;
+
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
 
         }
 
@@ -603,8 +636,8 @@
 
         body[data-screen-mode="default"] .video-wrapper {
 
-            width: auto;
-            height: auto;
+            width: 100%;
+            height: 100%;
 
             aspect-ratio: auto;
 
@@ -613,7 +646,7 @@
 
         body[data-screen-mode="default"] video {
 
-            object-fit: contain;
+            object-fit: cover;
 
         }
 
@@ -2094,11 +2127,150 @@
         }
 
 
+        /* Audio inicial */
+
+        setActiveAudio(1);
+
+
+        /* ============================================================
+           CLIC SIMPLE (AUDIO) VS 2 CLICS RÁPIDOS (MODO ENFOQUE)
+           ============================================================ */
+
+        const playersWrapper =
+            document.querySelector(
+                '.players-wrapper'
+            );
+
+
+        let focusedId =
+            null;
+
+
+        function toggleFocusMode(
+            id
+        ) {
+
+            if (
+                focusedId === id
+            ) {
+
+                playersWrapper.classList.remove(
+                    'focus-mode'
+                );
+
+                box1.classList.remove(
+                    'focused'
+                );
+
+                box2.classList.remove(
+                    'focused'
+                );
+
+                focusedId =
+                    null;
+
+            } else {
+
+                playersWrapper.classList.add(
+                    'focus-mode'
+                );
+
+                box1.classList.remove(
+                    'focused'
+                );
+
+                box2.classList.remove(
+                    'focused'
+                );
+
+                (
+                    id === 1
+                        ? box1
+                        : box2
+                ).classList.add(
+                    'focused'
+                );
+
+                focusedId =
+                    id;
+
+                setActiveAudio(
+                    id
+                );
+
+            }
+
+        }
+
+
+        const DOUBLE_CLICK_DELAY =
+            300;
+
+
+        const clickState =
+            {
+                1: {
+                    count: 0,
+                    timer: null
+                },
+                2: {
+                    count: 0,
+                    timer: null
+                }
+            };
+
+
+        function handleBoxClick(
+            id
+        ) {
+
+            const state =
+                clickState[id];
+
+
+            state.count++;
+
+
+            if (
+                state.count === 1
+            ) {
+
+                state.timer =
+                    setTimeout(
+                        () => {
+
+                            setActiveAudio(
+                                id
+                            );
+
+                            state.count = 0;
+
+                        },
+                        DOUBLE_CLICK_DELAY
+                    );
+
+            } else {
+
+                clearTimeout(
+                    state.timer
+                );
+
+                state.count = 0;
+
+                toggleFocusMode(
+                    id
+                );
+
+            }
+
+        }
+
+
         box1.addEventListener(
             'click',
             () => {
 
-                setActiveAudio(1);
+                handleBoxClick(1);
 
             }
         );
@@ -2108,15 +2280,10 @@
             'click',
             () => {
 
-                setActiveAudio(2);
+                handleBoxClick(2);
 
             }
         );
-
-
-        /* Audio inicial */
-
-        setActiveAudio(1);
 
 
         /* ============================================================
