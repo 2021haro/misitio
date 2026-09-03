@@ -64,6 +64,24 @@
 
 
         /* ============================================================
+           FONDO NEGRO PURO (alternado con el botón)
+           ============================================================ */
+
+        body.pure-black-bg {
+
+            background: #000000;
+
+        }
+
+
+        body.pure-black-bg .lava-lamp-bg {
+
+            display: none;
+
+        }
+
+
+        /* ============================================================
            MOVIMIENTO DEL GRADIENTE PRINCIPAL
            ============================================================ */
 
@@ -551,8 +569,6 @@
 
             overflow: hidden;
 
-            cursor: pointer;
-
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -576,15 +592,13 @@
             max-width: 100%;
             max-height: 100%;
 
-            border:
-                3px solid transparent;
+            border: none;
 
             box-sizing: border-box;
 
             overflow: hidden;
 
             transition:
-                border-color 0.2s ease,
                 box-shadow 0.2s ease,
                 width 0.25s ease,
                 height 0.25s ease;
@@ -593,17 +607,64 @@
 
 
         /* ============================================================
-           BORDE DEL VIDEO CON AUDIO
+           PUNTO ROJO (INDICADOR DE AUDIO ACTIVO)
+
+           Solo visible en la transmisión que NO está en mute.
            ============================================================ */
 
-        .player-box.active-audio .video-wrapper {
+        .live-dot {
 
-            border-color: #ffffff;
+            position: absolute;
+
+            top: 14px;
+            left: 14px;
+
+            width: 12px;
+            height: 12px;
+
+            border-radius: 50%;
+
+            background: #ef4444;
 
             box-shadow:
-                0 0 15px rgba(255,255,255,0.4);
+                0 0 8px rgba(239,68,68,0.9);
 
-            z-index: 3;
+            z-index: 4;
+
+            pointer-events: none;
+
+            display: none;
+
+        }
+
+
+        .player-box.active-audio .live-dot {
+
+            display: block;
+
+            animation:
+                blinkDot 2s steps(1) infinite;
+
+        }
+
+
+        /* ============================================================
+           PARPADEO DEL PUNTO ROJO (cada 2s prende/apaga)
+           ============================================================ */
+
+        @keyframes blinkDot {
+
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
 
         }
 
@@ -623,6 +684,9 @@
             height: 100%;
 
             object-fit: contain;
+            object-position: center center;
+
+            cursor: pointer;
 
             transition:
                 object-fit 0.3s ease;
@@ -631,28 +695,7 @@
 
 
         /* ============================================================
-           MODO PREDETERMINADO
-           ============================================================ */
-
-        body[data-screen-mode="default"] .video-wrapper {
-
-            width: 100%;
-            height: 100%;
-
-            aspect-ratio: auto;
-
-        }
-
-
-        body[data-screen-mode="default"] video {
-
-            object-fit: cover;
-
-        }
-
-
-        /* ============================================================
-           MODO 16:9
+           MODO 16:9 (ÚNICO MODO)
            ============================================================ */
 
         body[data-screen-mode="169"] .video-wrapper {
@@ -848,125 +891,6 @@
 
             border-color:
                 rgba(255,255,255,0.4);
-
-        }
-
-
-        /* ============================================================
-           MENÚ MODO DE PANTALLA
-           ============================================================ */
-
-        .screen-mode-wrapper {
-
-            position: relative;
-
-        }
-
-
-        .screen-mode-menu {
-
-            position: absolute;
-
-            top: 55px;
-            left: 50%;
-
-            transform:
-                translateX(-50%)
-                translateY(-8px);
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 4px;
-
-            background:
-                rgba(15,23,42,0.75);
-
-            backdrop-filter:
-                blur(14px);
-
-            -webkit-backdrop-filter:
-                blur(14px);
-
-            border:
-                1px solid rgba(255,255,255,0.12);
-
-            border-radius: 12px;
-
-            padding: 6px;
-
-            box-shadow:
-                0 8px 32px rgba(0,0,0,0.5);
-
-            opacity: 0;
-
-            visibility: hidden;
-
-            transition:
-                opacity 0.2s ease,
-                transform 0.2s ease,
-                visibility 0.2s;
-
-            white-space: nowrap;
-
-        }
-
-
-        .screen-mode-menu.open {
-
-            opacity: 1;
-
-            visibility: visible;
-
-            transform:
-                translateX(-50%)
-                translateY(0);
-
-        }
-
-
-        .screen-mode-option {
-
-            background: transparent;
-
-            border: none;
-
-            color: #cbd5e1;
-
-            font-size: 13px;
-
-            padding: 8px 14px;
-
-            border-radius: 8px;
-
-            cursor: pointer;
-
-            text-align: left;
-
-            transition:
-                background 0.15s,
-                color 0.15s;
-
-        }
-
-
-        .screen-mode-option:hover {
-
-            background:
-                rgba(255,255,255,0.08);
-
-            color: #fff;
-
-        }
-
-
-        .screen-mode-option.active {
-
-            background:
-                #2563eb;
-
-            color: #fff;
 
         }
 
@@ -1216,7 +1140,7 @@
 </head>
 
 
-<body data-screen-mode="default">
+<body data-screen-mode="169">
 
 
     <!-- ============================================================
@@ -1288,6 +1212,8 @@
 
             <div class="video-wrapper">
 
+                <div class="live-dot"></div>
+
                 <video
                     id="video-1"
                     autoplay
@@ -1336,6 +1262,8 @@
 
 
             <div class="video-wrapper">
+
+                <div class="live-dot"></div>
 
                 <video
                     id="video-2"
@@ -1447,70 +1375,41 @@
         </button>
 
 
-        <!-- MODO PANTALLA -->
+        <!-- FONDO -->
 
-        <div class="screen-mode-wrapper">
+        <button
+            id="btn-toggle-bg"
+            class="floating-btn"
+            title="Alternar fondo"
+            aria-label="Alternar fondo negro"
+        >
 
-            <button
-                id="btn-screen-mode"
-                class="floating-btn"
-                title="Modo de pantalla"
-                aria-label="Modo de pantalla"
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
             >
 
-                <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="9"
+                />
 
-                    <rect
-                        x="2"
-                        y="4"
-                        width="20"
-                        height="14"
-                        rx="2"
-                    />
+                <path
+                    d="M12 3a9 9 0 0 0 0 18z"
+                    fill="currentColor"
+                    stroke="none"
+                />
 
-                    <path
-                        d="M8 21h8M12 18v3"
-                    />
+            </svg>
 
-                </svg>
-
-            </button>
-
-
-            <div
-                id="screen-mode-menu"
-                class="screen-mode-menu"
-            >
-
-                <button
-                    type="button"
-                    class="screen-mode-option active"
-                    data-mode="default"
-                >
-                    Predeterminado
-                </button>
-
-
-                <button
-                    type="button"
-                    class="screen-mode-option"
-                    data-mode="169"
-                >
-                    16:9
-                </button>
-
-            </div>
-
-        </div>
+        </button>
 
     </div>
 
@@ -1614,6 +1513,9 @@
 
         const btnFullscreen =
             document.getElementById('btn-fullscreen');
+
+        const btnToggleBg =
+            document.getElementById('btn-toggle-bg');
 
         const topControls =
             document.getElementById('top-controls');
@@ -1787,6 +1689,22 @@
                     }
 
                 }
+
+            }
+        );
+
+
+        /* ============================================================
+           ALTERNAR FONDO (NEGRO PURO / FONDO ACTUAL)
+           ============================================================ */
+
+        btnToggleBg.addEventListener(
+            'click',
+            () => {
+
+                document.body.classList.toggle(
+                    'pure-black-bg'
+                );
 
             }
         );
@@ -2266,7 +2184,10 @@
         }
 
 
-        box1.addEventListener(
+        /* El clic solo debe responder dentro del video real,
+           no en el resto de la caja del reproductor */
+
+        video1.addEventListener(
             'click',
             () => {
 
@@ -2276,118 +2197,11 @@
         );
 
 
-        box2.addEventListener(
+        video2.addEventListener(
             'click',
             () => {
 
                 handleBoxClick(2);
-
-            }
-        );
-
-
-        /* ============================================================
-           MODO DE PANTALLA
-           ============================================================ */
-
-        const btnScreenMode =
-            document.getElementById(
-                'btn-screen-mode'
-            );
-
-
-        const screenModeMenu =
-            document.getElementById(
-                'screen-mode-menu'
-            );
-
-
-        const screenModeOptions =
-            document.querySelectorAll(
-                '.screen-mode-option'
-            );
-
-
-        /* Abrir menú */
-
-        btnScreenMode.addEventListener(
-            'click',
-            (e) => {
-
-                e.stopPropagation();
-
-                screenModeMenu.classList.toggle(
-                    'open'
-                );
-
-            }
-        );
-
-
-        /* Cerrar menú */
-
-        document.addEventListener(
-            'click',
-            (e) => {
-
-                if (
-                    !screenModeMenu.contains(
-                        e.target
-                    ) &&
-                    e.target !== btnScreenMode
-                ) {
-
-                    screenModeMenu.classList.remove(
-                        'open'
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* Cambiar modo */
-
-        screenModeOptions.forEach(
-            option => {
-
-                option.addEventListener(
-                    'click',
-                    () => {
-
-                        const mode =
-                            option.dataset.mode;
-
-
-                        document.body.setAttribute(
-                            'data-screen-mode',
-                            mode
-                        );
-
-
-                        screenModeOptions.forEach(
-                            o => {
-
-                                o.classList.remove(
-                                    'active'
-                                );
-
-                            }
-                        );
-
-
-                        option.classList.add(
-                            'active'
-                        );
-
-
-                        screenModeMenu.classList.remove(
-                            'open'
-                        );
-
-                    }
-                );
 
             }
         );
