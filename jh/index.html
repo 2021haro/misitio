@@ -1,1 +1,2353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor Doble M3U Flotante</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: transparent;
+        }
+
+
+        /* ============================================================
+           FONDO DEL CÓDIGO 1
+           
+           LÁMPARA DE LAVA / GLASS
+           
+           Se sustituyó completamente el Ambient Mode del código 2.
+           El fondo funciona independientemente de los videos.
+           ============================================================ */
+
+        .lava-lamp-bg {
+            position: fixed;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            z-index: -10;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #0f172a,
+                    #1e1b4b,
+                    #082f49,
+                    #1e1b4b,
+                    #0f172a
+                );
+
+            background-size: 400% 400%;
+
+            animation:
+                gradientDrift 24s ease-in-out infinite;
+        }
+
+
+        /* ============================================================
+           FONDO NEGRO PURO (alternado con el botón)
+           ============================================================ */
+
+        body.pure-black-bg {
+
+            background: #000000;
+
+        }
+
+
+        body.pure-black-bg .lava-lamp-bg {
+
+            display: none;
+
+        }
+
+
+        /* ============================================================
+           MOVIMIENTO DEL GRADIENTE PRINCIPAL
+           ============================================================ */
+
+        @keyframes gradientDrift {
+
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+
+        }
+
+
+        /* ============================================================
+           BLOBS
+           ============================================================ */
+
+        .lava-blob {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            filter: blur(90px);
+
+            opacity: 0.55;
+
+            mix-blend-mode: screen;
+
+            will-change: transform;
+
+        }
+
+
+        .blob-1 {
+
+            width: 480px;
+            height: 480px;
+
+            background: #2563eb;
+
+            top: -12%;
+            left: -12%;
+
+            animation:
+                floatBlob1 22s infinite alternate ease-in-out;
+
+        }
+
+
+        .blob-2 {
+
+            width: 520px;
+            height: 520px;
+
+            background: #7c3aed;
+
+            bottom: -18%;
+            right: -12%;
+
+            animation:
+                floatBlob2 27s infinite alternate ease-in-out;
+
+        }
+
+
+        .blob-3 {
+
+            width: 420px;
+            height: 420px;
+
+            background: #0d9488;
+
+            top: 25%;
+            left: 35%;
+
+            animation:
+                floatBlob3 18s infinite alternate ease-in-out;
+
+        }
+
+
+        .blob-4 {
+
+            width: 380px;
+            height: 380px;
+
+            background: #db2777;
+
+            top: 60%;
+            left: 5%;
+
+            animation:
+                floatBlob4 26s infinite alternate ease-in-out;
+
+        }
+
+
+        .blob-5 {
+
+            width: 440px;
+            height: 440px;
+
+            background: #0891b2;
+
+            top: 5%;
+            right: 15%;
+
+            animation:
+                floatBlob5 20s infinite alternate ease-in-out;
+
+        }
+
+
+        .blob-6 {
+
+            width: 400px;
+            height: 400px;
+
+            background: #4f46e5;
+
+            bottom: 5%;
+            left: 45%;
+
+            animation:
+                floatBlob6 30s infinite alternate ease-in-out;
+
+        }
+
+
+        /* ============================================================
+           ANIMACIONES DE LOS BLOBS
+           ============================================================ */
+
+        @keyframes floatBlob1 {
+
+            0% {
+                transform:
+                    translate(0px, 0px)
+                    scale(1);
+            }
+
+            35% {
+                transform:
+                    translate(180px, 120px)
+                    scale(1.25);
+            }
+
+            70% {
+                transform:
+                    translate(60px, 260px)
+                    scale(0.9);
+            }
+
+            100% {
+                transform:
+                    translate(220px, 40px)
+                    scale(1.1);
+            }
+
+        }
+
+
+        @keyframes floatBlob2 {
+
+            0% {
+                transform:
+                    translate(0px, 0px)
+                    scale(1);
+            }
+
+            35% {
+                transform:
+                    translate(-160px, -140px)
+                    scale(1.15);
+            }
+
+            70% {
+                transform:
+                    translate(-260px, 20px)
+                    scale(0.85);
+            }
+
+            100% {
+                transform:
+                    translate(-80px, -220px)
+                    scale(1.2);
+            }
+
+        }
+
+
+        @keyframes floatBlob3 {
+
+            0% {
+                transform:
+                    translate(0px, 0px)
+                    scale(1)
+                    rotate(0deg);
+            }
+
+            50% {
+                transform:
+                    translate(-140px, 180px)
+                    scale(1.3)
+                    rotate(30deg);
+            }
+
+            100% {
+                transform:
+                    translate(160px, -120px)
+                    scale(0.8)
+                    rotate(-20deg);
+            }
+
+        }
+
+
+        @keyframes floatBlob4 {
+
+            0% {
+                transform:
+                    translate(0px, 0px)
+                    scale(1);
+            }
+
+            40% {
+                transform:
+                    translate(200px, -100px)
+                    scale(1.2);
+            }
+
+            80% {
+                transform:
+                    translate(90px, -220px)
+                    scale(0.9);
+            }
+
+            100% {
+                transform:
+                    translate(240px, -40px)
+                    scale(1.05);
+            }
+
+        }
+
+
+        @keyframes floatBlob5 {
+
+            0% {
+                transform:
+                    translate(0px, 0px)
+                    scale(1);
+            }
+
+            45% {
+                transform:
+                    translate(-180px, 160px)
+                    scale(0.85);
+            }
+
+            100% {
+                transform:
+                    translate(-90px, 280px)
+                    scale(1.15);
+            }
+
+        }
+
+
+        @keyframes floatBlob6 {
+
+            0% {
+                transform:
+                    translate(0px, 0px)
+                    scale(1)
+                    rotate(0deg);
+            }
+
+            50% {
+                transform:
+                    translate(120px, -160px)
+                    scale(1.2)
+                    rotate(-25deg);
+            }
+
+            100% {
+                transform:
+                    translate(-140px, -80px)
+                    scale(0.9)
+                    rotate(15deg);
+            }
+
+        }
+
+
+        /* ============================================================
+           BRILLO GLASS
+           ============================================================ */
+
+        .glass-sheen {
+
+            position: absolute;
+
+            top: -50%;
+            left: -50%;
+
+            width: 220%;
+            height: 220%;
+
+            background:
+                linear-gradient(
+                    115deg,
+                    rgba(255,255,255,0) 40%,
+                    rgba(255,255,255,0.06) 48%,
+                    rgba(255,255,255,0.10) 50%,
+                    rgba(255,255,255,0.06) 52%,
+                    rgba(255,255,255,0) 60%
+                );
+
+            animation:
+                sheenSweep 14s linear infinite;
+
+            pointer-events: none;
+
+        }
+
+
+        @keyframes sheenSweep {
+
+            0% {
+                transform:
+                    translate(-15%, -15%)
+                    rotate(0deg);
+            }
+
+            100% {
+                transform:
+                    translate(15%, 15%)
+                    rotate(0deg);
+            }
+
+        }
+
+
+        /* ============================================================
+           CAPA GLASS
+           ============================================================ */
+
+        .glass-overlay {
+
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+
+            background:
+                rgba(255,255,255,0.015);
+
+            pointer-events: none;
+
+        }
+
+
+        /* ============================================================
+           CONTENEDOR PRINCIPAL
+           ============================================================ */
+
+        .players-wrapper {
+
+            position: relative;
+
+            width: 100%;
+            height: 100%;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 100%;
+
+            background: transparent;
+
+            z-index: 1;
+
+        }
+
+
+        /* ============================================================
+           MODO ENFOQUE (2 CLICS RÁPIDOS)
+
+           Cuando una transmisión entra en modo enfoque, ocupa todo
+           el espacio disponible y la otra se oculta.
+           ============================================================ */
+
+        .players-wrapper.focus-mode {
+
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+
+        }
+
+
+        .players-wrapper.focus-mode .player-box {
+
+            display: none;
+
+        }
+
+
+        .players-wrapper.focus-mode .player-box.focused {
+
+            display: flex;
+
+        }
+
+
+        /* ============================================================
+           MÓVILES VERTICAL
+           ============================================================ */
+
+        @media (max-width: 768px) and (orientation: portrait) {
+
+            body:not([data-layout="horizontal"]) .players-wrapper {
+
+                grid-template-columns: 100%;
+                grid-template-rows: 1fr 1fr;
+
+            }
+
+        }
+
+
+        /* ============================================================
+           FORZAR ORIENTACIÓN DESDE EL BOTÓN
+           ============================================================ */
+        body[data-layout="horizontal"] .players-wrapper {
+
+            grid-template-columns: 1fr 1fr !important;
+            grid-template-rows: 100% !important;
+
+        }
+
+        body[data-layout="vertical"] .players-wrapper {
+
+            grid-template-columns: 100% !important;
+            grid-template-rows: 1fr 1fr !important;
+
+        }
+
+
+        /* ============================================================
+           VISIBILIDAD DEL BOTÓN DE CAMBIO (Solo Móvil y Tablet)
+           ============================================================ */
+        #btn-toggle-layout {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            #btn-toggle-layout {
+                display: flex;
+            }
+        }
+
+
+        /* ============================================================
+           TV / PANTALLAS GRANDES
+           ============================================================ */
+
+        @media (min-width: 1920px) {
+
+            .floating-btn {
+
+                width: 70px !important;
+                height: 70px !important;
+
+            }
+
+            .floating-btn svg {
+
+                width: 32px !important;
+                height: 32px !important;
+
+            }
+
+        }
+
+
+        /* ============================================================
+           PLAYER
+           ============================================================ */
+
+        .player-box {
+
+            position: relative;
+
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            background: transparent;
+
+            overflow: hidden;
+
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+
+        }
+
+
+        /* ============================================================
+           VIDEO WRAPPER
+           ============================================================ */
+
+        .video-wrapper {
+
+            position: relative;
+
+            display: inline-flex;
+
+            justify-content: center;
+            align-items: center;
+
+            max-width: 100%;
+            max-height: 100%;
+
+            border: none;
+
+            box-sizing: border-box;
+
+            overflow: hidden;
+
+            transition:
+                box-shadow 0.2s ease,
+                width 0.25s ease,
+                height 0.25s ease;
+
+        }
+
+
+        /* ============================================================
+           PUNTO ROJO (INDICADOR DE AUDIO ACTIVO)
+
+           Solo visible en la transmisión que NO está en mute.
+           ============================================================ */
+
+        .live-dot {
+
+            position: absolute;
+
+            top: 14px;
+            left: 14px;
+
+            width: 12px;
+            height: 12px;
+
+            border-radius: 50%;
+
+            background: #ef4444;
+
+            box-shadow:
+                0 0 8px rgba(239,68,68,0.9);
+
+            z-index: 4;
+
+            pointer-events: none;
+
+            display: none;
+
+        }
+
+
+        .player-box.active-audio .live-dot {
+
+            display: block;
+
+            animation:
+                blinkDot 2s steps(1) infinite;
+
+        }
+
+
+        /* ============================================================
+           PARPADEO DEL PUNTO ROJO (cada 2s prende/apaga)
+           ============================================================ */
+
+        @keyframes blinkDot {
+
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+
+        }
+
+
+        /* ============================================================
+           VIDEO
+           ============================================================ */
+
+        video {
+
+            display: block;
+
+            max-width: 100%;
+            max-height: 100%;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+            object-position: center center;
+
+            cursor: pointer;
+
+            transition:
+                object-fit 0.3s ease;
+
+        }
+
+
+        /* ============================================================
+           MODO 16:9 (ÚNICO MODO)
+           ============================================================ */
+
+        body[data-screen-mode="169"] .video-wrapper {
+
+            display: flex;
+
+            width: 100%;
+            height: auto;
+
+            aspect-ratio: 16 / 9;
+
+            max-width: 100%;
+            max-height: 100%;
+
+            overflow: hidden;
+
+        }
+
+
+        body[data-screen-mode="169"] video {
+
+            display: block;
+
+            width: 100% !important;
+            height: 100% !important;
+
+            max-width: none !important;
+            max-height: none !important;
+
+            object-fit: fill !important;
+
+        }
+
+
+        /* ============================================================
+           SIN STREAM
+           ============================================================ */
+
+        .no-stream {
+
+            position: absolute;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #94a3b8;
+
+            text-align: center;
+
+            padding: 20px;
+
+            z-index: 2;
+
+        }
+
+
+        .no-stream svg {
+
+            width: 48px;
+            height: 48px;
+
+            stroke: currentColor;
+
+            opacity: 0.6;
+
+        }
+
+
+        /* ============================================================
+           CONTROLES
+           ============================================================ */
+
+        .top-controls-container {
+
+            position: fixed;
+
+            top: 20px;
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            display: flex;
+
+            gap: 12px;
+
+            z-index: 10;
+
+            background:
+                rgba(15,23,42,0.4);
+
+            backdrop-filter:
+                blur(12px);
+
+            -webkit-backdrop-filter:
+                blur(12px);
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            padding: 8px 14px;
+
+            border-radius: 30px;
+
+            box-shadow:
+                0 8px 32px rgba(0,0,0,0.4);
+
+            transition:
+                opacity 0.4s ease,
+                visibility 0.4s ease,
+                transform 0.4s ease;
+
+            opacity: 1;
+
+            visibility: visible;
+
+        }
+
+
+        .top-controls-container.hidden {
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transform:
+                translateX(-50%)
+                translateY(-20px);
+
+        }
+
+
+        /* ============================================================
+           BOTONES
+           ============================================================ */
+
+        .floating-btn {
+
+            background:
+                rgba(30,41,59,0.65);
+
+            color: #fff;
+
+            border:
+                1px solid rgba(255,255,255,0.15);
+
+            border-radius: 50%;
+
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            cursor: pointer;
+
+            backdrop-filter:
+                blur(8px);
+
+            -webkit-backdrop-filter:
+                blur(8px);
+
+            box-shadow:
+                0 4px 12px rgba(0,0,0,0.2);
+
+            transition:
+                background 0.2s,
+                transform 0.2s,
+                border-color 0.2s;
+
+            outline: none;
+
+        }
+
+
+        .floating-btn:hover,
+        .floating-btn:focus {
+
+            background:
+                rgba(51,65,85,0.9);
+
+            transform:
+                scale(1.08);
+
+            border-color:
+                rgba(255,255,255,0.4);
+
+        }
+
+
+        /* ============================================================
+           MODAL
+           ============================================================ */
+
+        .modal-overlay {
+
+            position: fixed;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+                rgba(0,0,0,0.75);
+
+            backdrop-filter:
+                blur(8px);
+
+            -webkit-backdrop-filter:
+                blur(8px);
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            z-index: 100;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition:
+                opacity 0.25s ease,
+                visibility 0.25s;
+
+            padding: 15px;
+
+        }
+
+
+        .modal-overlay.active {
+
+            opacity: 1;
+
+            visibility: visible;
+
+        }
+
+
+        .modal-content {
+
+            background:
+                rgba(30,41,59,0.85);
+
+            backdrop-filter:
+                blur(16px);
+
+            -webkit-backdrop-filter:
+                blur(16px);
+
+            border:
+                1px solid rgba(255,255,255,0.15);
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            width: 100%;
+
+            max-width: 450px;
+
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.6);
+
+            transform:
+                scale(0.95);
+
+            transition:
+                transform 0.25s ease;
+
+        }
+
+
+        .modal-overlay.active .modal-content {
+
+            transform:
+                scale(1);
+
+        }
+
+
+        .modal-content h3 {
+
+            margin-bottom: 12px;
+
+            font-size: 1.25rem;
+
+            font-weight: 600;
+
+            color: #f1f5f9;
+
+        }
+
+
+        .modal-content p {
+
+            font-size: 0.9rem;
+
+            color: #94a3b8;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .input-group {
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .input-group label {
+
+            display: block;
+
+            font-size: 0.85rem;
+
+            color: #cbd5e1;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .modal-content input {
+
+            width: 100%;
+
+            padding: 12px 14px;
+
+            background:
+                rgba(15,23,42,0.8);
+
+            border:
+                1px solid #334155;
+
+            border-radius: 8px;
+
+            color: #fff;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s;
+
+        }
+
+
+        .modal-content input:focus {
+
+            border-color:
+                #3b82f6;
+
+        }
+
+
+        .modal-actions {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .modal-actions button {
+
+            padding: 10px 20px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            cursor: pointer;
+
+            border: none;
+
+            transition:
+                background 0.2s;
+
+        }
+
+
+        .btn-cancel {
+
+            background:
+                #334155;
+
+            color:
+                #cbd5e1;
+
+        }
+
+
+        .btn-cancel:hover {
+
+            background:
+                #475569;
+
+        }
+
+
+        .btn-apply {
+
+            background:
+                #2563eb;
+
+            color:
+                #fff;
+
+        }
+
+
+        .btn-apply:hover {
+
+            background:
+                #1d4ed8;
+
+        }
+
+    </style>
+</head>
+
+
+<body data-screen-mode="169">
+
+
+        <div class="lava-lamp-bg">
+
+        <div class="lava-blob blob-1"></div>
+
+        <div class="lava-blob blob-2"></div>
+
+        <div class="lava-blob blob-3"></div>
+
+        <div class="lava-blob blob-4"></div>
+
+        <div class="lava-blob blob-5"></div>
+
+        <div class="lava-blob blob-6"></div>
+
+        <div class="glass-sheen"></div>
+
+        <div class="glass-overlay"></div>
+
+    </div>
+
+
+        <div class="players-wrapper">
+
+
+                <div
+            class="player-box"
+            id="box-1"
+        >
+
+            <div
+                id="placeholder-1"
+                class="no-stream"
+                style="display:none;"
+            >
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                >
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0 0 13.5 5.25h-9A2.25 2.25 0 0 0 2.25 7.5v9A2.25 2.25 0 0 0 4.5 18.75Z"
+                    />
+
+                </svg>
+
+                <p>
+                    Stream 1 sin configurar
+                </p>
+
+            </div>
+
+
+            <div class="video-wrapper">
+
+                <div class="live-dot"></div>
+
+                <video
+                    id="video-1"
+                    autoplay
+                    playsinline
+                    muted
+                ></video>
+
+            </div>
+
+        </div>
+
+
+                <div
+            class="player-box"
+            id="box-2"
+        >
+
+            <div
+                id="placeholder-2"
+                class="no-stream"
+                style="display:none;"
+            >
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                >
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0 0 13.5 5.25h-9A2.25 2.25 0 0 0 2.25 7.5v9A2.25 2.25 0 0 0 4.5 18.75Z"
+                    />
+
+                </svg>
+
+                <p>
+                    Stream 2 sin configurar
+                </p>
+
+            </div>
+
+
+            <div class="video-wrapper">
+
+                <div class="live-dot"></div>
+
+                <video
+                    id="video-2"
+                    autoplay
+                    playsinline
+                    muted
+                ></video>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <div
+        id="top-controls"
+        class="top-controls-container"
+    >
+
+                <button
+            id="btn-reset-streams"
+            class="floating-btn"
+            title="Reiniciar Transmisiones"
+            aria-label="Reiniciar Transmisiones"
+        >
+
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+
+                <path
+                    d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.65-5.65"
+                />
+
+            </svg>
+
+        </button>
+
+
+                <button
+            id="btn-fullscreen"
+            class="floating-btn"
+            title="Pantalla Completa"
+            aria-label="Pantalla Completa"
+        >
+
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+
+                <path
+                    d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
+                />
+
+            </svg>
+
+        </button>
+
+
+                <button
+            id="btn-open-modal"
+            class="floating-btn"
+            title="Configurar URLs"
+            aria-label="Configurar URLs"
+        >
+
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+
+                <path
+                    d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"
+                />
+
+            </svg>
+
+        </button>
+
+
+                <button
+            id="btn-toggle-layout"
+            class="floating-btn"
+            title="Cambiar Orientación (Vertical / Horizontal)"
+            aria-label="Cambiar Orientación"
+        >
+
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <line x1="12" y1="3" x2="12" y2="21"/>
+
+            </svg>
+
+        </button>
+
+
+                <button
+            id="btn-toggle-bg"
+            class="floating-btn"
+            title="Alternar fondo"
+            aria-label="Alternar fondo negro"
+        >
+
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="9"
+                />
+
+                <path
+                    d="M12 3a9 9 0 0 0 0 18z"
+                    fill="currentColor"
+                    stroke="none"
+                />
+
+            </svg>
+
+        </button>
+
+    </div>
+
+
+        <div
+        id="url-modal"
+        class="modal-overlay"
+    >
+
+        <div class="modal-content">
+
+            <h3>
+                Configurar Transmisiones
+            </h3>
+
+            <p>
+                Ingresa los enlaces para las dos pantallas simultáneas:
+            </p>
+
+
+            <div class="input-group">
+
+                <label for="url-1">
+                    URL Transmisión 1:
+                </label>
+
+                <input
+                    type="text"
+                    id="url-1"
+                    placeholder="https://ejemplo.com/stream1.m3u8"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="url-2">
+                    URL Transmisión 2:
+                </label>
+
+                <input
+                    type="text"
+                    id="url-2"
+                    placeholder="https://ejemplo.com/stream2.m3u8"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    id="btn-cancel"
+                    class="btn-cancel"
+                >
+                    Cancelar
+                </button>
+
+
+                <button
+                    type="button"
+                    id="btn-apply"
+                    class="btn-apply"
+                >
+                    Aplicar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <script>
+
+        /* ============================================================
+           ELEMENTOS
+           ============================================================ */
+
+        const modal =
+            document.getElementById('url-modal');
+
+        const btnOpenModal =
+            document.getElementById('btn-open-modal');
+
+        const btnResetStreams =
+            document.getElementById('btn-reset-streams');
+
+        const btnFullscreen =
+            document.getElementById('btn-fullscreen');
+
+        const btnToggleBg =
+            document.getElementById('btn-toggle-bg');
+
+        const btnToggleLayout =
+            document.getElementById('btn-toggle-layout');
+
+        const topControls =
+            document.getElementById('top-controls');
+
+        const btnCancel =
+            document.getElementById('btn-cancel');
+
+        const btnApply =
+            document.getElementById('btn-apply');
+
+
+        const input1 =
+            document.getElementById('url-1');
+
+        const input2 =
+            document.getElementById('url-2');
+
+
+        const box1 =
+            document.getElementById('box-1');
+
+        const box2 =
+            document.getElementById('box-2');
+
+
+        const video1 =
+            document.getElementById('video-1');
+
+        const video2 =
+            document.getElementById('video-2');
+
+
+        const placeholder1 =
+            document.getElementById('placeholder-1');
+
+        const placeholder2 =
+            document.getElementById('placeholder-2');
+
+
+        /* ============================================================
+           HLS
+           ============================================================ */
+
+        let hls1 = null;
+
+        let hls2 = null;
+
+
+        /* ============================================================
+           URLS PREDETERMINADAS
+           ============================================================ */
+
+        const defaultUrl1 =
+            "https://queputasteimporta.duckdns.org:58145/hls/canal.m3u8";
+
+        const defaultUrl2 =
+            "https://queputasteimporta.duckdns.org:58145/hls/canal2.m3u8";
+
+
+        input1.value =
+            defaultUrl1;
+
+        input2.value =
+            defaultUrl2;
+
+
+        /* ============================================================
+           INICIO
+           ============================================================ */
+
+        window.addEventListener(
+            'DOMContentLoaded',
+            () => {
+
+                loadStream(
+                    defaultUrl1,
+                    1
+                );
+
+                loadStream(
+                    defaultUrl2,
+                    2
+                );
+
+            }
+        );
+
+
+        /* ============================================================
+           ABRIR MODAL
+           ============================================================ */
+
+        btnOpenModal.addEventListener(
+            'click',
+            () => {
+
+                modal.classList.add(
+                    'active'
+                );
+
+                input1.focus();
+
+            }
+        );
+
+
+        /* ============================================================
+           REINICIAR STREAMS
+           ============================================================ */
+
+        btnResetStreams.addEventListener(
+            'click',
+            () => {
+
+                const u1 =
+                    input1.value.trim() ||
+                    defaultUrl1;
+
+                const u2 =
+                    input2.value.trim() ||
+                    defaultUrl2;
+
+
+                loadStream(
+                    u1,
+                    1
+                );
+
+                loadStream(
+                    u2,
+                    2
+                );
+
+            }
+        );
+
+
+        /* ============================================================
+           PANTALLA COMPLETA
+           ============================================================ */
+
+        btnFullscreen.addEventListener(
+            'click',
+            () => {
+
+                if (
+                    !document.fullscreenElement
+                ) {
+
+                    document.documentElement
+                        .requestFullscreen()
+                        .catch(
+                            err => {
+
+                                console.log(
+                                    "Error al intentar activar pantalla completa:",
+                                    err
+                                );
+
+                            }
+                        );
+
+                } else {
+
+                    if (
+                        document.exitFullscreen
+                    ) {
+
+                        document.exitFullscreen();
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* ============================================================
+           ALTERNAR FONDO (NEGRO PURO / FONDO ACTUAL)
+           ============================================================ */
+
+        btnToggleBg.addEventListener(
+            'click',
+            () => {
+
+                document.body.classList.toggle(
+                    'pure-black-bg'
+                );
+
+            }
+        );
+
+
+        /* ============================================================
+           CAMBIAR ORIENTACIÓN (VERTICAL / HORIZONTAL)
+           ============================================================ */
+
+        btnToggleLayout.addEventListener(
+            'click',
+            () => {
+                const currentLayout =
+                    document.body.getAttribute('data-layout') || 'vertical';
+                const newLayout =
+                    currentLayout === 'vertical' ? 'horizontal' : 'vertical';
+
+                document.body.setAttribute('data-layout', newLayout);
+
+                if (newLayout === 'horizontal') {
+                    btnToggleLayout.title = 'Cambiar a Vertical';
+                    btnToggleLayout.setAttribute('aria-label', 'Cambiar a Vertical');
+                } else {
+                    btnToggleLayout.title = 'Cambiar a Horizontal';
+                    btnToggleLayout.setAttribute('aria-label', 'Cambiar a Horizontal');
+                }
+            }
+        );
+
+
+        /* ============================================================
+           CERRAR MODAL
+           ============================================================ */
+
+        const closeModal = () => {
+
+            modal.classList.remove(
+                'active'
+            );
+
+        };
+
+
+        btnCancel.addEventListener(
+            'click',
+            closeModal
+        );
+
+
+        modal.addEventListener(
+            'click',
+            (e) => {
+
+                if (
+                    e.target === modal
+                ) {
+
+                    closeModal();
+
+                }
+
+            }
+        );
+
+
+        /* ============================================================
+           APLICAR URLS
+           ============================================================ */
+
+        btnApply.addEventListener(
+            'click',
+            () => {
+
+                const u1 =
+                    input1.value.trim();
+
+                const u2 =
+                    input2.value.trim();
+
+
+                if (u1) {
+
+                    loadStream(
+                        u1,
+                        1
+                    );
+
+                }
+
+
+                if (u2) {
+
+                    loadStream(
+                        u2,
+                        2
+                    );
+
+                }
+
+
+                closeModal();
+
+            }
+        );
+
+
+        /* ============================================================
+           ENTER
+           ============================================================ */
+
+        input1.addEventListener(
+            'keypress',
+            (e) => {
+
+                if (
+                    e.key === 'Enter'
+                ) {
+
+                    btnApply.click();
+
+                }
+
+            }
+        );
+
+
+        input2.addEventListener(
+            'keypress',
+            (e) => {
+
+                if (
+                    e.key === 'Enter'
+                ) {
+
+                    btnApply.click();
+
+                }
+
+            }
+        );
+
+
+        /* ============================================================
+           CARGAR STREAM
+           ============================================================ */
+
+        function loadStream(
+            url,
+            id
+        ) {
+
+            const video =
+                id === 1
+                    ? video1
+                    : video2;
+
+
+            const placeholder =
+                id === 1
+                    ? placeholder1
+                    : placeholder2;
+
+
+            let hlsRef =
+                id === 1
+                    ? hls1
+                    : hls2;
+
+
+            placeholder.style.display =
+                'none';
+
+            video.style.display =
+                'block';
+
+
+            /* Destruir HLS anterior */
+
+            if (hlsRef) {
+
+                hlsRef.destroy();
+
+                hlsRef = null;
+
+            }
+
+
+            /* ========================================================
+               HLS.JS
+               ======================================================== */
+
+            if (
+                url.includes('.m3u8') &&
+                Hls.isSupported()
+            ) {
+
+                hlsRef =
+                    new Hls();
+
+
+                hlsRef.loadSource(
+                    url
+                );
+
+
+                hlsRef.attachMedia(
+                    video
+                );
+
+
+                hlsRef.on(
+                    Hls.Events.MANIFEST_PARSED,
+                    () => {
+
+                        video
+                            .play()
+                            .catch(
+                                err => {
+
+                                    console.log(
+                                        "Autoplay bloqueado:",
+                                        err
+                                    );
+
+                                }
+                            );
+
+                    }
+                );
+
+
+                if (id === 1) {
+
+                    hls1 =
+                        hlsRef;
+
+                } else {
+
+                    hls2 =
+                        hlsRef;
+
+                }
+
+            }
+
+
+            /* ========================================================
+               HLS NATIVO
+               ======================================================== */
+
+            else if (
+                video.canPlayType(
+                    'application/vnd.apple.mpegurl'
+                )
+            ) {
+
+                video.src =
+                    url;
+
+
+                video.addEventListener(
+                    'loadedmetadata',
+                    () => {
+
+                        video
+                            .play()
+                            .catch(
+                                err => {
+
+                                    console.log(
+                                        "Autoplay bloqueado:",
+                                        err
+                                    );
+
+                                }
+                            );
+
+                    },
+                    {
+                        once: true
+                    }
+                );
+
+            }
+
+
+            /* ========================================================
+               OTROS FORMATOS
+               ======================================================== */
+
+            else {
+
+                video.src =
+                    url;
+
+                video.load();
+
+
+                video
+                    .play()
+                    .catch(
+                        err => {
+
+                            console.log(
+                                "Autoplay bloqueado:",
+                                err
+                            );
+
+                        }
+                    );
+
+            }
+
+        }
+
+
+        /* ============================================================
+           AUDIO EXCLUSIVO
+           ============================================================ */
+
+        function setActiveAudio(
+            targetId
+        ) {
+
+            if (
+                targetId === 1
+            ) {
+
+                video1.muted =
+                    false;
+
+                video2.muted =
+                    true;
+
+
+                box1.classList.add(
+                    'active-audio'
+                );
+
+                box2.classList.remove(
+                    'active-audio'
+                );
+
+            } else {
+
+                video1.muted =
+                    true;
+
+                video2.muted =
+                    false;
+
+
+                box1.classList.remove(
+                    'active-audio'
+                );
+
+                box2.classList.add(
+                    'active-audio'
+                );
+
+            }
+
+        }
+
+
+        /* Audio inicial */
+
+        setActiveAudio(1);
+
+
+        /* ============================================================
+           CLIC SIMPLE (AUDIO) VS 2 CLICS RÁPIDOS (MODO ENFOQUE)
+           ============================================================ */
+
+        const playersWrapper =
+            document.querySelector(
+                '.players-wrapper'
+            );
+
+
+        let focusedId =
+            null;
+
+
+        function toggleFocusMode(
+            id
+        ) {
+
+            if (
+                focusedId === id
+            ) {
+
+                playersWrapper.classList.remove(
+                    'focus-mode'
+                );
+
+                box1.classList.remove(
+                    'focused'
+                );
+
+                box2.classList.remove(
+                    'focused'
+                );
+
+                focusedId =
+                    null;
+
+            } else {
+
+                playersWrapper.classList.add(
+                    'focus-mode'
+                );
+
+                box1.classList.remove(
+                    'focused'
+                );
+
+                box2.classList.remove(
+                    'focused'
+                );
+
+                (
+                    id === 1
+                        ? box1
+                        : box2
+                ).classList.add(
+                    'focused'
+                );
+
+                focusedId =
+                    id;
+
+                setActiveAudio(
+                    id
+                );
+
+            }
+
+        }
+
+
+        const DOUBLE_CLICK_DELAY =
+            300;
+
+
+        const clickState =
+            {
+                1: {
+                    count: 0,
+                    timer: null
+                },
+                2: {
+                    count: 0,
+                    timer: null
+                }
+            };
+
+
+        function handleBoxClick(
+            id
+        ) {
+
+            const state =
+                clickState[id];
+
+
+            state.count++;
+
+
+            if (
+                state.count === 1
+            ) {
+
+                state.timer =
+                    setTimeout(
+                        () => {
+
+                            setActiveAudio(
+                                id
+                            );
+
+                            state.count = 0;
+
+                        },
+                        DOUBLE_CLICK_DELAY
+                    );
+
+            } else {
+
+                clearTimeout(
+                    state.timer
+                );
+
+                state.count = 0;
+
+                toggleFocusMode(
+                    id
+                );
+
+            }
+
+        }
+
+
+        /* El clic solo debe responder dentro del video real,
+           no en el resto de la caja del reproductor */
+
+        video1.addEventListener(
+            'click',
+            () => {
+
+                handleBoxClick(1);
+
+            }
+        );
+
+
+        video2.addEventListener(
+            'click',
+            () => {
+
+                handleBoxClick(2);
+
+            }
+        );
+
+
+        /* ============================================================
+           TEMPORIZADOR
+           ============================================================ */
+
+        let inactivityTimer =
+            null;
+
+
+        function resetInactivityTimer() {
+
+            topControls.classList.remove(
+                'hidden'
+            );
+
+
+            if (
+                inactivityTimer
+            ) {
+
+                clearTimeout(
+                    inactivityTimer
+                );
+
+            }
+
+
+            if (
+                modal.classList.contains(
+                    'active'
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            inactivityTimer =
+                setTimeout(
+                    () => {
+
+                        if (
+                            !modal.classList.contains(
+                                'active'
+                            )
+                        ) {
+
+                            topControls.classList.add(
+                                'hidden'
+                            );
+
+                        }
+
+                    },
+                    3000
+                );
+
+        }
+
+
+        window.addEventListener(
+            'click',
+            resetInactivityTimer
+        );
+
+
+        window.addEventListener(
+            'mousemove',
+            resetInactivityTimer
+        );
+
+
+        window.addEventListener(
+            'keydown',
+            resetInactivityTimer
+        );
+
+
+        window.addEventListener(
+            'touchstart',
+            resetInactivityTimer
+        );
+
+
+        resetInactivityTimer();
+
+    </script>
+
+</body>
+</html>
