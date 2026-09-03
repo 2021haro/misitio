@@ -1,9 +1,7 @@
 #EXTM3U
 
 #EXTINF:-1 tvg-id="" tvg-name="Acceso Total 24/7" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="La Casa De Los Famosos México 4",Acceso Total 24/7
-https://queputasteimporta.duckdns.org:53051/hls/canal.m3u8
-
+https://queputasteimporta.duckdns.org:58145/hls/canal.m3u8
 
 #EXTINF:-1 tvg-id="" tvg-name="Toda la Casa 24/7" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="La Casa De Los Famosos México 4",Toda la Casa 24/7
-https://queputasteimporta.duckdns.org:53051/hls/canal.m3u8
-
+https://queputasteimporta.duckdns.org:58145/hls/canal2.m3u8
