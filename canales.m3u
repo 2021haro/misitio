@@ -1,7 +1,7 @@
 #EXTM3U
 
-#EXTINF:-1 tvg-id="" tvg-name="Acceso Total 24/7" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="La Casa De Los Famosos México 4",Acceso Total 24/7
+#EXTINF:-1 tvg-id="" tvg-name="CAM 1" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="La Casa De Los Famosos 4 MX",CAM 1
 https://queputasteimporta.duckdns.org:36684/hls/canal.m3u8
 
-#EXTINF:-1 tvg-id="" tvg-name="Toda la Casa 24/7" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="La Casa De Los Famosos México 4",Toda la Casa 24/7
+#EXTINF:-1 tvg-id="" tvg-name="CAM 1" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="La Graja VIP 2 MX",CAM 1
 https://queputasteimporta.duckdns.org:36684/hls/canal2.m3u8
