@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Descargas Android - JAHF</title>
+
+<!-- Icono de la pestaña del navegador -->
+
+<link rel="icon" type="image/svg+xml" href="icono.svg">
+
+<style>
+:root{
+    --primary:#2563eb;
+    --primary-hover:#1d4ed8;
+    --primary-light:#eff6ff;
+    --bg:#f5f7fb;
+    --card:#fff;
+    --border:#e5e7eb;
+    --text:#111827;
+    --muted:#64748b;
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning-bg:#fdf1e0;
+    --warning-border:#f0c987;
+    --warning-text:#b45309;
+}
+
+[data-theme="dark"]{
+    --bg:#0b1120;
+    --card:#111827;
+    --border:#263244;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --primary-light:#172554;
+    --danger:#f87171;
+    --warning-bg:rgba(180,83,9,.15);
+    --warning-border:rgba(217,119,6,.4);
+    --warning-text:#fbbf24;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    -webkit-hyphens: none !important;
+    -ms-hyphens: none !important;
+    hyphens: none !important;
+}
+
+body{
+    font-family:'Samsung Sans','SamsungOne',Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button{
+    cursor:pointer;
+    font:inherit;
+}
+
+/* ===== TOPBAR ===== */
+.topbar{
+    position:sticky;
+    top:0;
+    width:100%;
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 20px;
+    gap:12px;
+    z-index:100;
+}
+
+.brand{
+    font-size:16px;
+    font-weight:bold;
+    color:var(--text);
+    white-space:nowrap;
+}
+
+.brand small{
+    display:block;
+    font-size:11px;
+    font-weight:normal;
+    color:var(--muted);
+    margin-top:2px;
+}
+
+.topbar-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.downloader-badge{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:8px 14px;
+    font-size:12px;
+    font-weight:bold;
+    color:var(--primary);
+    background:var(--primary-light);
+    white-space:nowrap;
+}
+
+.btn-icon{
+    width:38px;
+    height:38px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--card);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.btn-icon svg{
+    width:16px;
+    height:16px;
+    stroke:var(--text);
+    stroke-width:2;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.btn-icon:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.btn-icon:hover svg{
+    stroke:var(--primary);
+}
+
+/* ===== CONTENT ===== */
+.content{
+    max-width:640px;
+    margin:0 auto;
+    padding:32px 20px 60px;
+}
+
+.download-grid{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.warning-box{
+    background:var(--warning-bg);
+    border:1px solid var(--warning-border);
+    border-radius:12px;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.warning-text{
+    color:var(--warning-text);
+    font-size:13px;
+    font-weight:bold;
+    line-height:1.7;
+    text-align:center;
+}
+
+.warning-text .warning-sub{
+    display:block;
+    font-weight:bold;
+    color:var(--warning-text);
+    font-size:13px;
+    margin-top:4px;
+}
+
+.info-box{
+    background:var(--primary-light);
+    border:1px solid var(--primary);
+    border-radius:12px;
+    padding:16px;
+    font-size:13px;
+    font-weight:bold;
+    color:var(--text);
+    line-height:1.8;
+    white-space:pre-wrap;
+    text-align:center;
+}
+
+.qr-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.qr-card{
+    position:relative;
+    background:#fff;
+    border-radius:14px;
+    padding:12px;
+    width:150px;
+    height:150px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.qr-card img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.qr-icon-badge{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 0 0 4px #fff;
+}
+
+.qr-icon-badge.facebook{
+    background:#1877F2;
+}
+
+.qr-icon-badge.whatsapp{
+    background:#25D366;
+}
+
+.qr-icon-badge svg{
+    width:26px;
+    height:26px;
+    fill:#fff;
+}
+
+.empty-state{
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+    padding:30px 0;
+}
+
+.file-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.file-card{
+    border:1px solid var(--border);
+    background:var(--card);
+    border-radius:14px;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.file-card-name{
+    font-size:14px;
+    font-weight:bold;
+    color:var(--text);
+}
+
+.file-card-size{
+    font-size:12px;
+    color:var(--muted);
+}
+
+.file-card-note{
+    font-size:12px;
+    color:var(--text);
+    line-height:1.6;
+    white-space:pre-wrap;
+}
+
+.btn-download{
+    background:var(--primary);
+    color:#fff;
+    border:0;
+    border-radius:10px;
+    padding:11px 16px;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+    width:100%;
+    margin-top:4px;
+}
+
+.btn-download:hover{
+    background:var(--primary-hover);
+}
+
+.countdown-banner{
+    background:var(--primary-light);
+    border:1px solid var(--primary);
+    border-radius:12px;
+    padding:14px 16px;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+    color:var(--primary);
+    margin-bottom:12px;
+}
+
+@media(max-width: 560px){
+    .qr-card{
+        width:130px;
+        height:130px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">Descargas<small>Aplicaciones para Android</small></div>
+    <div class="topbar-right">
+        <div class="downloader-badge" id="downloaderBadge" style="display:none;"></div>
+        <button class="btn-icon" onclick="toggleTheme()" id="themeButton" title="Tema">
+            <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+    </div>
+</header>
+
+<main class="content">
+    <div class="download-grid" id="downloadGrid"></div>
+</main>
+
+<script>
+const STORAGE_KEY = "jahf_ajustes_android";
+
+function defaultSettings(){
+    return {
+        descargasSiempreActivas: true,
+        descargasPorTiempoActiva: false,
+        downloader: { enabled: false, value: "" },
+        info: { enabled: false, value: "" },
+        fbqr: { enabled: false, value: "" },
+        waqr: { enabled: false, value: "" }
+    };
+}
+
+function loadSettings(){
+    try{
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        return Object.assign(defaultSettings(), saved || {});
+    }catch(e){
+        return defaultSettings();
+    }
+}
+
+function escapeHTML(value){
+    return String(value).replace(/[&<>"']/g, c => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[c]);
+}
+
+function qrImageUrl(data){
+    return "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(data);
+}
+
+const FACEBOOK_BADGE = `<span class="qr-icon-badge facebook"><svg viewBox="0 0 24 24"><path d="M14 9h3V5h-3c-2.2 0-4 1.8-4 4v2H8v4h2v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1z"></path></svg></span>`;
+const WHATSAPP_BADGE = `<span class="qr-icon-badge whatsapp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.2.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.5 1.5.3.1.5.1.6-.1l.6-.7c.2-.3.4-.2.7-.1l1.6.8c.2.1.4.2.5.3.1.2.1.9-.1 1.6z"></path></svg></span>`;
+
+const ITEM_TYPE = "android";
+
+function loadItems(){
+    try{
+        const saved = JSON.parse(localStorage.getItem("cloudpanel_items"));
+        return Array.isArray(saved) ? saved : [];
+    }catch(e){
+        return [];
+    }
+}
+
+function renderFileList(){
+    const files = loadItems().filter(x => x.type === ITEM_TYPE && x.status === "active");
+    if (!files.length) {
+        return `<div class="empty-state">No hay archivos disponibles por el momento.</div>`;
+    }
+    return `<div class="file-list">` + files.map(item => `
+        <div class="file-card">
+            <div class="file-card-name">${escapeHTML(item.name)}</div>
+            <div class="file-card-size">${escapeHTML(item.size || "—")}</div>
+            ${item.note ? `<div class="file-card-note">${escapeHTML(item.note)}</div>` : ""}
+            <button class="btn-download" onclick="downloadFile(${item.id})">Descargar</button>
+        </div>
+    `).join("") + `</div>`;
+}
+
+function downloadFile(id){
+    const item = loadItems().find(x => x.id === id);
+    if (!item) return;
+    const dummyContent = `Simulación del contenido de descarga para: ${item.name} (${item.originalName || item.name})`;
+    const blob = new Blob([dummyContent], { type: "application/octet-stream" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = item.originalName || `${item.name}.${ITEM_TYPE === "android" ? "apk" : "exe"}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function formatCountdown(totalSeconds){
+    const h = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+    const m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+    const sec = String(totalSeconds % 60).padStart(2, "0");
+    return `${h}:${m}:${sec}`;
+}
+
+function getRemainingSeconds(s){
+    if (!s.downloadEndTime) return 0;
+    return Math.max(0, Math.floor((s.downloadEndTime - Date.now()) / 1000));
+}
+
+function render(){
+    const s = loadSettings();
+
+    const badge = document.getElementById("downloaderBadge");
+    if (s.downloader && s.downloader.enabled && s.downloader.value) {
+        badge.style.display = "block";
+        badge.textContent = "Código Downloader: " + s.downloader.value;
+    } else {
+        badge.style.display = "none";
+    }
+
+    const grid = document.getElementById("downloadGrid");
+    const remaining = getRemainingSeconds(s);
+    const timedActive = !!s.descargasPorTiempoActiva && remaining > 0;
+    const downloadsActive = !!s.descargasSiempreActivas || timedActive;
+
+    let html = "";
+
+    if (downloadsActive) {
+        if (timedActive) {
+            html += `<div class="countdown-banner">⏳ Descargas disponibles por tiempo limitado. Finaliza en: ${formatCountdown(remaining)}</div>`;
+        }
+        html += renderFileList();
+        grid.innerHTML = html;
+        return;
+    }
+
+    const infoBoxHtml = (s.info && s.info.enabled && s.info.value)
+        ? `<div class="info-box">${escapeHTML(s.info.value)}</div>`
+        : "";
+
+    html += `<div class="warning-box"><div class="warning-text">⚠️ Descargas temporalmente deshabilitadas por el administrador.<br>Comunícate por WhatsApp / Messenger con el administrador.<span class="warning-sub">« Solo mensajes 💬»</span></div>${infoBoxHtml}</div>`;
+
+    let qrHtml = "";
+    if (s.fbqr && s.fbqr.enabled && s.fbqr.value) {
+        qrHtml += `<div class="qr-card"><img src="${qrImageUrl(s.fbqr.value)}" alt="Código QR de Facebook">${FACEBOOK_BADGE}</div>`;
+    }
+    if (s.waqr && s.waqr.enabled && s.waqr.value) {
+        qrHtml += `<div class="qr-card"><img src="${qrImageUrl(s.waqr.value)}" alt="Código QR de WhatsApp">${WHATSAPP_BADGE}</div>`;
+    }
+    if (qrHtml) {
+        html += `<div class="qr-row">${qrHtml}</div>`;
+    }
+
+    if (!html) {
+        html = `<div class="empty-state">No hay información configurada para mostrar.</div>`;
+    }
+
+    grid.innerHTML = html;
+}
+
+function toggleTheme(){
+    const dark = document.body.dataset.theme === "dark";
+    const btn = document.getElementById("themeButton");
+    if (dark){
+        delete document.body.dataset.theme;
+        localStorage.setItem("cloudpanel-theme", "light");
+        btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+    } else {
+        document.body.dataset.theme = "dark";
+        localStorage.setItem("cloudpanel-theme", "dark");
+        btn.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    }
+}
+
+if (localStorage.getItem("cloudpanel-theme") === "dark") {
+    document.body.dataset.theme = "dark";
+    document.getElementById("themeButton").innerHTML = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+}
+
+// Si el panel de ajustes o la lista de archivos se editan en otra pestaña del mismo navegador, esta página se actualiza sola.
+window.addEventListener("storage", (e) => {
+    if (e.key === STORAGE_KEY || e.key === "cloudpanel_items") render();
+});
+
+render();
+// Se refresca cada segundo para que el contador regresivo corra en vivo.
+setInterval(render, 1000);
+</script>
+
+</body>
+</html>
