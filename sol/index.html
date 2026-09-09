@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor Doble M3U y YouTube Flotante</title>
+
+    <!-- HLS.js para streams M3U8 -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        /* ============================================================
+           FONDO LÁMPARA DE LAVA / GLASS
+           ============================================================ */
+        .lava-lamp-bg {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            overflow: hidden;
+            background:
+                linear-gradient(
+                    120deg,
+                    #0f172a,
+                    #1e1b4b,
+                    #082f49,
+                    #1e1b4b,
+                    #0f172a
+                );
+            background-size: 400% 400%;
+            animation: gradientDrift 24s ease-in-out infinite;
+        }
+
+        /* ============================================================
+           FONDO NEGRO PURO
+           ============================================================ */
+        body.pure-black-bg {
+            background: #000000;
+        }
+
+        body.pure-black-bg .lava-lamp-bg {
+            display: none;
+        }
+
+        @keyframes gradientDrift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ============================================================
+           BLOBS Y EFECTOS GLASS
+           ============================================================ */
+        .lava-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.55;
+            mix-blend-mode: screen;
+            will-change: transform;
+        }
+
+        .blob-1 { width: 480px; height: 480px; background: #2563eb; top: -12%; left: -12%; animation: floatBlob1 22s infinite alternate ease-in-out; }
+        .blob-2 { width: 520px; height: 520px; background: #7c3aed; bottom: -18%; right: -12%; animation: floatBlob2 27s infinite alternate ease-in-out; }
+        .blob-3 { width: 420px; height: 420px; background: #0d9488; top: 25%; left: 35%; animation: floatBlob3 18s infinite alternate ease-in-out; }
+        .blob-4 { width: 380px; height: 380px; background: #db2777; top: 60%; left: 5%; animation: floatBlob4 26s infinite alternate ease-in-out; }
+        .blob-5 { width: 440px; height: 440px; background: #0891b2; top: 5%; right: 15%; animation: floatBlob5 20s infinite alternate ease-in-out; }
+        .blob-6 { width: 400px; height: 400px; background: #4f46e5; bottom: 5%; left: 45%; animation: floatBlob6 30s infinite alternate ease-in-out; }
+
+        @keyframes floatBlob1 { 0% { transform: translate(0px, 0px) scale(1); } 50% { transform: translate(180px, 120px) scale(1.25); } 100% { transform: translate(220px, 40px) scale(1.1); } }
+        @keyframes floatBlob2 { 0% { transform: translate(0px, 0px) scale(1); } 50% { transform: translate(-160px, -140px) scale(1.15); } 100% { transform: translate(-80px, -220px) scale(1.2); } }
+        @keyframes floatBlob3 { 0% { transform: translate(0px, 0px) scale(1) rotate(0deg); } 50% { transform: translate(-140px, 180px) scale(1.3) rotate(30deg); } 100% { transform: translate(160px, -120px) scale(0.8) rotate(-20deg); } }
+        @keyframes floatBlob4 { 0% { transform: translate(0px, 0px) scale(1); } 50% { transform: translate(200px, -100px) scale(1.2); } 100% { transform: translate(240px, -40px) scale(1.05); } }
+        @keyframes floatBlob5 { 0% { transform: translate(0px, 0px) scale(1); } 50% { transform: translate(-180px, 160px) scale(0.85); } 100% { transform: translate(-90px, 280px) scale(1.15); } }
+        @keyframes floatBlob6 { 0% { transform: translate(0px, 0px) scale(1) rotate(0deg); } 50% { transform: translate(120px, -160px) scale(1.2) rotate(-25deg); } 100% { transform: translate(-140px, -80px) scale(0.9) rotate(15deg); } }
+
+        .glass-sheen {
+            position: absolute;
+            top: -50%; left: -50%; width: 220%; height: 220%;
+            background: linear-gradient(115deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.06) 48%, rgba(255,255,255,0.10) 50%, rgba(255,255,255,0.06) 52%, rgba(255,255,255,0) 60%);
+            animation: sheenSweep 14s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sheenSweep {
+            0% { transform: translate(-15%, -15%) rotate(0deg); }
+            100% { transform: translate(15%, 15%) rotate(0deg); }
+        }
+
+        .glass-overlay {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+            background: rgba(255,255,255,0.015);
+            pointer-events: none;
+        }
+
+        /* ============================================================
+           CONTENEDOR PRINCIPAL Y FOCUS MODE
+           ============================================================ */
+        .players-wrapper {
+            position: relative;
+            width: 100%; height: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 100%;
+            background: transparent;
+            z-index: 1;
+        }
+
+        .players-wrapper.focus-mode {
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+        }
+
+        .players-wrapper.focus-mode .player-box {
+            display: none;
+        }
+
+        .players-wrapper.focus-mode .player-box.focused {
+            display: flex;
+        }
+
+        @media (max-width: 768px) and (orientation: portrait) {
+            .players-wrapper {
+                grid-template-columns: 100%;
+                grid-template-rows: 1fr 1fr;
+            }
+        }
+
+        /* ============================================================
+           PLAYERS
+           ============================================================ */
+        .player-box {
+            position: relative;
+            width: 100%; height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .video-wrapper {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%;
+            max-height: 100%;
+            overflow: hidden;
+        }
+
+        .live-dot {
+            position: absolute;
+            top: 14px; left: 14px;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: #ef4444;
+            box-shadow: 0 0 8px rgba(239,68,68,0.9);
+            z-index: 4;
+            pointer-events: none;
+            display: none;
+        }
+
+        .player-box.active-audio .live-dot {
+            display: block;
+            animation: blinkDot 2s steps(1) infinite;
+        }
+
+        @keyframes blinkDot {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        video, .youtube-container {
+            display: block;
+            width: 100%; height: 100%;
+            object-fit: contain;
+            cursor: pointer;
+        }
+
+        /* Ocultar elementos nativos interactivos de YouTube para que el contenedor controle el clic */
+        .youtube-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .youtube-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        /* ============================================================
+           CONTROLES SUPERIORES Y BOTONES
+           ============================================================ */
+        .top-controls-container {
+            position: fixed;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+            background: rgba(15,23,42,0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 8px 14px;
+            border-radius: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+        }
+
+        .top-controls-container.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateX(-50%) translateY(-20px);
+        }
+
+        .floating-btn {
+            background: rgba(30,41,59,0.65);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            width: 45px; height: 45px;
+            display: flex;
+            justify-content: center; align-items: center;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: background 0.2s, transform 0.2s, border-color 0.2s;
+            outline: none;
+        }
+
+        .floating-btn:hover {
+            background: rgba(51,65,85,0.9);
+            transform: scale(1.08);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        /* ============================================================
+           MODAL DE CONFIGURACIÓN
+           ============================================================ */
+        .modal-overlay {
+            position: fixed; inset: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 100;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s;
+            padding: 15px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1; visibility: visible;
+        }
+
+        .modal-content {
+            background: rgba(30,41,59,0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 25px; border-radius: 16px;
+            width: 100%; max-width: 450px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            transform: scale(0.95);
+            transition: transform 0.25s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h3 { margin-bottom: 12px; font-size: 1.25rem; color: #f1f5f9; }
+        .modal-content p { font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 0.85rem; color: #cbd5e1; margin-bottom: 6px; }
+        .modal-content input {
+            width: 100%; padding: 12px 14px;
+            background: rgba(15,23,42,0.8);
+            border: 1px solid #334155; border-radius: 8px;
+            color: #fff; font-size: 14px; outline: none;
+        }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+        .modal-actions button { padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; }
+        .btn-cancel { background: #334155; color: #cbd5e1; }
+        .btn-apply { background: #2563eb; color: #fff; }
+    </style>
+</head>
+
+<body>
+
+    <!-- FONDO LAVA -->
+    <div class="lava-lamp-bg">
+        <div class="lava-blob blob-1"></div>
+        <div class="lava-blob blob-2"></div>
+        <div class="lava-blob blob-3"></div>
+        <div class="lava-blob blob-4"></div>
+        <div class="lava-blob blob-5"></div>
+        <div class="lava-blob blob-6"></div>
+        <div class="glass-sheen"></div>
+        <div class="glass-overlay"></div>
+    </div>
+
+    <!-- REPRODUCTORES -->
+    <div class="players-wrapper">
+
+        <!-- REPRODUCTOR 1 (HLS / M3U) -->
+        <div class="player-box" id="box-1">
+            <div class="video-wrapper">
+                <div class="live-dot"></div>
+                <video id="video-1" autoplay playsinline muted></video>
+            </div>
+        </div>
+
+        <!-- REPRODUCTOR 2 (Soporte YouTube & HLS) -->
+        <div class="player-box" id="box-2">
+            <div class="video-wrapper" style="width:100%; height:100%;">
+                <div class="live-dot"></div>
+                <!-- Reproductor estándar HLS -->
+                <video id="video-2" autoplay playsinline muted style="display:none;"></video>
+                <!-- Contenedor para YouTube API -->
+                <div id="youtube-wrapper-2" class="youtube-wrapper" style="display:none;">
+                    <div id="youtube-player-2"></div>
+                    <div class="youtube-overlay" onclick="handleBoxClick(2)"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CONTROLES SUPERIORES -->
+    <div id="top-controls" class="top-controls-container">
+        <button id="btn-reset-streams" class="floating-btn" title="Reiniciar Transmisiones">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.65-5.65"/></svg>
+        </button>
+        <button id="btn-fullscreen" class="floating-btn" title="Pantalla Completa">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        </button>
+        <button id="btn-open-modal" class="floating-btn" title="Configurar URLs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+        </button>
+        <button id="btn-toggle-bg" class="floating-btn" title="Alternar fondo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"/></svg>
+        </button>
+    </div>
+
+    <!-- MODAL -->
+    <div id="url-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Configurar Transmisiones</h3>
+            <p>Puedes ingresar enlaces M3U8 o enlaces de YouTube (ej. https://youtu.be/...):</p>
+            <div class="input-group">
+                <label for="url-1">URL Transmisión 1:</label>
+                <input type="text" id="url-1" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label for="url-2">URL Transmisión 2 (YouTube o M3U8):</label>
+                <input type="text" id="url-2" autocomplete="off">
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="btn-cancel" class="btn-cancel">Cancelar</button>
+                <button type="button" id="btn-apply" class="btn-apply">Aplicar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        const modal = document.getElementById('url-modal');
+        const btnOpenModal = document.getElementById('btn-open-modal');
+        const btnResetStreams = document.getElementById('btn-reset-streams');
+        const btnFullscreen = document.getElementById('btn-fullscreen');
+        const btnToggleBg = document.getElementById('btn-toggle-bg');
+        const topControls = document.getElementById('top-controls');
+        const btnCancel = document.getElementById('btn-cancel');
+        const btnApply = document.getElementById('btn-apply');
+
+        const input1 = document.getElementById('url-1');
+        const input2 = document.getElementById('url-2');
+
+        const box1 = document.getElementById('box-1');
+        const box2 = document.getElementById('box-2');
+
+        const video1 = document.getElementById('video-1');
+        const video2 = document.getElementById('video-2');
+        const ytWrapper2 = document.getElementById('youtube-wrapper-2');
+
+        let hls1 = null;
+        let hls2 = null;
+        let ytPlayer2 = null;
+        let ytApiReady = false;
+
+        const defaultUrl1 = "https://queputasteimporta.duckdns.org:58993/hls/canal.m3u8";
+        const defaultUrl2 = "https://youtu.be/GY6Cj5HIJ2U"; // URL de YouTube solicitada para el reproductor 2
+
+        input1.value = defaultUrl1;
+        input2.value = defaultUrl2;
+
+        // Callback requerida por la API de YouTube
+        function onYouTubeIframeAPIReady() {
+            ytApiReady = true;
+            initStreams();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Si la API de YouTube ya cargó o se carga después
+            if (typeof YT !== 'undefined' && YT.Player) {
+                ytApiReady = true;
+                initStreams();
+            }
+        });
+
+        function initStreams() {
+            loadStream(input1.value || defaultUrl1, 1);
+            loadStream(input2.value || defaultUrl2, 2);
+        }
+
+        // Utilidad para extraer el ID de un link de YouTube
+        function extractYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        function loadStream(url, id) {
+            if (id === 1) {
+                if (hls1) { hls1.destroy(); hls1 = null; }
+                if (url.includes('.m3u8') && Hls.isSupported()) {
+                    hls1 = new Hls();
+                    hls1.loadSource(url);
+                    hls1.attachMedia(video1);
+                    hls1.on(Hls.Events.MANIFEST_PARSED, () => video1.play().catch(e => console.log(e)));
+                } else {
+                    video1.src = url;
+                    video1.play().catch(e => console.log(e));
+                }
+            } else if (id === 2) {
+                const ytId = extractYouTubeId(url);
+
+                if (ytId) {
+                    // Es un enlace de YouTube
+                    video2.style.display = 'none';
+                    ytWrapper2.style.display = 'block';
+
+                    if (ytPlayer2 && typeof ytPlayer2.loadVideoById === 'function') {
+                        ytPlayer2.loadVideoById(ytId);
+                    } else if (ytApiReady) {
+                        ytPlayer2 = new YT.Player('youtube-player-2', {
+                            height: '100%',
+                            width: '100%',
+                            videoId: ytId,
+                            playerVars: {
+                                'autoplay': 1,
+                                'controls': 0,
+                                'disablekb': 1,
+                                'modestbranding': 1,
+                                'playsinline': 1,
+                                'enablejsapi': 1
+                            },
+                            events: {
+                                'onReady': (event) => {
+                                    event.target.mute(); // Inicia muteado acorde a tus reglas de autoplay
+                                    event.target.playVideo();
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    // Es un stream tradicional M3U8 / HLS para el reproductor 2
+                    ytWrapper2.style.display = 'none';
+                    video2.style.display = 'block';
+
+                    if (hls2) { hls2.destroy(); hls2 = null; }
+                    if (url.includes('.m3u8') && Hls.isSupported()) {
+                        hls2 = new Hls();
+                        hls2.loadSource(url);
+                        hls2.attachMedia(video2);
+                        hls2.on(Hls.Events.MANIFEST_PARSED, () => video2.play().catch(e => console.log(e)));
+                    } else {
+                        video2.src = url;
+                        video2.play().catch(e => console.log(e));
+                    }
+                }
+            }
+        }
+
+        // Control de audio exclusivo entre reproductor 1 y 2
+        function setActiveAudio(targetId) {
+            if (targetId === 1) {
+                video1.muted = false;
+                if (ytPlayer2 && typeof ytPlayer2.mute === 'function') ytPlayer2.mute();
+                video2.muted = true;
+
+                box1.classList.add('active-audio');
+                box2.classList.remove('active-audio');
+            } else {
+                video1.muted = true;
+                if (ytPlayer2 && typeof ytPlayer2.unMute === 'function') ytPlayer2.unMute();
+                video2.muted = false;
+
+                box1.classList.remove('active-audio');
+                box2.classList.add('active-audio');
+            }
+        }
+
+        setActiveAudio(1);
+
+        // UI Modals y Controles
+        btnOpenModal.addEventListener('click', () => { modal.classList.add('active'); input1.focus(); });
+        btnResetStreams.addEventListener('click', () => {
+            loadStream(input1.value.trim() || defaultUrl1, 1);
+            loadStream(input2.value.trim() || defaultUrl2, 2);
+        });
+
+        btnFullscreen.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => console.log(err));
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        });
+
+        btnToggleBg.addEventListener('click', () => document.body.classList.toggle('pure-black-bg'));
+
+        const closeModal = () => modal.classList.remove('active');
+        btnCancel.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        btnApply.addEventListener('click', () => {
+            const u1 = input1.value.trim();
+            const u2 = input2.value.trim();
+            if (u1) loadStream(u1, 1);
+            if (u2) loadStream(u2, 2);
+            closeModal();
+        });
+
+        // Doble clic para Modo Enfoque
+        const playersWrapper = document.querySelector('.players-wrapper');
+        let focusedId = null;
+
+        function toggleFocusMode(id) {
+            if (focusedId === id) {
+                playersWrapper.classList.remove('focus-mode');
+                box1.classList.remove('focused');
+                box2.classList.remove('focused');
+                focusedId = null;
+            } else {
+                playersWrapper.classList.add('focus-mode');
+                box1.classList.remove('focused');
+                box2.classList.remove('focused');
+                (id === 1 ? box1 : box2).classList.add('focused');
+                focusedId = id;
+                setActiveAudio(id);
+            }
+        }
+
+        const clickState = { 1: { count: 0, timer: null }, 2: { count: 0, timer: null } };
+        const DOUBLE_CLICK_DELAY = 300;
+
+        function handleBoxClick(id) {
+            const state = clickState[id];
+            state.count++;
+            if (state.count === 1) {
+                state.timer = setTimeout(() => {
+                    setActiveAudio(id);
+                    state.count = 0;
+                }, DOUBLE_CLICK_DELAY);
+            } else {
+                clearTimeout(state.timer);
+                state.count = 0;
+                toggleFocusMode(id);
+            }
+        }
+
+        video1.addEventListener('click', () => handleBoxClick(1));
+        video2.addEventListener('click', () => handleBoxClick(2));
+
+        // Auto-ocultar controles superiores por inactividad
+        let inactivityTimer = null;
+        function resetInactivityTimer() {
+            topControls.classList.remove('hidden');
+            if (inactivityTimer) clearTimeout(inactivityTimer);
+            if (modal.classList.contains('active')) return;
+            inactivityTimer = setTimeout(() => {
+                if (!modal.classList.contains('active')) topControls.classList.add('hidden');
+            }, 3000);
+        }
+
+        ['click', 'mousemove', 'keydown', 'touchstart'].forEach(ev => window.addEventListener(ev, resetInactivityTimer));
+        resetInactivityTimer();
+    </script>
+</body>
+</html>
