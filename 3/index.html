@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Descargas PC - JAHF</title>
+<title>Descargas Android - JAHF</title>
 
 <!-- Icono de la pestaña del navegador -->
 
@@ -329,7 +329,7 @@ button{
 <body>
 
 <header class="topbar">
-    <div class="brand">Descargas<small>Aplicaciones para PC</small></div>
+    <div class="brand">Descargas<small>Aplicaciones para Android</small></div>
     <div class="topbar-right">
         <div class="downloader-badge" id="downloaderBadge" style="display:none;"></div>
         <button class="btn-icon" onclick="toggleTheme()" id="themeButton" title="Tema">
@@ -379,7 +379,7 @@ async function iniciarConexionNube() {
         onValue(ref(db, "cloudpanel"), (snapshot) => {
             const data = snapshot.val() || {};
             cloudCache["cloudpanel_items"] = data.cloudpanel_items || null;
-            cloudCache["jahf_ajustes_pc"] = data.jahf_ajustes_pc || null;
+            cloudCache["jahf_ajustes_android"] = data.jahf_ajustes_android || null;
             render();
             if (!nubeIniciada) {
                 nubeIniciada = true;
@@ -404,7 +404,7 @@ async function iniciarConexionNube() {
 }
 /* ==================== Fin conexión a la nube ==================== */
 
-const STORAGE_KEY = "jahf_ajustes_pc";
+const STORAGE_KEY = "jahf_ajustes_android";
 
 function defaultSettings(){
     return {
@@ -443,7 +443,7 @@ function qrImageUrl(data){
 const FACEBOOK_BADGE = `<span class="qr-icon-badge facebook"><svg viewBox="0 0 24 24"><path d="M14 9h3V5h-3c-2.2 0-4 1.8-4 4v2H8v4h2v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1z"></path></svg></span>`;
 const WHATSAPP_BADGE = `<span class="qr-icon-badge whatsapp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.2.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.5 1.5.3.1.5.1.6-.1l.6-.7c.2-.3.4-.2.7-.1l1.6.8c.2.1.4.2.5.3.1.2.1.9-.1 1.6z"></path></svg></span>`;
 
-const ITEM_TYPE = "pc";
+const ITEM_TYPE = "android";
 
 function loadItems(){
     try{
