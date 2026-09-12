@@ -1,1 +1,3409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel - JAHF</title>
 
+<!-- Icono de la pestaña del navegador -->
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjMzOSA3MTUgMjMyNSAxNzUzIj48cGF0aCBmaWxsPSIjMTExODI3IiBkPSJNIDE3MDkuNTMxMjUgMTMyOC4yNjE3MTkgQyAxNzA5Ljc2MTcxOSAxMzI4LjI2MTcxOSAxNzA5Ljk4ODI4MSAxMzI4LjI2OTUzMSAxNzEwLjIxMDkzOCAxMzI4LjI4MTI1IEwgMTcxMS4xMDkzNzUgMTMyOC4yODkwNjIgQyAxNzMwLjA3MDMxMiAxMzI5Ljk0MTQwNiAxNzQxLjE0MDYyNSAxMzM5LjQ4MDQ2OSAxNzQ0LjMwMDc4MSAxMzU2LjkxMDE1NiBDIDE3NDcuNjI4OTA2IDEzNzAuODM5ODQ0IDE3NDAuMDU4NTk0IDEzODcuNzYxNzE5IDE3MjEuNjAxNTYyIDE0MDcuNjYwMTU2IEMgMTcwMi41NTg1OTQgMTQyOC45MTAxNTYgMTY4Mi41MTk1MzEgMTQ0My45ODA0NjkgMTY2MS40ODA0NjkgMTQ1Mi44Nzg5MDYgQyAxNjMxIDE0NjQuOTIxODc1IDE2MDMuMjg5MDYyIDE0NzEuMzcxMDk0IDE1NzguMzcxMDk0IDE0NzIuMjMwNDY5IEMgMTU3MS4xNDg0MzggMTQ3Mi4xNzE4NzUgMTU2NC43MTA5MzggMTQ3MS40Mjk2ODggMTU1OS4wNzAzMTIgMTQ3MC4wMTE3MTkgQyAxNTcyLjg3ODkwNiAxNDYyLjgyMDMxMiAxNTg2Ljk4MDQ2OSAxNDUxLjkyOTY4OCAxNjAxLjM3ODkwNiAxNDM3LjMzOTg0NCBDIDE2MDYuMjg5MDYyIDE0MzEuNDYwOTM4IDE2MTAuNjYwMTU2IDE0MjUuNTMxMjUgMTYxNC40ODgyODEgMTQxOS41NTA3ODEgQyAxNjIzLjMwODU5NCAxNDAzLjkxMDE1NiAxNjMxLjczMDQ2OSAxMzg5LjYwMTU2MiAxNjM5Ljc4MTI1IDEzNzYuNjA5Mzc1IEMgMTY0NS43MzgyODEgMTM2OC4yMTg3NSAxNjUwLjU3ODEyNSAxMzYyIDE2NTQuMzA4NTk0IDEzNTcuOTQ5MjE5IEMgMTY2MC40NjA5MzggMTM1MC42MjEwOTQgMTY3MC41MzkwNjIgMTM0Mi45NjA5MzggMTY4NC41NzAzMTIgMTMzNC45NDkyMTkgQyAxNjkwLjMyMDMxMiAxMzMyLjEwOTM3NSAxNjk1LjUzOTA2MiAxMzMwLjIzMDQ2OSAxNzAwLjIzMDQ2OSAxMzI5LjMwODU5NCBDIDE3MDQgMTMyOC41ODk4NDQgMTcwNy4xMDE1NjIgMTMyOC4yNSAxNzA5LjUzMTI1IDEzMjguMjYxNzE5IFogTSAxMjk3LjYwOTM3NSAxMzI1LjY3OTY4OCBMIDEyOTguNjkxNDA2IDEzMjUuNzEwOTM4IEMgMTMwOS4xNzk2ODggMTMyNi43NjE3MTkgMTMxNy4zMzk4NDQgMTMyOS4wODk4NDQgMTMyMy4xNjAxNTYgMTMzMi42Nzk2ODggQyAxMzM3LjA4OTg0NCAxMzQwLjg1OTM3NSAxMzQ3LjA3MDMxMiAxMzQ4LjY2MDE1NiAxMzUzLjEyODkwNiAxMzU2LjA1ODU5NCBDIDEzNTYuODAwNzgxIDEzNjAuMTYwMTU2IDEzNjEuNTcwMzEyIDEzNjYuNDQxNDA2IDEzNjcuNDIxODc1IDEzNzQuODkwNjI1IEMgMTM3NS4zMDA3ODEgMTM4Ny45ODgyODEgMTM4My41NTA3ODEgMTQwMi40MTAxNTYgMTM5Mi4xNzE4NzUgMTQxOC4xNjAxNTYgQyAxMzk1LjkyOTY4OCAxNDI0LjE3OTY4OCAxNDAwLjIxODc1IDE0MzAuMTYwMTU2IDE0MDUuMDU4NTk0IDE0MzYuMTAxNTYyIEMgMTQxMy4wNTg1OTQgMTQ0NS45NjA5MzggMTQyNy4wMzEyNSAxNDU3LjAzMTI1IDE0NDYuOTQ5MjE5IDE0NjkuMzAwNzgxIEMgMTQ0MS41MzEyNSAxNDcwLjY2MDE1NiAxNDM0Ljg1MTU2MiAxNDcxLjMwODU5NCAxNDI2Ljg5ODQzOCAxNDcxLjI4MTI1IEMgMTQwMi43MTg3NSAxNDcwLjEwOTM3NSAxMzc1LjMzOTg0NCAxNDYzLjMwODU5NCAxMzQ0Ljc2MTcxOSAxNDUwLjg5MDYyNSBDIDEzMjMuODM5ODQ0IDE0NDEuNzMwNDY5IDEzMDMuOTg4MjgxIDE0MjYuMzk4NDM4IDEyODUuMjE4NzUgMTQwNC45MjE4NzUgQyAxMjY3LjAxMTcxOSAxMzg0Ljc4OTA2MiAxMjU5LjY2MDE1NiAxMzY3Ljc4MTI1IDEyNjMuMTYwMTU2IDEzNTMuODc4OTA2IEMgMTI2Ni4yMzgyODEgMTMzNi41IDEyNzcuNzE4NzUgMTMyNy4xMDkzNzUgMTI5Ny42MDkzNzUgMTMyNS42Nzk2ODggWiBNIDIxMzcuMjMwNDY5IDgwOC44OTg0MzggQyAyMTI4LjQyMTg3NSA4MDguODUxNTYyIDIxMTkuMTkxNDA2IDgwOS43NjE3MTkgMjEwOS41NzgxMjUgODExLjgwMDc4MSBDIDIwNDkuMjY5NTMxIDgyNC41ODk4NDQgMTk3NC41NzAzMTIgODgxLjQ4MDQ2OSAxOTY1LjU3ODEyNSA5NDEuMTIxMDk0IEMgMTk2MS43NjE3MTkgOTY2LjQ2MDkzOCAxOTY5LjczMDQ2OSA5OTIuNTExNzE5IDE5NzguNTM5MDYyIDEwMjEuMTc5Njg4IEwgMTk3OC42MDE1NjIgMTAyMS4zNzEwOTQgTCAxOTc4LjY2MDE1NiAxMDIxLjU3MDMxMiBDIDE5OTAuNDYwOTM4IDEwNTkuOTQ5MjE5IDIwMDMuNTE5NTMxIDExMDIuNjIxMDk0IDE5ODkuNDgwNDY5IDExNTIuNTM5MDYyIEMgMTk2OSAxMjI1LjM5ODQzOCAxODkwLjgyODEyNSAxMzEzLjUxOTUzMSAxODIzLjY0MDYyNSAxMzU3LjMyODEyNSBMIDE4MjMuNjQ4NDM4IDEzNTcuMzI4MTI1IEMgMTgwNi43NSAxMzkzLjkyOTY4OCAxNzg1LjQyOTY4OCAxNDI4LjA3MDMxMiAxNzY1LjgzOTg0NCAxNDU5LjQ0MTQwNiBMIDE3NjUuNzg5MDYyIDE0NTkuNTMxMjUgTCAxNzY1Ljc4OTA2MiAxNDU5LjUzOTA2MiBDIDE3NTEuNjc5Njg4IDE0ODIuMTI4OTA2IDE3MzguNTUwNzgxIDE1MDMuMTc5Njg4IDE3MjguMzUxNTYyIDE1MjIuOTI5Njg4IEMgMTc5NS4yMzA0NjkgMTUxOC4zNzEwOTQgMTg2MS40MTAxNTYgMTUwNi45MTAxNTYgMTkyNS42Nzk2ODggMTQ1Mi45NjA5MzggQyAyMDAyLjY0ODQzOCAxMzg4LjM1OTM3NSAyMDc2Ljg1MTU2MiAxMjYyLjg1OTM3NSAyMDg5LjYwOTM3NSAxMTY5LjgwODU5NCBDIDIwODkuODkwNjI1IDExNjcuNzMwNDY5IDIwOTAuMTQwNjI1IDExNjUuNjc5Njg4IDIwOTAuMzcxMDk0IDExNjMuNjI4OTA2IEMgMjA5Ni4yMTg3NSAxMTEwLjQ0OTIxOSAyMDgyLjIzMDQ2OSAxMDY4LjAxOTUzMSAyMDcwLjgwODU5NCAxMDMzLjM5MDYyNSBMIDIwNzAuNDg4MjgxIDEwMzIuNDI5Njg4IEMgMjA2Mi45MTAxNTYgMTAwOS40Njg3NSAyMDU2LjQxMDE1NiA5ODkuNTU4NTk0IDIwNTguMjg5MDYyIDk3Mi40NDkyMTkgQyAyMDYyLjE3OTY4OCA5MzcuMDMxMjUgMjEwMS40MTAxNTYgOTE0LjYyMTA5NCAyMTMzLjkxMDE1NiA5MTQuODIwMzEyIEMgMjEzNS4zNzEwOTQgOTE0LjgyODEyNSAyMTM2LjgwODU5NCA5MTQuODc4OTA2IDIxMzguMjMwNDY5IDkxNC45ODA0NjkgQyAyMTQ0LjgwODU5NCA5MTUuNDQ5MjE5IDIxNTEuMTA5Mzc1IDkxNi44OTg0MzggMjE1Ni43MzA0NjkgOTE5LjQ2MDkzOCBDIDIxODkuNjkxNDA2IDkzNC40NDkyMTkgMjE5Ny42MDkzNzUgOTg2LjcxODc1IDIyMDQuNjkxNDA2IDEwMzguMTQwNjI1IEMgMjIwNC43MTg3NSAxMDM4LjMzOTg0NCAyMjA0Ljg1MTU2MiAxMDM4LjUgMjIwNS4wMzEyNSAxMDM4LjU1ODU5NCBDIDIyMDUuMDc4MTI1IDEwMzguNTcwMzEyIDIyMDUuMTQwNjI1IDEwMzguNTg5ODQ0IDIyMDUuMTk5MjE5IDEwMzguNTg5ODQ0IEMgMjIwNS4zMjgxMjUgMTAzOC41ODk4NDQgMjIwNS40NjA5MzggMTAzOC41MzkwNjIgMjIwNS41NTg1OTQgMTAzOC40NDE0MDYgQyAyMjI2LjAzMTI1IDEwMTguNTg5ODQ0IDIyNDUuNTU4NTk0IDk5OC42MDkzNzUgMjI1NC41NTg1OTQgOTcwLjI1IEMgMjI2NC4wODk4NDQgOTQwLjI1IDIyNjEuODU5Mzc1IDkwMC43NjE3MTkgMjIzOC4xNDg0MzggODY1LjQ2MDkzOCBDIDIyMTkuMzM5ODQ0IDgzNy40NDE0MDYgMjE4Ny4xMDkzNzUgODEyLjE5MTQwNiAyMTQ0Ljg5MDYyNSA4MDkuMTk5MjE5IEMgMjE0Mi4zNzEwOTQgODA5LjAxOTUzMSAyMTM5LjgyMDMxMiA4MDguOTIxODc1IDIxMzcuMjMwNDY5IDgwOC44OTg0MzggWiBNIDg3Mi42NDA2MjUgODAwLjk2MDkzOCBDIDg3MC4wNTA3ODEgODAwLjk0MTQwNiA4NjcuNSA4MDEuMDExNzE5IDg2NC45ODA0NjkgODAxLjE2MDE1NiBDIDgyMi43MTg3NSA4MDMuNjIxMDk0IDc5MC4xNzU3ODEgODI4LjQ2ODc1IDc3MS4wMTU2MjUgODU2LjI1IEwgNzcxLjAxNTYyNSA4NTYuMjM4MjgxIEMgNzQ2Ljg2NzE4OCA4OTEuMjM4MjgxIDc0NC4xNDA2MjUgOTMwLjY5OTIxOSA3NTMuMjg5MDYyIDk2MC44MjAzMTIgQyA3NjEuOTM3NSA5ODkuMjg5MDYyIDc4MS4yMTA5MzggMTAwOS41MTk1MzEgODAxLjQzNzUgMTAyOS42MjEwOTQgQyA4MDEuNTM1MTU2IDEwMjkuNzE4NzUgODAxLjY2NDA2MiAxMDI5Ljc2OTUzMSA4MDEuNzk2ODc1IDEwMjkuNzY5NTMxIEMgODAxLjg1MTU2MiAxMDI5Ljc2OTUzMSA4MDEuOTA2MjUgMTAyOS43NjE3MTkgODAxLjk2MDkzOCAxMDI5Ljc1IEMgODAyLjE0NDUzMSAxMDI5LjY3OTY4OCA4MDIuMjc3MzQ0IDEwMjkuNTMxMjUgODAyLjMwNDY4OCAxMDI5LjMzOTg0NCBDIDgxMC4wMjczNDQgOTc4IDgxOC42MDU0NjkgOTI1LjgzOTg0NCA4NTEuNzU3ODEyIDkxMS4yNjE3MTkgQyA4NTcuNDEwMTU2IDkwOC43Njk1MzEgODYzLjcxODc1IDkwNy4zOTg0MzggODcwLjMwODU5NCA5MDcuMDE5NTMxIEMgODcxLjczMDQ2OSA5MDYuOTQxNDA2IDg3My4xNzE4NzUgOTA2Ljg5ODQzOCA4NzQuNjI4OTA2IDkwNi45MTAxNTYgQyA5MDcuMTI1IDkwNy4xMDkzNzUgOTQ2LjA3MDMxMiA5MzAuMDE5NTMxIDk0OS41MTk1MzEgOTY1LjQ4ODI4MSBDIDk1MS4xOTkyMTkgOTgyLjczODI4MSA5NDQuMzM1OTM4IDEwMDIuNzE4NzUgOTM2LjQwMjM0NCAxMDI1Ljc4MTI1IEwgOTM2LjIzODI4MSAxMDI2LjI2MTcxOSBDIDkyNC4zNzUgMTA2MC43MzgyODEgOTA5Ljg1OTM3NSAxMTAzIDkxNS4wNDI5NjkgMTE1Ni4yNSBDIDkxNS4yNDIxODggMTE1OC4zMDA3ODEgOTE1LjQ2ODc1IDExNjAuMzU5Mzc1IDkxNS43MjY1NjIgMTE2Mi40Mjk2ODggQyA5MjcuMzE2NDA2IDEyNTUuNjQwNjI1IDk5OS45MzM1OTQgMTM4Mi4wNTg1OTQgMTA3Ni4wNzgxMjUgMTQ0Ny42Mjg5MDYgQyAxMTQxLjE0ODQzOCAxNTAzLjY0ODQzOCAxMjA4Ljc2OTUzMSAxNTE1LjIxMDkzOCAxMjc3LjE5MTQwNiAxNTIwLjQyOTY4OCBDIDEyNjcuMjUgMTUwMC41MTE3MTkgMTI1NC4zNTE1NjIgMTQ3OS4yMzA0NjkgMTI0MC40ODA0NjkgMTQ1Ni4zOTg0MzggTCAxMjQwLjM3ODkwNiAxNDU2LjIzMDQ2OSBMIDEyNDAuMzkwNjI1IDE0NTYuMjMwNDY5IEwgMTI0MC4zMjgxMjUgMTQ1Ni4xNDA2MjUgQyAxMjIxLjg1OTM3NSAxNDI1LjcxMDkzOCAxMjAxLjgwODU5NCAxMzkyLjY5MTQwNiAxMTg1LjY3MTg3NSAxMzU3LjQyOTY4OCBDIDExMTcuNjYwMTU2IDEzMTQuMzUxNTYyIDEwMzYuMjUgMTIyMS44NzEwOTQgMTAxNi4wNTg1OTQgMTE0Ni40Mjk2ODggQyAxMDAyLjYyODkwNiAxMDk2LjI1IDEwMTYuMjg5MDYyIDEwNTMuNjkxNDA2IDEwMjguNTg5ODQ0IDEwMTUuNDEwMTU2IEwgMTAyOC42NDg0MzggMTAxNS4yMTA5MzggQyAxMDM3LjgyMDMxMiA5ODYuNjYwMTU2IDEwNDYuMTIxMDk0IDk2MC43MTA5MzggMTA0Mi42MDkzNzUgOTM1LjMyMDMxMiBDIDEwMzQuMzc4OTA2IDg3NS41NzAzMTIgOTYwLjM5NDUzMSA4MTcuNzUgOTAwLjI1MzkwNiA4MDQuMTk5MjE5IEMgODkwLjY2NDA2MiA4MDIuMDM5MDYyIDg4MS40NDkyMTkgODAxLjAxOTUzMSA4NzIuNjQwNjI1IDgwMC45NjA5MzggWiBNIDE1MDcuMjM4MjgxIDc5NC45MjE4NzUgTCAxNDkzLjY2MDE1NiA3OTYuNTc4MTI1IEMgMTQxMC4yNjk1MzEgODAyLjUgMTMzNS41NzgxMjUgODU1Ljk4MDQ2OSAxMjY5LjU4OTg0NCA5NTcuMDE5NTMxIEMgMTIyOS42Nzk2ODggMTAyNy4zOTA2MjUgMTIwNi43ODEyNSAxMDc5LjgzOTg0NCAxMjAwLjg5ODQzOCAxMTE0LjM1OTM3NSBDIDExODkuODU5Mzc1IDExNjguNzEwOTM4IDExODUuNTU4NTk0IDEyMDAuNzMwNDY5IDExODguMDE5NTMxIDEyMTAuNDIxODc1IEMgMTE4Ni44MDg1OTQgMTIxOC41NTg1OTQgMTE4OS4zNzEwOTQgMTI0MC4zNTE1NjIgMTE5NS42OTE0MDYgMTI3NS44MDA3ODEgQyAxMjAyLjI2OTUzMSAxMzAzLjUzOTA2MiAxMjExLjI4MTI1IDEzMjkuNjQwNjI1IDEyMjIuNjk5MjE5IDEzNTQuMTAxNTYyIEMgMTIyMi41NzgxMjUgMTM1OCAxMjQ2LjEyODkwNiAxNDAxLjQ4ODI4MSAxMjkzLjM3MTA5NCAxNDg0LjU4OTg0NCBDIDEyOTcuMDE5NTMxIDE0OTAuNjIxMDk0IDEzMDIuNTg5ODQ0IDE1MDMuNDgwNDY5IDEzMTAuMDcwMzEyIDE1MjMuMTc5Njg4IEMgMTMyMS45MjE4NzUgMTU2MS42OTE0MDYgMTMyNC40NDkyMTkgMTU5NS42NDA2MjUgMTMxNy42Nzk2ODggMTYyNS4wMzkwNjIgTCAxMzIyLjA1ODU5NCAxNjI1LjQ4ODI4MSBDIDEzMjEuMzAwNzgxIDE2MjkuODIwMzEyIDEzMjAuNDQxNDA2IDE2MzQuMTAxNTYyIDEzMTkuNTE5NTMxIDE2MzguMzM5ODQ0IEwgMTMxOS41MTk1MzEgMTYzOC4zNTE1NjIgQyAxMzE4LjYyMTA5NCAxNjQyLjUgMTMxNC45Mjk2ODggMTY0NS4zMzk4NDQgMTMxMC44MDg1OTQgMTY0NS4zMjAzMTIgQyAxMzEwLjU3MDMxMiAxNjQ1LjMyMDMxMiAxMzEwLjE3MTg3NSAxNjQ1LjMwMDc4MSAxMzA5LjY5MTQwNiAxNjQ1LjIzODI4MSBMIDEzMDkuMjgxMjUgMTY0NS4xNzE4NzUgTCAxMzA5LjY0MDYyNSAxNjQ1LjIzMDQ2OSBDIDEzMDUuMDUwNzgxIDE2NDQuNTg5ODQ0IDEzMDEuNzMwNDY5IDE2NDAuNTExNzE5IDEzMDIuMDMxMjUgMTYzNS44OTA2MjUgTCAxMzAyLjAzOTA2MiAxNjM1Ljg5MDYyNSBMIDEzMTAuNzgxMjUgMTYzNi40NjA5MzggTCAxMzAyLjAzMTI1IDE2MzUuODkwNjI1IEMgMTMwNC4wMzkwNjIgMTYwNC44NTE1NjIgMTMwMC4yMzA0NjkgMTU3MS42MDE1NjIgMTI4My4yODkwNjIgMTUzMy4zMjgxMjUgQyAxMjQyLjAzMTI1IDE1NDIuODM5ODQ0IDEyMDAuNzYxNzE5IDE1NTEuMjYxNzE5IDExNjAuMDE5NTMxIDE1NTMuNjI4OTA2IEMgMTE1MS44MjAzMTIgMTU1NC4xMDkzNzUgMTE0My42NjAxNTYgMTU1NC4zMzk4NDQgMTEzNS41IDE1NTQuMjg5MDYyIEMgMTA4Mi4xNjAxNTYgMTU1My45NjA5MzggMTAyOS44MDA3ODEgMTU0MS40NDE0MDYgOTc5LjU1ODU5NCAxNTA1LjUxMTcxOSBDIDkxOC45ODA0NjkgMTQ2Mi4xNzk2ODggODYxLjU5Mzc1IDEzODQuODIwMzEyIDgwOC41NTQ2ODggMTMxMy4zMDg1OTQgTCA4MDguMzY3MTg4IDEzMTMuMDU4NTk0IEMgNzY5Ljc3NzM0NCAxMjYxLjAzOTA2MiA3MzMuNTA3ODEyIDEyMTIuMTQ4NDM4IDY5OS44MjgxMjUgMTE4MS4yMzA0NjkgQyA2NjUuMjM0Mzc1IDExNDkuNDY4NzUgNjMzLjUzNTE1NiAxMTM2LjgyODEyNSA2MDUuMjc3MzQ0IDExMzYuNjQ4NDM4IEMgNjAzLjIwNzAzMSAxMTM2LjY0MDYyNSA2MDEuMTUyMzQ0IDExMzYuNjkxNDA2IDU5OS4xMTcxODggMTEzNi44MDg1OTQgQyA1NjQuNzQyMTg4IDExMzguODA4NTk0IDUzNS4xNzU3ODEgMTE1OS4yMzgyODEgNTExLjU2MjUgMTE4Ni43MzA0NjkgQyA0NjcuNDE3OTY5IDEyMzguMTQwNjI1IDQ0NS4wMzEyNSAxMzEzLjE0MDYyNSA0NTUuNTY2NDA2IDEzNjAuNTUwNzgxIEMgNDY1LjYwMTU2MiAxNDA1LjcxODc1IDUwNS42NDQ1MzEgMTQyNi4zMjAzMTIgNTQ4LjA0Njg3NSAxNDQ2LjM1MTU2MiBDIDU0OC4xMTMyODEgMTQ0Ni4zNzg5MDYgNTQ4LjE4NzUgMTQ0Ni4zOTg0MzggNTQ4LjI2MTcxOSAxNDQ2LjM5ODQzOCBDIDU0OC4zODY3MTkgMTQ0Ni4zOTg0MzggNTQ4LjUwNzgxMiAxNDQ2LjM1OTM3NSA1NDguNjA1NDY5IDE0NDYuMjY5NTMxIEMgNTQ4Ljc1NzgxMiAxNDQ2LjEyODkwNiA1NDguODE2NDA2IDE0NDUuOTIxODc1IDU0OC43NSAxNDQ1LjcxODc1IEMgNTM0LjE5NTMxMiAxNDAyLjk2ODc1IDUyMC41MjM0MzggMTM1OS40ODgyODEgNTM0Ljc2NTYyNSAxMzE1LjAxOTUzMSBDIDU0NS45MDYyNSAxMjgwLjIxODc1IDU3NC41MDc4MTIgMTI0My45ODA0NjkgNjA3LjM1OTM3NSAxMjQyLjA3MDMxMiBMIDYwNy4zNjMyODEgMTI0Mi4wNzAzMTIgQyA2MDguMzU5Mzc1IDEyNDIuMDExNzE5IDYwOS4zNTU0NjkgMTI0MS45ODgyODEgNjEwLjM1NTQ2OSAxMjQxLjk4ODI4MSBDIDYyMC4wNTg1OTQgMTI0Mi4wNTg1OTQgNjI5Ljk3NjU2MiAxMjQ1LjE3OTY4OCA2MzkuNzI2NTYyIDEyNTIuMTQ4NDM4IEMgNjYyLjk0OTIxOSAxMjY4Ljc2MTcxOSA2ODUuNDcyNjU2IDEzMDcuNTE5NTMxIDcxMi4yMjI2NTYgMTM1My42MDE1NjIgTCA3MTIuNjE3MTg4IDEzNTQuMjY5NTMxIEMgNzM2LjA2MjUgMTM5NC42NDg0MzggNzYyLjkzMzU5NCAxNDQwLjkyMTg3NSA3OTYuNjQwNjI1IDE0ODQgQyA4NjkuMjU3ODEyIDE1NzYuODIwMzEyIDk3My42MjEwOTQgMTY1NC44Mzk4NDQgMTA1Ny4zNTE1NjIgMTY4NS43ODkwNjIgQyAxMDkxLjQ4ODI4MSAxNjk4LjQxMDE1NiAxMTIyLjE5OTIxOSAxNzAzLjIxMDkzOCAxMTUwLjkxMDE1NiAxNzAzLjM5MDYyNSBDIDExNTYuOTYwOTM4IDE3MDMuNDI5Njg4IDExNjIuOTIxODc1IDE3MDMuMjY5NTMxIDExNjguODA4NTk0IDE3MDIuOTIxODc1IEMgMTIwMy4zOTA2MjUgMTcwMC45MTAxNTYgMTIzNS4zNzEwOTQgMTY5Mi44Mzk4NDQgMTI2Ny41NTA3ODEgMTY4NC43MTg3NSBDIDEyNjcuNzEwOTM4IDE2ODQuNjc5Njg4IDEyNjcuODkwNjI1IDE2ODQuNjYwMTU2IDEyNjguMDUwNzgxIDE2ODQuNjYwMTU2IEMgMTI2OC44MjgxMjUgMTY4NC42NjAxNTYgMTI2OS41NTA3ODEgMTY4NS4xMjEwOTQgMTI2OS44NzEwOTQgMTY4NS44NTkzNzUgQyAxMjcwLjI2OTUzMSAxNjg2Ljc2MTcxOSAxMjY5Ljk0OTIxOSAxNjg3LjgwODU5NCAxMjY5LjEyODkwNiAxNjg4LjMzOTg0NCBMIDEyNjguNjA5Mzc1IDE2ODguNjc5Njg4IEwgMTI2Ny45NDkyMTkgMTY4OS4xMDkzNzUgQyAxMTY5LjczMDQ2OSAxNzUyLjk2ODc1IDEwNzAuODc4OTA2IDE4MTcuMTIxMDk0IDk4NC4xNDQ1MzEgMTgyMi4xNzk2ODggQyA5ODAuMTMyODEyIDE4MjIuNDEwMTU2IDk3Ni4xMzY3MTkgMTgyMi41MTk1MzEgOTcyLjE3NTc4MSAxODIyLjQ4ODI4MSBDIDk3MC44MjQyMTkgMTgyMi40ODA0NjkgOTY5LjQ2NDg0NCAxODIyLjQ2MDkzOCA5NjguMTE3MTg4IDE4MjIuNDIxODc1IEMgOTE1Ljg5MDYyNSAxODIwLjg3ODkwNiA4NjguNjY3OTY5IDE3OTUuNzgxMjUgODI0Ljk1NzAzMSAxNzcyLjU1MDc4MSBMIDgyNC43MDcwMzEgMTc3Mi40MTAxNTYgQyA3OTIuMTcxODc1IDE3NTUuMTIxMDk0IDc2MS42NzE4NzUgMTczOC45MjE4NzUgNzMyLjE1MjM0NCAxNzMzLjYyODkwNiBDIDcyNC44NzEwOTQgMTczMi4zMjgxMjUgNzE3LjY0NDUzMSAxNzMxLjY5MTQwNiA3MTAuNTA3ODEyIDE3MzEuNjQwNjI1IEMgNzA3LjcxNDg0NCAxNzMxLjYyMTA5NCA3MDQuOTQ1MzEyIDE3MzEuNjk5MjE5IDcwMi4xODM1OTQgMTczMS44NTkzNzUgTCA3MDIuMTc5Njg4IDE3MzEuODU5Mzc1IEMgNjQ0Ljg3MTA5NCAxNzM1LjE5MTQwNiA1OTQuNDc2NTYyIDE3NzYuMTIxMDk0IDU3MS42MTcxODggMTgxOC4yMTA5MzggQyA1NDQuOTQ5MjE5IDE4NjcuMzIwMzEyIDU1NS44MzIwMzEgMTkxOC4wMzEyNSA1NjguODA4NTk0IDE5NTMuNDI5Njg4IEMgNTgwLjY3MTg3NSAxOTg1Ljc4MTI1IDU5NC4xMTcxODggMjAwNC44OTg0MzggNjA3Ljc5Mjk2OSAyMDIzLjAzNTE1NiBDIDYwNy44OTA2MjUgMjAyMy4xNjQwNjIgNjA4LjA0Mjk2OSAyMDIzLjIzODI4MSA2MDguMTk5MjE5IDIwMjMuMjM4MjgxIEMgNjA4LjI0NjA5NCAyMDIzLjIzODI4MSA2MDguMjg5MDYyIDIwMjMuMjM0Mzc1IDYwOC4zMzU5MzggMjAyMy4yMjI2NTYgQyA2MDguNTM5MDYyIDIwMjMuMTY3OTY5IDYwOC42ODc1IDIwMjMgNjA4LjcxMDkzOCAyMDIyLjc5Mjk2OSBDIDYxNy45MTQwNjIgMTk1MC4zMDA3ODEgNjI4LjA0Mjk2OSAxODc3LjE0ODQzOCA2NzAuMDUwNzgxIDE4NTcuMzIwMzEyIEMgNjc3LjQyMTg3NSAxODUzLjgzOTg0NCA2ODUuNjk1MzEyIDE4NTIuMDE5NTMxIDY5NC41ODk4NDQgMTg1MS41IEMgNjk2LjYyNSAxODUxLjM5MDYyNSA2OTguNjkxNDA2IDE4NTEuMzM5ODQ0IDcwMC43OTY4NzUgMTg1MS4zNTE1NjIgQyA3MzkuOTE3OTY5IDE4NTEuNTg5ODQ0IDc5MC41MTk1MzEgMTg3My44OTA2MjUgODMzLjI5Njg3NSAxODkyLjc2MTcxOSBMIDgzMy43NzczNDQgMTg5Mi45Njg3NSBMIDgzNC41OTc2NTYgMTg5My4zMjgxMjUgQyA4MzguMTYwMTU2IDE4OTQuODk4NDM4IDg0MS44NzEwOTQgMTg5Ni41MzEyNSA4NDUuMzAwNzgxIDE4OTguMDM5MDYyIEMgODk4Ljc2MTcxOSAxOTIxLjQyOTY4OCA5MzcuMDU4NTk0IDE5MzUuNjA5Mzc1IDk4OC43MzA0NjkgMTkzNS45NDE0MDYgQyA5OTIuMzU1NDY5IDE5MzUuOTYwOTM4IDk5Ni4wMjczNDQgMTkzNS45MTAxNTYgOTk5Ljc5Mjk2OSAxOTM1LjgwMDc4MSBDIDEwMDIuODIwMzEyIDE5MzUuNzEwOTM4IDEwMDUuOTIxODc1IDE5MzUuNTcwMzEyIDEwMDkuMDM5MDYyIDE5MzUuMzkwNjI1IEMgMTA2NS4zMjAzMTIgMTkzMi4xMDkzNzUgMTEzNi4wMTk1MzEgMTkxNC41MTE3MTkgMTE5My45MjE4NzUgMTg4OC43Njk1MzEgQyAxMjU1IDE4NjEuNjA5Mzc1IDEzMDEuODM5ODQ0IDE4MjUuMzc4OTA2IDEzNDguODc4OTA2IDE3ODkgQyAxMzQ5LjI1IDE3ODguNzEwOTM4IDEzNDkuNjc5Njg4IDE3ODguNTc4MTI1IDEzNTAuMTIxMDk0IDE3ODguNTc4MTI1IEMgMTM1MC41NzAzMTIgMTc4OC41NzgxMjUgMTM1MS4wMTk1MzEgMTc4OC43MzA0NjkgMTM1MS4zOTA2MjUgMTc4OS4wMzkwNjIgQyAxMzUyLjEwOTM3NSAxNzg5LjY0MDYyNSAxMzUyLjMyMDMxMiAxNzkwLjY2MDE1NiAxMzUxLjg5MDYyNSAxNzkxLjUgTCAxMzUxLjcxODc1IDE3OTEuODIwMzEyIEMgMTMxNi44MDA3ODEgMTg1OS43Njk1MzEgMTI4MS42Nzk2ODggMTkyOC4wMzkwNjIgMTIyMC41ODk4NDQgMTk4Ni4yMzA0NjkgQyAxMjAzLjEyMTA5NCAyMDAyLjg3NSAxMTgzLjUxOTUzMSAyMDE4LjY4MzU5NCAxMTYzLjk4ODI4MSAyMDM0LjQ0NTMxMiBMIDExNjMuOTQxNDA2IDIwMzQuNDkyMTg4IEwgMTE2My42MDkzNzUgMjAzNC43NSBDIDExNDQuMTAxNTYyIDIwNTAuNDk2MDk0IDExMjQuNjcxODc1IDIwNjYuMTkxNDA2IDExMDcuMzA4NTk0IDIwODIuNzM0Mzc1IEMgMTA4MS4yODEyNSAyMTA3LjUyMzQzOCAxMDYwLjA4OTg0NCAyMTM0LjAzOTA2MiAxMDUwLjQxMDE1NiAyMTY1LjA3NDIxOSBDIDEwMjcuNjkxNDA2IDIyMzcuOTUzMTI1IDEwNjguMTYwMTU2IDIzMzYuNTM1MTU2IDExMjguOTI5Njg4IDIzNjkuOTkyMTg4IEMgMTE0Ny4wNTg1OTQgMjM3OS45NzI2NTYgMTE2Ny4wNTA3ODEgMjM4NC4xODc1IDExODcuMjE4NzUgMjM4NC4zMTY0MDYgQyAxMTkwLjU1MDc4MSAyMzg0LjMzNTkzOCAxMTkzLjg3ODkwNiAyMzg0LjI0NjA5NCAxMTk3LjE5OTIxOSAyMzg0LjA1MDc4MSBDIDEyNDEuMTA5Mzc1IDIzODEuNDk2MDk0IDEyODQuMTk5MjE5IDIzNjAuOTEwMTU2IDEzMDguNDYwOTM4IDIzNDAuMTU2MjUgQyAxMzQzLjEyODkwNiAyMzEwLjUwMzkwNiAxMzM5LjI2MTcxOSAyMjgwLjYyMTA5NCAxMzMyLjg5ODQzOCAyMjQ5Ljc5Mjk2OSBDIDEzMzIuODcxMDk0IDIyNDkuNjIxMDk0IDEzMzIuNzM4MjgxIDIyNDkuNDc2NTYyIDEzMzIuNTcwMzEyIDIyNDkuNDE0MDYyIEMgMTMzMi41MTk1MzEgMjI0OS4zOTQ1MzEgMTMzMi40NjA5MzggMjI0OS4zODY3MTkgMTMzMi4zOTg0MzggMjI0OS4zODY3MTkgQyAxMzMyLjIzODI4MSAyMjQ5LjM4MjgxMiAxMzMyLjA3ODEyNSAyMjQ5LjQ2NDg0NCAxMzMxLjk4MDQ2OSAyMjQ5LjYwNTQ2OSBDIDEzMTQuMTIxMDk0IDIyNzUuMjUzOTA2IDEyOTUuMzIwMzEyIDIzMDAuNjQwNjI1IDEyNjYuNjA5Mzc1IDIzMTEuMDQyOTY5IEMgMTI1OC43ODEyNSAyMzEzLjg4MjgxMiAxMjUwLjIzODI4MSAyMzE1LjU5NzY1NiAxMjQxLjQ0MTQwNiAyMzE2LjExMzI4MSBDIDEyMzkuMzkwNjI1IDIzMTYuMjMwNDY5IDEyMzcuMzIwMzEyIDIzMTYuMjg1MTU2IDEyMzUuMjUgMjMxNi4yNzM0MzggQyAxMjExLjU1ODU5NCAyMzE2LjEyNSAxMTg2LjY5MTQwNiAyMzA3LjI4MTI1IDExNjkuNDEwMTU2IDIyODcuODc1IEMgMTE0NC4zMjAzMTIgMjI1OS43MDcwMzEgMTEzNS4yNjk1MzEgMjIwOS4wMzUxNTYgMTE2MC42MDE1NjIgMjE3Ny4xMTcxODggQyAxMTcyLjAzOTA2MiAyMTYyLjcxNDg0NCAxMTkwLjQxMDE1NiAyMTUyLjMyMDMxMiAxMjEzLjE3OTY4OCAyMTM5LjQ1MzEyNSBMIDEyMTMuNTcwMzEyIDIxMzkuMjMwNDY5IEMgMTI0MS4wNTg1OTQgMjEyMy42OTE0MDYgMTI3NS40NDE0MDYgMjEwNC4yNTM5MDYgMTMxMy41MzkwNjIgMjA2OS41ODU5MzggQyAxMzY4LjUgMjAxOS41NjY0MDYgMTQzMS4xOTE0MDYgMTkzNy44Mzk4NDQgMTQ5NS42NjAxNTYgMTg0OS4xMjEwOTQgQyAxNDk1LjY5MTQwNiAxODQ5LjA4OTg0NCAxNDk1LjcxMDkzOCAxODQ5LjA1ODU5NCAxNDk1LjczMDQ2OSAxODQ5LjAxOTUzMSBDIDE0OTYuNTUwNzgxIDE4NDcuODkwNjI1IDE0OTcuNTM5MDYyIDE4NDYuNTMxMjUgMTQ5OC4zOTg0MzggMTg0NS4zMzk4NDQgTCAxNDk4LjYyODkwNiAxODQ1LjY3MTg3NSBMIDE0OTkuMjgxMjUgMTg0Ni41NzgxMjUgQyAxNDk5LjkxMDE1NiAxODQ3LjQ2ODc1IDE1MDAuNDI5Njg4IDE4NDguMTk5MjE5IDE1MDEuMDUwNzgxIDE4NDkuMDg5ODQ0IEMgMTUwMS4wNzAzMTIgMTg0OS4xMDkzNzUgMTUwMS4wODk4NDQgMTg0OS4xMjg5MDYgMTUwMS4xMDE1NjIgMTg0OS4xNDg0MzggQyAxNTY0LjQ0MTQwNiAxOTM4LjY3OTY4OCAxNjI2LjEwOTM3NSAyMDIxLjE4MzU5NCAxNjgwLjQ0MTQwNiAyMDcxLjg5MDYyNSBDIDE3MTguMDg5ODQ0IDIxMDcuMDM1MTU2IDE3NTIuMjMwNDY5IDIxMjYuOTAyMzQ0IDE3NzkuNTE5NTMxIDIxNDIuNzg1MTU2IEwgMTc4MC4zMDA3ODEgMjE0My4yMzgyODEgQyAxODAyLjcxODc1IDIxNTYuMjg5MDYyIDE4MjAuODIwMzEyIDIxNjYuODc1IDE4MzIuMDExNzE5IDIxODEuMzM1OTM4IEMgMTg1Ni45NDE0MDYgMjIxMy41NzAzMTIgMTg0Ny4yNSAyMjY0LjEyMTA5NCAxODIxLjgwODU5NCAyMjkxLjk3MjY1NiBDIDE4MDQuMjg5MDYyIDIzMTEuMTYwMTU2IDE3NzkuMzA4NTk0IDIzMTkuNjkxNDA2IDE3NTUuNjIxMDk0IDIzMTkuNTM5MDYyIEMgMTc1My41NTA3ODEgMjMxOS41MjczNDQgMTc1MS40ODA0NjkgMjMxOS40NDkyMTkgMTc0OS40Mjk2ODggMjMxOS4zMDA3ODEgQyAxNzQwLjY0MDYyNSAyMzE4LjY3OTY4OCAxNzMyLjEyMTA5NCAyMzE2Ljg1NTQ2OSAxNzI0LjMyMDMxMiAyMzEzLjkxNzk2OSBDIDE2OTUuNzYxNzE5IDIzMDMuMTU2MjUgMTY3Ny4yNjk1MzEgMjI3Ny41NDI5NjkgMTY1OS43MzA0NjkgMjI1MS42NzE4NzUgQyAxNjU5LjY0MDYyNSAyMjUxLjUzMTI1IDE2NTkuNDgwNDY5IDIyNTEuNDQ5MjE5IDE2NTkuMzA4NTk0IDIyNTEuNDQ1MzEyIEMgMTY1OS4wNzAzMTIgMjI1MS40NDUzMTIgMTY1OC44NTkzNzUgMjI1MS42MTMyODEgMTY1OC44MDg1OTQgMjI1MS44NDc2NTYgQyAxNjUyLjA3MDMxMiAyMjgyLjU4OTg0NCAxNjQ3LjgyMDMxMiAyMzEyLjQyMTg3NSAxNjgyLjEwOTM3NSAyMzQyLjUgQyAxNzA2LjEwOTM3NSAyMzYzLjU1ODU5NCAxNzQ4Ljk0MTQwNiAyMzg0LjY4MzU5NCAxNzkyLjgwODU5NCAyMzg3Ljc5Mjk2OSBDIDE3OTYuMTQwNjI1IDIzODguMDI3MzQ0IDE3OTkuNDYwOTM4IDIzODguMTYwMTU2IDE4MDIuNzg5MDYyIDIzODguMTc5Njg4IEMgMTgyMi45NjA5MzggMjM4OC4zMDg1OTQgMTg0My4wMTE3MTkgMjM4NC4zNDM3NSAxODYxLjI2MTcxOSAyMzc0LjU4OTg0NCBDIDE5MjIuNDQxNDA2IDIzNDEuODk4NDM4IDE5NjQuMTQwNjI1IDIyNDMuODMyMDMxIDE5NDIuMzM5ODQ0IDIxNzAuNjc1NzgxIEMgMTkzMy4wNTg1OTQgMjEzOS41MjM0MzggMTkxMi4xOTkyMTkgMjExMi43NDIxODggMTg4Ni40ODgyODEgMjA4Ny42Mjg5MDYgQyAxODY5LjIzMDQ2OSAyMDcwLjc3NzM0NCAxODQ5Ljg3ODkwNiAyMDU0Ljc1MzkwNiAxODMwLjQ2ODc1IDIwMzguNjc1NzgxIEwgMTgzMC4zOTA2MjUgMjAzOC42MTMyODEgQyAxODExLjA1ODU5NCAyMDIyLjYxMzI4MSAxNzkxLjY3OTY4OCAyMDA2LjU2MjUgMTc3NC40MjE4NzUgMTk4OS42OTkyMTkgQyAxNzE0LjA1ODU5NCAxOTMwLjc1IDE2NzkuODA4NTk0IDE4NjIuMDUwNzgxIDE2NDUuNzM4MjgxIDE3OTMuNjYwMTU2IEwgMTY0NS41NzgxMjUgMTc5My4zMzk4NDQgQyAxNjQ1LjE2MDE1NiAxNzkyLjUgMTY0NS4zNzg5MDYgMTc5MS40ODA0NjkgMTY0Ni4xMDkzNzUgMTc5MC44OTA2MjUgQyAxNjQ2LjQ4MDQ2OSAxNzkwLjU4OTg0NCAxNjQ2LjkyOTY4OCAxNzkwLjQ0MTQwNiAxNjQ3LjM3ODkwNiAxNzkwLjQ0MTQwNiBDIDE2NDcuODIwMzEyIDE3OTAuNDQ5MjE5IDE2NDguMjUgMTc5MC41ODk4NDQgMTY0OC42MDkzNzUgMTc5MC44Nzg5MDYgQyAxNjk1LjE5MTQwNiAxODI3Ljg1MTU2MiAxNzQxLjU3ODEyNSAxODY0LjY2MDE1NiAxODAyLjMyMDMxMiAxODkyLjU4OTg0NCBDIDE4NTkuODc4OTA2IDE5MTkuMDU4NTk0IDE5MzAuMzU5Mzc1IDE5MzcuNTM5MDYyIDE5ODYuNTg5ODQ0IDE5NDEuNTMxMjUgQyAxOTg5LjcxMDkzOCAxOTQxLjc1IDE5OTIuODA4NTk0IDE5NDEuOTI5Njg4IDE5OTUuODM5ODQ0IDE5NDIuMDU4NTk0IEMgMTk5OS42MDkzNzUgMTk0Mi4yMTg3NSAyMDAzLjI2OTUzMSAxOTQyLjMwODU5NCAyMDA2Ljg5MDYyNSAxOTQyLjMyODEyNSBDIDIwNTguNTcwMzEyIDE5NDIuNjYwMTU2IDIwOTcuMDM5MDYyIDE5MjguOTYwOTM4IDIxNTAuNzg5MDYyIDE5MDYuMjM4MjgxIEMgMjE1NC41NTA3ODEgMTkwNC42NDg0MzggMjE1OC40ODA0NjkgMTkwMi45Njg3NSAyMTYyLjM3ODkwNiAxOTAxLjMwODU5NCBMIDIxNjIuODU5Mzc1IDE5MDEuMTA5Mzc1IEwgMjE2My4zNTE1NjIgMTkwMC44OTg0MzggQyAyMjA2LjI2MTcxOSAxODgyLjYyMTA5NCAyMjU2Ljg5MDYyNSAxODYxLjEyMTA5NCAyMjk1Ljg3MTA5NCAxODYxLjM3MTA5NCBDIDIyOTcuOTY4NzUgMTg2MS4zNzg5MDYgMjMwMC4wMzkwNjIgMTg2MS40NjA5MzggMjMwMi4wNzAzMTIgMTg2MS42MDE1NjIgQyAyMzEwLjk2MDkzOCAxODYyLjIzMDQ2OSAyMzE5LjIxMDkzOCAxODY0LjE0MDYyNSAyMzI2LjUzOTA2MiAxODY3LjcxODc1IEMgMjM2OC4yODkwNjIgMTg4OC4wODk4NDQgMjM3Ny41IDE5NjEuMzUxNTYyIDIzODUuNzg5MDYyIDIwMzMuOTUzMTI1IEMgMjM4NS44MjAzMTIgMjAzNC4xNjAxNTYgMjM4NS45Njg3NSAyMDM0LjMzMjAzMSAyMzg2LjE2MDE1NiAyMDM0LjM4NjcxOSBDIDIzODYuMjEwOTM4IDIwMzQuNDAyMzQ0IDIzODYuMjUgMjAzNC40MDYyNSAyMzg2LjMwMDc4MSAyMDM0LjQwNjI1IEMgMjM4Ni40NjA5MzggMjAzNC40MTAxNTYgMjM4Ni42MDkzNzUgMjAzNC4zMzU5MzggMjM4Ni43MTA5MzggMjAzNC4yMDcwMzEgQyAyNDAwLjYwOTM3NSAyMDE2LjI0MjE4OCAyNDE0LjMwMDc4MSAxOTk3LjMwMDc4MSAyNDI2LjU1ODU5NCAxOTY1LjEwMTU2MiBDIDI0MzkuOTgwNDY5IDE5MjkuODcxMDk0IDI0NTEuNSAxODc5LjI4OTA2MiAyNDI1LjQ0OTIxOSAxODI5Ljg1OTM3NSBDIDI0MDMuMTI4OTA2IDE3ODcuNDgwNDY5IDIzNTMuMjUgMTc0NS45Mjk2ODggMjI5NS45ODA0NjkgMTc0MS44NzEwOTQgQyAyMjkzLjIzMDQ2OSAxNzQxLjY3MTg3NSAyMjkwLjQ0OTIxOSAxNzQxLjU1ODU5NCAyMjg3LjY2MDE1NiAxNzQxLjU1MDc4MSBDIDIyODAuNTMxMjUgMTc0MS41IDIyNzMuMjg5MDYyIDE3NDIuMDUwNzgxIDIyNjUuOTg4MjgxIDE3NDMuMjY5NTMxIEMgMjIzNi40MTAxNTYgMTc0OC4xNzk2ODggMjIwNS43MTA5MzggMTc2My45ODgyODEgMjE3Mi45NjA5MzggMTc4MC44Nzg5MDYgTCAyMTcyLjcxMDkzOCAxNzgxLjAxMTcxOSBDIDIxNzIuNjA5Mzc1IDE3ODEuMDU4NTk0IDIxNzIuNTcwMzEyIDE3ODEuMDc4MTI1IDIxNzIuNDY4NzUgMTc4MS4xNDA2MjUgQyAyMTI4LjUzMTI1IDE4MDMuNzg5MDYyIDIwODEuMDc4MTI1IDE4MjguMTk5MjE5IDIwMjguOTI5Njg4IDE4MjkuMDc4MTI1IEMgMjAyNy41ODk4NDQgMTgyOS4xMDkzNzUgMjAyNi4yMTg3NSAxODI5LjEwOTM3NSAyMDI0Ljg3MTA5NCAxODI5LjEwMTU2MiBDIDIwMjAuOTEwMTU2IDE4MjkuMDc4MTI1IDIwMTYuOTIxODc1IDE4MjguOTIxODc1IDIwMTIuOTEwMTU2IDE4MjguNjQwNjI1IEMgMTkyNi4wNTg1OTQgMTgyMi40ODA0NjkgMTgyNy43Njk1MzEgMTc1Ni44MjAzMTIgMTczMC4xNDA2MjUgMTY5MS41NzgxMjUgTCAxNzI5LjYyODkwNiAxNjkxLjIzMDQ2OSBDIDE3MjguODA4NTk0IDE2OTAuNjkxNDA2IDE3MjguNTExNzE5IDE2ODkuNjI4OTA2IDE3MjguOTEwMTU2IDE2ODguNzM4MjgxIEMgMTcyOS4yNSAxNjg4LjAxMTcxOSAxNzI5Ljk4MDQ2OSAxNjg3LjU1ODU5NCAxNzMwLjc1IDE2ODcuNTcwMzEyIEMgMTczMC45MTAxNTYgMTY4Ny41NzAzMTIgMTczMS4wODk4NDQgMTY4Ny41ODk4NDQgMTczMS4yNSAxNjg3LjYyODkwNiBDIDE3NjMuMzIwMzEyIDE2OTYuMTYwMTU2IDE3OTUuMTk5MjE5IDE3MDQuNjIxMDk0IDE4MjkuNzUgMTcwNy4wNzAzMTIgQyAxODM1LjY0MDYyNSAxNzA3LjQ4ODI4MSAxODQxLjU4OTg0NCAxNzA3LjczMDQ2OSAxODQ3LjY0ODQzOCAxNzA3Ljc2OTUzMSBDIDE4NzYuMzU5Mzc1IDE3MDcuOTQ5MjE5IDE5MDcuMTI4OTA2IDE3MDMuNTMxMjUgMTk0MS40MjE4NzUgMTY5MS4zMzk4NDQgQyAyMDI1LjUzMTI1IDE2NjEuNDQxNDA2IDIxMzAuODcxMDk0IDE1ODQuNzM4MjgxIDIyMDQuNjQwNjI1IDE0OTIuODM5ODQ0IEMgMjIzOC44OTA2MjUgMTQ1MC4xOTE0MDYgMjI2Ni4zMzk4NDQgMTQwNC4yNjE3MTkgMjI5MC4yODkwNjIgMTM2NC4xNzk2ODggTCAyMjkwLjY5MTQwNiAxMzYzLjUxMTcxOSBMIDIyOTEuMDg5ODQ0IDEzNjIuODM5ODQ0IEMgMjMxOC4yNSAxMzE3LjM5ODQzOCAyMzQxLjE0MDYyNSAxMjc5LjIxODc1IDIzNjQuNDYwOTM4IDEyNjIuOTgwNDY5IEMgMjM3NC4yODkwNjIgMTI1Ni4xNDA2MjUgMjM4NC4yNSAxMjUzLjEyODkwNiAyMzkzLjk0OTIxOSAxMjUzLjE5MTQwNiBDIDIzOTQuOTQ5MjE5IDEyNTMuMTk5MjE5IDIzOTUuOTQ5MjE5IDEyNTMuMjM4MjgxIDIzOTYuOTQ5MjE5IDEyNTMuMzA4NTk0IEMgMjQyOS43Njk1MzEgMTI1NS42NDA2MjUgMjQ1Ny45MjE4NzUgMTI5Mi4yMzA0NjkgMjQ2OC42MjEwOTQgMTMyNy4xNjAxNTYgQyAyNDgyLjMwODU5NCAxMzcxLjgyMDMxMiAyNDY4LjA4OTg0NCAxNDE1LjEyMTA5NCAyNDUzIDE0NTcuNjc5Njg4IEMgMjQ1Mi45Mjk2ODggMTQ1Ny44NzEwOTQgMjQ1Mi45ODA0NjkgMTQ1OC4wODk4NDQgMjQ1My4xMjg5MDYgMTQ1OC4yMzA0NjkgQyAyNDUzLjIzMDQ2OSAxNDU4LjMyMDMxMiAyNDUzLjM1MTU2MiAxNDU4LjM3MTA5NCAyNDUzLjQ4MDQ2OSAxNDU4LjM3MTA5NCBDIDI0NTMuNTUwNzgxIDE0NTguMzcxMDk0IDI0NTMuNjI4OTA2IDE0NTguMzUxNTYyIDI0NTMuNjkxNDA2IDE0NTguMzIwMzEyIEMgMjQ5Ni4zMzk4NDQgMTQzOC44MjAzMTIgMjUzNi42NDA2MjUgMTQxOC43MzA0NjkgMjU0Ny4yMzgyODEgMTM3My42Nzk2ODggQyAyNTU4LjM3MTA5NCAxMzI2LjQxMDE1NiAyNTM2LjkyOTY4OCAxMjUxLjE0MDYyNSAyNDkzLjQyOTY4OCAxMTk5LjE3OTY4OCBDIDI0NzAuMTcxODc1IDExNzEuMzkwNjI1IDI0NDAuODU5Mzc1IDExNTAuNTg5ODQ0IDI0MDYuNTExNzE5IDExNDguMTYwMTU2IEMgMjQwNC40ODA0NjkgMTE0OC4wMTk1MzEgMjQwMi40Mjk2ODggMTE0Ny45NDE0MDYgMjQwMC4zNTE1NjIgMTE0Ny45MjE4NzUgQyAyMzcyLjEwMTU2MiAxMTQ3Ljc1IDIzNDAuMjM4MjgxIDExNTkuOTg4MjgxIDIzMDUuMjUgMTE5MS4zMDg1OTQgQyAyMjcxLjE3OTY4OCAxMjIxLjgwODU5NCAyMjM0LjMwODU5NCAxMjcwLjIzMDQ2OSAyMTk1LjA1ODU5NCAxMzIxLjc2OTUzMSBMIDIxOTQuODc4OTA2IDEzMjIuMDE5NTMxIEwgMjE5NC41MzEyNSAxMzIyLjQ2ODc1IEMgMjE0MC42OTE0MDYgMTM5My4xNzk2ODggMjA4Mi40NjA5MzggMTQ2OS41NzgxMjUgMjAyMS40Njg3NSAxNTEyLjA1ODU5NCBDIDE5NzAuNzg5MDYyIDE1NDcuMzU5Mzc1IDE5MTguMjY5NTMxIDE1NTkuMjEwOTM4IDE4NjQuOTI5Njg4IDE1NTguODcxMDk0IEMgMTg1Ni43Njk1MzEgMTU1OC44MjAzMTIgMTg0OC42MDk1MzEgMTU1OC40ODA0NjkgMTg0MC40MjE4NzUgMTU1Ny45MTAxNTYgQyAxODAxLjA1ODU5NCAxNTU1LjEyMTA5NCAxNzYxLjI2OTUzMSAxNTQ2LjY3MTg3NSAxNzIxLjQ4ODI4MSAxNTM3LjAzOTA2MiBMIDE3MjEuNDgwNDY5IDE1MzcuMDM5MDYyIEMgMTcwNC40Mjk2ODggMTU3NC42OTkyMTkgMTcwMC4yODEyNSAxNjA3LjYwMTU2MiAxNzAxLjg5MDYyNSAxNjM4LjM5ODQzOCBMIDE3MDEuODkwNjI1IDE2MzguNDEwMTU2IEMgMTcwMi4wMTE3MTkgMTY0MC44MjgxMjUgMTcwMS4xNDA2MjUgMTY0My4yMTA5MzggMTY5OS40NDE0MDYgMTY0NC45ODA0NjkgQyAxNjk3Ljc1IDE2NDYuNzUgMTY5NS40ODA0NjkgMTY0Ny42NzE4NzUgMTY5My4yMTg3NSAxNjQ3LjcxMDkzOCBDIDE2OTMuMTQwNjI1IDE2NDcuNzE4NzUgMTY5My4wNTg1OTQgMTY0Ny43MTg3NSAxNjkyLjk4ODI4MSAxNjQ3LjcxODc1IEMgMTY5Mi43ODkwNjIgMTY0Ny43MTA5MzggMTY5Mi41NzgxMjUgMTY0Ny43MTA5MzggMTY5Mi4zNzg5MDYgMTY0Ny42OTE0MDYgTCAxNjkyLjM5MDYyNSAxNjQ3LjY5MTQwNiBDIDE2ODguNDY4NzUgMTY0Ny4zOTg0MzggMTY4NS4xNzE4NzUgMTY0NC41MzkwNjIgMTY4NC4zNzEwOTQgMTY0MC42NDA2MjUgQyAxNjgzLjUgMTYzNi4zNzg5MDYgMTY4Mi42OTkyMTkgMTYzMi4wODk4NDQgMTY4MiAxNjI3Ljc2MTcxOSBMIDE2ODEuOTg4MjgxIDE2MjcuNzYxNzE5IEwgMTY4Ni4zNTkzNzUgMTYyNy4zNTkzNzUgQyAxNjc5Ljk2ODc1IDE1OTcuODcxMDk0IDE2ODIuOTQxNDA2IDE1NjMuOTQ5MjE5IDE2OTUuMjYxNzE5IDE1MjUuNTg5ODQ0IEMgMTcwMyAxNTA1Ljk4ODI4MSAxNzA4LjczMDQ2OSAxNDkzLjE5OTIxOSAxNzEyLjQ0OTIxOSAxNDg3LjIzMDQ2OSBDIDE3NjAuNzMwNDY5IDE0MDQuNzMwNDY5IDE3ODQuODIwMzEyIDEzNjEuNTE5NTMxIDE3ODQuNzUgMTM1Ny42MjEwOTQgQyAxNzk2LjQ4MDQ2OSAxMzMzLjMwODU5NCAxODA1LjgwODU5NCAxMzA3LjMyODEyNSAxODEyLjczODI4MSAxMjc5LjY3MTg3NSBDIDE4MTkuNTExNzE5IDEyNDQuMzA4NTk0IDE4MjIuMzM5ODQ0IDEyMjIuNTUwNzgxIDE4MjEuMjMwNDY5IDEyMTQuMzkwNjI1IEMgMTgyMy44MjAzMTIgMTIwNC43MzA0NjkgMTgxOS45MjE4NzUgMTE3Mi42NjAxNTYgMTgwOS41NTg1OTQgMTExOC4xNzk2ODggQyAxNzg0Ljg1MTU2MiAxMDI1LjE5OTIxOSAxNzQzLjI1IDk0Ni44MDg1OTQgMTY4NC43NSA4ODIuOTg4MjgxIEMgMTYzMS40Njg3NSA4MjguOTIxODc1IDE1NzIuMzA4NTk0IDc5OS41NTg1OTQgMTUwNy4yMzgyODEgNzk0LjkyMTg3NSBaIE0gMTUwNy4yMzgyODEgNzk0LjkyMTg3NSAiLz48L3N2Zz4=">
+
+<style>
+:root{
+    --primary:#2563eb;
+    --primary-hover:#1d4ed8;
+    --primary-light:#eff6ff;
+    --bg:#f5f7fb;
+    --card:#fff;
+    --border:#e5e7eb;
+    --text:#111827;
+    --muted:#64748b;
+    --success:#16a34a;
+    --danger:#dc2626;
+}
+
+[data-theme="dark"]{
+    --bg:#0b1120;
+    --card:#111827;
+    --border:#263244;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --primary-light:#172554;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    -webkit-hyphens: none !important;
+    -ms-hyphens: none !important;
+    hyphens: none !important;
+}
+
+body{
+    font-family:'Samsung Sans','SamsungOne',Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+
+/* ================= TOPBAR (RESPONSIVA) ================= */
+
+.topbar{
+    position:sticky;
+    top:0;
+    width:100%;
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    padding:12px 20px;
+    z-index:100;
+    gap:15px;
+}
+
+.brand{
+    font-size:16px;
+    font-weight:bold;
+    color:var(--text);
+    white-space:nowrap;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.brand-logo{
+    width:26px;
+    height:26px;
+    flex-shrink:0;
+    color:var(--text);
+}
+
+.hamburger-btn{
+    display:none;
+    width:38px;
+    height:38px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--card);
+    color:var(--text);
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.hamburger-btn svg{
+    width:18px;
+    height:18px;
+    stroke:var(--text);
+    stroke-width:2;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.nav{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.nav-item{
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    padding:8px 12px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    font-weight:bold;
+    text-align:left;
+    white-space:nowrap;
+}
+
+.nav-item:hover{
+    background:var(--bg);
+    color:var(--text);
+}
+
+.nav-item:hover svg {
+    stroke: var(--text);
+}
+
+.nav-item.active{
+    background:var(--primary-light);
+    color:var(--primary);
+}
+
+.nav-item.active svg {
+    stroke: var(--primary);
+}
+
+.nav-icon{
+    font-size:15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--muted);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nav-item:hover .nav-icon svg,
+.nav-item.active .nav-icon svg {
+    stroke: var(--primary);
+}
+
+.nav-item .android-icon {
+    stroke: var(--muted);
+    fill: none;
+}
+
+.nav-item:hover .android-icon {
+    stroke: var(--text);
+    fill: none;
+}
+
+.nav-item.active .android-icon {
+    stroke: var(--primary);
+    fill: none;
+}
+
+.topbar-actions{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-shrink:0;
+    margin-left: auto;
+}
+
+.btn-icon{
+    width:38px;
+    height:38px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--card);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.btn-icon svg{
+    width:16px;
+    height:16px;
+    stroke:var(--text);
+    stroke-width:2;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.btn-icon:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.btn-icon:hover svg{
+    stroke:var(--primary);
+}
+
+.time-btn-wrap{
+    position:relative;
+}
+
+.time-btn.pulse{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.time-btn.pulse svg{
+    stroke:var(--primary);
+}
+
+.time-dropdown{
+    position:absolute;
+    top:calc(100% + 10px);
+    right:0;
+    min-width:230px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    padding:14px;
+    z-index:200;
+    display:none;
+}
+
+.time-dropdown.open{
+    display:block;
+}
+
+.time-status-title{
+    font-size:12px;
+    font-weight:bold;
+    color:var(--text);
+    margin-bottom:8px;
+}
+
+.time-status-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:8px 0;
+    font-size:12px;
+    font-weight:bold;
+    color:var(--text);
+    border-top:1px solid var(--border);
+}
+
+.time-status-row:first-of-type{
+    border-top:0;
+}
+
+.time-status-label{
+    color:var(--muted);
+    font-weight:normal;
+}
+
+.time-status-value{
+    color:var(--primary);
+}
+
+.time-status-empty{
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+    padding:6px 0;
+}
+
+.storage{
+    padding:6px 10px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    width:160px;
+}
+
+.storage-head{
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    margin-bottom:3px;
+}
+
+.progress{
+    height:5px;
+    background:var(--border);
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress div{
+    width:68%;
+    height:100%;
+    background:var(--primary);
+}
+
+.storage small{
+    display:none;
+}
+
+
+/* ================= MENÚ HAMBURGUESA (DRAWER) ================= */
+
+.drawer-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.55);
+    backdrop-filter:blur(2px);
+    z-index:290;
+    display:none;
+}
+
+.drawer-overlay.show{
+    display:block;
+}
+
+.drawer{
+    position:fixed;
+    top:0;
+    left:0;
+    height:100vh;
+    height:100dvh;
+    width:280px;
+    max-width:82vw;
+    background:var(--card);
+    border-right:1px solid var(--border);
+    z-index:300;
+    transform:translateX(-100%);
+    transition:transform .25s ease;
+    display:flex;
+    flex-direction:column;
+    padding:18px;
+    padding-bottom:max(18px, env(safe-area-inset-bottom));
+    gap:20px;
+    overflow-y:auto;
+}
+
+.drawer.open{
+    transform:translateX(0);
+}
+
+.drawer-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.close-btn{
+    width:36px;
+    height:36px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    background:var(--card);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.close-btn svg{
+    width:16px;
+    height:16px;
+    stroke:var(--text);
+    stroke-width:2;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.drawer-nav{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.drawer-nav .nav-item{
+    width:100%;
+    justify-content:flex-start;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px 14px;
+}
+
+.drawer-footer{
+    margin-top:auto;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+}
+
+.drawer-footer .storage{
+    width:100%;
+}
+
+/* Por defecto (PC/TV) el drawer nunca se muestra */
+.drawer,
+.drawer-overlay{
+    display:none;
+}
+
+
+/* ================= MAIN ================= */
+
+.main{
+    min-height:calc(100vh - 70px);
+}
+
+.header{
+    display:none;
+}
+
+.floating-menu-btn{
+    display:none;
+}
+
+.content{
+    padding:28px;
+    max-width:1900px;
+    margin:auto;
+}
+
+
+/* ================= ESTADISTICAS ================= */
+
+.stats{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 0;
+    margin-left: 20px;
+    margin-right: auto;
+}
+
+.stat{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:8px 12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width: auto;
+    flex: 0 0 auto;
+}
+
+.stat-icon{
+    width: 32px;
+    height: 32px;
+    background:var(--primary-light);
+    color:var(--primary);
+    border-radius: 8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.stat-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--primary);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.stat-icon svg.android-icon {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.stat-label{
+    display:block;
+    color:var(--muted);
+    font-size: 10px;
+    margin-bottom: 1px;
+}
+
+.stat-number{
+    font-size: 16px;
+    line-height: 1.1;
+}
+
+
+/* ================= TITULO ================= */
+
+.section-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:18px;
+    flex-wrap: wrap;
+}
+
+.section-title {
+    flex-shrink: 0;
+}
+
+.section-title h2{
+    font-size:20px;
+}
+
+.section-title p{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:5px;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-shrink: 0;
+}
+
+.btn{
+    min-height:42px;
+    padding:0 15px;
+    border-radius:10px;
+    border:0;
+    font-size:12px;
+    font-weight:bold;
+    white-space:nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-primary:hover{
+    background:var(--primary-hover);
+}
+
+.btn-secondary{
+    background:var(--card);
+    color:var(--text);
+    border:1px solid var(--border);
+}
+
+.btn-secondary svg {
+    stroke: var(--text);
+}
+
+
+/* ================= TABLA ================= */
+
+.grid-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.toolbar{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    gap:10px;
+}
+
+.search{
+    flex:1;
+    position:relative;
+}
+
+.search span{
+    position:absolute;
+    left:13px;
+    top:50%;
+    transform:translateY(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.search span svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--muted);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.search input{
+    width:100%;
+    height:42px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--bg);
+    color:var(--text);
+    padding:0 12px 0 37px;
+    outline:none;
+    font-size:12px;
+}
+
+.filter{
+    height:42px;
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text);
+    border-radius:10px;
+    padding:0 12px;
+    font-size:12px;
+}
+
+.table-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:900px;
+    border-collapse:collapse;
+}
+
+th{
+    background:var(--bg);
+    color:var(--muted);
+    font-size:12px;
+    text-transform:uppercase;
+    padding:14px 17px;
+    text-align:left;
+}
+
+td{
+    padding:14px 17px;
+    border-top:1px solid var(--border);
+    font-size:12px;
+}
+
+tbody tr:hover{
+    background:var(--bg);
+}
+
+.file{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.file-icon{
+    width:36px;
+    height:36px;
+    border-radius:9px;
+    background:var(--primary-light);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.file-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--primary);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.file-icon svg.android-icon {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.file-info strong{
+    display:block;
+}
+
+.file-info small{
+    display:block;
+    color:var(--muted);
+    margin-top:3px;
+    font-size:12px;
+}
+
+.badge{
+    display:inline-flex;
+    padding:5px 9px;
+    border-radius:50px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.badge-pc{
+    background:var(--primary-light);
+    color:var(--primary);
+}
+
+.badge-android{
+    background:rgba(22,163,74,.1);
+    color:#16a34a;
+}
+
+.badge-page{
+    background:rgba(8,145,178,.1);
+    color:#0891b2;
+}
+
+.badge-active{
+    background:rgba(22,163,74,.1);
+    color:var(--success);
+}
+
+.badge-inactive{
+    background:rgba(217,119,6,.1);
+    color:#d97706;
+}
+
+.row-actions{
+    display:flex;
+    gap:6px;
+}
+
+.icon-btn{
+    width:32px;
+    height:32px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--text);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.icon-btn:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.icon-btn:hover svg {
+    stroke: var(--primary);
+}
+
+.note-button{
+    border:0;
+    background:none;
+    color:var(--primary);
+    font-size:12px;
+    font-weight:bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.note-button svg {
+    width: 13px;
+    height: 13px;
+    stroke: var(--primary);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.url{
+    color:var(--primary);
+    text-decoration:none;
+    max-width:300px;
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    font-size:12px;
+}
+
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.6);
+    backdrop-filter:blur(5px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:1000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:550px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+}
+
+.modal-box-lg{
+    max-width:550px;
+}
+
+@media(min-width: 1101px){
+    .modal-box-lg{
+        max-width:680px;
+    }
+}
+
+.modal-header{
+    padding:18px 20px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.modal-header h3{
+    font-size:16px;
+}
+
+.close{
+    border:0;
+    background:none;
+    color:var(--muted);
+    font-size:24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--muted);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.close:hover svg {
+    stroke: var(--text);
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.form-control{
+    width:100%;
+    min-height:43px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--bg);
+    color:var(--text);
+    padding:10px 12px;
+    outline:none;
+    font-size:12px;
+}
+
+.form-control:focus{
+    border-color:var(--primary);
+}
+
+textarea.form-control{
+    min-height:90px;
+    resize:vertical;
+}
+
+
+/* ================= DROPZONE COMPACTA ================= */
+
+.dropzone{
+    border:2px dashed #dbe2ec;
+    border-radius:13px;
+    padding:10px 15px;
+    min-height:70px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    transition:.2s;
+    background:var(--card);
+}
+
+.dropzone:hover{
+    border-color:var(--primary);
+    background:var(--primary-light);
+}
+
+.dropzone.dragover{
+    border-color:var(--primary);
+    background:var(--primary-light);
+}
+
+.dropzone-icon{
+    font-size:20px;
+    line-height:1;
+    margin-bottom:4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropzone-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--primary);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.dropzone strong{
+    display:block;
+    font-size:12px;
+    line-height:1.3;
+}
+
+.dropzone p{
+    margin-top:4px;
+    color:var(--primary);
+    font-size:12px;
+    line-height:1.3;
+}
+
+.selected-files{
+    margin-top:7px;
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+}
+
+.current-file{
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px;
+    margin-bottom:14px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.current-file strong{
+    display:block;
+    color:var(--text);
+    margin-bottom:3px;
+}
+
+
+/* ================= CONFIGURACIÓN ================= */
+
+.config-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:14px;
+}
+
+@media(min-width: 1101px){
+    .config-grid{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.config-item{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    background:var(--bg);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.config-item-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.config-item-head label.config-label{
+    font-size:12px;
+    font-weight:bold;
+    color:var(--primary);
+}
+
+.config-password-box{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    background:var(--bg);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.config-password-box strong{
+    font-size:13px;
+    color:var(--text);
+}
+
+.btn-block{
+    width:100%;
+    justify-content:center;
+}
+
+.modal-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.modal-section-title{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    color:var(--text);
+    margin-bottom:12px;
+}
+
+.modal-divider{
+    border:none;
+    border-top:1px solid var(--border);
+    margin:16px 0;
+}
+
+.time-presets{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:14px;
+}
+
+.time-preset-btn{
+    flex:1 1 auto;
+    min-width:56px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--card);
+    color:var(--text);
+    padding:8px 10px;
+    font-size:12px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.time-preset-btn:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.time-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:12px;
+}
+
+.time-grid label{
+    display:block;
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:6px;
+}
+
+.form-control-center{
+    text-align:center;
+}
+
+.timer-display{
+    width:100%;
+    min-height:43px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--bg);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.pages-order-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:14px;
+    max-height:230px;
+    overflow-y:auto;
+}
+
+.drag-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 12px;
+    background:var(--card);
+    font-size:12px;
+    font-weight:bold;
+    color:var(--text);
+    cursor:grab;
+}
+
+.drag-row.dragging{
+    opacity:.5;
+}
+
+.drag-handle{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1;
+    user-select:none;
+}
+
+.pages-order-empty{
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+    padding:14px 0;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.form-control:disabled{
+    background:var(--border);
+    color:var(--muted);
+    cursor:not-allowed;
+    opacity:.7;
+}
+
+.modal-footer.split{
+    justify-content:space-between;
+}
+
+.switch{
+    position:relative;
+    display:inline-block;
+    width:40px;
+    height:22px;
+    flex-shrink:0;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.switch-slider{
+    position:absolute;
+    cursor:pointer;
+    inset:0;
+    background:var(--border);
+    border-radius:999px;
+    transition:.2s;
+}
+
+.switch-slider:before{
+    content:"";
+    position:absolute;
+    height:16px;
+    width:16px;
+    left:3px;
+    top:3px;
+    background:#fff;
+    border-radius:50%;
+    transition:.2s;
+    box-shadow:0 1px 2px rgba(0,0,0,.25);
+}
+
+.switch input:checked + .switch-slider{
+    background:var(--primary);
+}
+
+.switch input:checked + .switch-slider:before{
+    transform:translateX(18px);
+}
+
+
+/* ================= FOOTER MODAL ================= */
+
+.modal-footer{
+    padding:14px 20px;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+}
+
+
+/* ================= TOAST ================= */
+
+.toast-container{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:2000;
+}
+
+.toast{
+    background:var(--card);
+    color:var(--text);
+    border:1px solid var(--border);
+    padding:13px 16px;
+    border-radius:10px;
+    margin-top:8px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    font-size:12px;
+}
+
+
+/* ================= RESPONSIVO ================= */
+
+@media(min-width: 1400px){
+    .content{
+        padding:40px 60px;
+    }
+}
+
+/* ===== MÓVIL Y TABLET (hasta 1100px): menú hamburguesa ===== */
+@media(max-width: 1100px){
+    .topbar{
+        display:grid;
+        grid-template-columns: 44px 1fr auto;
+        align-items:center;
+        gap:10px;
+        padding:12px 16px;
+    }
+    .hamburger-btn{
+        display:flex;
+        grid-column:1;
+    }
+    .brand{
+        grid-column:2;
+        text-align:center;
+        justify-content:center;
+    }
+    .nav{
+        display:none;
+    }
+    .topbar-actions{
+        grid-column:3;
+        margin-left:0;
+        justify-content:flex-end;
+    }
+    .topbar-actions .settings-btn,
+    .topbar-actions .fullscreen-btn,
+    .topbar-actions .storage{
+        display:none;
+    }
+    .drawer,
+    .drawer-overlay{
+        display:none;
+    }
+    .drawer-overlay.show{
+        display:block;
+    }
+    .drawer.open{
+        display:flex;
+    }
+}
+
+/* ===== PC Y TV (desde 1101px): barra horizontal completa ===== */
+@media(min-width: 1101px){
+    .hamburger-btn{
+        display:none;
+    }
+    .nav{
+        display:flex;
+    }
+    .drawer,
+    .drawer-overlay{
+        display:none !important;
+    }
+}
+
+/* TABLET - max 1100px */
+@media(max-width: 1100px) and (min-width: 801px){
+    .section-header.dashboard-section{
+        flex-wrap: wrap;
+        justify-content: flex-start !important;
+    }
+    .section-header.dashboard-section .section-title{
+        text-align: left;
+        width: auto;
+        flex: 0 1 auto;
+        order: 1;
+    }
+    .section-header.dashboard-section .stats{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        justify-content: flex-start !important;
+        width: auto;
+        flex: 0 0 auto;
+        flex-wrap: nowrap !important;
+        gap: 12px !important;
+        order: 2;
+    }
+    .section-header.dashboard-section .stat {
+        width: auto !important;
+        flex: 0 0 auto !important;
+        padding: 8px 12px !important;
+    }
+    .section-header.dashboard-section .actions{
+        order: 3;
+    }
+}
+
+/* MÓVIL - max 800px - SOLO PARA DASHBOARD: ESTADÍSTICAS EN FILA */
+@media(max-width: 800px){
+    .section-header.dashboard-section .stats{
+        flex-direction: row !important;
+        align-items: stretch !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        gap: 8px !important;
+        width: 100% !important;
+        flex-wrap: nowrap !important;
+        overflow-x: visible !important;
+        padding: 0 !important;
+    }
+    .section-header.dashboard-section .stat {
+        width: auto !important;
+        max-width: 100% !important;
+        flex: 0 0 auto !important;
+        min-width: 0 !important;
+        padding: 8px 10px !important;
+        gap: 6px !important;
+    }
+    .section-header.dashboard-section .stat > div:last-child{
+        min-width: 0;
+        overflow: hidden;
+    }
+    .section-header.dashboard-section .stat-number {
+        font-size: 15px !important;
+        white-space: nowrap;
+    }
+    .section-header.dashboard-section .stat-icon {
+        width: 30px !important;
+        height: 30px !important;
+        flex-shrink: 0 !important;
+    }
+    .section-header.dashboard-section .stat-icon svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+    .section-header.dashboard-section .stat-label {
+        font-size: 10px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+
+    .section-header.dashboard-section{
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .section-header.dashboard-section .section-title{
+        flex: 1 1 180px;
+        min-width: 180px;
+        order: 1;
+    }
+    .section-header.dashboard-section .section-title h2 {
+        font-size: 18px;
+        text-align: left;
+    }
+    .section-header.dashboard-section .section-title p {
+        font-size: 11px;
+        text-align: left;
+    }
+    .section-header.dashboard-section .actions{
+        flex: 1 1 260px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+        order: 3;
+    }
+    .section-header.dashboard-section .actions .btn {
+        flex: 1 0 auto;
+        min-width: 100px;
+        justify-content: center;
+        font-size: 11px;
+        padding: 0 12px;
+        min-height: 38px;
+    }
+    .section-header.dashboard-section .stats {
+        flex: 1 1 260px;
+        order: 2;
+    }
+
+    .section-header:not(.dashboard-section){
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .section-header:not(.dashboard-section) .section-title{
+        flex: 1 1 180px;
+        min-width: 180px;
+    }
+    .section-header:not(.dashboard-section) .stats{
+        margin-left: 0;
+        margin-right: 0;
+        flex: 1 1 180px;
+    }
+    .section-header:not(.dashboard-section) .stat {
+        width: auto;
+        max-width: 100%;
+        flex: 0 0 auto;
+        padding: 8px 12px;
+    }
+    .section-header:not(.dashboard-section) .actions{
+        flex: 1 1 200px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+    .section-header:not(.dashboard-section) .actions .btn{
+        flex: 1 0 auto;
+        min-width: 100px;
+        justify-content: center;
+        font-size: 11px;
+        padding: 0 12px;
+        min-height: 38px;
+    }
+
+    .toolbar{
+        flex-direction:column;
+    }
+    .filter{
+        width:100%;
+    }
+    .table-container {
+        overflow-x: auto;
+    }
+    table {
+        min-width: 700px;
+    }
+    .content {
+        padding: 16px;
+    }
+}
+
+@media (min-width: 100vh) and (max-width: 1399px), (hover: none) and (pointer: coarse) {
+    button, input, select, .nav-item, .icon-btn, .btn {
+        outline-offset: 3px;
+    }
+    button:focus-visible, input:focus-visible, select:focus-visible {
+        outline: 3px solid var(--primary);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Definición del logo (pulpo) reutilizable, adaptable al color del tema vía currentColor -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="jahf-logo-icon" viewBox="339 715 2325 1753">
+      <path fill-rule="nonzero" fill="currentColor" d="M 1709.53125 1328.261719 C 1709.761719 1328.261719 1709.988281 1328.269531 1710.210938 1328.28125 L 1711.109375 1328.289062 C 1730.070312 1329.941406 1741.140625 1339.480469 1744.300781 1356.910156 C 1747.628906 1370.839844 1740.058594 1387.761719 1721.601562 1407.660156 C 1702.558594 1428.910156 1682.519531 1443.980469 1661.480469 1452.878906 C 1631 1464.921875 1603.289062 1471.371094 1578.371094 1472.230469 C 1571.148438 1472.171875 1564.710938 1471.429688 1559.070312 1470.011719 C 1572.878906 1462.820312 1586.980469 1451.929688 1601.378906 1437.339844 C 1606.289062 1431.460938 1610.660156 1425.53125 1614.488281 1419.550781 C 1623.308594 1403.910156 1631.730469 1389.601562 1639.78125 1376.609375 C 1645.738281 1368.21875 1650.578125 1362 1654.308594 1357.949219 C 1660.460938 1350.621094 1670.539062 1342.960938 1684.570312 1334.949219 C 1690.320312 1332.109375 1695.539062 1330.230469 1700.230469 1329.308594 C 1704 1328.589844 1707.101562 1328.25 1709.53125 1328.261719 Z M 1297.609375 1325.679688 L 1298.691406 1325.710938 C 1309.179688 1326.761719 1317.339844 1329.089844 1323.160156 1332.679688 C 1337.089844 1340.859375 1347.070312 1348.660156 1353.128906 1356.058594 C 1356.800781 1360.160156 1361.570312 1366.441406 1367.421875 1374.890625 C 1375.300781 1387.988281 1383.550781 1402.410156 1392.171875 1418.160156 C 1395.929688 1424.179688 1400.21875 1430.160156 1405.058594 1436.101562 C 1413.058594 1445.960938 1427.03125 1457.03125 1446.949219 1469.300781 C 1441.53125 1470.660156 1434.851562 1471.308594 1426.898438 1471.28125 C 1402.71875 1470.109375 1375.339844 1463.308594 1344.761719 1450.890625 C 1323.839844 1441.730469 1303.988281 1426.398438 1285.21875 1404.921875 C 1267.011719 1384.789062 1259.660156 1367.78125 1263.160156 1353.878906 C 1266.238281 1336.5 1277.71875 1327.109375 1297.609375 1325.679688 Z M 2137.230469 808.898438 C 2128.421875 808.851562 2119.191406 809.761719 2109.578125 811.800781 C 2049.269531 824.589844 1974.570312 881.480469 1965.578125 941.121094 C 1961.761719 966.460938 1969.730469 992.511719 1978.539062 1021.179688 L 1978.601562 1021.371094 L 1978.660156 1021.570312 C 1990.460938 1059.949219 2003.519531 1102.621094 1989.480469 1152.539062 C 1969 1225.398438 1890.828125 1313.519531 1823.640625 1357.328125 L 1823.648438 1357.328125 C 1806.75 1393.929688 1785.429688 1428.070312 1765.839844 1459.441406 L 1765.789062 1459.53125 L 1765.789062 1459.539062 C 1751.679688 1482.128906 1738.550781 1503.179688 1728.351562 1522.929688 C 1795.230469 1518.371094 1861.410156 1506.910156 1925.679688 1452.960938 C 2002.648438 1388.359375 2076.851562 1262.859375 2089.609375 1169.808594 C 2089.890625 1167.730469 2090.140625 1165.679688 2090.371094 1163.628906 C 2096.21875 1110.449219 2082.230469 1068.019531 2070.808594 1033.390625 L 2070.488281 1032.429688 C 2062.910156 1009.46875 2056.410156 989.558594 2058.289062 972.449219 C 2062.179688 937.03125 2101.410156 914.621094 2133.910156 914.820312 C 2135.371094 914.828125 2136.808594 914.878906 2138.230469 914.980469 C 2144.808594 915.449219 2151.109375 916.898438 2156.730469 919.460938 C 2189.691406 934.449219 2197.609375 986.71875 2204.691406 1038.140625 C 2204.71875 1038.339844 2204.851562 1038.5 2205.03125 1038.558594 C 2205.078125 1038.570312 2205.140625 1038.589844 2205.199219 1038.589844 C 2205.328125 1038.589844 2205.460938 1038.539062 2205.558594 1038.441406 C 2226.03125 1018.589844 2245.558594 998.609375 2254.558594 970.25 C 2264.089844 940.25 2261.859375 900.761719 2238.148438 865.460938 C 2219.339844 837.441406 2187.109375 812.191406 2144.890625 809.199219 C 2142.371094 809.019531 2139.820312 808.921875 2137.230469 808.898438 Z M 872.640625 800.960938 C 870.050781 800.941406 867.5 801.011719 864.980469 801.160156 C 822.71875 803.621094 790.175781 828.46875 771.015625 856.25 L 771.015625 856.238281 C 746.867188 891.238281 744.140625 930.699219 753.289062 960.820312 C 761.9375 989.289062 781.210938 1009.519531 801.4375 1029.621094 C 801.535156 1029.71875 801.664062 1029.769531 801.796875 1029.769531 C 801.851562 1029.769531 801.90625 1029.761719 801.960938 1029.75 C 802.144531 1029.679688 802.277344 1029.53125 802.304688 1029.339844 C 810.027344 978 818.605469 925.839844 851.757812 911.261719 C 857.410156 908.769531 863.71875 907.398438 870.308594 907.019531 C 871.730469 906.941406 873.171875 906.898438 874.628906 906.910156 C 907.125 907.109375 946.070312 930.019531 949.519531 965.488281 C 951.199219 982.738281 944.335938 1002.71875 936.402344 1025.78125 L 936.238281 1026.261719 C 924.375 1060.738281 909.859375 1103 915.042969 1156.25 C 915.242188 1158.300781 915.46875 1160.359375 915.726562 1162.429688 C 927.316406 1255.640625 999.933594 1382.058594 1076.078125 1447.628906 C 1141.148438 1503.648438 1208.769531 1515.210938 1277.191406 1520.429688 C 1267.25 1500.511719 1254.351562 1479.230469 1240.480469 1456.398438 L 1240.378906 1456.230469 L 1240.390625 1456.230469 L 1240.328125 1456.140625 C 1221.859375 1425.710938 1201.808594 1392.691406 1185.671875 1357.429688 C 1117.660156 1314.351562 1036.25 1221.871094 1016.058594 1146.429688 C 1002.628906 1096.25 1016.289062 1053.691406 1028.589844 1015.410156 L 1028.648438 1015.210938 C 1037.820312 986.660156 1046.121094 960.710938 1042.609375 935.320312 C 1034.378906 875.570312 960.394531 817.75 900.253906 804.199219 C 890.664062 802.039062 881.449219 801.019531 872.640625 800.960938 Z M 1507.238281 794.921875 L 1493.660156 796.578125 C 1410.269531 802.5 1335.578125 855.980469 1269.589844 957.019531 C 1229.679688 1027.390625 1206.78125 1079.839844 1200.898438 1114.359375 C 1189.859375 1168.710938 1185.558594 1200.730469 1188.019531 1210.421875 C 1186.808594 1218.558594 1189.371094 1240.351562 1195.691406 1275.800781 C 1202.269531 1303.539062 1211.28125 1329.640625 1222.699219 1354.101562 C 1222.578125 1358 1246.128906 1401.488281 1293.371094 1484.589844 C 1297.019531 1490.621094 1302.589844 1503.480469 1310.070312 1523.179688 C 1321.921875 1561.691406 1324.449219 1595.640625 1317.679688 1625.039062 L 1322.058594 1625.488281 C 1321.300781 1629.820312 1320.441406 1634.101562 1319.519531 1638.339844 L 1319.519531 1638.351562 C 1318.621094 1642.5 1314.929688 1645.339844 1310.808594 1645.320312 C 1310.570312 1645.320312 1310.171875 1645.300781 1309.691406 1645.238281 L 1309.28125 1645.171875 L 1309.640625 1645.230469 C 1305.050781 1644.589844 1301.730469 1640.511719 1302.03125 1635.890625 L 1302.039062 1635.890625 L 1310.78125 1636.460938 L 1302.03125 1635.890625 C 1304.039062 1604.851562 1300.230469 1571.601562 1283.289062 1533.328125 C 1242.03125 1542.839844 1200.761719 1551.261719 1160.019531 1553.628906 C 1151.820312 1554.109375 1143.660156 1554.339844 1135.5 1554.289062 C 1082.160156 1553.960938 1029.800781 1541.441406 979.558594 1505.511719 C 918.980469 1462.179688 861.59375 1384.820312 808.554688 1313.308594 L 808.367188 1313.058594 C 769.777344 1261.039062 733.507812 1212.148438 699.828125 1181.230469 C 665.234375 1149.46875 633.535156 1136.828125 605.277344 1136.648438 C 603.207031 1136.640625 601.152344 1136.691406 599.117188 1136.808594 C 564.742188 1138.808594 535.175781 1159.238281 511.5625 1186.730469 C 467.417969 1238.140625 445.03125 1313.140625 455.566406 1360.550781 C 465.601562 1405.71875 505.644531 1426.320312 548.046875 1446.351562 C 548.113281 1446.378906 548.1875 1446.398438 548.261719 1446.398438 C 548.386719 1446.398438 548.507812 1446.359375 548.605469 1446.269531 C 548.757812 1446.128906 548.816406 1445.921875 548.75 1445.71875 C 534.195312 1402.96875 520.523438 1359.488281 534.765625 1315.019531 C 545.90625 1280.21875 574.507812 1243.980469 607.359375 1242.070312 L 607.363281 1242.070312 C 608.359375 1242.011719 609.355469 1241.988281 610.355469 1241.988281 C 620.058594 1242.058594 629.976562 1245.179688 639.726562 1252.148438 C 662.949219 1268.761719 685.472656 1307.519531 712.222656 1353.601562 L 712.617188 1354.269531 C 736.0625 1394.648438 762.933594 1440.921875 796.640625 1484 C 869.257812 1576.820312 973.621094 1654.839844 1057.351562 1685.789062 C 1091.488281 1698.410156 1122.199219 1703.210938 1150.910156 1703.390625 C 1156.960938 1703.429688 1162.921875 1703.269531 1168.808594 1702.921875 C 1203.390625 1700.910156 1235.371094 1692.839844 1267.550781 1684.71875 C 1267.710938 1684.679688 1267.890625 1684.660156 1268.050781 1684.660156 C 1268.828125 1684.660156 1269.550781 1685.121094 1269.871094 1685.859375 C 1270.269531 1686.761719 1269.949219 1687.808594 1269.128906 1688.339844 L 1268.609375 1688.679688 L 1267.949219 1689.109375 C 1169.730469 1752.96875 1070.878906 1817.121094 984.144531 1822.179688 C 980.132812 1822.410156 976.136719 1822.519531 972.175781 1822.488281 C 970.824219 1822.480469 969.464844 1822.460938 968.117188 1822.421875 C 915.890625 1820.878906 868.667969 1795.78125 824.957031 1772.550781 L 824.707031 1772.410156 C 792.171875 1755.121094 761.671875 1738.921875 732.152344 1733.628906 C 724.871094 1732.328125 717.644531 1731.691406 710.507812 1731.640625 C 707.714844 1731.621094 704.945312 1731.699219 702.183594 1731.859375 L 702.179688 1731.859375 C 644.871094 1735.191406 594.476562 1776.121094 571.617188 1818.210938 C 544.949219 1867.320312 555.832031 1918.03125 568.808594 1953.429688 C 580.671875 1985.78125 594.117188 2004.898438 607.792969 2023.035156 C 607.890625 2023.164062 608.042969 2023.238281 608.199219 2023.238281 C 608.246094 2023.238281 608.289062 2023.234375 608.335938 2023.222656 C 608.539062 2023.167969 608.6875 2023 608.710938 2022.792969 C 617.914062 1950.300781 628.042969 1877.148438 670.050781 1857.320312 C 677.421875 1853.839844 685.695312 1852.019531 694.589844 1851.5 C 696.625 1851.390625 698.691406 1851.339844 700.796875 1851.351562 C 739.917969 1851.589844 790.519531 1873.890625 833.296875 1892.761719 L 833.777344 1892.96875 L 834.597656 1893.328125 C 838.160156 1894.898438 841.871094 1896.53125 845.300781 1898.039062 C 898.761719 1921.429688 937.058594 1935.609375 988.730469 1935.941406 C 992.355469 1935.960938 996.027344 1935.910156 999.792969 1935.800781 C 1002.820312 1935.710938 1005.921875 1935.570312 1009.039062 1935.390625 C 1065.320312 1932.109375 1136.019531 1914.511719 1193.921875 1888.769531 C 1255 1861.609375 1301.839844 1825.378906 1348.878906 1789 C 1349.25 1788.710938 1349.679688 1788.578125 1350.121094 1788.578125 C 1350.570312 1788.578125 1351.019531 1788.730469 1351.390625 1789.039062 C 1352.109375 1789.640625 1352.320312 1790.660156 1351.890625 1791.5 L 1351.71875 1791.820312 C 1316.800781 1859.769531 1281.679688 1928.039062 1220.589844 1986.230469 C 1203.121094 2002.875 1183.519531 2018.683594 1163.988281 2034.445312 L 1163.941406 2034.492188 L 1163.609375 2034.75 C 1144.101562 2050.496094 1124.671875 2066.191406 1107.308594 2082.734375 C 1081.28125 2107.523438 1060.089844 2134.039062 1050.410156 2165.074219 C 1027.691406 2237.953125 1068.160156 2336.535156 1128.929688 2369.992188 C 1147.058594 2379.972656 1167.050781 2384.1875 1187.21875 2384.316406 C 1190.550781 2384.335938 1193.878906 2384.246094 1197.199219 2384.050781 C 1241.109375 2381.496094 1284.199219 2360.910156 1308.460938 2340.15625 C 1343.128906 2310.503906 1339.261719 2280.621094 1332.898438 2249.792969 C 1332.871094 2249.621094 1332.738281 2249.476562 1332.570312 2249.414062 C 1332.519531 2249.394531 1332.460938 2249.386719 1332.398438 2249.386719 C 1332.238281 2249.382812 1332.078125 2249.464844 1331.980469 2249.605469 C 1314.121094 2275.253906 1295.320312 2300.640625 1266.609375 2311.042969 C 1258.78125 2313.882812 1250.238281 2315.597656 1241.441406 2316.113281 C 1239.390625 2316.230469 1237.320312 2316.285156 1235.25 2316.273438 C 1211.558594 2316.125 1186.691406 2307.28125 1169.410156 2287.875 C 1144.320312 2259.707031 1135.269531 2209.035156 1160.601562 2177.117188 C 1172.039062 2162.714844 1190.410156 2152.320312 1213.179688 2139.453125 L 1213.570312 2139.230469 C 1241.058594 2123.691406 1275.441406 2104.253906 1313.539062 2069.585938 C 1368.5 2019.566406 1431.191406 1937.839844 1495.660156 1849.121094 C 1495.691406 1849.089844 1495.710938 1849.058594 1495.730469 1849.019531 C 1496.550781 1847.890625 1497.539062 1846.53125 1498.398438 1845.339844 L 1498.628906 1845.671875 L 1499.28125 1846.578125 C 1499.910156 1847.46875 1500.429688 1848.199219 1501.050781 1849.089844 C 1501.070312 1849.109375 1501.089844 1849.128906 1501.101562 1849.148438 C 1564.441406 1938.679688 1626.109375 2021.183594 1680.441406 2071.890625 C 1718.089844 2107.035156 1752.230469 2126.902344 1779.519531 2142.785156 L 1780.300781 2143.238281 C 1802.71875 2156.289062 1820.820312 2166.875 1832.011719 2181.335938 C 1856.941406 2213.570312 1847.25 2264.121094 1821.808594 2291.972656 C 1804.289062 2311.160156 1779.308594 2319.691406 1755.621094 2319.539062 C 1753.550781 2319.527344 1751.480469 2319.449219 1749.429688 2319.300781 C 1740.640625 2318.679688 1732.121094 2316.855469 1724.320312 2313.917969 C 1695.761719 2303.15625 1677.269531 2277.542969 1659.730469 2251.671875 C 1659.640625 2251.53125 1659.480469 2251.449219 1659.308594 2251.445312 C 1659.070312 2251.445312 1658.859375 2251.613281 1658.808594 2251.847656 C 1652.070312 2282.589844 1647.820312 2312.421875 1682.109375 2342.5 C 1706.109375 2363.558594 1748.941406 2384.683594 1792.808594 2387.792969 C 1796.140625 2388.027344 1799.460938 2388.160156 1802.789062 2388.179688 C 1822.960938 2388.308594 1843.011719 2384.34375 1861.261719 2374.589844 C 1922.441406 2341.898438 1964.140625 2243.832031 1942.339844 2170.675781 C 1933.058594 2139.523438 1912.199219 2112.742188 1886.488281 2087.628906 C 1869.230469 2070.777344 1849.878906 2054.753906 1830.46875 2038.675781 L 1830.390625 2038.613281 C 1811.058594 2022.613281 1791.679688 2006.5625 1774.421875 1989.699219 C 1714.058594 1930.75 1679.808594 1862.050781 1645.738281 1793.660156 L 1645.578125 1793.339844 C 1645.160156 1792.5 1645.378906 1791.480469 1646.109375 1790.890625 C 1646.480469 1790.589844 1646.929688 1790.441406 1647.378906 1790.441406 C 1647.820312 1790.449219 1648.25 1790.589844 1648.609375 1790.878906 C 1695.191406 1827.851562 1741.578125 1864.660156 1802.320312 1892.589844 C 1859.878906 1919.058594 1930.359375 1937.539062 1986.589844 1941.53125 C 1989.710938 1941.75 1992.808594 1941.929688 1995.839844 1942.058594 C 1999.609375 1942.21875 2003.269531 1942.308594 2006.890625 1942.328125 C 2058.570312 1942.660156 2097.039062 1928.960938 2150.789062 1906.238281 C 2154.550781 1904.648438 2158.480469 1902.96875 2162.378906 1901.308594 L 2162.859375 1901.109375 L 2163.351562 1900.898438 C 2206.261719 1882.621094 2256.890625 1861.121094 2295.871094 1861.371094 C 2297.96875 1861.378906 2300.039062 1861.460938 2302.070312 1861.601562 C 2310.960938 1862.230469 2319.210938 1864.140625 2326.539062 1867.71875 C 2368.289062 1888.089844 2377.5 1961.351562 2385.789062 2033.953125 C 2385.820312 2034.160156 2385.96875 2034.332031 2386.160156 2034.386719 C 2386.210938 2034.402344 2386.25 2034.40625 2386.300781 2034.40625 C 2386.460938 2034.410156 2386.609375 2034.335938 2386.710938 2034.207031 C 2400.609375 2016.242188 2414.300781 1997.300781 2426.558594 1965.101562 C 2439.980469 1929.871094 2451.5 1879.289062 2425.449219 1829.859375 C 2403.128906 1787.480469 2353.25 1745.929688 2295.980469 1741.871094 C 2293.230469 1741.671875 2290.449219 1741.558594 2287.660156 1741.550781 C 2280.53125 1741.5 2273.289062 1742.050781 2265.988281 1743.269531 C 2236.410156 1748.179688 2205.710938 1763.988281 2172.960938 1780.878906 L 2172.710938 1781.011719 C 2172.609375 1781.058594 2172.570312 1781.078125 2172.46875 1781.140625 C 2128.53125 1803.789062 2081.078125 1828.199219 2028.929688 1829.078125 C 2027.589844 1829.109375 2026.21875 1829.109375 2024.871094 1829.101562 C 2020.910156 1829.078125 2016.921875 1828.921875 2012.910156 1828.640625 C 1926.058594 1822.480469 1827.769531 1756.820312 1730.140625 1691.578125 L 1729.628906 1691.230469 C 1728.808594 1690.691406 1728.511719 1689.628906 1728.910156 1688.738281 C 1729.25 1688.011719 1729.980469 1687.558594 1730.75 1687.570312 C 1730.910156 1687.570312 1731.089844 1687.589844 1731.25 1687.628906 C 1763.320312 1696.160156 1795.199219 1704.621094 1829.75 1707.070312 C 1835.640625 1707.488281 1841.589844 1707.730469 1847.648438 1707.769531 C 1876.359375 1707.949219 1907.128906 1703.53125 1941.421875 1691.339844 C 2025.53125 1661.441406 2130.871094 1584.738281 2204.640625 1492.839844 C 2238.890625 1450.191406 2266.339844 1404.261719 2290.289062 1364.179688 L 2290.691406 1363.511719 L 2291.089844 1362.839844 C 2318.25 1317.398438 2341.140625 1279.21875 2364.460938 1262.980469 C 2374.289062 1256.140625 2384.25 1253.128906 2393.949219 1253.191406 C 2394.949219 1253.199219 2395.949219 1253.238281 2396.949219 1253.308594 C 2429.769531 1255.640625 2457.921875 1292.230469 2468.621094 1327.160156 C 2482.308594 1371.820312 2468.089844 1415.121094 2453 1457.679688 C 2452.929688 1457.871094 2452.980469 1458.089844 2453.128906 1458.230469 C 2453.230469 1458.320312 2453.351562 1458.371094 2453.480469 1458.371094 C 2453.550781 1458.371094 2453.628906 1458.351562 2453.691406 1458.320312 C 2496.339844 1438.820312 2536.640625 1418.730469 2547.238281 1373.679688 C 2558.371094 1326.410156 2536.929688 1251.140625 2493.429688 1199.179688 C 2470.171875 1171.390625 2440.859375 1150.589844 2406.511719 1148.160156 C 2404.480469 1148.019531 2402.429688 1147.941406 2400.351562 1147.921875 C 2372.101562 1147.75 2340.238281 1159.988281 2305.25 1191.308594 C 2271.179688 1221.808594 2234.308594 1270.230469 2195.058594 1321.769531 L 2194.878906 1322.019531 L 2194.53125 1322.46875 C 2140.691406 1393.179688 2082.460938 1469.578125 2021.46875 1512.058594 C 1970.789062 1547.359375 1918.269531 1559.210938 1864.929688 1558.871094 C 1856.769531 1558.820312 1848.609531 1558.480469 1840.421875 1557.910156 C 1801.058594 1555.121094 1761.269531 1546.671875 1721.488281 1537.039062 L 1721.480469 1537.039062 C 1704.429688 1574.699219 1700.28125 1607.601562 1701.890625 1638.398438 L 1701.890625 1638.410156 C 1702.011719 1640.828125 1701.140625 1643.210938 1699.441406 1644.980469 C 1697.75 1646.75 1695.480469 1647.671875 1693.21875 1647.710938 C 1693.140625 1647.71875 1693.058594 1647.71875 1692.988281 1647.71875 C 1692.789062 1647.710938 1692.578125 1647.710938 1692.378906 1647.691406 L 1692.390625 1647.691406 C 1688.46875 1647.398438 1685.171875 1644.539062 1684.371094 1640.640625 C 1683.5 1636.378906 1682.699219 1632.089844 1682 1627.761719 L 1681.988281 1627.761719 L 1686.359375 1627.359375 C 1679.96875 1597.871094 1682.941406 1563.949219 1695.261719 1525.589844 C 1703 1505.988281 1708.730469 1493.199219 1712.449219 1487.230469 C 1760.730469 1404.730469 1784.820312 1361.519531 1784.75 1357.621094 C 1796.480469 1333.308594 1805.808594 1307.328125 1812.738281 1279.671875 C 1819.511719 1244.308594 1822.339844 1222.550781 1821.230469 1214.390625 C 1823.820312 1204.730469 1819.921875 1172.660156 1809.558594 1118.179688 C 1784.851562 1025.199219 1743.25 946.808594 1684.75 882.988281 C 1631.46875 828.921875 1572.308594 799.558594 1507.238281 794.921875 Z M 1507.238281 794.921875 "/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="app">
+
+<!-- ================= TOPBAR ================= -->
+
+<header class="topbar" id="topbar">
+
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="openMobileMenu()" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+
+    <div class="brand"><svg class="brand-logo"><use href="#jahf-logo-icon"></use></svg>JAHF</div>
+
+    <nav class="nav" id="desktopNav">
+
+        <button class="nav-item active" data-section="dashboard" onclick="changeSection('dashboard')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></span>
+            Dashboard
+        </button>
+
+        <button class="nav-item" data-section="pc" onclick="changeSection('pc')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
+            PC
+        </button>
+
+        <button class="nav-item" data-section="android" onclick="changeSection('android')">
+            <span class="nav-icon"><svg class="android-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg></span>
+            Android
+        </button>
+
+        <button class="nav-item" data-section="pages" onclick="changeSection('pages')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
+            Páginas
+        </button>
+
+    </nav>
+
+    <div class="topbar-actions">
+
+        <div class="time-btn-wrap" id="timeBtnWrap">
+            <button class="btn-icon time-btn hidden" id="timeButton" onclick="toggleTimePanel(event)" title="Descargas por tiempo activas">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </button>
+            <div class="time-dropdown" id="timeDropdown"></div>
+        </div>
+
+        <button class="btn-icon theme-btn" onclick="toggleTheme()" id="themeButton" title="Noche">
+            <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+
+        <button class="btn-icon fullscreen-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="Pantalla completa">
+            <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </button>
+
+        <button class="btn-icon settings-btn" onclick="openPasswordModal()" title="Contraseña">
+            <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
+        </button>
+
+        <div class="storage">
+            <div class="storage-head">
+                <span>Almacenamiento</span>
+                <strong>68%</strong>
+            </div>
+            <div class="progress">
+                <div></div>
+            </div>
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ================= MENÚ HAMBURGUESA (MÓVIL / TABLET) ================= -->
+
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeMobileMenu()"></div>
+
+<aside class="drawer" id="mobileDrawer">
+
+    <div class="drawer-header">
+        <button class="close-btn" onclick="closeMobileMenu()" aria-label="Cerrar menú">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <div class="brand"><svg class="brand-logo"><use href="#jahf-logo-icon"></use></svg>JAHF</div>
+    </div>
+
+    <nav class="drawer-nav" id="mobileNav">
+
+        <button class="nav-item active" data-section="dashboard" onclick="changeSection('dashboard')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></span>
+            Dashboard
+        </button>
+
+        <button class="nav-item" data-section="pc" onclick="changeSection('pc')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
+            PC
+        </button>
+
+        <button class="nav-item" data-section="android" onclick="changeSection('android')">
+            <span class="nav-icon"><svg class="android-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg></span>
+            Android
+        </button>
+
+        <button class="nav-item" data-section="pages" onclick="changeSection('pages')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
+            Páginas
+        </button>
+
+    </nav>
+
+    <div class="drawer-footer">
+
+        <button class="btn-icon settings-btn" onclick="openPasswordModal()" title="Contraseña">
+            <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
+        </button>
+
+        <div class="storage">
+            <div class="storage-head">
+                <span>Almacenamiento</span>
+                <strong>68%</strong>
+            </div>
+            <div class="progress">
+                <div></div>
+            </div>
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+<section class="content">
+
+<!-- ================= SECTION ================= -->
+
+<div class="section-header" id="sectionHeader">
+
+    <div class="section-title">
+        <h2 id="sectionTitle">Contenido reciente</h2>
+        <p id="sectionDescription">Administra todas tus aplicaciones y páginas.</p>
+    </div>
+
+    <!-- ================= STATS ================= -->
+    <div class="stats" id="statsContainer">
+
+        <div class="stat">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </div>
+            <div>
+                <span class="stat-label">Apps PC</span>
+                <strong class="stat-number" id="pcCount">0</strong>
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">
+                <svg class="android-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg>
+            </div>
+            <div>
+                <span class="stat-label">Apps Android</span>
+                <strong class="stat-number" id="androidCount">0</strong>
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            </div>
+            <div>
+                <span class="stat-label">Páginas</span>
+                <strong class="stat-number" id="pageCount">0</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="actions" id="sectionActions"></div>
+
+</div>
+
+
+<!-- ================= TABLE ================= -->
+
+<div class="grid-card">
+
+    <div class="toolbar">
+
+        <div class="search">
+            <span><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+            <input type="text" id="searchInput" placeholder="Buscar aplicaciones, páginas..." oninput="renderTable()">
+        </div>
+
+        <select id="statusFilter" class="filter" onchange="renderTable()">
+            <option value="all">Todos</option>
+            <option value="active">Activos</option>
+            <option value="inactive">Inactivos</option>
+        </select>
+
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr id="tableHeader"></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- ================= MODAL PC / ANDROID ================= -->
+
+<div class="modal" id="fileModal">
+<div class="modal-box">
+
+    <div class="modal-header">
+        <h3 id="fileModalTitle">Subir archivo</h3>
+        <button class="close" onclick="closeModal('fileModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label>Nombre del archivo</label>
+            <input id="fileName" class="form-control" type="text" placeholder="Ej. Mi aplicación">
+        </div>
+
+        <div class="current-file" id="currentFileBox" style="display:none"></div>
+
+        <div class="form-group">
+            <label>Archivo</label>
+            <div class="dropzone" id="dropzone">
+                <div class="dropzone-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path><polyline points="12 13 12 17"></polyline><polyline points="10 15 12 13 14 15"></polyline></svg>
+                </div>
+                <strong>Arrastra tu archivo aquí</strong>
+                <p>o haz clic para seleccionarlo</p>
+                <input type="file" id="fileInput" hidden>
+            </div>
+            <div class="selected-files" id="selectedFiles"></div>
+        </div>
+
+        <div class="form-group">
+            <label>Nota</label>
+            <textarea id="fileNote" class="form-control" placeholder="Escribe una descripción o nota para este archivo..."></textarea>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('fileModal')">Cancelar</button>
+        <button class="btn btn-primary" id="saveFileButton" onclick="saveFile()">Subir Archivo</button>
+    </div>
+
+</div>
+</div>
+
+
+<!-- ================= MODAL PAGINAS ================= -->
+
+<div class="modal" id="pageModal">
+<div class="modal-box">
+
+    <div class="modal-header">
+        <h3 id="pageModalTitle">Agregar página</h3>
+        <button class="close" onclick="closeModal('pageModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Nombre del sitio</label>
+            <input id="siteName" class="form-control" placeholder="Ej. Mi página web">
+        </div>
+        <div class="form-group">
+            <label>URL</label>
+            <input id="siteUrl" class="form-control" type="url" placeholder="https://ejemplo.com">
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('pageModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="savePage()">Guardar página</button>
+    </div>
+
+</div>
+</div>
+
+
+<!-- ================= MODAL NOTA ================= -->
+
+<div class="modal" id="noteModal">
+<div class="modal-box">
+    <div class="modal-header">
+        <h3>Nota</h3>
+        <button class="close" onclick="closeModal('noteModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div id="noteContent" style="white-space:pre-wrap; line-height:1.7; font-size:12px; color:var(--muted);"></div>
+    </div>
+</div>
+</div>
+
+
+<!-- ================= MODAL CONTRASEÑA ================= -->
+
+<div class="modal" id="passwordModal">
+<div class="modal-box">
+
+    <div class="modal-header">
+        <h3>Contraseña</h3>
+        <button class="close" onclick="closeModal('passwordModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <label style="display:block; font-size:13px; font-weight:bold; color:var(--text); margin-bottom:10px;">Cambiar Contraseña</label>
+        <div class="form-group">
+            <input type="password" id="currentPassword" class="form-control" placeholder="Contraseña actual...">
+        </div>
+        <div class="form-group">
+            <input type="password" id="newPassword" class="form-control" placeholder="Nueva contraseña...">
+        </div>
+    </div>
+
+    <div class="modal-footer split">
+        <button class="btn btn-secondary" onclick="closeModal('passwordModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="savePassword()">Guardar</button>
+    </div>
+
+</div>
+</div>
+
+
+<!-- ================= MODAL TIEMPO (MÓVIL / TABLET) ================= -->
+
+<div class="modal" id="timeModal">
+<div class="modal-box">
+
+    <div class="modal-header">
+        <h3>Descargas por tiempo</h3>
+        <button class="close" onclick="closeModal('timeModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body" id="timeModalBody"></div>
+
+</div>
+</div>
+
+
+<!-- ================= MODAL AJUSTES PC ================= -->
+
+<div class="modal" id="pcAjustesModal">
+<div class="modal-box modal-box-lg">
+
+    <div class="modal-header">
+        <h3>Ajustes</h3>
+        <button class="close" onclick="closeModal('pcAjustesModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="modal-row">
+            <span class="modal-section-title" style="margin-bottom:0;">Descargas siempre activas</span>
+            <label class="switch">
+                <input type="checkbox" id="pcDescargasToggle" checked onchange="toggleDescargasNormales('pc')">
+                <span class="switch-slider"></span>
+            </label>
+        </div>
+
+        <hr class="modal-divider">
+
+        <span class="modal-section-title">Descargas por tiempo</span>
+
+        <div id="pcTimerSetup">
+            <div class="time-presets">
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 5)">5 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 10)">10 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 15)">15 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 20)">20 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 25)">25 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('pc', 30)">30 min</button>
+            </div>
+            <div class="time-grid">
+                <div>
+                    <label>Hora</label>
+                    <input type="number" min="0" id="pcHora" class="form-control form-control-center" placeholder="00">
+                </div>
+                <div>
+                    <label>Minutos</label>
+                    <input type="number" min="0" max="59" id="pcMinutos" class="form-control form-control-center" placeholder="00">
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="startTimedDownload('pc')">Iniciar</button>
+        </div>
+
+        <div id="pcTimerRunning" class="hidden">
+            <div class="timer-display" id="pcTimeRemaining">Tiempo restante 00:00:00</div>
+            <button class="btn btn-secondary btn-block" onclick="stopTimedDownload('pc')">Terminar</button>
+        </div>
+
+        <hr class="modal-divider">
+
+        <div class="config-grid">
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Código Downloader</label>
+                    <label class="switch">
+                        <input type="checkbox" id="cfg-pcDownloader-toggle" checked onchange="toggleConfigItemEnabled('pcDownloader')">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" id="cfg-pcDownloader" placeholder="Ej. 12434567..." disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('pcDownloader')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('pcDownloader')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('pcDownloader')">Cancelar</button>
+            </div>
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Información</label>
+                    <label class="switch">
+                        <input type="checkbox" id="cfg-pcInfo-toggle" checked onchange="toggleConfigItemEnabled('pcInfo')">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" id="cfg-pcInfo" placeholder="Ej. Información, nota, precio etc..." disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('pcInfo')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('pcInfo')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('pcInfo')">Cancelar</button>
+            </div>
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Código QR Facebook</label>
+                    <label class="switch">
+                        <input type="checkbox" id="cfg-pcFbqr-toggle" checked onchange="toggleConfigItemEnabled('pcFbqr')">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" id="cfg-pcFbqr" placeholder="URL el perfil de Facebook" disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('pcFbqr')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('pcFbqr')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('pcFbqr')">Cancelar</button>
+            </div>
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Código QR WhatsApp</label>
+                    <label class="switch">
+                        <input type="checkbox" id="cfg-pcWaqr-toggle" checked onchange="toggleConfigItemEnabled('pcWaqr')">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" id="cfg-pcWaqr" placeholder="Ej. núm. teléfono" disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('pcWaqr')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('pcWaqr')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('pcWaqr')">Cancelar</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer split">
+        <button class="btn btn-secondary" onclick="closeModal('pcAjustesModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="closeModal('pcAjustesModal')">Aceptar</button>
+    </div>
+
+</div>
+</div>
+
+
+<!-- ================= MODAL AJUSTES ANDROID ================= -->
+
+<div class="modal" id="androidAjustesModal">
+<div class="modal-box modal-box-lg">
+
+    <div class="modal-header">
+        <h3>Ajustes</h3>
+        <button class="close" onclick="closeModal('androidAjustesModal')">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="modal-row">
+            <span class="modal-section-title" style="margin-bottom:0;">Descargas siempre activas</span>
+            <label class="switch">
+                <input type="checkbox" id="androidDescargasToggle" checked onchange="toggleDescargasNormales('android')">
+                <span class="switch-slider"></span>
+            </label>
+        </div>
+
+        <hr class="modal-divider">
+
+        <span class="modal-section-title">Descargas por tiempo</span>
+
+        <div id="androidTimerSetup">
+            <div class="time-presets">
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 5)">5 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 10)">10 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 15)">15 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 20)">20 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 25)">25 min</button>
+                <button type="button" class="time-preset-btn" onclick="startTimedDownload('android', 30)">30 min</button>
+            </div>
+            <div class="time-grid">
+                <div>
+                    <label>Hora</label>
+                    <input type="number" min="0" id="androidHora" class="form-control form-control-center" placeholder="00">
+                </div>
+                <div>
+                    <label>Minutos</label>
+                    <input type="number" min="0" max="59" id="androidMinutos" class="form-control form-control-center" placeholder="00">
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="startTimedDownload('android')">Iniciar</button>
+        </div>
+
+        <div id="androidTimerRunning" class="hidden">
+            <div class="timer-display" id="androidTimeRemaining">Tiempo restante 00:00:00</div>
+            <button class="btn btn-secondary btn-block" onclick="stopTimedDownload('android')">Terminar</button>
+        </div>
+
+        <hr class="modal-divider">
+
+        <div class="config-grid">
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Código Downloader</label>
+                    <label class="switch">
+                        <input type="checkbox" id="cfg-androidDownloader-toggle" checked onchange="toggleConfigItemEnabled('androidDownloader')">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" id="cfg-androidDownloader" placeholder="Ej. 12434567..." disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('androidDownloader')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('androidDownloader')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('androidDownloader')">Cancelar</button>
+            </div>
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Información</label>
+                    <label class="switch">
+                        <input type="checkbox" id="cfg-androidInfo-toggle" checked onchange="toggleConfigItemEnabled('androidInfo')">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" id="cfg-androidInfo" placeholder="Ej. Información, nota, precio etc..." disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('androidInfo')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('androidInfo')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('androidInfo')">Cancelar</button>
+            </div>
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Código QR Facebook</label>
+                    <label class="switch">
+                        <input type="checkbox" id="cfg-androidFbqr-toggle" checked onchange="toggleConfigItemEnabled('androidFbqr')">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" id="cfg-androidFbqr" placeholder="URL el perfil de Facebook" disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('androidFbqr')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('androidFbqr')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('androidFbqr')">Cancelar</button>
+            </div>
+
+            <div class="config-item">
+                <div class="config-item-head">
+                    <label class="config-label">Código QR WhatsApp</label>
+                    <label class="switch">
+                        <input type="checkbox" id="cfg-androidWaqr-toggle" checked onchange="toggleConfigItemEnabled('androidWaqr')">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <input type="text" class="form-control" id="cfg-androidWaqr" placeholder="Ej. núm. teléfono" disabled>
+                <button class="btn btn-secondary btn-block cfg-edit-btn" onclick="editConfigItem('androidWaqr')">Editar</button>
+                <button class="btn btn-primary btn-block cfg-save-btn hidden" onclick="saveConfigItem('androidWaqr')">Guardar</button>
+                <button class="btn btn-secondary btn-block cfg-cancel-btn hidden" onclick="cancelConfigItem('androidWaqr')">Cancelar</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer split">
+        <button class="btn btn-secondary" onclick="closeModal('androidAjustesModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="closeModal('androidAjustesModal')">Aceptar</button>
+    </div>
+
+</div>
+</div>
+
+
+<!-- ================= MODAL AJUSTES PÁGINAS ================= -->
+
+<div class="modal" id="pagesAjustesModal">
+<div class="modal-box">
+
+    <div class="modal-header">
+        <h3>Ajustes</h3>
+        <button class="close" onclick="cancelPagesAjustes()">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="modal-row">
+            <span class="modal-section-title" style="margin-bottom:0;">Orden normal de páginas</span>
+            <label class="switch">
+                <input type="checkbox" id="pagesOrdenNormalToggle" checked onchange="togglePagesOrderMode('normal')">
+                <span class="switch-slider"></span>
+            </label>
+        </div>
+
+        <hr class="modal-divider">
+
+        <div class="modal-row">
+            <span class="modal-section-title" style="margin-bottom:0;">Orden personalizado de páginas</span>
+            <label class="switch">
+                <input type="checkbox" id="pagesOrdenPersonalizadoToggle" onchange="togglePagesOrderMode('custom')">
+                <span class="switch-slider"></span>
+            </label>
+        </div>
+
+        <div id="pagesCustomOrderList" class="hidden"></div>
+
+    </div>
+
+    <div class="modal-footer split">
+        <button class="btn btn-secondary" onclick="cancelPagesAjustes()">Cancelar</button>
+        <button class="btn btn-primary" onclick="acceptPagesAjustes()">Aceptar</button>
+    </div>
+
+</div>
+</div>
+
+
+<div class="toast-container" id="toastContainer"></div>
+
+
+<script>
+const defaultItems = [
+    // PC - 5 registros
+    { id: 101, name: "Google Chrome Setup", originalName: "chrome_installer.exe", type: "pc", size: "85.2 MB", date: "27 Ago 2026", status: "active", note: "Navegador web de Google." },
+    { id: 102, name: "Mozilla Firefox", originalName: "firefox_setup.exe", type: "pc", size: "58.4 MB", date: "27 Ago 2026", status: "active", note: "Navegador web libre y de código abierto." },
+    { id: 103, name: "VLC Media Player", originalName: "vlc_3.0.18_win64.exe", type: "pc", size: "42.1 MB", date: "26 Ago 2026", status: "active", note: "Reproductor multimedia multiformato." },
+    { id: 104, name: "Visual Studio Code", originalName: "VSCodeUserSetup-x64.exe", type: "pc", size: "94.7 MB", date: "25 Ago 2026", status: "active", note: "Editor de código fuente ligero y potente." },
+    { id: 105, name: "Spotify Desktop", originalName: "SpotifySetup.exe", type: "pc", size: "86.1 MB", date: "22 Ago 2026", status: "active", note: "Reproductor de música en streaming." },
+
+    // Android - 5 registros
+    { id: 201, name: "WhatsApp Messenger", originalName: "WhatsApp_v2.23.16.76.apk", type: "android", size: "65.4 MB", date: "27 Ago 2026", status: "active", note: "Mensajería instantánea y llamadas HD." },
+    { id: 202, name: "Telegram Official", originalName: "Telegram_v9.7.0.apk", type: "android", size: "68.2 MB", date: "27 Ago 2026", status: "active", note: "Cliente oficial de Telegram con funciones extra." },
+    { id: 203, name: "YouTube Vanced", originalName: "ReVanced_Manager_v1.4.3.apk", type: "android", size: "15.8 MB", date: "26 Ago 2026", status: "active", note: "Parcheador para ver videos de YT sin publicidad." },
+    { id: 204, name: "Netflix Mobile", originalName: "Netflix_v8.76.0.apk", type: "android", size: "92.0 MB", date: "25 Ago 2026", status: "active", note: "Plataforma de películas y series en streaming." },
+    { id: 205, name: "Spotify Premium", originalName: "Spotify_v8.8.48.523.apk", type: "android", size: "75.1 MB", date: "26 Ago 2026", status: "active", note: "Música sin anuncios y reproducción en alta calidad." },
+
+    // Páginas - 5 registros
+    { id: 301, name: "CloudPanel Home", type: "page", date: "27 Ago 2026", status: "active", url: "https://cloudpanel.io" },
+    { id: 302, name: "GitHub Repositories", type: "page", date: "26 Ago 2026", status: "active", url: "https://github.com" },
+    { id: 303, name: "Vercel Dashboard", type: "page", date: "26 Ago 2026", status: "active", url: "https://vercel.com/dashboard" },
+    { id: 304, name: "Firebase Console", type: "page", date: "25 Ago 2026", status: "active", url: "https://console.firebase.google.com" },
+    { id: 305, name: "ChatGPT OpenAI", type: "page", date: "21 Ago 2026", status: "active", url: "https://chat.openai.com" }
+];  
+ 
+/* ==================== Conexión a la nube (Firebase Realtime Database) ==================== */
+// Credenciales de tu proyecto de Firebase.
+const firebaseConfig = {
+    apiKey: "AIzaSyAKQzpfbj6ep-yvyT0Z7GGVQsYmZivyHNw",
+    authDomain: "misitio-2373f.firebaseapp.com",
+    databaseURL: "https://misitio-2373f-default-rtdb.firebaseio.com",
+    projectId: "misitio-2373f",
+    storageBucket: "misitio-2373f.firebasestorage.app",
+    messagingSenderId: "692152740198",
+    appId: "1:692152740198:web:fdce00729ae74eac4ac0a7"
+};
+
+// Datos que antes vivían solo en este navegador (localStorage) y ahora se guardan en la nube.
+const CLOUD_KEYS = ["cloudpanel_items", "jahf_pages_order", "jahf_ajustes_pc", "jahf_ajustes_android"];
+
+let firebaseDB = null;
+let firebaseRefFn = null;
+let firebaseSetFn = null;
+const cloudCache = {};
+let panelIniciado = false;
+
+function sanitizeFirebaseKey(key) {
+    // Firebase no permite . # $ [ ] en los nombres de nodo.
+    return key.replace(/[.#$\[\]\/]/g, "_");
+}
+
+// Reemplazo de localStorage: misma forma de uso (getItem/setItem con strings),
+// pero leyendo y escribiendo en Firebase en vez del navegador local.
+const cloudStorage = {
+    getItem(key) {
+        return Object.prototype.hasOwnProperty.call(cloudCache, key) ? cloudCache[key] : null;
+    },
+    setItem(key, value) {
+        cloudCache[key] = value;
+        if (firebaseDB && firebaseRefFn && firebaseSetFn) {
+            firebaseSetFn(firebaseRefFn(firebaseDB, "cloudpanel/" + sanitizeFirebaseKey(key)), value)
+                .catch(err => console.error("Error guardando en Firebase:", err));
+        }
+    }
+};
+
+function aplicarDatosDeLaNube() {
+    const savedItems = JSON.parse(cloudStorage.getItem("cloudpanel_items"));
+    const nuevosItems = (!savedItems || savedItems.length === 0) ? defaultItems : savedItems;
+    const nuevoOrden = JSON.parse(cloudStorage.getItem("jahf_pages_order")) || { mode: "normal", order: [] };
+
+    const cambiaronItems = JSON.stringify(nuevosItems) !== JSON.stringify(items);
+    const cambioOrden = JSON.stringify(nuevoOrden) !== JSON.stringify(pagesOrderSettings);
+
+    items = nuevosItems;
+    pagesOrderSettings = nuevoOrden;
+
+    if (!panelIniciado) {
+        arrancarPanel();
+    } else if (cambiaronItems || cambioOrden) {
+        // Los datos cambiaron en la nube (por ejemplo desde otro dispositivo): refrescamos la vista.
+        renderTable();
+        updateStats();
+    }
+}
+
+function arrancarPanel() {
+    panelIniciado = true;
+    updateActions();
+    updateStats();
+    renderTable();
+    initAjustesUI("pc");
+    initAjustesUI("android");
+}
+
+async function iniciarConexionNube() {
+    try {
+        const [{ initializeApp }, { getDatabase, ref, set, onValue }] = await Promise.all([
+            import("https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"),
+            import("https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js")
+        ]);
+
+        const app = initializeApp(firebaseConfig);
+        firebaseDB = getDatabase(app);
+        firebaseRefFn = ref;
+        firebaseSetFn = set;
+
+        onValue(ref(firebaseDB, "cloudpanel"), (snapshot) => {
+            const data = snapshot.val() || {};
+            CLOUD_KEYS.forEach(key => {
+                const sanitized = sanitizeFirebaseKey(key);
+                cloudCache[key] = Object.prototype.hasOwnProperty.call(data, sanitized) ? data[sanitized] : null;
+            });
+            aplicarDatosDeLaNube();
+        }, (error) => {
+            console.error("Error leyendo de Firebase, se usan datos por defecto:", error);
+            if (!panelIniciado) arrancarPanel();
+        });
+    } catch (error) {
+        console.error("No se pudo conectar a Firebase, se usan datos por defecto:", error);
+        if (!panelIniciado) arrancarPanel();
+    }
+}
+/* ==================== Fin conexión a la nube ==================== */
+
+let items = defaultItems; // Valor temporal: se reemplaza por los datos reales en cuanto Firebase responde.
+ 
+let currentSection = "dashboard";  
+let editingId = null;  
+let uploadType = "pc";  
+let selectedFile = null;  
+
+let pagesOrderSettings = { mode: "normal", order: [] }; // Valor temporal: se reemplaza por los datos reales en cuanto Firebase responde.
+let pagesOrderSettingsBackup = null;
+let draggedRow = null;
+ 
+const sections = {  
+    dashboard: { title: "Dashboard", sectionTitle: "Contenido reciente", description: "Administra todas tus aplicaciones y páginas.", searchPlaceholder: "Buscar aplicaciones, páginas..." },  
+    pc: { title: "PC", sectionTitle: "PC", description: "Gestiona las aplicaciones para PC.", searchPlaceholder: "Buscar aplicaciones..." },  
+    android: { title: "Android", sectionTitle: "Android", description: "Gestiona las aplicaciones para Android.", searchPlaceholder: "Buscar aplicaciones..." },  
+    pages: { title: "Páginas", sectionTitle: "Páginas", description: "Gestiona las Páginas.", searchPlaceholder: "Buscar páginas..." }  
+};  
+ 
+function saveData() {  
+    cloudStorage.setItem("cloudpanel_items", JSON.stringify(items));  
+}  
+
+function updateSectionClass() {
+    const sectionHeader = document.getElementById("sectionHeader");
+    sectionHeader.classList.remove("dashboard-section");
+    if (currentSection === "dashboard") {
+        sectionHeader.classList.add("dashboard-section");
+    }
+}
+ 
+function changeSection(section) {  
+    currentSection = section;  
+    document.querySelectorAll(".nav-item[data-section]").forEach(x => {
+        x.classList.toggle("active", x.dataset.section === section);
+    });
+    document.getElementById("sectionTitle").textContent = sections[section].sectionTitle;  
+    document.getElementById("sectionDescription").textContent = sections[section].description;  
+    document.getElementById("searchInput").placeholder = sections[section].searchPlaceholder;  
+     
+    const statsContainer = document.getElementById("statsContainer");  
+
+    updateSectionClass();
+
+    closeMobileMenu();
+
+    if (section === "dashboard") {
+        statsContainer.className = "stats";
+        statsContainer.style.marginLeft = "20px";
+        statsContainer.style.marginRight = "auto";
+        statsContainer.innerHTML = `
+            <div class="stat">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </div>
+                <div>
+                    <span class="stat-label">Apps PC</span>
+                    <strong class="stat-number" id="pcCount">${items.filter(x => x.type === "pc").length}</strong>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">
+                    <svg class="android-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg>
+                </div>
+                <div>
+                    <span class="stat-label">Apps Android</span>
+                    <strong class="stat-number" id="androidCount">${items.filter(x => x.type === "android").length}</strong>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+                <div>
+                    <span class="stat-label">Páginas</span>
+                    <strong class="stat-number" id="pageCount">${items.filter(x => x.type === "page").length}</strong>
+                </div>
+            </div>
+        `;
+    } else if (section === "pc") {
+        statsContainer.className = "stats";
+        statsContainer.innerHTML = "";
+    } else if (section === "android") {
+        statsContainer.className = "stats";
+        statsContainer.innerHTML = "";
+    } else if (section === "pages") {
+        statsContainer.className = "stats";
+        statsContainer.innerHTML = "";
+    }
+ 
+    updateActions();  
+    renderTable();  
+}  
+ 
+function updateActions() {  
+    const box = document.getElementById("sectionActions");  
+    const gearIcon = `<svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>`;
+    if (currentSection === "pc") {  
+        box.innerHTML = `<button class="btn btn-primary" onclick="openFileModal('pc')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir Archivo</button>
+            <button class="btn btn-secondary" onclick="openAjustesModal('pc')" title="Ajustes">${gearIcon} Ajustes</button>`;  
+    } else if (currentSection === "android") {  
+        box.innerHTML = `<button class="btn btn-primary" onclick="openFileModal('android')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir APK</button>
+            <button class="btn btn-secondary" onclick="openAjustesModal('android')" title="Ajustes">${gearIcon} Ajustes</button>`;  
+    } else if (currentSection === "pages") {  
+        box.innerHTML = `<button class="btn btn-primary" onclick="openPageModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Agregar URL</button>
+            <button class="btn btn-secondary" onclick="openPagesAjustesModal()" title="Ajustes">${gearIcon} Ajustes</button>`;  
+    } else {  
+        box.innerHTML = `  
+            <button class="btn btn-primary" onclick="openFileModal('pc')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir Archivo</button>  
+            <button class="btn btn-secondary" onclick="openFileModal('android')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Subir APK</button>  
+            <button class="btn btn-secondary" onclick="openPageModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Agregar URL</button>  
+        `;  
+    }  
+}  
+ 
+function getVisibleItems() {  
+    if (currentSection === "pc") return items.filter(x => x.type === "pc");  
+    if (currentSection === "android") return items.filter(x => x.type === "android");  
+    if (currentSection === "pages") {
+        const pages = items.filter(x => x.type === "page");
+        if (pagesOrderSettings.mode === "custom" && pagesOrderSettings.order && pagesOrderSettings.order.length) {
+            const orderIds = pagesOrderSettings.order;
+            return [...pages].sort((a, b) => {
+                const posA = orderIds.indexOf(a.id);
+                const posB = orderIds.indexOf(b.id);
+                return (posA === -1 ? Infinity : posA) - (posB === -1 ? Infinity : posB);
+            });
+        }
+        return pages;
+    }
+    return items;  
+}  
+ 
+function renderTable() {  
+    const body = document.getElementById("tableBody");  
+    const header = document.getElementById("tableHeader");  
+    const search = document.getElementById("searchInput").value.toLowerCase();  
+    const status = document.getElementById("statusFilter").value;  
+ 
+    let data = getVisibleItems().filter(item => {  
+        const found = item.name.toLowerCase().includes(search) ||  
+                      (item.url || "").toLowerCase().includes(search) ||  
+                      (item.note || "").toLowerCase().includes(search);  
+        const statusOk = (status === "all" || item.status === status);  
+        return found && statusOk;  
+    });  
+ 
+    if (currentSection === "pages") {  
+        header.innerHTML = `<th>Nombre</th><th>Plataforma</th><th>URL</th><th>Fecha</th><th>Estado</th><th>Acciones</th>`;  
+    } else if (currentSection === "dashboard") {
+        header.innerHTML = `<th>Nombre</th><th>Plataforma</th><th>Tamaño / URL</th><th>Fecha</th><th>Nota</th><th>Estado</th><th>Acciones</th>`;
+    } else {  
+        header.innerHTML = `<th>Nombre</th><th>Plataforma</th><th>Tamaño</th><th>Fecha</th><th>Nota</th><th>Estado</th><th>Acciones</th>`;  
+    }  
+ 
+    if (!data.length) {  
+        body.innerHTML = `  
+            <tr>  
+                <td colspan="${currentSection === "pages" ? 6 : 7}">  
+                    <div style="text-align:center; padding:50px; color:var(--muted);">  
+                        <svg style="width:32px;height:32px;stroke:var(--muted);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;margin-bottom:10px;" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg><br>  
+                        No se encontraron registros.  
+                    </div>  
+                </td>  
+            </tr>  
+        `;  
+        return;  
+    }  
+ 
+    body.innerHTML = data.map(createRow).join("");  
+}  
+ 
+function createRow(item) {  
+    let icon = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`;  
+    let platform = "Página";  
+    let badge = "badge-page";  
+ 
+    if (item.type === "pc") {  
+        icon = `<svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`;  
+        platform = "PC";  
+        badge = "badge-pc";  
+    } else if (item.type === "android") {  
+        icon = `<svg class="android-icon android-row-icon" viewBox="0 0 24 24"><path d="M8 8l-2-3m10 3l2-3M7 11h10M6 13a6 6 0 0012 0v-2H6v2zm1 4v3m10-3v3"/><circle cx="9" cy="9" r="0.75"/><circle cx="15" cy="9" r="0.75"/></svg>`;  
+        platform = "Android";  
+        badge = "badge-android";  
+    }  
+ 
+    const statusClass = (item.status === "active") ? "badge-active" : "badge-inactive";  
+    const statusText = (item.status === "active") ? "Activo" : "Inactivo";  
+ 
+    if (item.type === "page") {  
+        // En la sección Páginas: 6 columnas (Nombre, Plataforma, URL, Fecha, Estado, Acciones)
+        // En Dashboard: 7 columnas (Nombre, Plataforma, Tamaño/URL, Fecha, Nota, Estado, Acciones)
+        const urlCell = `<a class="url" href="${escapeHTML(item.url)}" target="_blank">${escapeHTML(item.url)}</a>`;
+        const notaCell = `<span style="color:var(--muted)">Sin nota</span>`;
+        
+        if (currentSection === "dashboard") {
+            return `  
+            <tr>  
+                <td>  
+                    <div class="file">  
+                        <div class="file-icon">${icon}</div>  
+                        <div class="file-info"><strong>${escapeHTML(item.name)}</strong></div>  
+                    </div>  
+                </td>  
+                <td><span class="badge ${badge}">${platform}</span></td>  
+                <td>${urlCell}</td>  
+                <td>${item.date}</td>  
+                <td>${notaCell}</td>
+                <td><span class="badge ${statusClass}">${statusText}</span></td>  
+                <td>  
+                    <div class="row-actions">  
+                        <button class="icon-btn" onclick="openPage(${item.id})"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>  
+                        <button class="icon-btn" onclick="editItem(${item.id})"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>  
+                        <button class="icon-btn" onclick="toggleStatus(${item.id})"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></button>  
+                        <button class="icon-btn" onclick="deleteItem(${item.id})"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>  
+                    </div>  
+                </td>  
+            </tr>`;  
+        }
+        
+        return `  
+        <tr>  
+            <td>  
+                <div class="file">  
+                    <div class="file-icon">${icon}</div>  
+                    <div class="file-info"><strong>${escapeHTML(item.name)}</strong></div>  
+                </div>  
+            </td>  
+            <td><span class="badge ${badge}">${platform}</span></td>  
+            <td>${urlCell}</td>  
+            <td>${item.date}</td>  
+            <td><span class="badge ${statusClass}">${statusText}</span></td>  
+            <td>  
+                <div class="row-actions">  
+                    <button class="icon-btn" onclick="openPage(${item.id})"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>  
+                    <button class="icon-btn" onclick="editItem(${item.id})"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>  
+                    <button class="icon-btn" onclick="toggleStatus(${item.id})"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></button>  
+                    <button class="icon-btn" onclick="deleteItem(${item.id})"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>  
+                </div>  
+            </td>  
+        </tr>`;  
+    }  
+ 
+    return `  
+    <tr>  
+        <td>  
+            <div class="file">  
+                <div class="file-icon">${icon}</div>  
+                <div class="file-info">  
+                    <strong>${escapeHTML(item.name)}</strong>  
+                    <small>${escapeHTML(item.originalName || "")}</small>  
+                </div>  
+            </div>  
+        </td>  
+        <td><span class="badge ${badge}">${platform}</span></td>  
+        <td>${item.size || "—"}</td>  
+        <td>${item.date}</td>  
+        <td>  
+            ${item.note ? `<button class="note-button" onclick="showNote(${item.id})"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Ver nota</button>` : `<span style="color:var(--muted)">Sin nota</span>`}  
+        </td>  
+        <td><span class="badge ${statusClass}">${statusText}</span></td>  
+        <td>  
+            <div class="row-actions">  
+                <button class="icon-btn" title="Descargar" onclick="downloadItem(${item.id})"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button>  
+                <button class="icon-btn" title="Editar" onclick="editItem(${item.id})"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>  
+                <button class="icon-btn" title="Estado" onclick="toggleStatus(${item.id})"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></button>  
+                <button class="icon-btn" title="Eliminar" onclick="deleteItem(${item.id})"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>  
+            </div>  
+        </td>  
+    </tr>`;  
+}  
+ 
+function openFileModal(type, id = null) {  
+    uploadType = type;  
+    editingId = id;  
+    selectedFile = null;  
+    document.getElementById("fileInput").value = "";  
+    document.getElementById("selectedFiles").innerHTML = "";  
+ 
+    if (id) {  
+        const item = items.find(x => x.id === id);  
+        document.getElementById("fileModalTitle").textContent = (type === "android") ? "Editar App Android" : "Editar App PC";  
+        document.getElementById("fileName").value = item.name;  
+        document.getElementById("fileNote").value = item.note || "";  
+        document.getElementById("currentFileBox").style.display = "block";  
+        document.getElementById("currentFileBox").innerHTML = `<strong>Archivo actual</strong>${escapeHTML(item.originalName || item.name)}<br>${item.size || ""}`;  
+        document.getElementById("saveFileButton").textContent = "Guardar cambios";  
+    } else {  
+        document.getElementById("fileModalTitle").textContent = (type === "android") ? "Subir App Android" : "Subir App PC";  
+        document.getElementById("fileName").value = "";  
+        document.getElementById("fileNote").value = "";  
+        document.getElementById("currentFileBox").style.display = "none";  
+        document.getElementById("saveFileButton").textContent = "Subir Archivo";  
+    }  
+    document.getElementById("fileModal").classList.add("show");  
+}  
+ 
+const fileInput = document.getElementById("fileInput");  
+const dropzone = document.getElementById("dropzone");  
+ 
+dropzone.onclick = () => fileInput.click();  
+fileInput.onchange = () => { selectedFile = fileInput.files[0] || null; showSelectedFile(); };  
+dropzone.ondragover = e => { e.preventDefault(); dropzone.classList.add("dragover"); };  
+dropzone.ondragleave = () => dropzone.classList.remove("dragover");  
+dropzone.ondrop = e => {  
+    e.preventDefault();  
+    dropzone.classList.remove("dragover");  
+    selectedFile = e.dataTransfer.files[0] || null;  
+    showSelectedFile();  
+};  
+ 
+function showSelectedFile() {  
+    if (!selectedFile) {  
+        document.getElementById("selectedFiles").innerHTML = "";  
+        return;  
+    }  
+    document.getElementById("selectedFiles").innerHTML = `📄 ${escapeHTML(selectedFile.name)} — ${formatBytes(selectedFile.size)}`;  
+}  
+ 
+function saveFile() {  
+    const name = document.getElementById("fileName").value.trim();  
+    const note = document.getElementById("fileNote").value.trim();  
+ 
+    if (!name) { toast("Escribe un nombre para el archivo."); return; }  
+ 
+    if (editingId) {  
+        const item = items.find(x => x.id === editingId);  
+        item.name = name;  
+        item.note = note;  
+        if (selectedFile) {  
+            if (uploadType === "android" && !selectedFile.name.toLowerCase().endsWith(".apk")) {  
+                toast("Para Android debes seleccionar un archivo APK.");  
+                return;  
+            }  
+            item.originalName = selectedFile.name;  
+            item.size = formatBytes(selectedFile.size);  
+        }  
+        saveData();  
+        updateStats();  
+        renderTable();  
+        closeModal("fileModal");  
+        toast("Archivo actualizado correctamente.");  
+        return;  
+    }  
+ 
+    if (!selectedFile) { toast("Selecciona un archivo."); return; }  
+    if (uploadType === "android" && !selectedFile.name.toLowerCase().endsWith(".apk")) {  
+        toast("Para Android debes seleccionar un archivo APK.");  
+        return;  
+    }  
+ 
+    items.unshift({  
+        id: Date.now(),  
+        name: name,  
+        originalName: selectedFile.name,  
+        type: uploadType,  
+        size: formatBytes(selectedFile.size),  
+        date: getToday(),  
+        status: "active",  
+        note: note  
+    });  
+ 
+    saveData();  
+    updateStats();  
+    renderTable();  
+    closeModal("fileModal");  
+    toast("Archivo agregado correctamente.");  
+}  
+ 
+function openPageModal(id = null) {  
+    editingId = id;  
+    if (id) {  
+        const item = items.find(x => x.id === id);  
+        document.getElementById("pageModalTitle").textContent = "Editar página";  
+        document.getElementById("siteName").value = item.name;  
+        document.getElementById("siteUrl").value = item.url;  
+    } else {  
+        document.getElementById("pageModalTitle").textContent = "Agregar página";  
+        document.getElementById("siteName").value = "";  
+        document.getElementById("siteUrl").value = "";  
+    }  
+    document.getElementById("pageModal").classList.add("show");  
+}  
+ 
+function savePage() {  
+    const name = document.getElementById("siteName").value.trim();  
+    const url = document.getElementById("siteUrl").value.trim();  
+ 
+    if (!name) { toast("Escribe el nombre del sitio."); return; }  
+    if (!url) { toast("Escribe la URL."); return; }  
+ 
+    try {  
+        const test = new URL(url);  
+        if (test.protocol !== "http:" && test.protocol !== "https:") throw new Error();  
+    } catch {  
+        toast("Introduce una URL válida.");  
+        return;  
+    }  
+ 
+    if (editingId) {  
+        const item = items.find(x => x.id === editingId);  
+        item.name = name;  
+        item.url = url;  
+        saveData();  
+        updateStats();  
+        renderTable();  
+        closeModal("pageModal");  
+        toast("Página actualizada correctamente.");  
+        return;  
+    }  
+ 
+    items.unshift({  
+        id: Date.now(),  
+        name: name,  
+        type: "page",  
+        date: getToday(),  
+        status: "active",  
+        url: url  
+    });  
+ 
+    saveData();  
+    updateStats();  
+    renderTable();  
+    closeModal("pageModal");  
+    toast("Página agregada correctamente.");  
+}  
+ 
+function editItem(id) {  
+    const item = items.find(x => x.id === id);  
+    if (item.type === "page") openPageModal(id);  
+    else openFileModal(item.type, id);  
+}  
+ 
+function downloadItem(id) {  
+    const item = items.find(x => x.id === id);  
+    if (item) {  
+        toast(`Iniciando descarga de "${item.name}"...`);  
+        const dummyContent = `Simulación del contenido de descarga para: ${item.name} (${item.originalName || item.name})`;  
+        const blob = new Blob([dummyContent], { type: 'application/octet-stream' });  
+        const url = URL.createObjectURL(blob);  
+        const a = document.createElement('a');  
+        a.href = url;  
+        a.download = item.originalName || `${item.name}.${item.type === 'android' ? 'apk' : 'exe'}`;  
+        document.body.appendChild(a);  
+        a.click();  
+        document.body.removeChild(a);  
+        URL.revokeObjectURL(url);  
+    }  
+}  
+ 
+function showNote(id) {  
+    const item = items.find(x => x.id === id);  
+    document.getElementById("noteContent").textContent = item.note || "Este archivo no tiene ninguna nota.";  
+    document.getElementById("noteModal").classList.add("show");  
+}  
+ 
+function toggleStatus(id) {  
+    const item = items.find(x => x.id === id);  
+    item.status = (item.status === "active") ? "inactive" : "active";  
+    saveData();  
+    renderTable();  
+    toast("Estado actualizado.");  
+}  
+ 
+function deleteItem(id) {  
+    const item = items.find(x => x.id === id);   
+    if (!item) return;  
+    if (!confirm(`¿Eliminar "${item.name}"?`)) return;  
+    items = items.filter(x => x.id !== id);  
+    saveData();  
+    updateStats();  
+    renderTable();  
+    toast("Registro eliminado.");  
+}  
+ 
+function openPage(id) {  
+    const item = items.find(x => x.id === id);  
+    if (item && item.url) window.open(item.url, "_blank");  
+}  
+ 
+function updateStats() {  
+    const pcElem = document.getElementById("pcCount");
+    const androidElem = document.getElementById("androidCount");
+    const pageElem = document.getElementById("pageCount");
+
+    if (pcElem) pcElem.textContent = items.filter(x => x.type === "pc").length;  
+    if (androidElem) androidElem.textContent = items.filter(x => x.type === "android").length;  
+    if (pageElem) pageElem.textContent = items.filter(x => x.type === "page").length;  
+}  
+ 
+fileInput.addEventListener('change', () => {  
+    if (fileInput.files.length > 0) {  
+        selectedFile = fileInput.files[0];  
+        showSelectedFile();  
+    }  
+});  
+
+function closeModal(id) {  
+    document.getElementById(id).classList.remove("show");  
+    editingId = null;  
+    selectedFile = null;  
+}  
+
+function openMobileMenu() {
+    document.getElementById("mobileDrawer").classList.add("open");
+    document.getElementById("drawerOverlay").classList.add("show");
+    document.body.style.overflow = "hidden";
+}
+
+function closeMobileMenu() {
+    document.getElementById("mobileDrawer").classList.remove("open");
+    document.getElementById("drawerOverlay").classList.remove("show");
+    document.body.style.overflow = "";
+}
+
+const timedDownloadState = {
+    pc: { interval: null, remaining: 0 },
+    android: { interval: null, remaining: 0 }
+};
+
+const CONFIG_FIELD_MAP = {
+    pcDownloader: { prefix: "pc", field: "downloader" },
+    pcInfo: { prefix: "pc", field: "info" },
+    pcFbqr: { prefix: "pc", field: "fbqr" },
+    pcWaqr: { prefix: "pc", field: "waqr" },
+    androidDownloader: { prefix: "android", field: "downloader" },
+    androidInfo: { prefix: "android", field: "info" },
+    androidFbqr: { prefix: "android", field: "fbqr" },
+    androidWaqr: { prefix: "android", field: "waqr" }
+};
+
+function defaultAjustesSettings() {
+    return {
+        descargasSiempreActivas: true,
+        descargasPorTiempoActiva: false,
+        downloadEndTime: null,
+        downloader: { enabled: true, value: "" },
+        info: { enabled: true, value: "" },
+        fbqr: { enabled: true, value: "" },
+        waqr: { enabled: true, value: "" }
+    };
+}
+
+function getAjustesSettings(prefix) {
+    try {
+        const saved = JSON.parse(cloudStorage.getItem("jahf_ajustes_" + prefix));
+        return Object.assign(defaultAjustesSettings(), saved || {});
+    } catch (e) {
+        return defaultAjustesSettings();
+    }
+}
+
+function saveAjustesSettings(prefix, settings) {
+    cloudStorage.setItem("jahf_ajustes_" + prefix, JSON.stringify(settings));
+}
+
+function initAjustesUI(prefix) {
+    const settings = getAjustesSettings(prefix);
+
+    document.getElementById(prefix + "DescargasToggle").checked = !!settings.descargasSiempreActivas;
+
+    ["downloader", "info", "fbqr", "waqr"].forEach(field => {
+        const key = prefix + field.charAt(0).toUpperCase() + field.slice(1);
+        const toggle = document.getElementById("cfg-" + key + "-toggle");
+        const input = document.getElementById("cfg-" + key);
+        if (toggle && settings[field]) {
+            toggle.checked = !!settings[field].enabled;
+        }
+        if (input && settings[field] && settings[field].value) {
+            input.value = settings[field].value;
+        }
+    });
+
+    // Si había una descarga por tiempo corriendo y sigue vigente, se retoma el conteo visual.
+    if (settings.descargasPorTiempoActiva && settings.downloadEndTime && settings.downloadEndTime > Date.now()) {
+        const remainingSeconds = Math.ceil((settings.downloadEndTime - Date.now()) / 1000);
+        document.getElementById(prefix + "TimerSetup").classList.add("hidden");
+        document.getElementById(prefix + "TimerRunning").classList.remove("hidden");
+        document.getElementById(prefix + "DescargasToggle").checked = false;
+        timedDownloadState[prefix].remaining = remainingSeconds;
+        document.getElementById(prefix + "TimeRemaining").textContent = "Tiempo restante " + formatTime(remainingSeconds);
+        clearInterval(timedDownloadState[prefix].interval);
+        timedDownloadState[prefix].interval = setInterval(() => {
+            timedDownloadState[prefix].remaining--;
+            if (timedDownloadState[prefix].remaining <= 0) {
+                stopTimedDownload(prefix, true);
+                return;
+            }
+            document.getElementById(prefix + "TimeRemaining").textContent = "Tiempo restante " + formatTime(timedDownloadState[prefix].remaining);
+        }, 1000);
+    } else {
+        settings.descargasPorTiempoActiva = false;
+        settings.downloadEndTime = null;
+        saveAjustesSettings(prefix, settings);
+    }
+}
+
+function toggleConfigItemEnabled(key) {
+    const map = CONFIG_FIELD_MAP[key];
+    if (!map) return;
+    const toggle = document.getElementById("cfg-" + key + "-toggle");
+    const input = document.getElementById("cfg-" + key);
+    const settings = getAjustesSettings(map.prefix);
+    settings[map.field] = { enabled: toggle.checked, value: input.value };
+    saveAjustesSettings(map.prefix, settings);
+}
+
+function openAjustesModal(prefix) {
+    document.getElementById(prefix + "AjustesModal").classList.add("show");
+}
+
+function toggleDescargasNormales(prefix) {
+    const toggle = document.getElementById(prefix + "DescargasToggle");
+    // Si el usuario activa las descargas normales mientras hay una descarga
+    // por tiempo corriendo, se detiene la descarga por tiempo (mutuamente excluyentes).
+    if (toggle.checked && timedDownloadState[prefix].interval) {
+        stopTimedDownload(prefix, false);
+        return;
+    }
+    const settings = getAjustesSettings(prefix);
+    settings.descargasSiempreActivas = toggle.checked;
+    settings.descargasPorTiempoActiva = !!timedDownloadState[prefix].interval;
+    saveAjustesSettings(prefix, settings);
+}
+
+function formatTime(totalSeconds) {
+    const h = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+    const m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+    const s = String(totalSeconds % 60).padStart(2, "0");
+    return `${h}:${m}:${s}`;
+}
+
+function getPrefixRemainingSeconds(prefix) {
+    const settings = getAjustesSettings(prefix);
+    if (!settings.descargasPorTiempoActiva || !settings.downloadEndTime) return 0;
+    return Math.max(0, Math.floor((settings.downloadEndTime - Date.now()) / 1000));
+}
+
+function isAnyTimedActive() {
+    return getPrefixRemainingSeconds("pc") > 0 || getPrefixRemainingSeconds("android") > 0;
+}
+
+function buildTimeStatusHTML() {
+    let html = "";
+    [["pc", "PC"], ["android", "Android"]].forEach(([prefix, label]) => {
+        const remaining = getPrefixRemainingSeconds(prefix);
+        if (remaining > 0) {
+            html += `<div class="time-status-row"><span class="time-status-label">${label}</span><span class="time-status-value">${formatTime(remaining)}</span></div>`;
+        }
+    });
+    if (!html) {
+        html = `<div class="time-status-empty">No hay descargas por tiempo activas.</div>`;
+    }
+    return html;
+}
+
+function toggleTimePanel(event) {
+    event.stopPropagation();
+    if (window.innerWidth <= 1100) {
+        document.getElementById("timeModalBody").innerHTML = buildTimeStatusHTML();
+        document.getElementById("timeModal").classList.add("show");
+        return;
+    }
+    const dropdown = document.getElementById("timeDropdown");
+    const isOpen = dropdown.classList.contains("open");
+    if (isOpen) {
+        dropdown.classList.remove("open");
+    } else {
+        dropdown.innerHTML = `<div class="time-status-title">Descargas por tiempo activas</div>` + buildTimeStatusHTML();
+        dropdown.classList.add("open");
+    }
+}
+
+function closeTimeDropdown() {
+    document.getElementById("timeDropdown").classList.remove("open");
+}
+
+function refreshTimeButton() {
+    const btn = document.getElementById("timeButton");
+    const active = isAnyTimedActive();
+
+    btn.classList.toggle("hidden", !active);
+    btn.classList.toggle("pulse", active);
+
+    if (!active) {
+        closeTimeDropdown();
+        const timeModal = document.getElementById("timeModal");
+        if (timeModal.classList.contains("show")) closeModal("timeModal");
+        return;
+    }
+
+    const dropdown = document.getElementById("timeDropdown");
+    if (dropdown.classList.contains("open")) {
+        dropdown.innerHTML = `<div class="time-status-title">Descargas por tiempo activas</div>` + buildTimeStatusHTML();
+    }
+    const timeModal = document.getElementById("timeModal");
+    if (timeModal.classList.contains("show")) {
+        document.getElementById("timeModalBody").innerHTML = buildTimeStatusHTML();
+    }
+}
+
+document.addEventListener("click", (e) => {
+    const wrap = document.getElementById("timeBtnWrap");
+    if (wrap && !wrap.contains(e.target)) {
+        closeTimeDropdown();
+    }
+});
+
+setInterval(refreshTimeButton, 1000);
+refreshTimeButton();
+
+function startTimedDownload(prefix, presetMinutes) {
+    let totalSeconds;
+
+    if (presetMinutes) {
+        totalSeconds = presetMinutes * 60;
+        document.getElementById(prefix + "Hora").value = 0;
+        document.getElementById(prefix + "Minutos").value = presetMinutes;
+    } else {
+        const horaInput = document.getElementById(prefix + "Hora");
+        const minInput = document.getElementById(prefix + "Minutos");
+        const hours = parseInt(horaInput.value) || 0;
+        const minutes = parseInt(minInput.value) || 0;
+        totalSeconds = (hours * 3600) + (minutes * 60);
+
+        if (totalSeconds <= 0) {
+            toast("Ingresa una hora o minutos válidos.");
+            return;
+        }
+    }
+
+    // Las descargas normales y por tiempo no pueden estar activas a la vez.
+    const toggle = document.getElementById(prefix + "DescargasToggle");
+    toggle.checked = false;
+
+    document.getElementById(prefix + "TimerSetup").classList.add("hidden");
+    document.getElementById(prefix + "TimerRunning").classList.remove("hidden");
+
+    timedDownloadState[prefix].remaining = totalSeconds;
+    document.getElementById(prefix + "TimeRemaining").textContent = "Tiempo restante " + formatTime(totalSeconds);
+
+    const settingsOnStart = getAjustesSettings(prefix);
+    settingsOnStart.descargasSiempreActivas = false;
+    settingsOnStart.descargasPorTiempoActiva = true;
+    settingsOnStart.downloadEndTime = Date.now() + (totalSeconds * 1000);
+    saveAjustesSettings(prefix, settingsOnStart);
+
+    clearInterval(timedDownloadState[prefix].interval);
+    timedDownloadState[prefix].interval = setInterval(() => {
+        timedDownloadState[prefix].remaining--;
+        if (timedDownloadState[prefix].remaining <= 0) {
+            stopTimedDownload(prefix, true);
+            return;
+        }
+        document.getElementById(prefix + "TimeRemaining").textContent = "Tiempo restante " + formatTime(timedDownloadState[prefix].remaining);
+    }, 1000);
+}
+
+function stopTimedDownload(prefix, finished) {
+    clearInterval(timedDownloadState[prefix].interval);
+    timedDownloadState[prefix].interval = null;
+    timedDownloadState[prefix].remaining = 0;
+
+    document.getElementById(prefix + "TimerRunning").classList.add("hidden");
+    document.getElementById(prefix + "TimerSetup").classList.remove("hidden");
+    document.getElementById(prefix + "Hora").value = "";
+    document.getElementById(prefix + "Minutos").value = "";
+
+    const toggle = document.getElementById(prefix + "DescargasToggle");
+    toggle.disabled = false;
+    toggle.checked = true;
+
+    const settingsOnStop = getAjustesSettings(prefix);
+    settingsOnStop.descargasSiempreActivas = true;
+    settingsOnStop.descargasPorTiempoActiva = false;
+    settingsOnStop.downloadEndTime = null;
+    saveAjustesSettings(prefix, settingsOnStop);
+
+    if (finished) {
+        toast("Descarga por tiempo finalizada.");
+    }
+}
+
+function openPagesAjustesModal() {
+    pagesOrderSettingsBackup = JSON.parse(JSON.stringify(pagesOrderSettings));
+
+    const isCustom = pagesOrderSettings.mode === "custom";
+    document.getElementById("pagesOrdenNormalToggle").checked = !isCustom;
+    document.getElementById("pagesOrdenPersonalizadoToggle").checked = isCustom;
+
+    const listEl = document.getElementById("pagesCustomOrderList");
+    if (isCustom) {
+        listEl.classList.remove("hidden");
+        renderPagesOrderList();
+    } else {
+        listEl.classList.add("hidden");
+    }
+
+    document.getElementById("pagesAjustesModal").classList.add("show");
+}
+
+function togglePagesOrderMode(which) {
+    const normalToggle = document.getElementById("pagesOrdenNormalToggle");
+    const customToggle = document.getElementById("pagesOrdenPersonalizadoToggle");
+
+    if (which === "normal" && normalToggle.checked) {
+        customToggle.checked = false;
+    } else if (which === "custom" && customToggle.checked) {
+        normalToggle.checked = false;
+    }
+
+    // Si el usuario apaga el único que estaba activo, el otro vuelve a activarse
+    // (siempre debe haber un modo de orden seleccionado).
+    if (!normalToggle.checked && !customToggle.checked) {
+        if (which === "normal") {
+            customToggle.checked = true;
+        } else {
+            normalToggle.checked = true;
+        }
+    }
+
+    const listEl = document.getElementById("pagesCustomOrderList");
+    if (customToggle.checked) {
+        listEl.classList.remove("hidden");
+        renderPagesOrderList();
+    } else {
+        listEl.classList.add("hidden");
+    }
+}
+
+function renderPagesOrderList() {
+    const container = document.getElementById("pagesCustomOrderList");
+    const activePages = items.filter(x => x.type === "page" && x.status === "active");
+    const orderIds = pagesOrderSettings.order || [];
+
+    const sorted = [...activePages].sort((a, b) => {
+        const posA = orderIds.indexOf(a.id);
+        const posB = orderIds.indexOf(b.id);
+        return (posA === -1 ? Infinity : posA) - (posB === -1 ? Infinity : posB);
+    });
+
+    if (!sorted.length) {
+        container.innerHTML = `<div class="pages-order-empty">No hay páginas activas para ordenar.</div>`;
+        return;
+    }
+
+    container.innerHTML = `<div class="pages-order-list" id="pagesOrderDragList">` +
+        sorted.map(p => `
+            <div class="drag-row" draggable="true" data-id="${p.id}">
+                <span class="drag-handle">⠿</span>
+                <span class="drag-row-name">${escapeHTML(p.name)}</span>
+            </div>
+        `).join("") +
+        `</div>`;
+
+    attachDragHandlers();
+}
+
+function attachDragHandlers() {
+    const rows = document.querySelectorAll("#pagesOrderDragList .drag-row");
+    rows.forEach(row => {
+        row.addEventListener("dragstart", () => {
+            draggedRow = row;
+            row.classList.add("dragging");
+        });
+        row.addEventListener("dragend", () => {
+            row.classList.remove("dragging");
+            draggedRow = null;
+            persistOrderFromDOM();
+        });
+        row.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            if (!draggedRow) return;
+            const list = document.getElementById("pagesOrderDragList");
+            const afterElement = getDragAfterElement(list, e.clientY);
+            if (afterElement == null) {
+                list.appendChild(draggedRow);
+            } else {
+                list.insertBefore(draggedRow, afterElement);
+            }
+        });
+    });
+}
+
+function getDragAfterElement(container, y) {
+    const rows = [...container.querySelectorAll(".drag-row:not(.dragging)")];
+    return rows.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset, element: child };
+        }
+        return closest;
+    }, { offset: -Infinity, element: null }).element;
+}
+
+function persistOrderFromDOM() {
+    const list = document.getElementById("pagesOrderDragList");
+    if (!list) return;
+    pagesOrderSettings.order = [...list.querySelectorAll(".drag-row")].map(r => Number(r.dataset.id));
+}
+
+function cancelPagesAjustes() {
+    if (pagesOrderSettingsBackup) {
+        pagesOrderSettings = JSON.parse(JSON.stringify(pagesOrderSettingsBackup));
+    }
+    closeModal("pagesAjustesModal");
+}
+
+function acceptPagesAjustes() {
+    pagesOrderSettings.mode = document.getElementById("pagesOrdenPersonalizadoToggle").checked ? "custom" : "normal";
+    cloudStorage.setItem("jahf_pages_order", JSON.stringify(pagesOrderSettings));
+    closeModal("pagesAjustesModal");
+    if (currentSection === "pages") renderTable();
+    toast("Orden de páginas actualizado.");
+}
+
+const configOriginalValues = {};
+
+function editConfigItem(key) {
+    const input = document.getElementById("cfg-" + key);
+    const item = input.closest(".config-item");
+    configOriginalValues[key] = input.value;
+    input.disabled = false;
+    input.focus();
+    item.querySelector(".cfg-edit-btn").classList.add("hidden");
+    item.querySelector(".cfg-save-btn").classList.remove("hidden");
+    item.querySelector(".cfg-cancel-btn").classList.remove("hidden");
+}
+
+function saveConfigItem(key) {
+    const input = document.getElementById("cfg-" + key);
+    const item = input.closest(".config-item");
+    input.disabled = true;
+    item.querySelector(".cfg-edit-btn").classList.remove("hidden");
+    item.querySelector(".cfg-save-btn").classList.add("hidden");
+    item.querySelector(".cfg-cancel-btn").classList.add("hidden");
+    toggleConfigItemEnabled(key);
+    toast("Cambios guardados.");
+}
+
+function cancelConfigItem(key) {
+    const input = document.getElementById("cfg-" + key);
+    const item = input.closest(".config-item");
+    if (configOriginalValues[key] !== undefined) {
+        input.value = configOriginalValues[key];
+    }
+    input.disabled = true;
+    item.querySelector(".cfg-edit-btn").classList.remove("hidden");
+    item.querySelector(".cfg-save-btn").classList.add("hidden");
+    item.querySelector(".cfg-cancel-btn").classList.add("hidden");
+}
+
+function openPasswordModal() {
+    document.getElementById("passwordModal").classList.add("show");
+}
+
+function savePassword() {
+    const current = document.getElementById("currentPassword").value.trim();
+    const next = document.getElementById("newPassword").value.trim();
+
+    if (!current || !next) {
+        toast("Completa ambos campos de contraseña.");
+        return;
+    }
+
+    document.getElementById("currentPassword").value = "";
+    document.getElementById("newPassword").value = "";
+    closeModal("passwordModal");
+    toast("Contraseña actualizada correctamente.");
+}
+
+const FULLSCREEN_ICON_ENTER = `<svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>`;
+const FULLSCREEN_ICON_EXIT = `<svg viewBox="0 0 24 24"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>`;
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+    } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+    }
+}
+
+function updateFullscreenIcon() {
+    const btn = document.getElementById("fullscreenBtn");
+    if (!btn) return;
+    const isFullscreen = !!document.fullscreenElement;
+    btn.innerHTML = isFullscreen ? FULLSCREEN_ICON_EXIT : FULLSCREEN_ICON_ENTER;
+    btn.title = isFullscreen ? "Salir de pantalla completa" : "Pantalla completa";
+}
+
+document.addEventListener("fullscreenchange", updateFullscreenIcon);
+
+window.addEventListener("resize", () => {
+    if (window.innerWidth > 1100) {
+        closeMobileMenu();
+    }
+});
+ 
+function toggleTheme() {  
+    const dark = document.body.dataset.theme === "dark";  
+    const btn = document.getElementById("themeButton");  
+    if (dark) {  
+        delete document.body.dataset.theme;  
+        localStorage.setItem("cloudpanel-theme", "light");  
+        btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;  
+        btn.title = "Noche";  
+    } else {  
+        document.body.dataset.theme = "dark";  
+        localStorage.setItem("cloudpanel-theme", "dark");  
+        btn.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;  
+        btn.title = "Día";  
+    }  
+}  
+ 
+if (localStorage.getItem("cloudpanel-theme") === "dark") {  
+    document.body.dataset.theme = "dark";  
+    const btn = document.getElementById("themeButton");  
+    btn.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;  
+    btn.title = "Día";  
+}  
+ 
+function toast(message) {  
+    const container = document.getElementById("toastContainer");  
+    const element = document.createElement("div");  
+    element.className = "toast";  
+    element.textContent = message;  
+    container.appendChild(element);  
+    setTimeout(() => element.remove(), 3000);  
+}  
+ 
+function formatBytes(bytes) {  
+    if (bytes === 0) return "0 Bytes";  
+    const units = ["Bytes", "KB", "MB", "GB"];  
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));  
+    return parseFloat((bytes / Math.pow(1024, i)).toFixed(1)) + " " + units[i];  
+}  
+ 
+function getToday() {  
+    const d = new Date();  
+    const months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];  
+    return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();  
+}  
+ 
+function escapeHTML(value) {  
+    return String(value).replace(/[&<>"']/g, c => ({  
+        "&": "&amp;",  
+        "<": "&lt;",  
+        ">": "&gt;",  
+        '"': "&quot;",  
+        "'": "&#039;"  
+    })[c]);  
+}  
+
+updateSectionClass();
+ 
+iniciarConexionNube();
+</script>  
+
+</body>  
+</html>
