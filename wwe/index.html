@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Base de Datos Firebase</title>
+</head>
+<body>
+    <h2>Creando la base de datos en Firebase...</h2>
+    <p>Abre la consola del navegador (**F12** -> pestaña **Console**) para ver el progreso detallado.</p>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+        // Tus credenciales
+        const firebaseConfig = {
+            apiKey: "AIzaSyARJu5KdUOviwVs03iCAz7XPlh723EOgc8",
+            authDomain: "mi-sito-web.firebaseapp.com",
+            projectId: "mi-sito-web",
+            storageBucket: "mi-sito-web.firebasestorage.app",
+            messagingSenderId: "1051796467613",
+            appId: "1:1051796467613:web:be35c3631b44e9fd268974",
+            measurementId: "G-79KL8H2170"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function crearEstructuraBaseDeDatos() {
+            try {
+                console.log("Iniciando la creación de colecciones y campos...");
+
+                // 1. Colección PANEL
+                await setDoc(doc(db, "panel", "config"), {
+                    "p-tema-estado": "light"
+                });
+                console.log("✔ Colección 'panel' creada.");
+
+                // 2. Colección DESCARGAS-PC-AJUSTES
+                await setDoc(doc(db, "descargas-pc-ajustes", "config"), {
+                    "dpa-modo": true,
+                    "dpa-qr-downlader-estado": false,
+                    "dpa-qr-downlader-codigo": "",
+                    "dpa-informacion-estado": false,
+                    "dpa-informacion-nota": "",
+                    "dpa-qr-facebook-estado": false,
+                    "dpa-qr-facebook-url": "",
+                    "dpa-qr-whatsapp-estado": false,
+                    "dpa-qr-whatsapp-numero": ""
+                });
+                console.log("✔ Colección 'descargas-pc-ajustes' creada.");
+
+                // 3. Colección DESCARGAS-ANDROID-AJUSTES
+                await setDoc(doc(db, "descargas-android-ajustes", "config"), {
+                    "daa-modo": true,
+                    "daa-qr-downlader-estado": false,
+                    "daa-qr-downlader-codigo": "",
+                    "daa-informacion-estado": false,
+                    "daa-informacion-nota": "",
+                    "daa-qr-facebook-estado": false,
+                    "daa-qr-facebook-url": "",
+                    "daa-qr-whatsapp-estado": false,
+                    "daa-qr-whatsapp-numero": ""
+                });
+                console.log("✔ Colección 'descargas-android-ajustes' creada.");
+
+                // 4. Colección PAGINAS-WEB-AJUSTES
+                await setDoc(doc(db, "paginas-web-ajustes", "config"), {
+                    "pwa-modo": true,
+                    "pwa-orden-lista": "fecha"
+                });
+                console.log("✔ Colección 'paginas-web-ajustes' creada.");
+
+                // 5. Colecciones principales (creamos un documento inicial de prueba para que Firestore registre las colecciones)
+                await addDoc(collection(db, "descargas-pc"), {
+                    "dp-nombre": "Ejemplo PC",
+                    "dp-url": "https://ejemplo.com",
+                    "dp-nota": "Nota de prueba",
+                    "dp-fecha-hora": new Date().toISOString(),
+                    "dp-estado": "activo",
+                    "dp-editing": false
+                });
+                console.log("✔ Colección 'descargas-pc' inicializada.");
+
+                await addDoc(collection(db, "descargas-android"), {
+                    "da-nombre": "Ejemplo Android",
+                    "da-url": "https://ejemplo.com",
+                    "da-nota": "Nota de prueba",
+                    "da-fecha-hora": new Date().toISOString(),
+                    "da-estado": "activo",
+                    "da-editing": false
+                });
+                console.log("✔ Colección 'descargas-android' inicializada.");
+
+                await addDoc(collection(db, "paginas-web"), {
+                    "pw-nombre": "Ejemplo Página Web",
+                    "pw-url": "https://ejemplo.com",
+                    "pw-fecha-hora": new Date().toISOString(),
+                    "pw-estado": "activo",
+                    "pw-editing": false
+                });
+                console.log("✔ Colección 'paginas-web' inicializada.");
+
+                console.log("🎉 ¡Estructura completa creada y guardada en Firebase exitosamente!");
+                alert("¡Base de datos creada y poblada con éxito! Revisa tu consola de Firebase.");
+
+            } catch (error) {
+                console.error("❌ Error al crear la base de datos: ", error);
+                alert("Ocurrió un error. Revisa la consola del navegador (F12).");
+            }
+        }
+
+        crearEstructuraBaseDeDatos();
+    </script>
+</body>
+</html>
