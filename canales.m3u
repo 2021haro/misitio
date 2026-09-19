@@ -6,23 +6,23 @@ https://queputasteimporta.duckdns.org:38515/hls/canal.m3u8
 #EXTINF:-1 tvg-id="CAM2" tvg-name="CAM 2" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="Canales",CAM 2
 https://queputasteimporta.duckdns.org:38515/hls/canal2.m3u8
 
-#EXTINF:-1 tvg-id="Canal5" tvg-name="Canal 5 (México)" tvg-logo="https://i.imgur.com/uZdVSoW.png" group-title="Canales",Canal 5 (México)
+#EXTINF:-1 tvg-id="Canal5" tvg-name="Canal 5" tvg-logo="https://i.imgur.com/uZdVSoW.png" group-title="Canales",Canal 5
 http://38.65.175.87:8000/play/a0ll/index.m3u8u?hls
 
-#EXTINF:-1 tvg-id="LasEstrellas" tvg-name="Las Estrellas (México)" tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png" group-title="Canales",Las Estrellas (México)
+#EXTINF:-1 tvg-id="LasEstrellas" tvg-name="Las Estrellas" tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png" group-title="Canales",Las Estrellas
 https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
 
-#EXTINF:-1 tvg-id="Azteca7" tvg-name="Azteca 7 (México)" tvg-logo="https://i.imgur.com/UtFXjIn.png" group-title="Canales",Azteca 7 (México)
+#EXTINF:-1 tvg-id="Azteca7" tvg-name="Azteca 7" tvg-logo="https://i.imgur.com/UtFXjIn.png" group-title="Canales",Azteca 7
 http://201.174.175.3:8000/play/a0kl/index.m3u8u?hls
 
-#EXTINF:-1 tvg-id="Multimedios6" tvg-name="Multimedios Canal 6 (CDMX, México)" tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="Canales",Multimedios Canal 6 (CDMX, México)
+#EXTINF:-1 tvg-id="Multimedios6" tvg-name="Multimedios Canal 6" tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="Canales",Multimedios Canal 6
 https://mdstrm.com/live-stream-playlist/5f2d9d6ff17144074bd8a284.m3u8
 
-#EXTINF:-1 tvg-id="EstrellaTV" tvg-name="Estrella TV (CDMX, México)" tvg-logo="https://i.imgur.com/IZxjnyp.png" group-title="Canales",Estrella TV (CDMX, México)
+#EXTINF:-1 tvg-id="EstrellaTV" tvg-name="Estrella TV" tvg-logo="https://i.imgur.com/IZxjnyp.png" group-title="Canales",Estrella TV
 https://estrellatv-oando.amagi.tv/playlist.m3u8
 
-#EXTINF:-1 tvg-id="EstrellaNews" tvg-name="Estrella News (USA / México)" tvg-logo="https://i.imgur.com/HRrkhLq.png" group-title="Canales",Estrella News (USA / México)
+#EXTINF:-1 tvg-id="EstrellaNews" tvg-name="Estrella News" tvg-logo="https://i.imgur.com/HRrkhLq.png" group-title="Canales",Estrella News
 https://estrella-news-oando.amagi.tv/playlist.m3u8
 
-#EXTINF:-1 tvg-id="ClaroSports" tvg-name="Claro Sports (México)" tvg-logo="https://i.postimg.cc/kXRFKVGz/unnamed.png" group-title="Canales",Claro Sports (México)
+#EXTINF:-1 tvg-id="ClaroSports" tvg-name="Claro Sports" tvg-logo="https://i.postimg.cc/kXRFKVGz/unnamed.png" group-title="Canales",Claro Sports
 https://dai.google.com/linear/hls/event/yINISWAPQ0CPhPixe-40wQ/master.m3u8
