@@ -3,40 +3,26 @@
 #EXTINF:-1 tvg-id="" tvg-name="CAM 1" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="Canales",CAM 1
 https://queputasteimporta.duckdns.org:38515/hls/canal.m3u8
 
-#EXTINF:-1 tvg-id="" tvg-name="CAM 1" tvg-logo="https://tvazteca.brightspotcdn.com/dims4/default/8463302/2147483647/strip/true/crop/1597x900+1+0/resize/992x559!/format/webp/quality/100/?url=https%3A%2F%2Ftv-azteca-production-tv-azteca.s3.us-west-2.amazonaws.com%2Fbrightspot%2Ff9%2F97%2Fc1bffe4948f79409788c9b166b83%2Fla-granja-vip-segunda-temporada-fecha-en-que-inicia-la-segunda-temporada.jpeg" group-title="Canales",CAM 1
+#EXTINF:-1 tvg-id="" tvg-name="CAM 2" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="Canales",CAM 1
 https://queputasteimporta.duckdns.org:38515/hls/canal2.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uZdVSoW.png" group-title="México", Canal 5 HD (Nacional)[Opc. 1]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/uZdVSoW.png" group-title="Canales", Canal 5 HD (México)
 http://38.65.175.87:8000/play/a0ll/index.m3u8u?hls
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png" group-title="México", Las Estrellas HD (Nacional)[v1]
+#EXTINF:-1 tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png" group-title="Canales", Las Estrellas HD (México)
 https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/UtFXjIn.png" group-title="México",Azteca 7 HD  (México)[Opc. 1]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/UtFXjIn.png" group-title="Canales",Azteca 7 HD (México)
 http://201.174.175.3:8000/play/a0kl/index.m3u8u?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="México", Multimedios Canal 6 HD (CDMX)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="Canales", Multimedios Canal 6 HD (CDMX, México)
 https://mdstrm.com/live-stream-playlist/5f2d9d6ff17144074bd8a284.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/IZxjnyp.png" group-title="México", Estrella TV HD (Nacional)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/IZxjnyp.png" group-title="Canales", Estrella TV HD (CDMX, México)
 https://estrellatv-oando.amagi.tv/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/5qlVblr.png" group-title="Cine / Películas", VB Media TV (México)
-https://capomo01-enitv.eninetworks.com/locales_vbmedia_publico/index.m3u8
-
-#EXTINF:-1 tvg-logo="https://i.imgur.com/G6SnV75.png" group-title="Cine / Películas", Canal Teleclasica (México)
-https://vtm1.msinteractiva.com/teleclasica/teleclasica/playlist.m3u8
-
-#EXTINF:-1 tvg-logo="https://i.postimg.cc/yx0fLNBc/mytime-movie-network-México-mx.png" group-title="Cine / Películas", MyTime Movie Network (México)(ES)
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0
-https://appletree-mytime-samsungmexico.amagi.tv/playlist.m3u8
-
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Gwz78jZ.png" group-title="Entretenimiento / Cine / Series", GikTVMX [No 24/7](México)
-https://pistream.ddns.net/hls/stream.m3u8
-
-#EXTINF:-1 tvg-logo="https://i.imgur.com/HRrkhLq.png" group-title="Informativos", Estrella News (USA / México)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/HRrkhLq.png" group-title="Canales", Estrella News (USA / México)
 https://estrella-news-oando.amagi.tv/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.postimg.cc/kXRFKVGz/unnamed.png" group-title="Deportes",Claro Sports (México)
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/kXRFKVGz/unnamed.png" group-title="Canales",Claro Sports (México)
 https://dai.google.com/linear/hls/event/yINISWAPQ0CPhPixe-40wQ/master.m3u8
-
