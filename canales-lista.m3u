@@ -135,35 +135,35 @@ http://190.60.59.60:8000/play/a0tn/index.m3u8
 
 # === HBO Xtreme ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/HBO_Xtreme.svg/960px-HBO_Xtreme.svg.png" group-title="Cine / Películas Premium",HBO Xtreme HD (Opc.1)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/HBO_Xtreme.svg/960px-HBO_Xtreme.svg.png" group-title="México",HBO Xtreme HD (Opc.1)
 http://186.33.61.182:8000/play/a011/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/HBO_Xtreme.svg/960px-HBO_Xtreme.svg.png" group-title="Cine / Películas Premium",HBO Xtreme HD (Opc.2)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/HBO_Xtreme.svg/960px-HBO_Xtreme.svg.png" group-title="México",HBO Xtreme HD (Opc.2)
 http://200.35.176.154:8000/play/a00p/index.m3u8
 
-#EXTINF:-1 group-title="Cine / Películas Premium" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/HBO_Xtreme.svg/960px-HBO_Xtreme.svg.png",HBO XTREME HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/HBO_Xtreme.svg/960px-HBO_Xtreme.svg.png",HBO XTREME HD (Opc.3)
 http://157.100.9.51:8000/play/a1td
 
 # === HBO MUNDI ===
 
-#EXTINF:-1 group-title="Cine / Películas Premium" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/HBO_Mundi.svg/960px-HBO_Mundi.svg.png",HBO MUNDI SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/HBO_Mundi.svg/960px-HBO_Mundi.svg.png",HBO MUNDI SD (Opc.1)
 http://181.224.255.210:8001/play/a0rf/index.m3u8?hls
 
-#EXTINF:-1 group-title="Cine / Películas Premium" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/HBO_Mundi.svg/960px-HBO_Mundi.svg.png",HBO MUNDI SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/HBO_Mundi.svg/960px-HBO_Mundi.svg.png",HBO MUNDI SD (Opc.2)
 http://38.224.231.47:8000/play/a01h/index.m3u8
 
-#EXTINF:-1 group-title="Cine / Películas Premium" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/HBO_Mundi.svg/960px-HBO_Mundi.svg.png",HBO MUNDI SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/HBO_Mundi.svg/960px-HBO_Mundi.svg.png",HBO MUNDI SD (Opc.3)
 http://190.60.59.60:8000/play/a0pe/index.m3u8
 
 # === HBO Signature ===
 
-#EXTINF:-1 group-title="Cine / Películas Premium" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/HBO_Signature.svg/960px-HBO_Signature.svg.png",HBO Signature SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/HBO_Signature.svg/960px-HBO_Signature.svg.png",HBO Signature SD (Opc.1)
 http://38.65.175.87:8000/play/a0ji/index.m3u8?hls
 
-#EXTINF:-1 group-title="Cine / Películas Premium" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/HBO_Signature.svg/960px-HBO_Signature.svg.png",HBO Signature SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/HBO_Signature.svg/960px-HBO_Signature.svg.png",HBO Signature SD (Opc.2)
 http://190.60.59.60:8000/play/a0pd/index.m3u8
 
-#EXTINF:-1 group-title="Cine / Películas Premium" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/HBO_Signature.svg/960px-HBO_Signature.svg.png",HBO Signature SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/HBO_Signature.svg/960px-HBO_Signature.svg.png",HBO Signature SD (Opc.3)
 http://181.224.255.210:8001/play/a0re/index.m3u8?hls
 
 # === MAXTV Movies ===
@@ -477,11 +477,12 @@ https://fa20e8a40a8149a2b7e14b7ed1bd4432.mediatailor.us-east-1.amazonaws.com/v1/
 #EXTINF:-1 tvg-logo="https://i.imgur.com/NNd1lYl.png" group-title="México",Golden SD (Opc.1)
 http://181.224.255.210:8001/play/a0qv/index.m3u8?hls
 
-#EXTINF:-1 group-title="Cine / Películas Premium" tvg-logo="México",Golden HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/NNd1lYl.png",Golden HD (Opc.2)
 http://186.33.26.18:8000/play/a0rz/index.m3u8
 
-#EXTINF:-1 group-title="Cine / Películas Premium" tvg-logo="México",Golden SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/NNd1lYl.png",Golden SD (Opc.3)
 http://186.33.1.71:8000/play/a0jv/index.m3u8
+
 
 # === Golden EDGE ===
 
@@ -557,13 +558,13 @@ http://186.148.182.83:8000/play/a096/index.m3u8
 
 # === TNT Series ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png" group-title="Entretenimiento Premium",TNT Series HD (Opc.1)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png" group-title="México",TNT Series HD (Opc.1)
 http://186.33.26.18:8000/play/a0l8/index.m3u8
 
-#EXTINF:-1 group-title="Entretenimiento Premium" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png",TNT Series HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png",TNT Series HD (Opc.2)
 http://181.224.255.210:8001/play/a0ls/index.m3u8?hls
 
-#EXTINF:-1 group-title="Entretenimiento Premium" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png",TNT Series SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png",TNT Series SD (Opc.3)
 http://186.148.182.83:8000/play/a0bo/index.m3u8
 
 # === TNT Sports ===
@@ -988,7 +989,7 @@ http://190.61.101.11:7050/play/a05e/index.m3u8?hls
 
 # === ESPN Premium REVISAR ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png" group-title="ESPN",ESPN Premium [Opc.1]
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png" group-title="México",ESPN Premium (Opc.1)
 http://205.235.6.29:8000/play/a0wl/index.m3u8?hls
 
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN 7 
@@ -1078,5 +1079,5 @@ https://mdstrm.com/live-stream-playlist/62f2c855f7981b5a5a2d8763.m3u8
 
 # === DW Español ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/8MRNFb9.png" group-title="Informativos", DW Español (Alemania/Internacional)(Opc.1)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/8MRNFb9.png" group-title="México", DW Español (Alemania/Internacional)(Opc.1)
 https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8
