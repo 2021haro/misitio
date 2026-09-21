@@ -3,10 +3,10 @@
 
 # === Azteca Uno ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/rRxgBtI.png" group-title="México Premium",Azteca UNO SD  (México)[Opc. 1] 
+#EXTINF:-1 tvg-logo="https://i.imgur.com/rRxgBtI.png" group-title="México",Azteca UNO SD  (México)[Opc. 1] 
 http://209.87.175.160:5001/play/a0cc/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/rRxgBtI.png" group-title="México Premium",Azteca UNO SD  (México)[Opc. 2]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/rRxgBtI.png" group-title="México",Azteca UNO SD  (México)[Opc. 2]
 http://38.65.175.87:8000/play/a0cc/index.m3u8u?hls
 
 # === Azteca 7 ===
