@@ -3,37 +3,37 @@
 
 # === Azteca Uno ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/rRxgBtI.png" group-title="México",Azteca UNO SD  (México)(Opc.1) 
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/rRxgBtI.png",Azteca UNO SD  (México)(Opc.1) 
 http://209.87.175.160:5001/play/a0cc/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/rRxgBtI.png" group-title="México",Azteca UNO SD  (México)(Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/rRxgBtI.png",Azteca UNO SD  (México)(Opc.2)
 http://38.65.175.87:8000/play/a0cc/index.m3u8u?hls
 
 # === Azteca 7 ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/UtFXjIn.png" group-title="México",Azteca 7 HD  (México)(Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/UtFXjIn.png",Azteca 7 HD  (México)(Opc.1)
 http://201.174.175.3:8000/play/a0kl/index.m3u8u?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/UtFXjIn.png" group-title="México",Azteca 7 HD  (México)(Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/UtFXjIn.png",Azteca 7 HD  (México)(Opc.2)
 http://38.65.175.87:8000/play/a0la/index.m3u8u?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/UtFXjIn.png" group-title="México",Azteca 7 SD  (México)(Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/UtFXjIn.png",Azteca 7 SD  (México)(Opc.3)
 http://38.65.175.87:8000/play/a0fm/index.m3u8u?hls
 
 # === Adn40 ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Og17U9N.png" group-title="México", ADN40 (México)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/Og17U9N.png",ADN40 (México)
 https://mdstrm.com/live-stream-playlist/60b578b060947317de7b57ac.m3u8
 
 # === Las Estrellas ===
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png" group-title="México", Las Estrellas HD (México)[v1](Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png",Las Estrellas HD (México)[v1](Opc.1)
 https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png" group-title="México", Las Estrellas HD (México)[v1](Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png",Las Estrellas HD (México)[v1](Opc.2)
 http://205.235.6.29:8000/play/13/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png" group-title="México", Las Estrellas HD (México)[V2](Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png",Las Estrellas HD (México)[V2](Opc.1)
 http://181.224.255.210:8001/play/a0se/index.m3u8?hls
 
 #EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png",Las Estrellas HD (México)[V2](Opc.2)
@@ -45,64 +45,64 @@ http://200.59.191.177:8000/play/a0pc/index.m3u8?hls
 #EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png",Las Estrellas SD (México)[V2](Opc.4)
 http://186.148.196.100:8000/play/a01g
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png" group-title="México", Las Estrellas HD (México)[V3](Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png",Las Estrellas HD (México)[V3](Opc.1)
 http://45.167.2.101:8000/play/a0pk/index.m3u8
 
 # === Canal 5 ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uZdVSoW.png" group-title="México", Canal 5 HD (México)(Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/uZdVSoW.png",Canal 5 HD (México)(Opc.1)
 http://38.65.175.87:8000/play/a0ll/index.m3u8u?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uZdVSoW.png" group-title="México", Canal 5 HD (México)(Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/uZdVSoW.png",Canal 5 HD (México)(Opc.2)
 http://45.5.118.152:8000/play/a03i/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uZdVSoW.png" group-title="México", Canal 5 HD (México)(Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/uZdVSoW.png",Canal 5 HD (México)(Opc.3)
 http://200.35.176.154:8000/play/a067/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uZdVSoW.png" group-title="México", Canal 5 SD (México)(Opc.4)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/uZdVSoW.png",Canal 5 SD (México)(Opc.4)
 http://38.65.175.87:8000/play/a0o1/index.m3u8u?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uZdVSoW.png" group-title="México", Canal 5 SD (México)(Opc.5)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/uZdVSoW.png",Canal 5 SD (México)(Opc.5)
 http://38.65.175.87:8000/play/a0fl/index.m3u8u?hls
 
 # === N+ ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/TwBa344.png" group-title="México", N+ Foro (México)(Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/TwBa344.png",N+ Foro (México)(Opc.1)
 https://nomvauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel07secure.akamaized.net/hls/live/2036971-b/event01/index.m3u8&redirect=true
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/dDFrONz.png" group-title="México", N+ Foro (México)(Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/dDFrONz.png",N+ Foro (México)(Opc.2)
 https://notusaauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel02secure-notusa.akamaized.net/hls/live/2023914-b/event01/index.m3u8&redirect=true
 
 # === Multimedios ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="México", Multimedios Canal 6 HD (México-CDMX)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/4IGzNdq.png",Multimedios Canal 6 HD (México-CDMX)
 https://mdstrm.com/live-stream-playlist/5f2d9d6ff17144074bd8a284.m3u8
 
 # === HBO ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/960px-HBO_logo.svg.png" group-title="México",HBO HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/960px-HBO_logo.svg.png",HBO HD (Opc.1)
 http://186.33.61.182:8000/play/a00x/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/960px-HBO_logo.svg.png" group-title="México",HBO HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/960px-HBO_logo.svg.png",HBO HD (Opc.2)
 http://181.79.87.131:8000/play/a0ei/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/960px-HBO_logo.svg.png" group-title="México",HBO HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/960px-HBO_logo.svg.png",HBO HD (Opc.3)
 http://186.148.196.100:8000/play/a002
 
 # === HBO Plus ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Logohboplus2019.svg/960px-Logohboplus2019.svg.png" group-title="México",HBO Plus SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Logohboplus2019.svg/960px-Logohboplus2019.svg.png",HBO Plus SD (Opc.1)
 http://200.59.191.177:8000/play/a00m/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Logohboplus2019.svg/960px-Logohboplus2019.svg.png" group-title="México",HBO Plus HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Logohboplus2019.svg/960px-Logohboplus2019.svg.png",HBO Plus HD (Opc.2)
 http://201.174.175.3:8000/play/a0y2/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Logohboplus2019.svg/960px-Logohboplus2019.svg.png" group-title="México",HBO Plus SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Logohboplus2019.svg/960px-Logohboplus2019.svg.png",HBO Plus SD (Opc.3)
 http://186.33.1.71:8000/play/a0l4/index.m3u8
 
 # === HBO POP ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/HBO_Pop.svg/960px-HBO_Pop.svg.png" group-title="México",HBO POP HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/HBO_Pop.svg/960px-HBO_Pop.svg.png",HBO POP HD (Opc.1)
 http://190.108.83.69:8000/play/a03k/index.m3u8
 
 #EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/HBO_Pop.svg/960px-HBO_Pop.svg.png",HBO POP HD (Opc.2)
@@ -113,32 +113,32 @@ http://179.60.191.102:8000/play/a0i8
 
 # === HBO2 ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/HBO2_logo.svg/960px-HBO2_logo.svg.png" group-title="México",HBO2 HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/HBO2_logo.svg/960px-HBO2_logo.svg.png",HBO2 HD (Opc.1)
 http://38.52.208.106:8000/play/a00l/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/HBO2_logo.svg/960px-HBO2_logo.svg.png" group-title="México",HBO2 HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/HBO2_logo.svg/960px-HBO2_logo.svg.png",HBO2 HD (Opc.2)
 http://181.78.197.59:8000/play/a07e/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/HBO2_logo.svg/960px-HBO2_logo.svg.png" group-title="México",HBO2 SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/HBO2_logo.svg/960px-HBO2_logo.svg.png",HBO2 SD (Opc.3)
 http://38.65.175.87:8000/play/a0ct/index.m3u8?hls
 
 # === HBO Family ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/HBO_Family.svg/960px-HBO_Family.svg.png" group-title="México",HBO Family HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/HBO_Family.svg/960px-HBO_Family.svg.png",HBO Family HD (Opc.1)
 http://201.174.175.3:8000/play/a0y3/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/HBO_Family.svg/960px-HBO_Family.svg.png" group-title="México",HBO Family HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/HBO_Family.svg/960px-HBO_Family.svg.png",HBO Family HD (Opc.2)
 http://157.100.9.51:8000/play/a1tc
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/HBO_Family.svg/960px-HBO_Family.svg.png" group-title="México",HBO Family HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/HBO_Family.svg/960px-HBO_Family.svg.png",HBO Family HD (Opc.3)
 http://190.60.59.60:8000/play/a0tn/index.m3u8
 
 # === HBO Xtreme ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/HBO_Xtreme.svg/960px-HBO_Xtreme.svg.png" group-title="México",HBO Xtreme HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/HBO_Xtreme.svg/960px-HBO_Xtreme.svg.png",HBO Xtreme HD (Opc.1)
 http://186.33.61.182:8000/play/a011/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/HBO_Xtreme.svg/960px-HBO_Xtreme.svg.png" group-title="México",HBO Xtreme HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/HBO_Xtreme.svg/960px-HBO_Xtreme.svg.png",HBO Xtreme HD (Opc.2)
 http://200.35.176.154:8000/play/a00p/index.m3u8
 
 #EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/HBO_Xtreme.svg/960px-HBO_Xtreme.svg.png",HBO XTREME HD (Opc.3)
@@ -168,10 +168,10 @@ http://181.224.255.210:8001/play/a0re/index.m3u8?hls
 
 # === MAXTV Movies ===
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/jPRPzJdX/maxtvmovies.jpg" group-title="México", MAXTV Movies [No 24/7]
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/jPRPzJdX/maxtvmovies.jpg",MAXTV Movies [No 24/7]
 https://tvstreaming.albpo.com/memfs/8d987761-7923-4532-a95d-20723ae95374.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/jPRPzJdX/maxtvmovies.jpg" group-title="México", MAXTV Retro [No 24/7]
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/jPRPzJdX/maxtvmovies.jpg",MAXTV Retro [No 24/7]
 https://tvstreaming.albpo.com/memfs/b55226da-30ec-434a-9090-166df8a37d5b.m3u8
 
 # === Cinemax ===
@@ -187,55 +187,55 @@ http://181.78.197.59:8000/play/a08f/index.m3u8
 
 # === FOX Sports ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png" group-title="México",FOX Sport Premiumm (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png",FOX Sport Premiumm (Opc.1)
 http://190.61.101.11:7050/play/a08w/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png" group-title="México",FOX Sport Premiumm (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png",FOX Sport Premiumm (Opc.2)
 http://190.61.101.11:7050/play/a08u/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png" group-title="México",FOX Sports (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png",FOX Sports (Opc.1)
 http://190.61.101.11:7050/play/a08t/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png" group-title="México",FOX Sports (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png",FOX Sports (Opc.2)
 http://45.167.2.138:8000/play/a0ql/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/oG7HzEf.png" group-title="México",FOX Sports 2 (USA)(Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/oG7HzEf.png",FOX Sports 2 (USA)(Opc.1)
 http://190.61.101.11:7050/play/a08v/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/oG7HzEf.png" group-title="México",FOX Sports 2 (USA)(Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/oG7HzEf.png",FOX Sports 2 (USA)(Opc.2)
 http://186.33.26.18:8000/play/a0rt/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Fox_sports_3_logo.svg/960px-Fox_sports_3_logo.svg.png" group-title="México",FOX Sports 3 (USA)(Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Fox_sports_3_logo.svg/960px-Fox_sports_3_logo.svg.png",FOX Sports 3 (USA)(Opc.1)
 http://45.167.2.138:8000/play/a0qn/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Fox_sports_3_logo.svg/960px-Fox_sports_3_logo.svg.png" group-title="México",FOX Sports 3 (USA)(Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Fox_sports_3_logo.svg/960px-Fox_sports_3_logo.svg.png",FOX Sports 3 (USA)(Opc.2)
 http://45.167.2.101:8000/play/a0rw/index.m3u8
 
 # === A&E ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/A%26E_Network_logo.svg/960px-A%26E_Network_logo.svg.png" group-title="México",A&E HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/A%26E_Network_logo.svg/960px-A%26E_Network_logo.svg.png",A&E HD (Opc.1)
 http://45.228.234.62:8000/play/a032/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/A%26E_Network_logo.svg/960px-A%26E_Network_logo.svg.png" group-title="México",A&E HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/A%26E_Network_logo.svg/960px-A%26E_Network_logo.svg.png",A&E HD (Opc.2)
 http://186.33.26.18:8000/play/a0nz/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/A%26E_Network_logo.svg/960px-A%26E_Network_logo.svg.png" group-title="México",A&E SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/A%26E_Network_logo.svg/960px-A%26E_Network_logo.svg.png",A&E SD (Opc.3)
 http://45.186.106.207:8000/play/a01n/index.m3u8
 
 # === E! ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/E%21_Logo_2012.svg/500px-E%21_Logo_2012.svg.png" group-title="México",E! Entertainment HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/E%21_Logo_2012.svg/500px-E%21_Logo_2012.svg.png",E! Entertainment HD (Opc.1)
 http://181.119.177.253:8000/play/a0dd/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/E%21_Logo_2012.svg/500px-E%21_Logo_2012.svg.png" group-title="México",E! Entertainment SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/E%21_Logo_2012.svg/500px-E%21_Logo_2012.svg.png",E! Entertainment SD (Opc.2)
 http://45.228.234.62:8000/play/a051/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/E%21_Logo_2012.svg/500px-E%21_Logo_2012.svg.png" group-title="México",E! Entertainment HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/E%21_Logo_2012.svg/500px-E%21_Logo_2012.svg.png",E! Entertainment HD (Opc.3)
 http://38.52.208.106:8000/play/a01v/index.m3u8
 
 # === AXN ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png" group-title="México",AXN HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",AXN HD (Opc.1)
 http://181.224.255.210:8001/play/a0m8/index.m3u8?hls
 
 #EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",AXN SD (Opc.2)
@@ -257,7 +257,7 @@ http://45.5.117.188:8000/play/a06d/index.m3u8
 
 # === Sony Cine ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/bZWoDTg.png" group-title="México", Sony Cine HD
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/bZWoDTg.png",Sony Cine HD
 https://a-cdn.klowdtv.com/live1/cine_720p/playlist.m3u8
 
 # === Sony ===
@@ -284,42 +284,42 @@ http://186.148.175.138:8000/play/a05b
 
 # === Sony One Cinema ===
 
-#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/0/00/Sony_One_2024.png/revision/latest?cb=20240808205124" group-title="México",Sony One Cinema
+#EXTINF:-1 group-title="México" tvg-logo="https://static.wikia.nocookie.net/logopedia/images/0/00/Sony_One_2024.png/revision/latest?cb=20240808205124",Sony One Cinema
 https://55a8e146e2a14a0288735149357b44c0.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/LG-mx_SonyOneCinema/playlist.m3u8
 
 # === Sony One Novelas ===
 
-#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/dreamlogos/images/e/ef/Sony_Telenovelas.svg/revision/latest?cb=20220403004504" group-title="México",Sony One Novelas
+#EXTINF:-1 group-title="México" tvg-logo="https://static.wikia.nocookie.net/dreamlogos/images/e/ef/Sony_Telenovelas.svg/revision/latest?cb=20220403004504",Sony One Novelas
 https://8d4a17fe54c04f04bb010a8d291c7d41.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/LG-mx_SonyOneNovelas/playlist.m3u8
 
 # === Sony One Exitos ===
 
-#EXTINF:-1 tvg-logo="https://i.postimg.cc/jdLSCtD9/sony-one-exitos-es.png" group-title="México",Sony One Exitos
+#EXTINF:-1 group-title="México" tvg-logo="https://i.postimg.cc/jdLSCtD9/sony-one-exitos-es.png",Sony One Exitos
 https://240d7025e5434cb687148fff33611a9c.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-832-ES-SONYONEXITOS-LG_ES/playlist.m3u8
 
 # === Sony One Hits Acción ===
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/mr13PRP4/sony-one-hits-accion-es.png" group-title="México",Sony One Hits Acción
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/mr13PRP4/sony-one-hits-accion-es.png",Sony One Hits Acción
 https://375132e20edd4ed0bbddadeefa5b652d.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-829-ES-SONYONEHITSACCIN-LG_ES/playlist.m3u8
 
 # === Sony One Hits Comedia ===
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/JWNj6mNP/sony-one-hits-comedia-es.png" group-title="México",Sony One Hits Comedia
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/JWNj6mNP/sony-one-hits-comedia-es.png",Sony One Hits Comedia
 https://7bb2f486b8cd470296181dff19a115d0.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-830-ES-SONYONEHITSCOMEDIA-LG_ES/playlist.m3u8
 
 # === Sony One Series Comedia ===
 
-#EXTINF:-1 tvg-logo="https://i.postimg.cc/yxF43pCM/sony-one-series-comedia-es.png" group-title="México",Sony One Series Comedia
+#EXTINF:-1 group-title="México" tvg-logo="https://i.postimg.cc/yxF43pCM/sony-one-series-comedia-es.png",Sony One Series Comedia
 https://bb5d0cf0f2fa4dbea91b1eebfdd144b9.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-831-ES-SONYONESERIESCOMEDIA-LG_ES/playlist.m3u8
 
 # === Sony One The Blacklist ===
 
-#EXTINF:-1 tvg-logo="https://i.postimg.cc/ZKKVdDm0/sone-one-blacklist-es.png" group-title="México",Sony One The Blacklist
+#EXTINF:-1 group-title="México" tvg-logo="https://i.postimg.cc/ZKKVdDm0/sone-one-blacklist-es.png",Sony One The Blacklist
 https://db57ce9cb585443b89cc08f6e6d00a61.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-834-ES-SONYONETHEBLACKLIST-LG_ES/playlist.m3u8
 
 # === Telemundo Internacional ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/DVASpQj.png" group-title="México", Telemundo (Internacional) HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/DVASpQj.png",Telemundo (Internacional) HD (Opc.1)
 http://186.33.26.18:8000/play/a0qi/index.m3u8
 
 #EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/DVASpQj.png",Telemundo (Internacional) SD (Opc.2)
@@ -349,17 +349,17 @@ http://45.228.234.62:8000/play/a01s/index.m3u8
 
 # === Telemundo Acción ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/DVASpQj.png" group-title="México",Telemundo Acción
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/DVASpQj.png",Telemundo Acción
 https://xumo-drct-ch835-ekq0p.fast.nbcuni.com/live/master.m3u8
 
 # === Telemundo Romance ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/DVASpQj.png" group-title="México",Telemundo Romance
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/DVASpQj.png",Telemundo Romance
 https://xumo-drct-ch836-57aiq.fast.nbcuni.com/live/master.m3u8
 
 # === Studio Universal ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/StudioUniversal2016.png/960px-StudioUniversal2016.png" group-title="México",Studio Universal SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/StudioUniversal2016.png/960px-StudioUniversal2016.png",Studio Universal SD (Opc.1)
 http://200.59.191.177:8000/play/a0jo/index.m3u8?hls
 
 #EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/StudioUniversal2016.png/960px-StudioUniversal2016.png",Studio Universal HD (Opc.2)
@@ -370,7 +370,7 @@ http://186.148.182.83:8000/play/a0br/index.m3u8
 
 # === Universal TV ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/jnjvR5f.png" group-title="México",Universal TV HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/jnjvR5f.png",Universal TV HD (Opc.1)
 http://186.148.163.17:8000/play/a08j/index.m3u8
 
 #EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/jnjvR5f.png",Universal TV SD (Opc.2)
@@ -381,35 +381,35 @@ http://186.148.163.17:8000/play/a03b/index.m3u8
 
 # === Universal Premiere ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/KdFk80C.png" group-title="México",Universal Premiere HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/KdFk80C.png",Universal Premiere HD (Opc.1)
 http://200.35.176.154:8000/play/a0rg/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/KdFk80C.png" group-title="México",Universal Premiere SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/KdFk80C.png",Universal Premiere SD (Opc.2)
 http://186.148.163.17:8000/play/a048/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/KdFk80C.png" group-title="México",Universal Premiere SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/KdFk80C.png",Universal Premiere SD (Opc.3)
 http://181.79.87.130:8000/play/a0db/index.m3u8
 
 # === Universal Cinema ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XxfET68.png" group-title="México",Universal Cinema HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/XxfET68.png",Universal Cinema HD (Opc.1)
 http://170.244.209.30:8000/play/a04c/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XxfET68.png" group-title="México",Universal Cinema HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/XxfET68.png",Universal Cinema HD (Opc.2)
 http://45.228.234.62:8000/play/a07c/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XxfET68.png" group-title="México",Universal Cinema HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/XxfET68.png",Universal Cinema HD (Opc.3)
 http://186.33.61.182:8000/play/a05c/index.m3u8
 
 # === Universal Crime ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/OwSlGMu.png" group-title="México",Universal Crime HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/OwSlGMu.png",Universal Crime HD (Opc.1)
 http://45.228.234.62:8000/play/a05v/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/OwSlGMu.png" group-title="México",Universal Crime HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/OwSlGMu.png",Universal Crime HD (Opc.2)
 http://200.35.176.154:8000/play/a0rj/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/OwSlGMu.png" group-title="México",Universal Crime HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/OwSlGMu.png",Universal Crime HD (Opc.3)
 http://45.167.1.138:8000/play/a066
 
 # === Comedy Central ===
@@ -425,7 +425,7 @@ http://186.148.196.100:8000/play/a02x
 
 # === TNT Series ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png" group-title="México",TNT Series HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png",TNT Series HD (Opc.1)
 http://186.33.26.18:8000/play/a0l8/index.m3u8
 
 #EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png",TNT Series HD (Opc.2)
@@ -436,45 +436,45 @@ http://186.148.182.83:8000/play/a0bo/index.m3u8
 
 # === Unicable ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/MnH8XKh.png" group-title="México",Unicable HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/MnH8XKh.png",Unicable HD (Opc.1)
 http://190.61.101.11:7050/play/a04j/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/MnH8XKh.png" group-title="México",Unicable HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/MnH8XKh.png",Unicable HD (Opc.2)
 http://186.33.61.182:8000/play/a05o/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/MnH8XKh.png" group-title="México",Unicable HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/MnH8XKh.png",Unicable HD (Opc.3)
 http://186.33.1.71:8000/play/a04x/index.m3u8
 
 # === tlnovelas ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/8AKW7Uu.png" group-title="México",tlnovelas HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/8AKW7Uu.png",tlnovelas HD (Opc.1)
 http://190.60.48.150:8000/play/tlnovelas/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/8AKW7Uu.png" group-title="México",tlnovelas SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/8AKW7Uu.png",tlnovelas SD (Opc.2)
 http://205.235.6.29:8000/play/a0wi/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/8AKW7Uu.png" group-title="México",tlnovelas SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/8AKW7Uu.png",tlnovelas SD (Opc.3)
 http://181.224.255.210:8001/play/a0qm/index.m3u8?hls
 
 # === Distrito Comedia ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/DistritoComediaLOGO2018.png/960px-DistritoComediaLOGO2018.png" group-title="México",Distrito Comedia SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/DistritoComediaLOGO2018.png/960px-DistritoComediaLOGO2018.png",Distrito Comedia SD (Opc.1)
 http://205.235.6.29:8000/play/a0z5/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/DistritoComediaLOGO2018.png/960px-DistritoComediaLOGO2018.png" group-title="México",Distrito Comedia HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/DistritoComediaLOGO2018.png/960px-DistritoComediaLOGO2018.png",Distrito Comedia HD (Opc.2)
 http://186.33.26.18:8000/play/a0rv/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/DistritoComediaLOGO2018.png/960px-DistritoComediaLOGO2018.png" group-title="México",Distrito Comedia HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/DistritoComediaLOGO2018.png/960px-DistritoComediaLOGO2018.png",Distrito Comedia HD (Opc.3)
 http://190.60.48.150:8000/play/distrito-comedia/index.m3u8
 
 # === TravelXP ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/zsGt5iH.png" group-title="México", TravelXP (ES)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/zsGt5iH.png",TravelXP (ES)
 https://fa20e8a40a8149a2b7e14b7ed1bd4432.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/LG-es_TravelXP-1/playlist.m3u8
 
 # === Golden ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/NNd1lYl.png" group-title="México",Golden SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/NNd1lYl.png",Golden SD (Opc.1)
 http://181.224.255.210:8001/play/a0qv/index.m3u8?hls
 
 #EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/NNd1lYl.png",Golden HD (Opc.2)
@@ -483,49 +483,48 @@ http://186.33.26.18:8000/play/a0rz/index.m3u8
 #EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/NNd1lYl.png",Golden SD (Opc.3)
 http://186.33.1.71:8000/play/a0jv/index.m3u8
 
-
 # === Golden EDGE ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/SlSbcp3.png" group-title="México",Golden EDGE HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/SlSbcp3.png",Golden EDGE HD (Opc.1)
 http://45.167.2.101:8000/play/a0sc/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/SlSbcp3.png" group-title="México",Golden EDGE HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/SlSbcp3.png",Golden EDGE HD (Opc.2)
 http://186.33.26.18:8000/play/a0sc/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/SlSbcp3.png" group-title="México",Golden EDGE HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/SlSbcp3.png",Golden EDGE HD (Opc.3)
 http://181.78.8.199:8000/play/a0ab/index.m3u8
 
 # === Golden Premiere ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JMa7jws.png" group-title="México",Golden Premiere (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/JMa7jws.png",Golden Premiere (Opc.1)
 http://170.244.209.30:8000/play/a00m/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JMa7jws.png" group-title="México",Golden Premiere (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/JMa7jws.png",Golden Premiere (Opc.2)
 http://170.244.209.30:8000/play/a00m/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JMa7jws.png" group-title="México",Golden Premiere 2 (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/JMa7jws.png",Golden Premiere 2 (Opc.1)
 http://170.244.209.30:8000/play/a00n/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JMa7jws.png" group-title="México",Golden Premiere 2 (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/JMa7jws.png",Golden Premiere 2 (Opc.2)
 http://170.244.209.30:8000/play/a0jn/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JMa7jws.png" group-title="México",Golden Premiere 2 (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/JMa7jws.png",Golden Premiere 2 (Opc.3)
 http://45.186.106.207:8000/play/a06w/index.m3u8
 
 # === Multipremier ===
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/jZsrJSzH/MP.png" group-title="México",Multipremier HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/jZsrJSzH/MP.png",Multipremier HD (Opc.1)
 http://186.148.182.83:8000/play/a01h/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/jZsrJSzH/MP.png" group-title="México",Multipremier SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/jZsrJSzH/MP.png",Multipremier SD (Opc.2)
 http://38.65.175.87:8000/play/a0cp/index.m3u8u?hls
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/jZsrJSzH/MP.png" group-title="México",Multipremier SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/jZsrJSzH/MP.png",Multipremier SD (Opc.3)
 http://186.33.61.182:8000/play/a04q/index.m3u8
 
 # === Space ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/SpaceLogo.svg/960px-SpaceLogo.svg.png" group-title="México",Space HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/SpaceLogo.svg/960px-SpaceLogo.svg.png",Space HD (Opc.1)
 http://45.228.234.62:8000/play/a06x/index.m3u8
 
 #EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/SpaceLogo.svg/960px-SpaceLogo.svg.png",Space HD (Opc.2)
@@ -536,7 +535,7 @@ http://205.235.6.29:8000/play/a0yu/index.m3u8?hls
 
 # === TNT ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/960px-TNT_Logo_2016.svg.png" group-title="México",TNT HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/960px-TNT_Logo_2016.svg.png",TNT HD (Opc.1)
 http://186.33.26.18:8000/play/a0rn/index.m3u8
 
 #EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/960px-TNT_Logo_2016.svg.png",TNT HD (Opc.2)
@@ -547,18 +546,18 @@ http://45.167.2.101:8000/play/a0rn/index.m3u8
 
 # === TNT Novelas ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/960px-TNT_Logo_2016.svg.png" group-title="México",TNT Novelas HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/960px-TNT_Logo_2016.svg.png",TNT Novelas HD (Opc.1)
 http://181.224.255.210:8001/play/a0lv/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/960px-TNT_Logo_2016.svg.png" group-title="México",TNT Novelas HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/960px-TNT_Logo_2016.svg.png",TNT Novelas HD (Opc.2)
 http://186.148.175.138:8000/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/960px-TNT_Logo_2016.svg.png" group-title="México",TNT Novelas SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/960px-TNT_Logo_2016.svg.png",TNT Novelas SD (Opc.3)
 http://186.148.182.83:8000/play/a096/index.m3u8
 
 # === TNT Series ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png" group-title="México",TNT Series HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png",TNT Series HD (Opc.1)
 http://186.33.26.18:8000/play/a0l8/index.m3u8
 
 #EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/75/TNT_Series_Logo_2016.png",TNT Series HD (Opc.2)
@@ -569,57 +568,57 @@ http://186.148.182.83:8000/play/a0bo/index.m3u8
 
 # === TNT Sports ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/TNT_Sports_2021_logo.svg/960px-TNT_Sports_2021_logo.svg.png" group-title="México",TNT Sports (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/TNT_Sports_2021_logo.svg/960px-TNT_Sports_2021_logo.svg.png",TNT Sports (Opc.1)
 http://186.148.163.17:8000/play/a0ai/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/TNT_Sports_2021_logo.svg/960px-TNT_Sports_2021_logo.svg.png" group-title="México",TNT Sports (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/TNT_Sports_2021_logo.svg/960px-TNT_Sports_2021_logo.svg.png",TNT Sports (Opc.2)
 http://205.235.6.29:8000/play/a0xa/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/TNT_Sports_2021_logo.svg/960px-TNT_Sports_2021_logo.svg.png" group-title="México",TNT Sports Premium (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/TNT_Sports_2021_logo.svg/960px-TNT_Sports_2021_logo.svg.png",TNT Sports Premium (Opc.1)
 http://205.235.6.29:8000/play/a104/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/TNT_Sports_2021_logo.svg/960px-TNT_Sports_2021_logo.svg.png" group-title="México",TNT Sports Premium(Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/TNT_Sports_2021_logo.svg/960px-TNT_Sports_2021_logo.svg.png",TNT Sports Premium(Opc.2)
 http://186.148.163.17:8000/play/a0az/index.m3u8
 
 # === AMC Series ===
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/Wv7jSHmv/AMC-SERIES-1.png" group-title="México",AMC Series SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/Wv7jSHmv/AMC-SERIES-1.png",AMC Series SD (Opc.1)
 http://181.224.255.210:8001/play/a0qn/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/Wv7jSHmv/AMC-SERIES-1.png" group-title="México",AMC Series SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/Wv7jSHmv/AMC-SERIES-1.png",AMC Series SD (Opc.2)
 http://186.148.196.100:8000/play/a02u
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/Wv7jSHmv/AMC-SERIES-1.png" group-title="México",AMC Series SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/Wv7jSHmv/AMC-SERIES-1.png",AMC Series SD (Opc.3)
 http://45.186.254.75:8000/play/a08l/index.m3u8
 
 # === AMC HD ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png" group-title="México",AMC HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png",AMC HD (Opc.1)
 http://181.224.255.210:8001/play/a0f7/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png" group-title="México",AMC HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png",AMC HD (Opc.2)
 http://152.231.29.139:8000/play/a0hb/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png" group-title="México",AMC HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png",AMC HD (Opc.3)
 http://186.148.182.83:8000/play/a0bn/index.m3u8
 
 # === Film & Arts ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ukdmEKD.png" group-title="México",Film & Arts HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/ukdmEKD.png",Film & Arts HD (Opc.1)
 http://181.119.177.253:8000/play/a0de/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ukdmEKD.png" group-title="México",Film & Arts SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/ukdmEKD.png",Film & Arts SD (Opc.2)
 http://181.119.177.253:8000/play/a00q/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ukdmEKD.png" group-title="México",Film & Arts HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/ukdmEKD.png",Film & Arts HD (Opc.3)
 http://45.167.2.101:8000/play/a0q9/index.m3u8
 
 # === TCM ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/QpDkrmT.png" group-title="México",TCM HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/QpDkrmT.png",TCM HD (Opc.1)
 http://45.167.2.101:8000/play/a0nu/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/QpDkrmT.png" group-title="México",TCM SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/QpDkrmT.png",TCM SD (Opc.2)
 http://181.224.255.210:8001/play/a0qw/index.m3u8?hls
 
 #EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/QpDkrmT.png",TCM HD (Opc.3)
@@ -627,7 +626,7 @@ http://45.167.1.136:8000/play/a02s
 
 # === Cinecanal ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/CinecanalLA.png/960px-CinecanalLA.png" group-title="México",Cinecanal HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/CinecanalLA.png/960px-CinecanalLA.png",Cinecanal HD (Opc.1)
 http://200.35.176.154:8000/play/a046/index.m3u8
 
 #EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/CinecanalLA.png/960px-CinecanalLA.png",Cinecanal HD (Opc.2)
@@ -638,7 +637,7 @@ http://186.33.26.18:8000/play/a0o2/index.m3u8
 
 # === De Película ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/aksM8pa.png" group-title="México",De Película HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/aksM8pa.png",De Película HD (Opc.1)
 http://45.167.2.101:8000/play/a0ru/index.m3u8
 
 #EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/aksM8pa.png",De Película SD (Opc.2)
@@ -649,172 +648,172 @@ http://45.5.118.152:8000/play/a089/index.m3u8
 
 # === CINE MEXICANO ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/qHtOVRO.png" group-title="México",CINE MEXICANO (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/qHtOVRO.png",CINE MEXICANO (Opc.1)
 http://190.61.101.11:7050/play/a08x/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/qHtOVRO.png" group-title="México",CINE MEXICANO (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/qHtOVRO.png",CINE MEXICANO (Opc.2)
 http://138.94.3.106:8000/play/a00p/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/qHtOVRO.png" group-title="México",CINE MEXICANO (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/qHtOVRO.png",CINE MEXICANO (Opc.3)
 http://181.79.86.130:8000/play/a00p/index.m3u8
 
 # === Discovery ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="México",Discovery Channel SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png",Discovery Channel SD (Opc.1)
 http://181.78.211.244:8000/play/a08i/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="México",Discovery Channel SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png",Discovery Channel SD (Opc.2)
 http://45.5.117.99:8000/play/a049/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="México",Discovery Channel HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png",Discovery Channel HD (Opc.3)
 http://205.235.6.29:8000/play/a0yq/index.m3u8?hls
 
 # === Discovery ID HD ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/InvestigationDiscoveryLogo2020.svg/960px-InvestigationDiscoveryLogo2020.svg.png" group-title="México",Discovery ID HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/InvestigationDiscoveryLogo2020.svg/960px-InvestigationDiscoveryLogo2020.svg.png",Discovery ID HD (Opc.1)
 http://186.148.196.100:8000/play/a00n
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/InvestigationDiscoveryLogo2020.svg/960px-InvestigationDiscoveryLogo2020.svg.png" group-title="México",Discovery ID HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/InvestigationDiscoveryLogo2020.svg/960px-InvestigationDiscoveryLogo2020.svg.png",Discovery ID HD (Opc.2)
 http://186.148.175.138:8000/play/a05m
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/InvestigationDiscoveryLogo2020.svg/960px-InvestigationDiscoveryLogo2020.svg.png" group-title="México",Discovery ID HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/InvestigationDiscoveryLogo2020.svg/960px-InvestigationDiscoveryLogo2020.svg.png",Discovery ID HD (Opc.3)
 http://181.78.197.59:8000/play/a08a/index.m3u8
 
 # === Discovery Turbo ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1pQPxu3.png" group-title="México",Discovery Turbo SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/1pQPxu3.png",Discovery Turbo SD (Opc.1)
 http://186.148.196.100:8000/play/a00r
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1pQPxu3.png" group-title="México",Discovery Turbo SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/1pQPxu3.png",Discovery Turbo SD (Opc.2)
 http://181.79.86.130:8000/play/a042/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1pQPxu3.png" group-title="México",Discovery Turbo HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/1pQPxu3.png",Discovery Turbo HD (Opc.3)
 http://186.148.175.138:8000/play/a05l
 
 # === Discovery World ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/yNFmUkE.png" group-title="México",Discovery World HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/yNFmUkE.png",Discovery World HD (Opc.1)
 http://45.167.2.101:8000/play/a0m3/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/yNFmUkE.png" group-title="México",Discovery World HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/yNFmUkE.png",Discovery World HD (Opc.2)
 http://186.33.26.18:8000/play/a0m3/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/yNFmUkE.png" group-title="México",Discovery World HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/yNFmUkE.png",Discovery World HD (Opc.3)
 http://181.79.87.132:8000/play/a0ej/index.m3u8
 
 # === Discovery Theater ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/AqR0Jkn.png" group-title="México",Discovery Theater HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/AqR0Jkn.png",Discovery Theater HD (Opc.1)
 http://181.119.86.1:8000/play/a01d
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/AqR0Jkn.png" group-title="México",Discovery Theater HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/AqR0Jkn.png",Discovery Theater HD (Opc.2)
 http://186.148.163.17:8000/play/a0an/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/AqR0Jkn.png" group-title="México",Discovery Theater HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/AqR0Jkn.png",Discovery Theater HD (Opc.3)
 http://186.148.184.22:8000/play/a0lq/index.m3u8
 
 # === Discovery Home & Health ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Discovery_H%26H_Logo_2022.webp/960px-Discovery_H%26H_Logo_2022.webp.png" group-title="México",Discovery Home & Health HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Discovery_H%26H_Logo_2022.webp/960px-Discovery_H%26H_Logo_2022.webp.png",Discovery Home & Health HD (Opc.1)
 http://181.78.8.199:8000/play/a071/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Discovery_H%26H_Logo_2022.webp/960px-Discovery_H%26H_Logo_2022.webp.png" group-title="México",Discovery Home & Health SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Discovery_H%26H_Logo_2022.webp/960px-Discovery_H%26H_Logo_2022.webp.png",Discovery Home & Health SD (Opc.2)
 http://179.60.224.196:8000/play/a0ey/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Discovery_H%26H_Logo_2022.webp/960px-Discovery_H%26H_Logo_2022.webp.png" group-title="México",Discovery Home & Health SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Discovery_H%26H_Logo_2022.webp/960px-Discovery_H%26H_Logo_2022.webp.png",Discovery Home & Health SD (Opc.3)
 http://205.235.6.29:8000/play/a0y6/index.m3u8?hls
 
 # === Discovery Science ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Discovery_science_new_logo_2017.png/960px-Discovery_science_new_logo_2017.png" group-title="México",Discovery Science SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Discovery_science_new_logo_2017.png/960px-Discovery_science_new_logo_2017.png",Discovery Science SD (Opc.1)
 http://200.59.191.177:8000/play/a0qk/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Discovery_science_new_logo_2017.png/960px-Discovery_science_new_logo_2017.png" group-title="México",Discovery Science SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Discovery_science_new_logo_2017.png/960px-Discovery_science_new_logo_2017.png",Discovery Science SD (Opc.2)
 http://157.100.9.51:8000/play/a1r0
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Discovery_science_new_logo_2017.png/960px-Discovery_science_new_logo_2017.png" group-title="México",Discovery Science SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Discovery_science_new_logo_2017.png/960px-Discovery_science_new_logo_2017.png",Discovery Science SD (Opc.3)
 http://186.148.182.83:8000/play/a07i/index.m3u8
 
 # === Discovery Kids ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2JPtmZR.png" group-title="México",Discovery Kids HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/2JPtmZR.png",Discovery Kids HD (Opc.1)
 http://186.33.26.18:8000/play/a0oi/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2JPtmZR.png" group-title="México",Discovery Kids SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/2JPtmZR.png",Discovery Kids SD (Opc.2)
 http://181.224.255.210:8001/play/a0pv/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2JPtmZR.png" group-title="México",Discovery Kids SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/2JPtmZR.png",Discovery Kids SD (Opc.3)
 http://186.148.196.100:8000/play/a00s
 
 # === Lifetime ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_Lifetime_2020.svg/960px-Logo_Lifetime_2020.svg.png" group-title="México", Lifetime (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_Lifetime_2020.svg/960px-Logo_Lifetime_2020.svg.png",Lifetime (Opc.1)
 http://45.167.2.101:8000/play/a0q4/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_Lifetime_2020.svg/960px-Logo_Lifetime_2020.svg.png" group-title="México", Lifetime (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_Lifetime_2020.svg/960px-Logo_Lifetime_2020.svg.png",Lifetime (Opc.2)
 http://186.33.26.18:8000/play/a0q4/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_Lifetime_2020.svg/960px-Logo_Lifetime_2020.svg.png" group-title="México", Lifetime (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_Lifetime_2020.svg/960px-Logo_Lifetime_2020.svg.png",Lifetime (Opc.3)
 http://45.167.1.139:8000/play/a01a
 
 # === Animal Planet ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/2018_Animal_Planet_logo.svg/960px-2018_Animal_Planet_logo.svg.png" group-title="México",Animal Planet HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/2018_Animal_Planet_logo.svg/960px-2018_Animal_Planet_logo.svg.png",Animal Planet HD (Opc.1)
 http://45.5.118.152:8000/play/a09l/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/2018_Animal_Planet_logo.svg/960px-2018_Animal_Planet_logo.svg.png" group-title="México",Animal Planet HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/2018_Animal_Planet_logo.svg/960px-2018_Animal_Planet_logo.svg.png",Animal Planet HD (Opc.2)
 http://45.167.2.101:8000/play/a0nt/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/2018_Animal_Planet_logo.svg/960px-2018_Animal_Planet_logo.svg.png" group-title="México",Animal Planet SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/2018_Animal_Planet_logo.svg/960px-2018_Animal_Planet_logo.svg.png",Animal Planet SD (Opc.3)
 http://190.61.101.11:7050/play/a07v/index.m3u8?hls
 
 # === History Channel ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png" group-title="México",History Channel HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png",History Channel HD (Opc.1)
 http://181.119.177.253:8000/play/a020/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png" group-title="México",History Channel SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png",History Channel SD (Opc.2)
 http://186.33.47.113:8000/play/a08d/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png" group-title="México",History Channel SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png",History Channel SD (Opc.3)
 http://201.174.175.3:8000/play/a0ra/index.m3u8?hls
 
 # === History Channel 2 ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/History2_logo_%282022%29.svg/500px-History2_logo_%282022%29.svg.png" group-title="México",History Channel 2 SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/History2_logo_%282022%29.svg/500px-History2_logo_%282022%29.svg.png",History Channel 2 SD (Opc.1)
 http://181.225.190.242:8000/play/a023
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/History2_logo_%282022%29.svg/500px-History2_logo_%282022%29.svg.png" group-title="México",History Channel 2 HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/History2_logo_%282022%29.svg/500px-History2_logo_%282022%29.svg.png",History Channel 2 HD (Opc.2)
 http://45.167.2.101:8000/play/a0qf/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/History2_logo_%282022%29.svg/500px-History2_logo_%282022%29.svg.png" group-title="México",History Channel 2 HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/History2_logo_%282022%29.svg/500px-History2_logo_%282022%29.svg.png",History Channel 2 HD (Opc.3)
 http://186.148.196.100:8000/play/a00x
 
 # === Turistik ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/g9j0ze8.png" group-title="México", Turistik HD
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/g9j0ze8.png",Turistik HD
 https://cdn1.cef-technology.com/stream_web/turistik/playlist.m3u8
 
 # === Baby TV ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WxLHBwu.png" group-title="México",Baby TV (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/WxLHBwu.png",Baby TV (Opc.1)
 http://181.224.255.210:8001/play/a0pz/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WxLHBwu.png" group-title="México",Baby TV (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/WxLHBwu.png",Baby TV (Opc.2)
 http://205.235.6.29:8000/play/a0yj/index.m3u8?hls
 
 # === Disney Channel ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="México",Disney Channel HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://1000logos.net/wp-content/uploads/2020/09/Disney-Channel-Logo.png",Disney Channel HD (Opc.1)
 http://205.235.6.29:8000/play/a0zp/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="México",Disney Channel HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://1000logos.net/wp-content/uploads/2020/09/Disney-Channel-Logo.png",Disney Channel HD (Opc.2)
 http://181.224.255.210:8001/play/a0oe/index.m3u8?hls
 
-#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg",Disney Channel HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://1000logos.net/wp-content/uploads/2020/09/Disney-Channel-Logo.png",Disney Channel HD (Opc.3)
 http://181.225.190.242:8000/play/a01e
 
-#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg",Disney Channel HD (Opc.4)
+#EXTINF:-1 group-title="México" tvg-logo="https://1000logos.net/wp-content/uploads/2020/09/Disney-Channel-Logo.png",Disney Channel HD (Opc.4)
 http://45.186.254.75:8000/play/a0ck/index.m3u8
 
 #EXTINF:-1 group-title="México" tvg-logo="https://1000logos.net/wp-content/uploads/2020/09/Disney-Channel-Logo.png",Disney Channel HD (Opc.5)
@@ -844,7 +843,7 @@ http://181.78.73.153:8000/play/a032/index.m3u8
 
 # === Cartoon ===
 
-#EXTINF:-1 tvg-logo="https://gia.tv/streams/logo/209148.png?1788920583" group-title="México",Cartoon Clasico 
+#EXTINF:-1 group-title="México" tvg-logo="https://gia.tv/streams/logo/209148.png?1788920583",Cartoon Clasico 
 https://183.bozztv.com/giatv/giatv-CartoonClasico/CartoonClasico/playlist.m3u8
 
 # === Cartoon ===
@@ -860,7 +859,7 @@ http://190.60.39.195:8000/play/a0x0/index.m3u8
 
 # === Cartoon Network ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="México",Cartoon Network SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png",Cartoon Network SD (Opc.1)
 http://181.224.255.210:8001/play/a0py/index.m3u8?hls
 
 #EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png",Cartoon Network SD (Opc.2)
@@ -871,12 +870,12 @@ http://181.78.79.131:8000/play/a0tj
 
 # === Cartoon Retro ===
 
-#EXTINF:-1 tvg-logo="https://www.cxtv.com.br/img/Tvs/Logo/webp-m/bc4b7e61e1dc1d6e21310964acd99139.webp" group-title="México",Retro Cartoons (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://www.cxtv.com.br/img/Tvs/Logo/webp-m/bc4b7e61e1dc1d6e21310964acd99139.webp",Retro Cartoons (Opc.1)
 https://stmv3.voxtvhd.com.br/xtremaretrocartoons/xtremaretrocartoons/playlist.m3u8
 
 # === Cartoon ===
 
-#EXTINF:-1 tvg-logo="https://www.cxtv.com.br/img/Tvs/Logo/webp-m/def4d6a960fc00da49db5898c4a41e48.webp" group-title="México",Cartoons (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://www.cxtv.com.br/img/Tvs/Logo/webp-m/def4d6a960fc00da49db5898c4a41e48.webp",Cartoons (Opc.1)
 https://stmv6.voxtvhd.com.br/xtremacartoons/xtremacartoons/playlist.m3u8
 
 # === Tooncast ===
@@ -892,192 +891,194 @@ http://45.167.1.137:8000/play/a03a
 
 # === Disney Jr Lat ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg" group-title="México", Disney Jr. Latin America South (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fe/2017_Disney_Junior_logo.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original",Disney Jr. Latin America South (Opc.1)
 #EXTVLCOPT:http-referrer=http://tr.live.clarovtrcdn.vtrplay.com/
 http://tr.live.clarovtrcdn.vtrplay.com/disneyjrhdchi/vxfmt=dp/playlist.m3u8?device_profile=STB_HLS_VCAS_LIVE_HD
 
 # === Disney Jr ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg" group-title="México",Disney Jr SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fe/2017_Disney_Junior_logo.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original",Disney Jr SD (Opc.1)
 http://181.224.255.210:8001/play/a0ny/index.m3u8?hls
 
-#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg",Disney Jr SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fe/2017_Disney_Junior_logo.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original",Disney Jr SD (Opc.2)
 http://205.235.6.29:8000/play/a0zj/index.m3u8?hls
 
-#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg",Disney Jr HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fe/2017_Disney_Junior_logo.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original",Disney Jr HD (Opc.3)
 http://181.225.190.242:8000/play/a01f
 
 # === Nat Geo ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png" group-title="México",Nat Geo SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png",Nat Geo SD (Opc.1)
 http://45.5.118.152:8000/play/a01w/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png" group-title="México",Nat Geo HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png",Nat Geo HD (Opc.2)
 http://181.224.255.210:8001/play/a0m2/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png" group-title="México",Nat Geo SD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png",Nat Geo SD (Opc.3)
 http://181.224.200.5:2277/play/5684/index.m3u8
 
 # === Imagen TV ===
 
-#EXTINF:-1 tvg-logo="https://i.postimg.cc/FHFgYTMW/Diseno-sin-titulo(7).png" group-title="México", Imagen TV Plus HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.postimg.cc/FHFgYTMW/Diseno-sin-titulo(7).png",Imagen TV Plus HD (Opc.1)
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=13917&device_os=html5&livestream=1&custom_targeting=html5
 
 # === Canal once ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/K0351vF.png" group-title="México", Canal Once HD (IPN)(Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/K0351vF.png",Canal Once HD (IPN)(Opc.1)
 https://vivo.canaloncelive.tv/oncedos/ngrp:pruebachunks_all/.m3u8
 
 # === TUDN ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/oT5CAvd.png" group-title="México",TUDN (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/oT5CAvd.png",TUDN (Opc.1)
 http://186.33.26.18:8000/play/a0r4/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/oT5CAvd.png" group-title="México",TUDN (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/oT5CAvd.png",TUDN (Opc.2)
 http://179.60.224.196:8000/play/a0f4/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/oT5CAvd.png" group-title="México",TUDN (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/oT5CAvd.png",TUDN (Opc.3)
 http://45.167.2.138:8000/play/a0r4/index.m3u8
 
 # === Sky Sports LaLiga ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png" group-title="México",Sky Sports LaLiga (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png",Sky Sports LaLiga (Opc.1)
 http://190.61.101.11:7050/play/a04g/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png" group-title="México",Sky Sports LaLiga (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png",Sky Sports LaLiga (Opc.2)
 http://45.5.118.152:8000/play/a08f/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png" group-title="México",Sky Sports LaLiga (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png",Sky Sports LaLiga (Opc.3)
 http://181.119.177.253:8000/play/a0dz/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png" group-title="México",Sky Sports LaLiga (Opc.4)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png",Sky Sports LaLiga (Opc.4)
 http://186.33.61.182:8000/play/a05q/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png" group-title="México",Sky Sports LaLiga (Opc.5)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png",Sky Sports LaLiga (Opc.5)
 http://45.5.118.188:8000/play/a06p/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png" group-title="México",Sky Sports LaLiga (Opc.6)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png",Sky Sports LaLiga (Opc.6)
 http://186.33.1.71:8000/play/a03u/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png" group-title="México",Sky Sports LaLiga (Opc.7)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png",Sky Sports LaLiga (Opc.7)
 http://186.148.184.22:8000/play/a0i6/index.m3u8
 
 # === Sky Sports F1 ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png" group-title="México",Sky Sports F1
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sky_Sport_1_DE_Logo_2020.svg/960px-Sky_Sport_1_DE_Logo_2020.svg.png",Sky Sports F1
 http://157.100.9.51:8000/play/a25q
 
 # === ESPN ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN HD (Opc.1)
 http://190.61.101.11:7050/play/a09k/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png" group-title="México",ESPN 2 HD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png",ESPN 2 HD (Opc.1)
 http://190.61.101.11:7050/play/a05c/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/ESPN3_Logo.png/960px-ESPN3_Logo.png" group-title="México",ESPN 3 HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/ESPN3_Logo.png/960px-ESPN3_Logo.png",ESPN 3 HD (Opc.3)
 http://190.61.101.11:7050/play/a05d/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png" group-title="México",ESPN 4 HD (Opc.4)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png",ESPN 4 HD (Opc.4)
 http://190.61.101.11:7050/play/a08p/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN 5 HD (Opc.5)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN 5 HD (Opc.5)
 http://190.61.101.11:7050/play/a06j/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN 6 HD (Opc.6)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN 6 HD (Opc.6)
 http://190.61.101.11:7050/play/a05e/index.m3u8?hls
 
 # === ESPN Premium REVISAR ===
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png" group-title="México",ESPN Premium (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png",ESPN Premium (Opc.1)
 http://205.235.6.29:8000/play/a0wl/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN 7 
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN 7 
 http://205.235.6.29:8000/play/a0zv/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN SD (Opc.2)
 http://181.119.177.253:8000/play/a0ck/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png" group-title="México",ESPN 2 (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png",ESPN 2 (Opc.2)
 http://181.119.177.253:8000/play/a0cl/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/ESPN3_Logo.png/960px-ESPN3_Logo.png" group-title="México",ESPN 3 HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/ESPN3_Logo.png/960px-ESPN3_Logo.png",ESPN 3 HD (Opc.2)
 http://45.167.2.101:8000/play/a0q0/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png" group-title="México",ESPN 4 HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png",ESPN 4 HD (Opc.2)
 http://200.59.191.177:8000/play/a0pz/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN 5 SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN 5 SD (Opc.2)
 http://181.119.177.253:8000/play/a04y/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN 6 (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN 6 (Opc.2)
 http://186.148.196.100:8000/play/a02q
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN 7 (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN 7 (Opc.2)
 http://200.59.191.177:8000/play/a0p2/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN CO (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN CO (Opc.2)
 http://186.148.163.17:8000/play/a008/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png" group-title="México",ESPN Premium HD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png",ESPN Premium HD (Opc.2)
 http://186.148.163.17:8000/play/a0ay/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN HD - (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN HD - (Opc.3)
 http://181.224.255.210:8001/play/a0sd/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png" group-title="México",ESPN2 HD - (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png",ESPN2 HD - (Opc.3)
 http://181.224.255.210:8001/play/a0oj/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png" group-title="México",ESPN4 HD - (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png",ESPN4 HD - (Opc.3)
 http://181.224.255.210:8001/play/a0og/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN5 HD - (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN5 HD - (Opc.3)
 http://181.224.255.210:8001/play/a0pr/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN6 HD - (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN6 HD - (Opc.3)
 http://181.224.255.210:8001/play/a0eq/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="México",ESPN7 HD - (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",ESPN7 HD - (Opc.3)
 http://181.224.255.210:8001/play/a0m5/index.m3u8?hls
 
 # === Claro Sports ===
 
-#EXTINF:-1 tvg-logo="https://i.postimg.cc/kXRFKVGz/unnamed.png" group-title="México",Claro Sports (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.postimg.cc/kXRFKVGz/unnamed.png",Claro Sports (Opc.1)
 https://dai.google.com/linear/hls/event/yINISWAPQ0CPhPixe-40wQ/master.m3u8
 
 # === TVC Sports REVISAR ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Y1t8xkL.png" group-title="México",Deportes TVC SD (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/Y1t8xkL.png",Deportes TVC SD (Opc.1)
 http://190.61.101.11:7050/play/a06t/index.m3u8?hls
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Y1t8xkL.png" group-title="México",Deportes TVC SD (Opc.2)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/Y1t8xkL.png",Deportes TVC SD (Opc.2)
 http://181.119.177.253:8000/play/a06d/index.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Y1t8xkL.png" group-title="México",Deportes TVC HD (Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/Y1t8xkL.png",Deportes TVC HD (Opc.3)
 http://45.5.118.188:8000/play/a03m/index.m3u8
 
 # === RT Noticias ===
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/yB0LtpH/RT-ESPA-OL-FHD-03.jpg" group-title="México", RT Noticias (HD)(Opc.1)  
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/yB0LtpH/RT-ESPA-OL-FHD-03.jpg",RT Noticias (HD)(Opc.1)  
 https://rt-esp.rttv.com/dvr/rtesp/playlist_4500Kb.m3u8
- 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/Sr0yrJ2/RT-NEW-SD.jpg" group-title="México", RT Noticias (SD)(Opc.2)
+
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/Sr0yrJ2/RT-NEW-SD.jpg",RT Noticias (SD)(Opc.2)
 https://rt-esp.rttv.com/dvr/rtesp/playlist_1600Kb.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.ibb.co/VHHjvdr/RT-EN-VIVO-HD.jpg" group-title="México", RT Noticias (Auto)(Opc.3)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.ibb.co/VHHjvdr/RT-EN-VIVO-HD.jpg",RT Noticias (Auto)(Opc.3)
 https://rt-esp.rttv.com/dvr/rtesp/playlist.m3u8
 
 # === Justicia TV ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/zyAS1hk.png" group-title="México", Justicia TV (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/zyAS1hk.png",Justicia TV (Opc.1)
 https://live-scjn.ovp-vivaro.digital/ovp-origin/638a22b47746d/playlist.m3u8
 
 # === Telefórmula ===
 
-#EXTINF:-1 tvg-logo="https://i.postimg.cc/dV7RRh0d/Diseno-sin-titulo(11).png" group-title="México", Telefórmula (Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.postimg.cc/dV7RRh0d/Diseno-sin-titulo(11).png",Telefórmula (Opc.1)
 https://mdstrm.com/live-stream-playlist/62f2c855f7981b5a5a2d8763.m3u8
 
 # === DW Español ===
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/8MRNFb9.png" group-title="México", DW Español (Alemania/Internacional)(Opc.1)
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/8MRNFb9.png",DW Español (Alemania/Internacional)(Opc.1)
 https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8
+
+
