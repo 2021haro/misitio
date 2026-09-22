@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subir archivo grande a GitHub</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#111820; --line:#22303c; --text:#c9d1d9;
+    --dim:#6e7f8d; --accent:#3fb950; --accent2:#58a6ff; --warn:#f0883e; --err:#f85149;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    padding:32px 16px 80px; line-height:1.55;
+  }
+  .wrap{max-width:640px; margin:0 auto}
+  h1{
+    font-size:17px; font-weight:600; color:#fff; margin:0 0 4px;
+    display:flex; align-items:center; gap:8px;
+  }
+  h1::before{content:"$"; color:var(--accent)}
+  .sub{color:var(--dim); font-size:13px; margin:0 0 28px}
+  fieldset{border:1px solid var(--line); border-radius:6px; padding:16px; margin:0 0 16px; background:var(--panel)}
+  legend{color:var(--accent2); font-size:12px; padding:0 6px}
+  label{display:block; font-size:12px; color:var(--dim); margin:12px 0 4px}
+  label:first-of-type{margin-top:0}
+  input[type=text], input[type=password]{
+    width:100%; background:#0a0f14; border:1px solid var(--line); color:var(--text);
+    padding:9px 10px; border-radius:4px; font:inherit; font-size:13px;
+  }
+  input:focus{outline:1px solid var(--accent2)}
+  .row{display:flex; gap:10px}
+  .row > div{flex:1}
+  .filebox{
+    border:1px dashed var(--line); border-radius:4px; padding:16px; text-align:center;
+    cursor:pointer; font-size:12px; color:var(--dim); margin-top:4px;
+  }
+  .filebox.has-file{color:var(--accent); border-color:var(--accent); border-style:solid}
+  input[type=file]{display:none}
+  button{
+    width:100%; padding:11px; border-radius:4px; border:none; font:inherit; font-size:13px;
+    font-weight:600; cursor:pointer; background:var(--accent); color:#04150a; margin-top:6px;
+  }
+  button:disabled{background:#1c2530; color:var(--dim); cursor:not-allowed}
+  .bar{height:6px; background:#1c2530; border-radius:3px; overflow:hidden; margin-top:14px; display:none}
+  .bar.on{display:block}
+  .bar > i{display:block; height:100%; width:0%; background:var(--accent2)}
+  .pct{font-size:11px; color:var(--dim); margin-top:6px; text-align:right}
+  .log{
+    margin-top:18px; background:#080c10; border:1px solid var(--line); border-radius:4px;
+    padding:10px 12px; font-size:12px; max-height:220px; overflow-y:auto; display:none;
+  }
+  .log.on{display:block}
+  .log p{margin:0 0 4px; white-space:pre-wrap}
+  .log p.ok{color:var(--accent)} .log p.err{color:var(--err)} .log p.warn{color:var(--warn)}
+  .hint{font-size:11px; color:var(--dim); margin-top:6px}
+  a{color:var(--accent2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>subir-a-github</h1>
+  <p class="sub">Sube un archivo de más de 100&nbsp;MB a un repositorio, usando un Release de GitHub (límite 2&nbsp;GB por archivo).</p>
+
+  <fieldset>
+    <legend>credenciales</legend>
+    <label for="pat">Token de acceso personal (PAT)</label>
+    <input type="password" id="pat" placeholder="ghp_..." autocomplete="off">
+    <p class="hint">Se usa solo en tu navegador para llamar a la API de GitHub. No se guarda ni se envía a ningún otro sitio.</p>
+  </fieldset>
+
+  <fieldset>
+    <legend>repositorio</legend>
+    <div class="row">
+      <div>
+        <label for="owner">Usuario / organización</label>
+        <input type="text" id="owner" placeholder="mi-usuario">
+      </div>
+      <div>
+        <label for="repo">Repositorio</label>
+        <input type="text" id="repo" placeholder="mi-repo">
+      </div>
+    </div>
+    <label for="tag">Nombre del release (tag)</label>
+    <input type="text" id="tag" placeholder="se genera automáticamente si lo dejas vacío">
+  </fieldset>
+
+  <fieldset>
+    <legend>archivo</legend>
+    <div class="filebox" id="filebox">Toca para elegir un archivo</div>
+    <input type="file" id="file">
+  </fieldset>
+
+  <button id="go" disabled>Subir archivo</button>
+  <div class="bar" id="bar"><i id="barfill"></i></div>
+  <div class="pct" id="pct"></div>
+  <div class="log" id="log"></div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const fileInput = $('file'), filebox = $('filebox'), go = $('go');
+const bar = $('bar'), barfill = $('barfill'), pct = $('pct'), log = $('log');
+let chosenFile = null;
+
+filebox.onclick = () => fileInput.click();
+fileInput.onchange = () => {
+  chosenFile = fileInput.files[0];
+  if (chosenFile) {
+    const mb = (chosenFile.size / 1024 / 1024).toFixed(1);
+    filebox.textContent = `${chosenFile.name} (${mb} MB)`;
+    filebox.classList.add('has-file');
+  }
+  validate();
+};
+
+['pat','owner','repo'].forEach(id => $(id).addEventListener('input', validate));
+function validate(){
+  go.disabled = !($('pat').value && $('owner').value && $('repo').value && chosenFile);
+}
+
+function logLine(msg, cls){
+  log.classList.add('on');
+  const p = document.createElement('p');
+  if (cls) p.className = cls;
+  p.textContent = msg;
+  log.appendChild(p);
+  log.scrollTop = log.scrollHeight;
+}
+
+function apiHeaders(pat, extra){
+  return Object.assign({
+    'Authorization': 'token ' + pat,
+    'Accept': 'application/vnd.github+json'
+  }, extra || {});
+}
+
+go.onclick = async () => {
+  go.disabled = true;
+  log.innerHTML = ''; log.classList.remove('on');
+  bar.classList.add('on'); barfill.style.width = '0%'; pct.textContent = '';
+
+  const pat = $('pat').value.trim();
+  const owner = $('owner').value.trim();
+  const repo = $('repo').value.trim();
+  let tag = $('tag').value.trim();
+  if (!tag) tag = 'upload-' + Date.now();
+
+  try {
+    logLine('Creando release "' + tag + '"...');
+    const relRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases`, {
+      method: 'POST',
+      headers: apiHeaders(pat, {'Content-Type':'application/json'}),
+      body: JSON.stringify({
+        tag_name: tag,
+        name: tag,
+        body: 'Subido automáticamente: ' + chosenFile.name,
+        draft: false,
+        prerelease: false
+      })
+    });
+    if (!relRes.ok) {
+      const errBody = await relRes.text();
+      throw new Error('No se pudo crear el release (' + relRes.status + '): ' + errBody.slice(0,300));
+    }
+    const rel = await relRes.json();
+    logLine('Release creado.', 'ok');
+
+    let uploadUrl = rel.upload_url.replace('{?name,label}', '');
+    const safeName = encodeURIComponent(chosenFile.name);
+    uploadUrl += `?name=${safeName}`;
+
+    logLine('Subiendo "' + chosenFile.name + '"...');
+
+    await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', uploadUrl);
+      xhr.setRequestHeader('Authorization', 'token ' + pat);
+      xhr.setRequestHeader('Accept', 'application/vnd.github+json');
+      xhr.setRequestHeader('Content-Type', chosenFile.type || 'application/octet-stream');
+
+      xhr.upload.onprogress = (e) => {
+        if (e.lengthComputable) {
+          const p = Math.round((e.loaded / e.total) * 100);
+          barfill.style.width = p + '%';
+          pct.textContent = p + '% (' + (e.loaded/1024/1024).toFixed(1) + ' / ' + (e.total/1024/1024).toFixed(1) + ' MB)';
+        }
+      };
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) resolve();
+        else reject(new Error('Falló la subida (' + xhr.status + '): ' + xhr.responseText.slice(0,300)));
+      };
+      xhr.onerror = () => reject(new Error('Error de red durante la subida.'));
+      xhr.send(chosenFile);
+    });
+
+    logLine('¡Listo! Archivo subido correctamente.', 'ok');
+    const asset = JSON.parse(JSON.stringify(rel));
+    logLine('Release: ' + rel.html_url, 'ok');
+  } catch (err) {
+    logLine(String(err.message || err), 'err');
+  } finally {
+    go.disabled = false;
+  }
+};
+</script>
+</body>
+</html>
