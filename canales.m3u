@@ -67,13 +67,13 @@ https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8
 #EXTINF:-1 tvg-id="Teleformula" tvg-name="Telefórmula" tvg-logo="https://imgur.com/y0a0xwY.png" group-title="Informativos",Telefórmula
 https://mdstrm.com/live-stream-playlist/62f2c855f7981b5a5a2d8763.m3u8
 
-#EXTINF:-1 tvg-id="adn40" tvg-name="adn40 Noticias" tvg-logo="" group-title="Informativos",adn40 Noticias
+#EXTINF:-1 tvg-id="adn40" tvg-name="adn40 Noticias" tvg-logo="https://imgur.com/Og17U9N.png" group-title="Informativos",adn40 Noticias
 https://mdstrm.com/live-stream-playlist/60b578b060947317de7b57ac.m3u8
 
 #EXTINF:-1 tvg-id="A+" tvg-name="A+" tvg-logo="" group-title="Novelas",A+
 https://dish.akamaized.net/Content/HLS_HLS_CLR/Live/channel(mvs)/variant.m3u8
 
-#EXTINF:-1 tvg-id="MVS" tvg-name="MVS" tvg-logo="https://imgur.com/Og17U9N.png" group-title="Informativos",MVS
+#EXTINF:-1 tvg-id="MVS" tvg-name="MVS" tvg-logo="" group-title="Informativos",MVS
 https://mdstrm.com/live-stream-playlist/60b56be1000ea50835fa1e63.m3u8
 
 #EXTINF:-1 tvg-id="CanalOnce" tvg-name="Canal Once CDMX" tvg-logo="https://canalonce.mx/REST/data/images/canalonce-logo-350x150.webp" group-title="Cultura",Canal Once CDMX
