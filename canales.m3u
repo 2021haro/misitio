@@ -22,13 +22,13 @@ https://estrellatv-oando.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="EstrellaNoticias" tvg-name="Estrella Noticias" tvg-logo="" group-title="Entretenimiento",Estrella Noticias
 https://estrella-news-oando.amagi.tv/playlist.m3u8
 
-#EXTINF:-1 tvg-id="ImagenTV" tvg-name="Imagen TV" tvg-logo="https://es.wikipedia.org/wiki/Archivo:Logo-Imagen-TV-MX.png" group-title="Entretenimiento",Imagen TV
+#EXTINF:-1 tvg-id="ImagenTV" tvg-name="Imagen TV" ttvg-logo="" group-title="Informativos",Imagen TV
 https://igd-it-runtime.otteravision.com/igd/it/it.m3u8
 
-#EXTINF:-1 tvg-id="TeleSaltillo" tvg-name="TeleSaltillo" tvg-logo="https://xmcomunicacion.com/img/clients/telesaltillo.png" group-title="Entretenimiento",TeleSaltillo
+#EXTINF:-1 tvg-id="TeleSaltillo" tvg-name="TeleSaltillo" tvg-logo="https://xmcomunicacion.com/img/clients/telesaltillo.png" group-title="Informativos",TeleSaltillo
 https://servilive.com:3879/live/telesaltillolive.m3u8
 
-#EXTINF:-1 tvg-id="SuperChannel12" tvg-name="Super Channel 12" tvg-logo="https://media.superchannel12.com/logos/1.webp" group-title="Entretenimiento",uper Channel 12
+#EXTINF:-1 tvg-id="SuperChannel12" tvg-name="Super Channel 12" tvg-logo="https://media.superchannel12.com/logos/1.webp" group-title="Informativos",Super Channel 12
 https://servilive.com:3263/live/channel12live.m3u8
 
 #EXTINF:-1 tvg-id="NMasNacional" tvg-name="N+ (Nacional)" tvg-logo="https://i.imgur.com/IrimbhT.png" group-title="Informativos",N+ (Nacional)
