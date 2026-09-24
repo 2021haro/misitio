@@ -64,3 +64,77 @@ https://mdstrm.com/live-stream-playlist/57b4dc126338448314449d0c.m3u8
 https://mdstrm.com/live-stream-playlist/60b578b060947317de7b57ac.m3u8
 #EXTINF:-1,Telefórmula CDMX
 https://mdstrm.com/live-stream-playlist/62f2c855f7981b5a5a2d8763.m3u8
+
+
+
+
+
+#EXTINF:-1 tvg-id="LasEstrellas" tvg-name="Las Estrellas" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSila2GvL0Jiejt7AaOymgFK90ZhypiJ1lDvtoImCesiA&s=10" group-title="Entretenimiento",Las Estrellas
+https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
+
+#EXTINF:-1 tvg-id="NMasNacional" tvg-name="N+ (Nacional)" tvg-logo="https://i.imgur.com/TwBa344.png" group-title="Informativos",N+ (Nacional)
+https://nomvauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel07secure.akamaized.net/hls/live/2036971-b/event01/index.m3u8&redirect=true
+
+#EXTINF:-1 tvg-id="NMasForo" tvg-name="N+ Foro (Televisa)" tvg-logo="https://i.imgur.com/dDFrONz.png" group-title="Informativos",N+ Foro (Televisa) (Nacional)
+https://notusaauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel02secure-notusa.akamaized.net/hls/live/2023914-b/event01/index.m3u8&redirect=true
+
+#EXTINF:-1 tvg-id="NMasMonterrey" tvg-name="N+ Monterrey" tvg-logo="https://i.imgur.com/TwBa344.png" group-title="Informativos",N+ Monterrey (Nuevo León)
+https://notusaauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel09secure-notusa.akamaized.net/hls/live/2094418-b/event01/index.m3u8&redirect=true
+
+#EXTINF:-1 tvg-id="NMasGuadalajara" tvg-name="N+ Guadalajara" tvg-logo="https://i.imgur.com/IrimbhT.png" group-title="Informativos",N+ Guadalajara (Jalisco)
+https://notusaauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel08secure-notusa.akamaized.net/hls/live/2037034-b/event01/index.m3u8&redirect=true
+
+#EXTINF:-1 tvg-id="Canal6Monterrey" tvg-name="Canal 6 Monterrey" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Monterrey
+https://mdstrm.com/live-stream-playlist/57b4dbf5dbbfc8f16bb63ce1.m3u8
+
+#EXTINF:-1 tvg-id="Canal6CDMX" tvg-name="Canal 6 CDMX" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 CDMX
+https://mdstrm.com/live-stream-playlist/5f2d9d6ff17144074bd8a284.m3u8
+
+#EXTINF:-1 tvg-id="Canal6Guadalajara" tvg-name="Canal 6 Guadalajara" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Guadalajara
+https://mdstrm.com/live-stream-playlist/5c54d38ca392a5119bb0aa0d.m3u8
+
+#EXTINF:-1 tvg-id="Canal6Puebla" tvg-name="Canal 6 Puebla" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Puebla
+https://mdstrm.com/live-stream-playlist/5d56ed29c92dd106ff01543b.m3u8
+
+#EXTINF:-1 tvg-id="Canal6Bajio" tvg-name="Canal 6 Bajío" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Bajío
+https://mdstrm.com/live-stream-playlist/5d4b0fec848918070128c8cb.m3u8
+
+#EXTINF:-1 tvg-id="Canal6Laguna" tvg-name="Canal 6 Laguna" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Laguna
+https://mdstrm.com/live-stream-playlist/57bf686a61ff39e1085d43e1.m3u8
+
+#EXTINF:-1 tvg-id="Canal6Saltillo" tvg-name="Canal 6 Saltillo" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Saltillo
+https://mdstrm.com/live-stream-playlist/5d5d51a4e9a40e25f4a0332c.m3u8
+
+#EXTINF:-1 tvg-id="RCGNoticiasSaltillo" tvg-name="RCG Noticias Saltillo" tvg-logo="https://api.rcgmedia.mx/uploads/thumbnail_logo_rcg_media_250_1_69610a5309.png" group-title="Informativos",RCG Noticias Saltillo
+https://video1.getstreamhosting.com:1936/8172/8172/chunklist_w961798368.m3u8
+
+#EXTINF:-1 tvg-id="Teleritmo" tvg-name="Teleritmo" tvg-logo="https://telmex.com/documents/575301/4466888/ICO-110326-tele-ritmo.png/1f0db4b6-c49e-97db-9109-df3a990fa712?t=1773270808679" group-title="Música",Teleritmo
+https://mdstrm.com/live-stream-playlist/57b4dc126338448314449d0c.m3u8
+
+#EXTINF:-1 tvg-id="CGTNEspanol" tvg-name="CGTN Español" tvg-logo="https://www.google.com/search?q=logo+del+canal+CGTN+Espa%C3%B1ol+.svg&sca_esv=c091ce370ff831f4&rlz=1C1FKPE_esMX1231MX1231&udm=2&biw=1366&bih=633&sxsrf=APpeQnsNCb6FfNE4tJD4lRm_7ff1w7fjMw%3A1790239858351&ei=cuS0aqaRFfXhp84PyaermAQ&ved=2ahUKEwimkseW64aXAxX18MkDHcnTCkMQ4dUDegQIBhAN&uact=5&oq=logo+del+canal+CGTN+Espa%C3%B1ol+.svg&gs_lp=Egtnd3Mtd2l6LWltZyIhbG9nbyBkZWwgY2FuYWwgQ0dUTiBFc3Bhw7FvbCAuc3ZnSJoaUPAPWNoXcAR4AJABAJgBngGgAY0CqgEDMC4yuAEDyAEA-AEC-AEBmAIAoAIAmAMAiAYBkgcAoAcYsgcAuAcAwgcAyAcAgAgB&sclient=gws-wiz-img#sv=CAMSURoyKhBlLXhfa25LWnNCXy15RlBNMg54X2tuS1pzQl8teUZQTToOa2NCNTdlNGlScHBCbE0gBCoXCgFzEhBlLXhfa25LWnNCXy15RlBNGAEwARgHIKOn__wISggQARgBIAEoAQ" group-title="Internacional",CGTN Español
+https://mdstrm.com/live-stream-playlist/60b578b060947317de7b57ac.m3u8
+
+#EXTINF:-1 tvg-id="RTEspanol" tvg-name="RT TV Español" tvg-logo="https://www.google.com/search?q=logo+del+canal+rt+.svg&sca_esv=c091ce370ff831f4&rlz=1C1FKPE_esMX1231MX1231&udm=2&biw=1366&bih=633&sxsrf=APpeQnuhzn9ggYBppUIY7xiRf-TBj1ROQQ%3A1790239831201&ei=V-S0asT6C_PUp84PzaynwQY&ved=2ahUKEwiEgs6J64aXAxVz6skDHU3WKWgQ4dUDegQIBhAN&uact=5&oq=logo+del+canal+rt+.svg&gs_lp=Egtnd3Mtd2l6LWltZyIWbG9nbyBkZWwgY2FuYWwgcnQgLnN2Z0iYG1DIB1jiD3ACeACQAQCYAVugAY0CqgEBM7gBA8gBAPgBAZgCAqACD8ICBxAjGMkCGCeYAwCIBgGSBwEyoAcksgcAuAcAwgcDMi0yyAcKgAgB&sclient=gws-wiz-img#sv=CAMSURoyKhBlLWNmQndZTERnZG1yR0dNMg5jZkJ3WUxEZ2RtckdHTToOTXBDSFBtQzg2b3ctbk0gBCoXCgFzEhBlLWNmQndZTERnZG1yR0dNGAEwARgHIN2Tkp8MSggQARgBIAEoAQ" group-title="Internacional",RT TV Español
+https://rt-esp.rttv.com/dvr/rtesp/playlist_800Kb.m3u8
+
+#EXTINF:-1 tvg-id="DWEspanol" tvg-name="DW Español" tvg-logo="https://www.google.com/search?sca_esv=c091ce370ff831f4&rlz=1C1FKPE_esMX1231MX1231&sxsrf=APpeQnub9WuhKQrWTdlwnexQNTuMI7SSwg:1790239829399&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832SMIiTl3t-JZ4hGJOxPbHYQR84vEJkyW62ul7Q3Bkhu9GRwQTzZtuiXKXT_W9_8T_hfJs9DGXuMqeQy5WqIlWsc_smV0gcmeZXbp1kpnnSZN9i-3x5gm60E-pXKtoP3hxCrUJAKE4n4bVpmeNT9fZoJChg6lXaZQUve-guriOFf23ZkAcw&q=logo+del+canal+DW++.svg&sa=X&ved=2ahUKEwjNgeCI64aXAxWPM9AFHZcCNuoQtKgLegQIGRAB&biw=1366&bih=633&dpr=1#sv=CAMSURoyKhBlLWZ6WE16WTJBZE54THBNMg5melhNelkyQWROeExwTToORDl1RnhvOW1sSTZROU0gBCoXCgFzEhBlLWZ6WE16WTJBZE54THBNGAEwARgHINWisdYGSggQARgBIAEoAQ" group-title="Internacional",DW Español
+https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8
+
+#EXTINF:-1 tvg-id="Teleformula" tvg-name="Telefórmula" tvg-logo="" group-title="Informativos",Telefórmula
+https://mdstrm.com/live-stream-playlist/62f2c855f7981b5a5a2d8763.m3u8
+
+#EXTINF:-1 tvg-id="adn40" tvg-name="adn40 Noticias" tvg-logo="https://www.google.com/search?sca_esv=c091ce370ff831f4&rlz=1C1FKPE_esMX1231MX1231&sxsrf=APpeQnsGOZMIw1QklkAxp2nJxKfU93NRBA:1790239647432&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832U_8HGA5CoQxEwPvRgW8Cjzcsp_mzAhBftctt5p4L-ex9ba3KLm7aRRGoZ27d9dp2Goc7W3cYmjLZQ-1ogZ3bAYpzyq_xo9HQbfE4ghMnzCmDi2VBo3NFXz0i7UXVHl7W4eRbEIWVZOdc-bNYl59UCAdFBJXzKHywwCySnz609sFi7yaog&q=logo+del+canal+adn40+.svg&sa=X&ved=2ahUKEwj_zf2x6oaXAxXl5MkDHRHXCNIQtKgLegQIGBAB&biw=1366&bih=633&dpr=1#sv=CAMSURoyKhBlLVNwQWo5OU9jYUhmVGpNMg5TcEFqOTlPY2FIZlRqTToOVnZDaFRhbEZVMGtNc00gBCoXCgFzEhBlLVNwQWo5OU9jYUhmVGpNGAEwARgHIMnPh_0ISggQARgBIAEoAQ" group-title="Informativos",adn40 Noticias
+https://mdstrm.com/live-stream-playlist/60b578b060947317de7b57ac.m3u8
+
+#EXTINF:-1 tvg-id="CanalOnce" tvg-name="Canal Once CDMX" tvg-logo="https://canalonce.mx/REST/data/images/canalonce-logo-350x150.webp" group-title="Cultura",Canal Once CDMX
+https://vivo.canaloncelive.tv/secureoncedos/oncedigital/chunklist.m3u8
+
+#EXTINF:-1 tvg-id="CanalCongreso451" tvg-name="Canal del Congreso (45.1)" tvg-logo="https://www.canaldelcongreso.gob.mx/images/channel-c-logo.png" group-title="Gobierno",Canal del Congreso (45.1)
+https://ccstreaming.packet.mx/WebRTCAppEE/streams/45.1_kd5oiNTTWO0gEOFc431277834_480p1000kbps.m3u8
+
+#EXTINF:-1 tvg-id="CanalCongreso452" tvg-name="Canal del Congreso (45.2)" tvg-logo="https://www.canaldelcongreso.gob.mx/images/channel-g-logo.png" group-title="Gobierno",Canal del Congreso (45.2)
+https://ccstreaming.packet.mx/WebRTCAppEE/streams/45.2_kd5oiNTTWO0gEOFc423456787er_480p1000kbps.m3u8
+
+#EXTINF:-1 tvg-id="CanalCongreso453" tvg-name="Canal del Congreso (45.3)" tvg-logo="https://www.canaldelcongreso.gob.mx/images/channel-d-logo.png" group-title="Gobierno",Canal del Congreso (45.3)
+https://ccstreaming.packet.mx/WebRTCAppEE/streams/45.3_kd5oiNTTWO0gEOFc875423kf52.m3u8
+
