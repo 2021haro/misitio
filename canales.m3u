@@ -67,7 +67,8 @@ https://mdstrm.com/live-stream-playlist/62f2c855f7981b5a5a2d8763.m3u8
 
 
 
-
+#EXTINF:-1 tvg-id="Mileno" tvg-name="Milenio (Nacional)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/d4/Milenio_Television.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original" group-title="Informativos",Milenio (Nacional)
+https://mdstrm.com/live-stream-playlist/610178c7db32a4112d994650.m3u8
 
 #EXTINF:-1 tvg-id="LasEstrellas" tvg-name="Las Estrellas" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSila2GvL0Jiejt7AaOymgFK90ZhypiJ1lDvtoImCesiA&s=10" group-title="Entretenimiento",Las Estrellas
 https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
