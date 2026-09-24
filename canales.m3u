@@ -16,37 +16,37 @@ https://mdstrm.com/live-stream-playlist/610178c7db32a4112d994650.m3u8
 #EXTINF:-1 tvg-id="LasEstrellas" tvg-name="Las Estrellas" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSila2GvL0Jiejt7AaOymgFK90ZhypiJ1lDvtoImCesiA&s=10" group-title="Entretenimiento",Las Estrellas
 https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
 
-#EXTINF:-1 tvg-id="NMasNacional" tvg-name="N+ (Nacional)" tvg-logo="https://i.imgur.com/TwBa344.png" group-title="Informativos",N+ (Nacional)
+#EXTINF:-1 tvg-id="NMasNacional" tvg-name="N+ (Nacional)" tvg-logo="https://i.imgur.com/IrimbhT.pn" group-title="Informativos",N+
 https://nomvauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel07secure.akamaized.net/hls/live/2036971-b/event01/index.m3u8&redirect=true
 
-#EXTINF:-1 tvg-id="NMasForo" tvg-name="N+ Foro (Televisa)" tvg-logo="https://i.imgur.com/dDFrONz.png" group-title="Informativos",N+ Foro (Televisa) (Nacional)
+#EXTINF:-1 tvg-id="NMasForo" tvg-name="N+ Foro (Televisa)" tvg-logo="https://i.imgur.com/dDFrONz.png" group-title="Informativos",N+ Foro
 https://notusaauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel02secure-notusa.akamaized.net/hls/live/2023914-b/event01/index.m3u8&redirect=true
 
-#EXTINF:-1 tvg-id="NMasMonterrey" tvg-name="N+ Monterrey" tvg-logo="https://i.imgur.com/TwBa344.png" group-title="Informativos",N+ Monterrey (Nuevo León)
+#EXTINF:-1 tvg-id="NMasMonterrey" tvg-name="N+ Monterrey" tvg-logo="https://i.imgur.com/IrimbhT.png" group-title="Informativos",N+ Monterrey
 https://notusaauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel09secure-notusa.akamaized.net/hls/live/2094418-b/event01/index.m3u8&redirect=true
 
-#EXTINF:-1 tvg-id="NMasGuadalajara" tvg-name="N+ Guadalajara" tvg-logo="https://i.imgur.com/IrimbhT.png" group-title="Informativos",N+ Guadalajara (Jalisco)
+#EXTINF:-1 tvg-id="NMasGuadalajara" tvg-name="N+ Guadalajara" tvg-logo="https://i.imgur.com/IrimbhT.png" group-title="Informativos",N+ Guadalajara
 https://notusaauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel08secure-notusa.akamaized.net/hls/live/2037034-b/event01/index.m3u8&redirect=true
 
-#EXTINF:-1 tvg-id="Canal6Monterrey" tvg-name="Canal 6 Monterrey" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Monterrey
+#EXTINF:-1 tvg-id="Canal6Monterrey" tvg-name="Canal 6 Monterrey" tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="Canal 6",Canal 6 Monterrey
 https://mdstrm.com/live-stream-playlist/57b4dbf5dbbfc8f16bb63ce1.m3u8
 
-#EXTINF:-1 tvg-id="Canal6CDMX" tvg-name="Canal 6 CDMX" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 CDMX
+#EXTINF:-1 tvg-id="Canal6CDMX" tvg-name="Canal 6 CDMX" tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="Canal 6",Canal 6 CDMX
 https://mdstrm.com/live-stream-playlist/5f2d9d6ff17144074bd8a284.m3u8
 
-#EXTINF:-1 tvg-id="Canal6Guadalajara" tvg-name="Canal 6 Guadalajara" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Guadalajara
+#EXTINF:-1 tvg-id="Canal6Guadalajara" tvg-name="Canal 6 Guadalajara" tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="Canal 6",Canal 6 Guadalajara
 https://mdstrm.com/live-stream-playlist/5c54d38ca392a5119bb0aa0d.m3u8
 
-#EXTINF:-1 tvg-id="Canal6Puebla" tvg-name="Canal 6 Puebla" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Puebla
+#EXTINF:-1 tvg-id="Canal6Puebla" tvg-name="Canal 6 Puebla" tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="Canal 6",Canal 6 Puebla
 https://mdstrm.com/live-stream-playlist/5d56ed29c92dd106ff01543b.m3u8
 
-#EXTINF:-1 tvg-id="Canal6Bajio" tvg-name="Canal 6 Bajío" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Bajío
+#EXTINF:-1 tvg-id="Canal6Bajio" tvg-name="Canal 6 Bajío" tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="Canal 6",Canal 6 Bajío
 https://mdstrm.com/live-stream-playlist/5d4b0fec848918070128c8cb.m3u8
 
-#EXTINF:-1 tvg-id="Canal6Laguna" tvg-name="Canal 6 Laguna" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Laguna
+#EXTINF:-1 tvg-id="Canal6Laguna" tvg-name="Canal 6 Laguna" tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="Canal 6",Canal 6 Laguna
 https://mdstrm.com/live-stream-playlist/57bf686a61ff39e1085d43e1.m3u8
 
-#EXTINF:-1 tvg-id="Canal6Saltillo" tvg-name="Canal 6 Saltillo" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/Multimedios_Canal_Seis_Logo.svg" group-title="Canal 6",Canal 6 Saltillo
+#EXTINF:-1 tvg-id="Canal6Saltillo" tvg-name="Canal 6 Saltillo" tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="Canal 6",Canal 6 Saltillo
 https://mdstrm.com/live-stream-playlist/5d5d51a4e9a40e25f4a0332c.m3u8
 
 #EXTINF:-1 tvg-id="RCGNoticiasSaltillo" tvg-name="RCG Noticias Saltillo" tvg-logo="https://api.rcgmedia.mx/uploads/thumbnail_logo_rcg_media_250_1_69610a5309.png" group-title="Informativos",RCG Noticias Saltillo
