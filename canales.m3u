@@ -12,8 +12,20 @@ http://38.65.175.87:8000/play/a0ll/index.m3u8u?hls
 #EXTINF:-1 tvg-id="LasEstrellas" tvg-name="Las Estrellas" tvg-logo="https://i.ibb.co/pF7gtSQ/las-estrellas-co.png" group-title="Canales",Las Estrellas
 https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
 
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/TwBa344.png",N+ Foro (México)(Opc.1)
+https://nomvauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel07secure.akamaized.net/hls/live/2036971-b/event01/index.m3u8&redirect=true
+
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/dDFrONz.png",N+ Foro (México)(Opc.2)
+https://notusaauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel02secure-notusa.akamaized.net/hls/live/2023914-b/event01/index.m3u8&redirect=true
+
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/rRxgBtI.png",Azteca UNO SD  (México)(Opc.2)
+http://38.65.175.87:8000/play/a0cc/index.m3u8u?hls
+
 #EXTINF:-1 tvg-id="Azteca7" tvg-name="Azteca 7" tvg-logo="https://i.imgur.com/UtFXjIn.png" group-title="Canales",Azteca 7
 http://201.174.175.3:8000/play/a0kl/index.m3u8u?hls
+
+#EXTINF:-1 group-title="México" tvg-logo="https://i.imgur.com/Og17U9N.png",ADN40 (México)
+https://mdstrm.com/live-stream-playlist/60b578b060947317de7b57ac.m3u8
 
 #EXTINF:-1 tvg-id="Multimedios6" tvg-name="Multimedios Canal 6" tvg-logo="https://i.imgur.com/4IGzNdq.png" group-title="Canales",Multimedios Canal 6
 https://mdstrm.com/live-stream-playlist/5f2d9d6ff17144074bd8a284.m3u8
@@ -23,6 +35,9 @@ https://estrellatv-oando.amagi.tv/playlist.m3u8
 
 #EXTINF:-1 tvg-id="EstrellaNews" tvg-name="Estrella News" tvg-logo="https://i.imgur.com/HRrkhLq.png" group-title="Canales",Estrella News
 https://estrella-news-oando.amagi.tv/playlist.m3u8
+
+#EXTINF:-1 group-title="México" tvg-logo="https://i.postimg.cc/dV7RRh0d/Diseno-sin-titulo(11).png",Telefórmula (Opc.1)
+https://mdstrm.com/live-stream-playlist/62f2c855f7981b5a5a2d8763.m3u8
 
 #EXTINF:-1 tvg-id="ClaroSports" tvg-name="Claro Sports" tvg-logo="https://i.postimg.cc/kXRFKVGz/unnamed.png" group-title="Canales",Claro Sports
 https://dai.google.com/linear/hls/event/yINISWAPQ0CPhPixe-40wQ/master.m3u8
