@@ -17,7 +17,19 @@ https://mdstrm.com/live-stream-playlist/610178c7db32a4112d994650.m3u8
 https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
 
 #EXTINF:-1 tvg-id="EstrellaTV" tvg-name="Estrella TV" tvg-logo="https://imgur.com/IZxjnyp.png" group-title="Entretenimiento",Estrella TV
-https://amg00567-estrellamedia-estrellatv-estrellamedia-5tdh5.amagi.tv/ts-us-w2-n2/playlist/amg00567-estrellamedia-estrellatv-estrellamedia/cb573d167c6c678e93d43d78d1f14082847b3dcb0e6c886470af4a9765d97800dbe8ae84ae5b910c4c9e1fc061017d360439cd1dd56c49c1da63b820743c4b21fdcde00080dd0d0cb1df11292ca36265299a7369cc350f7bd2ec5a2f803ebe764c53cb017c593f88f258a8754cc59e0a957f39e8fc8b307b24455a9c5a43e6a64cb7aab70c13da6df0e0011a9d2f4cfa83439fd501e9d680538315d371f317ce90f889d01580e4275293768acb9acb4307fbad41d1af70b3c2936a36ee0942243074966e17632c46eb694c4eecf78b9e68fa01c78a24fb0f5f588f0b2ef658a764a40aabee58a1efcfb7c8ddadc5b6384208819fc8a9f4343ba86ff7a3a3ba1919cba3432c1f9b2ab0265af47b46c3740b9935ef38a825ed2a2b0160db34ba90b791e6b38c05b12ac4d3f18a2f475759c963ec528f9577d225d179e79b5d711c0573a49451cb91ca1e1e560fd7d01084485b8ed285d58b557bd2364f13a841c94b0969fb316e57ec39b6cf6f3bc7755cc57d16d36c18ac0ebcb425fea29bc20338bed18e02dc67fdba07d7b953fc3e72094ce3bc7c1f764d7bd1fc6f42652a940bb785b8941d6337e5f9c9f1d740785669653522bfa2b620d5deba6a7770e65c296778156de627de7bd00d4c40638929daa20d7b9215634ac2a22c564e6386c2d2d0de822a252d91677a9b5734d6a45b0395616f231ab986c33aa8/194/1920x1080_5253600/index.m3u8
+https://estrellatv-oando.amagi.tv/playlist.m3u8
+
+#EXTINF:-1 tvg-id="EstrellaNoticias" tvg-name="Estrella Noticias" tvg-logo="" group-title="Entretenimiento",Estrella Noticias
+https://estrella-news-oando.amagi.tv/playlist.m3u8
+
+#EXTINF:-1 tvg-id="ImagenTV" tvg-name="Imagen TV" tvg-logo="https://es.wikipedia.org/wiki/Archivo:Logo-Imagen-TV-MX.png" group-title="Entretenimiento",Imagen TV
+https://igd-it-runtime.otteravision.com/igd/it/it.m3u8
+
+#EXTINF:-1 tvg-id="TeleSaltillo" tvg-name="TeleSaltillo" tvg-logo="https://xmcomunicacion.com/img/clients/telesaltillo.png" group-title="Entretenimiento",TeleSaltillo
+https://servilive.com:3879/live/telesaltillolive.m3u8
+
+#EXTINF:-1 tvg-id="SuperChannel12" tvg-name="Super Channel 12" tvg-logo="https://media.superchannel12.com/logos/1.webp" group-title="Entretenimiento",uper Channel 12
+https://servilive.com:3263/live/channel12live.m3u8
 
 #EXTINF:-1 tvg-id="NMasNacional" tvg-name="N+ (Nacional)" tvg-logo="https://i.imgur.com/IrimbhT.png" group-title="Informativos",N+ (Nacional)
 https://nomvauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel07secure.akamaized.net/hls/live/2036971-b/event01/index.m3u8&redirect=true
