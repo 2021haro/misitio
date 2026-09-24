@@ -52,22 +52,22 @@ https://mdstrm.com/live-stream-playlist/5d5d51a4e9a40e25f4a0332c.m3u8
 #EXTINF:-1 tvg-id="RCGNoticiasSaltillo" tvg-name="RCG Noticias Saltillo" tvg-logo="https://api.rcgmedia.mx/uploads/thumbnail_logo_rcg_media_250_1_69610a5309.png" group-title="Informativos",RCG Noticias Saltillo
 https://video1.getstreamhosting.com:1936/8172/8172/chunklist_w961798368.m3u8
 
-#EXTINF:-1 tvg-id="Teleritmo" tvg-name="Teleritmo" tvg-logo="https://imgur.com/9s380Bz" group-title="Música",Teleritmo
+#EXTINF:-1 tvg-id="Teleritmo" tvg-name="Teleritmo" tvg-logo="https://imgur.com/9s380Bz.png" group-title="Música",Teleritmo
 https://mdstrm.com/live-stream-playlist/57b4dc126338448314449d0c.m3u8
 
-#EXTINF:-1 tvg-id="CGTNEspanol" tvg-name="CGTN Español" tvg-logo="https://www.google.com/search?q=logo+del+canal+CGTN+Espa%C3%B1ol+.svg&sca_esv=c091ce370ff831f4&rlz=1C1FKPE_esMX1231MX1231&udm=2&biw=1366&bih=633&sxsrf=APpeQnsNCb6FfNE4tJD4lRm_7ff1w7fjMw%3A1790239858351&ei=cuS0aqaRFfXhp84PyaermAQ&ved=2ahUKEwimkseW64aXAxX18MkDHcnTCkMQ4dUDegQIBhAN&uact=5&oq=logo+del+canal+CGTN+Espa%C3%B1ol+.svg&gs_lp=Egtnd3Mtd2l6LWltZyIhbG9nbyBkZWwgY2FuYWwgQ0dUTiBFc3Bhw7FvbCAuc3ZnSJoaUPAPWNoXcAR4AJABAJgBngGgAY0CqgEDMC4yuAEDyAEA-AEC-AEBmAIAoAIAmAMAiAYBkgcAoAcYsgcAuAcAwgcAyAcAgAgB&sclient=gws-wiz-img#sv=CAMSURoyKhBlLXhfa25LWnNCXy15RlBNMg54X2tuS1pzQl8teUZQTToOa2NCNTdlNGlScHBCbE0gBCoXCgFzEhBlLXhfa25LWnNCXy15RlBNGAEwARgHIKOn__wISggQARgBIAEoAQ" group-title="Internacional",CGTN Español
+#EXTINF:-1 tvg-id="CGTNEspanol" tvg-name="CGTN Español" tvg-logo="" group-title="Internacional",CGTN Español
 https://mdstrm.com/live-stream-playlist/60b578b060947317de7b57ac.m3u8
 
-#EXTINF:-1 tvg-id="RTEspanol" tvg-name="RT TV Español" tvg-logo="https://www.google.com/search?q=logo+del+canal+rt+.svg&sca_esv=c091ce370ff831f4&rlz=1C1FKPE_esMX1231MX1231&udm=2&biw=1366&bih=633&sxsrf=APpeQnuhzn9ggYBppUIY7xiRf-TBj1ROQQ%3A1790239831201&ei=V-S0asT6C_PUp84PzaynwQY&ved=2ahUKEwiEgs6J64aXAxVz6skDHU3WKWgQ4dUDegQIBhAN&uact=5&oq=logo+del+canal+rt+.svg&gs_lp=Egtnd3Mtd2l6LWltZyIWbG9nbyBkZWwgY2FuYWwgcnQgLnN2Z0iYG1DIB1jiD3ACeACQAQCYAVugAY0CqgEBM7gBA8gBAPgBAZgCAqACD8ICBxAjGMkCGCeYAwCIBgGSBwEyoAcksgcAuAcAwgcDMi0yyAcKgAgB&sclient=gws-wiz-img#sv=CAMSURoyKhBlLWNmQndZTERnZG1yR0dNMg5jZkJ3WUxEZ2RtckdHTToOTXBDSFBtQzg2b3ctbk0gBCoXCgFzEhBlLWNmQndZTERnZG1yR0dNGAEwARgHIN2Tkp8MSggQARgBIAEoAQ" group-title="Internacional",RT TV Español
+#EXTINF:-1 tvg-id="RTEspanol" tvg-name="RT TV Español" tvg-logo="" group-title="Internacional",RT TV Español
 https://rt-esp.rttv.com/dvr/rtesp/playlist_800Kb.m3u8
 
 #EXTINF:-1 tvg-id="DWEspanol" tvg-name="DW Español" tvg-logo="https://i.imgur.com/8MRNFb9.png" group-title="Internacional",DW Español
 https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8
 
-#EXTINF:-1 tvg-id="Teleformula" tvg-name="Telefórmula" tvg-logo="https://imgur.com/y0a0xwY" group-title="Informativos",Telefórmula
+#EXTINF:-1 tvg-id="Teleformula" tvg-name="Telefórmula" tvg-logo="https://imgur.com/y0a0xwY.png" group-title="Informativos",Telefórmula
 https://mdstrm.com/live-stream-playlist/62f2c855f7981b5a5a2d8763.m3u8
 
-#EXTINF:-1 tvg-id="adn40" tvg-name="adn40 Noticias" tvg-logo="https://imgur.com/Og17U9N" group-title="Informativos",adn40 Noticias
+#EXTINF:-1 tvg-id="adn40" tvg-name="adn40 Noticias" tvg-logo="https://imgur.com/Og17U9N.png" group-title="Informativos",adn40 Noticias
 https://mdstrm.com/live-stream-playlist/60b578b060947317de7b57ac.m3u8
 
 #EXTINF:-1 tvg-id="CanalOnce" tvg-name="Canal Once CDMX" tvg-logo="https://canalonce.mx/REST/data/images/canalonce-logo-350x150.webp" group-title="Cultura",Canal Once CDMX
