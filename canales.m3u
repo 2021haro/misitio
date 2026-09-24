@@ -10,16 +10,16 @@ https://queputasteimporta.duckdns.org:33025/hls/canal2.m3u8
 *****************************************************************************************************************************************************
 
 
-#EXTINF:-1 tvg-id="Mileno" tvg-name="Milenio (Nacional)" tvg-logo="https://i.imgur.com/TG1T5Oh.png" group-title="Informativos",Milenio (Nacional)
+#EXTINF:-1 tvg-id="Mileno" tvg-name="Milenio" tvg-logo="https://i.imgur.com/TG1T5Oh.png" group-title="Informativos",Milenio
 https://mdstrm.com/live-stream-playlist/610178c7db32a4112d994650.m3u8
 
 #EXTINF:-1 tvg-id="LasEstrellas" tvg-name="Las Estrellas" tvg-logo="https://i.imgur.com/g5ShxZ7.png" group-title="Entretenimiento",Las Estrellas
 https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
 
-#EXTINF:-1 tvg-id="NMasNacional" tvg-name="N+ (Nacional)" tvg-logo="https://i.imgur.com/IrimbhT.png" group-title="Informativos",N+
+#EXTINF:-1 tvg-id="NMasNacional" tvg-name="N+ (Nacional)" tvg-logo="https://i.imgur.com/IrimbhT.png" group-title="Informativos",N+ (Nacional)
 https://nomvauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel07secure.akamaized.net/hls/live/2036971-b/event01/index.m3u8&redirect=true
 
-#EXTINF:-1 tvg-id="NMasForo" tvg-name="N+ Foro (Televisa)" tvg-logo="https://i.imgur.com/dDFrONz.png" group-title="Informativos",N+ Foro
+#EXTINF:-1 tvg-id="NMasForo" tvg-name="N+ Foro" tvg-logo="https://i.imgur.com/dDFrONz.png" group-title="Informativos",N+ Foro
 https://notusaauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel02secure-notusa.akamaized.net/hls/live/2023914-b/event01/index.m3u8&redirect=true
 
 #EXTINF:-1 tvg-id="NMasMonterrey" tvg-name="N+ Monterrey" tvg-logo="https://i.imgur.com/IrimbhT.png" group-title="Informativos",N+ Monterrey
