@@ -14,10 +14,10 @@ https://queputasteimporta.duckdns.org:33025/hls/canal2.m3u8
 https://mdstrm.com/live-stream-playlist/610178c7db32a4112d994650.m3u8
 
 #EXTINF:-1 tvg-id="LasEstrellas" tvg-name="Las Estrellas" tvg-logo="https://i.imgur.com/IZxjnyp.png" group-title="Entretenimiento",Las Estrellas
-https://amg00567-estrellamedia-estrellatv-estrellamedia-5tdh5.amagi.tv/playlist.m3u8
-
-#EXTINF:-1 tvg-id="Estrella TV" tvg-name="Estrellas TV" tvg-logo="https://i.imgur.com/g5ShxZ7.png" group-title="Entretenimiento",Estrella TV
 https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
+
+#EXTINF:-1 tvg-id="EstrellaTV" tvg-name="Estrellas TV" tvg-logo="https://i.imgur.com/g5ShxZ7.png" group-title="Entretenimiento",Estrella TV
+https://amg00567-estrellamedia-estrellatv-estrellamedia-5tdh5.amagi.tv/playlist.m3u8
 
 #EXTINF:-1 tvg-id="NMasNacional" tvg-name="N+ (Nacional)" tvg-logo="https://i.imgur.com/IrimbhT.png" group-title="Informativos",N+ (Nacional)
 https://nomvauth.univision.com/api/v3/akamai-auth/token-auth?url=https://channel07secure.akamaized.net/hls/live/2036971-b/event01/index.m3u8&redirect=true
