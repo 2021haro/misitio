@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Pruebas - TMDB + Embed69</title>
+    <title>Panel de Pruebas - TMDB + VidSrc</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Estilos para ocultar y mostrar el modal suavemente */
@@ -34,8 +34,8 @@
     <!-- Encabezado y Buscador -->
     <header class="bg-gray-800 p-6 shadow-md">
         <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-3xl font-bold text-blue-400 mb-2">Panel de Streaming V2</h1>
-            <p class="text-gray-400 text-sm mb-6">Integración TMDB -> Embed69 (Películas y Series)</p>
+            <h1 class="text-3xl font-bold text-blue-400 mb-2">Panel de Streaming V3</h1>
+            <p class="text-gray-400 text-sm mb-6">Integración TMDB -> VidSrc API (Películas y Series)</p>
             
             <form id="search-form" class="flex gap-2 justify-center">
                 <input type="text" id="search-input" placeholder="Buscar película o serie..." required
@@ -84,7 +84,7 @@
 
     <!-- Lógica JavaScript -->
     <script>
-        // ¡IMPORTANTE! Reemplaza esto con tu API Key de TMDB (es gratis obtener una en themoviedb.org)
+        // Clave de TMDB (v3 auth)
         const TMDB_API_KEY = '619ec91494635dde84001d877186d865'; 
         const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
         const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
@@ -107,11 +107,6 @@
             e.preventDefault();
             const query = searchInput.value.trim();
             if (!query) return;
-
-            if (TMDB_API_KEY === 'TU_API_KEY_AQUI') {
-                alert("Debes poner tu API KEY de TMDB en el código para que funcione la búsqueda.");
-                return;
-            }
 
             resultsGrid.innerHTML = '<p class="col-span-full text-center text-blue-400">Buscando...</p>';
             
@@ -182,7 +177,7 @@
 
                 if (item.media_type === 'movie') {
                     // Es Película: Cargamos el iframe directamente
-                    loadEmbed69(imdbId);
+                    loadVideoPlayer(imdbId);
                 } else if (item.media_type === 'tv') {
                     // Es Serie: Mostramos las temporadas y episodios
                     renderSeriesDetails(details, imdbId);
@@ -210,7 +205,7 @@
                 
                 // Generamos los botones para cada episodio
                 for (let e = 1; e <= season.episode_count; e++) {
-                    html += `<button onclick="loadEmbed69('${imdbId}', ${season.season_number}, ${e})" class="bg-gray-600 hover:bg-blue-600 text-sm px-3 py-1 rounded transition">Ep ${e}</button>`;
+                    html += `<button onclick="loadVideoPlayer('${imdbId}', ${season.season_number}, ${e})" class="bg-gray-600 hover:bg-blue-600 text-sm px-3 py-1 rounded transition">Ep ${e}</button>`;
                 }
                 
                 html += `</div></div>`;
@@ -223,19 +218,23 @@
             debugUrl.textContent = `ID Base de la Serie: ${imdbId}`;
         }
 
-        // Función: Cargar el iframe de Embed69 en el modal
-        function loadEmbed69(imdbId, season = null, episode = null) {
-            let embedUrl = `https://embed69.org/play.php?id=${imdbId}`;
+        // Función: Cargar el iframe del proveedor de video
+        function loadVideoPlayer(imdbId, season = null, episode = null) {
+            let embedUrl = '';
             
-            // Si es serie, agregamos los parámetros &s= y &e=
+            // Lógica para estructurar la URL según la API de VidSrc
             if (season !== null && episode !== null) {
-                embedUrl += `&s=${season}&e=${episode}`;
+                // Formato para series
+                embedUrl = `https://vidsrc.me/embed/tv?imdb=${imdbId}&season=${season}&episode=${episode}`;
                 modalTitle.textContent = modalTitle.textContent.split(' - ')[0] + ` - T${season} E${episode}`;
+            } else {
+                // Formato para películas
+                embedUrl = `https://vidsrc.me/embed/movie?imdb=${imdbId}`;
             }
 
             modalBody.innerHTML = `
                 <div class="video-container">
-                    <iframe src="${embedUrl}" allowfullscreen frameborder="0" scrolling="no"></iframe>
+                    <iframe src="${embedUrl}" allowfullscreen frameborder="0" scrolling="no" referrerpolicy="origin"></iframe>
                 </div>
             `;
             debugUrl.textContent = `URL: ${embedUrl}`;
