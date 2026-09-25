@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Pruebas - Selector de Servidores</title>
+    <title>Panel de Pruebas - Selector de Servidores Latinos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Estilos para ocultar y mostrar el modal suavemente */
         #modal-backdrop { display: none; }
         #modal-backdrop.active { display: flex; }
         
-        /* Contenedor del video para mantener la proporción 16:9 */
         .video-container {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 */
@@ -31,11 +29,10 @@
 </head>
 <body class="bg-gray-900 text-white min-h-screen font-sans">
 
-    <!-- Encabezado y Buscador -->
     <header class="bg-gray-800 p-6 shadow-md">
         <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-3xl font-bold text-blue-400 mb-2">Panel de Streaming V4</h1>
-            <p class="text-gray-400 text-sm mb-6">Integración TMDB -> Múltiples Servidores (Embed69, VidSrc, AutoEmbed)</p>
+            <h1 class="text-3xl font-bold text-blue-400 mb-2">Panel de Streaming V5</h1>
+            <p class="text-gray-400 text-sm mb-6">Integración TMDB -> Multi-APIs (Enfoque Latino y Multi-idioma)</p>
             
             <form id="search-form" class="flex gap-2 justify-center">
                 <input type="text" id="search-input" placeholder="Buscar película o serie..." required
@@ -47,54 +44,43 @@
         </div>
     </header>
 
-    <!-- Contenedor de Resultados -->
     <main class="max-w-6xl mx-auto p-6">
         <div id="results-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            <!-- Los resultados de TMDB aparecerán aquí -->
             <p class="col-span-full text-center text-gray-500 mt-10">Realiza una búsqueda para comenzar.</p>
         </div>
     </main>
 
-    <!-- Modal (Ventana Emergente) -->
     <div id="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-90 z-50 items-center justify-center p-4">
         <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col relative">
             
-            <!-- Botón Cerrar -->
             <button id="close-modal" class="absolute -top-4 -right-4 bg-red-600 hover:bg-red-700 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold shadow-lg z-50">
                 X
             </button>
 
-            <!-- Cabecera del Modal -->
             <div class="p-4 border-b border-gray-700">
                 <h2 id="modal-title" class="text-xl font-bold text-blue-300">Título</h2>
                 <p id="modal-type-badge" class="text-xs text-gray-400 uppercase tracking-wider mt-1">Tipo</p>
             </div>
 
-            <!-- Cuerpo del Modal (Donde va el Video o la Lista de Episodios) -->
             <div id="modal-body" class="p-4 overflow-y-auto flex-1 w-full">
-                <!-- El contenido se inyectará dinámicamente aquí -->
+                <!-- Contenido dinámico -->
             </div>
             
-            <!-- Pie del Modal (Para depuración) -->
             <div class="p-3 bg-gray-900 rounded-b-lg border-t border-gray-700 text-xs font-mono text-green-400 break-all" id="debug-url">
                 URL generada aparecerá aquí...
             </div>
         </div>
     </div>
 
-    <!-- Lógica JavaScript -->
     <script>
-        // Tu API Key de TMDB ya configurada
         const TMDB_API_KEY = '619ec91494635dde84001d877186d865'; 
         const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
         const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
-        // Elementos del DOM
         const searchForm = document.getElementById('search-form');
         const searchInput = document.getElementById('search-input');
         const resultsGrid = document.getElementById('results-grid');
         
-        // Elementos del Modal
         const modalBackdrop = document.getElementById('modal-backdrop');
         const closeModalBtn = document.getElementById('close-modal');
         const modalTitle = document.getElementById('modal-title');
@@ -102,10 +88,8 @@
         const modalBody = document.getElementById('modal-body');
         const debugUrl = document.getElementById('debug-url');
 
-        // Variable global para guardar los datos del video actual
-        window.currentVideo = { imdbId: null, season: null, episode: null };
+        window.currentVideo = { imdbId: null, tmdbId: null, season: null, episode: null };
 
-        // Evento: Enviar búsqueda
         searchForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const query = searchInput.value.trim();
@@ -114,11 +98,9 @@
             resultsGrid.innerHTML = '<p class="col-span-full text-center text-blue-400">Buscando...</p>';
             
             try {
-                // Buscamos películas y series
                 const response = await fetch(`${TMDB_BASE_URL}/search/multi?api_key=${TMDB_API_KEY}&language=es-MX&query=${encodeURIComponent(query)}`);
                 const data = await response.json();
                 
-                // Filtramos solo películas y series
                 const results = data.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv');
                 renderResults(results);
             } catch (error) {
@@ -126,7 +108,6 @@
             }
         });
 
-        // Función: Dibujar los resultados en la grilla
         function renderResults(results) {
             resultsGrid.innerHTML = '';
             if (results.length === 0) {
@@ -149,28 +130,26 @@
                     </div>
                 `;
                 
-                // Al hacer clic en la tarjeta
                 card.addEventListener('click', () => handleItemClick(item));
                 resultsGrid.appendChild(card);
             });
         }
 
-        // Función: Manejar el clic en un resultado
         async function handleItemClick(item) {
             const title = item.title || item.name;
             modalTitle.textContent = title;
             modalTypeBadge.textContent = item.media_type === 'movie' ? 'Película' : 'Serie de TV';
             modalBody.innerHTML = '<p class="text-center">Cargando datos...</p>';
-            debugUrl.textContent = 'Obteniendo ID de IMDb...';
+            debugUrl.textContent = 'Obteniendo IDs...';
             
             modalBackdrop.classList.add('active');
 
             try {
-                // Consulta para obtener el ID de IMDb
                 const detailsResponse = await fetch(`${TMDB_BASE_URL}/${item.media_type}/${item.id}?api_key=${TMDB_API_KEY}&append_to_response=external_ids`);
                 const details = await detailsResponse.json();
                 
                 const imdbId = details.external_ids.imdb_id;
+                const tmdbId = item.id; // Algunas APIs usan TMDB ID en lugar de IMDb ID
 
                 if (!imdbId) {
                     modalBody.innerHTML = '<p class="text-center text-red-400">Esta producción no tiene un ID de IMDb asociado.</p>';
@@ -178,11 +157,9 @@
                 }
 
                 if (item.media_type === 'movie') {
-                    // Es Película
-                    loadVideoPlayer(imdbId);
+                    loadVideoPlayer(imdbId, tmdbId);
                 } else if (item.media_type === 'tv') {
-                    // Es Serie
-                    renderSeriesDetails(details, imdbId);
+                    renderSeriesDetails(details, imdbId, tmdbId);
                 }
 
             } catch (error) {
@@ -190,8 +167,7 @@
             }
         }
 
-        // Función: Cargar interfaz de Serie (Temporadas y Episodios)
-        function renderSeriesDetails(seriesDetails, imdbId) {
+        function renderSeriesDetails(seriesDetails, imdbId, tmdbId) {
             let html = '<div class="space-y-4">';
             
             seriesDetails.seasons.forEach(season => {
@@ -204,7 +180,7 @@
                 `;
                 
                 for (let e = 1; e <= season.episode_count; e++) {
-                    html += `<button onclick="loadVideoPlayer('${imdbId}', ${season.season_number}, ${e})" class="bg-gray-600 hover:bg-blue-600 text-sm px-3 py-1 rounded transition">Ep ${e}</button>`;
+                    html += `<button onclick="loadVideoPlayer('${imdbId}', '${tmdbId}', ${season.season_number}, ${e})" class="bg-gray-600 hover:bg-blue-600 text-sm px-3 py-1 rounded transition">Ep ${e}</button>`;
                 }
                 
                 html += `</div></div>`;
@@ -214,67 +190,78 @@
             html += `<p class="mt-4 text-sm text-gray-400 text-center">Selecciona un episodio para cargar el reproductor.</p>`;
             
             modalBody.innerHTML = html;
-            debugUrl.textContent = `ID Base de la Serie: ${imdbId}`;
+            debugUrl.textContent = `IMDb: ${imdbId} | TMDB: ${tmdbId}`;
         }
 
-        // Función: Iniciar el reproductor y guardar datos
-        function loadVideoPlayer(imdbId, season = null, episode = null) {
-            window.currentVideo = { imdbId, season, episode };
+        function loadVideoPlayer(imdbId, tmdbId, season = null, episode = null) {
+            window.currentVideo = { imdbId, tmdbId, season, episode };
             
-            // Actualizamos el título si es serie
             if (season !== null && episode !== null) {
                 const baseTitle = modalTitle.textContent.split(' - ')[0];
                 modalTitle.textContent = `${baseTitle} - T${season} E${episode}`;
             }
             
-            // Cargamos el servidor por defecto (VidSrc) para asegurar que se vea video primero
-            changeServer('vidsrc');
+            // Iniciamos con Vidsrc.pro, que suele ser muy estable
+            changeServer('vidsrcpro');
         }
 
-        // Función: Cambiar de servidor dinámicamente
         window.changeServer = function(serverName) {
-            const { imdbId, season, episode } = window.currentVideo;
+            const { imdbId, tmdbId, season, episode } = window.currentVideo;
             let embedUrl = '';
 
-            if (serverName === 'vidsrc') {
-                embedUrl = (season && episode) 
-                    ? `https://vidsrc.me/embed/tv?imdb=${imdbId}&season=${season}&episode=${episode}` 
-                    : `https://vidsrc.me/embed/movie?imdb=${imdbId}`;
-            } 
-            else if (serverName === 'embed69') {
-                embedUrl = (season && episode) 
-                    ? `https://embed69.org/play.php?id=${imdbId}&s=${season}&e=${episode}` 
-                    : `https://embed69.org/play.php?id=${imdbId}`;
-            }
-            else if (serverName === 'autoembed') {
-                embedUrl = (season && episode) 
-                    ? `https://autoembed.co/tv/imdb/${imdbId}-${season}-${episode}` 
-                    : `https://autoembed.co/movie/imdb/${imdbId}`;
+            // Lógica de ruteo para cada proveedor de API
+            switch(serverName) {
+                case 'vidsrcpro':
+                    embedUrl = (season && episode) 
+                        ? `https://vidsrc.pro/embed/tv/${imdbId}/${season}/${episode}` 
+                        : `https://vidsrc.pro/embed/movie/${imdbId}`;
+                    break;
+                case 'superembed':
+                    embedUrl = (season && episode) 
+                        ? `https://multiembed.mov/directstream.php?video_id=${imdbId}&s=${season}&e=${episode}` 
+                        : `https://multiembed.mov/directstream.php?video_id=${imdbId}`;
+                    break;
+                case 'autoembed':
+                    embedUrl = (season && episode) 
+                        ? `https://autoembed.co/tv/imdb/${imdbId}-${season}-${episode}` 
+                        : `https://autoembed.co/movie/imdb/${imdbId}`;
+                    break;
+                case 'pelisplus':
+                    // Muchos scrapers latinos usan el ID de TMDB en lugar del de IMDb
+                    embedUrl = (season && episode)
+                        ? `https://pelisplus.icu/embed/tv/${tmdbId}/${season}/${episode}`
+                        : `https://pelisplus.icu/embed/movie/${tmdbId}`;
+                    break;
+                case 'embed69':
+                    embedUrl = (season && episode) 
+                        ? `https://embed69.org/play.php?id=${imdbId}&s=${season}&e=${episode}` 
+                        : `https://embed69.org/play.php?id=${imdbId}`;
+                    break;
             }
 
             const buttonsHtml = `
                 <div class="flex flex-wrap gap-2 mb-4 justify-center">
-                    <button onclick="changeServer('vidsrc')" class="px-4 py-2 text-sm font-semibold rounded transition ${serverName === 'vidsrc' ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'}">Servidor 1 (Inglés)</button>
-                    <button onclick="changeServer('autoembed')" class="px-4 py-2 text-sm font-semibold rounded transition ${serverName === 'autoembed' ? 'bg-purple-600' : 'bg-gray-700 hover:bg-gray-600'}">Servidor 2 (Multi)</button>
-                    <button onclick="changeServer('embed69')" class="px-4 py-2 text-sm font-semibold rounded transition ${serverName === 'embed69' ? 'bg-green-600' : 'bg-gray-700 hover:bg-gray-600'}">Servidor 3 (Latino)</button>
+                    <button onclick="changeServer('vidsrcpro')" class="px-3 py-1 text-xs font-semibold rounded transition ${serverName === 'vidsrcpro' ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'}">VidSrc Pro (Multi)</button>
+                    <button onclick="changeServer('superembed')" class="px-3 py-1 text-xs font-semibold rounded transition ${serverName === 'superembed' ? 'bg-purple-600' : 'bg-gray-700 hover:bg-gray-600'}">SuperEmbed (Multi)</button>
+                    <button onclick="changeServer('autoembed')" class="px-3 py-1 text-xs font-semibold rounded transition ${serverName === 'autoembed' ? 'bg-indigo-600' : 'bg-gray-700 hover:bg-gray-600'}">AutoEmbed (Multi)</button>
+                    <button onclick="changeServer('pelisplus')" class="px-3 py-1 text-xs font-semibold rounded transition ${serverName === 'pelisplus' ? 'bg-orange-600' : 'bg-gray-700 hover:bg-gray-600'}">PelisPlus (Latino)</button>
+                    <button onclick="changeServer('embed69')" class="px-3 py-1 text-xs font-semibold rounded transition ${serverName === 'embed69' ? 'bg-green-600' : 'bg-gray-700 hover:bg-gray-600'}">Embed69 (Latino)</button>
                 </div>
             `;
 
             modalBody.innerHTML = buttonsHtml + `
-                <div class="video-container">
+                <div class="video-container bg-black rounded-lg shadow-inner">
                     <iframe src="${embedUrl}" allowfullscreen frameborder="0" scrolling="no" referrerpolicy="origin"></iframe>
                 </div>
             `;
             debugUrl.textContent = `URL: ${embedUrl}`;
         }
 
-        // Evento: Cerrar Modal
         closeModalBtn.addEventListener('click', () => {
             modalBackdrop.classList.remove('active');
             modalBody.innerHTML = ''; 
         });
 
-        // Cerrar modal al hacer clic fuera
         modalBackdrop.addEventListener('click', (e) => {
             if (e.target === modalBackdrop) {
                 closeModalBtn.click();
