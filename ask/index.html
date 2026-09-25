@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Pruebas de Streaming</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc; /* Slate 50 */
+        }
+        
+        /* Custom scrollbar for history if it gets too long */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+
+    <main class="flex-grow flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8 w-full max-w-5xl mx-auto">
+        
+        <!-- Header Section -->
+        <header class="text-center mb-8 w-full">
+            <h1 class="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500 mb-2">
+                Panel de Pruebas de Streaming
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
+                Herramienta de desarrollo para probar la integración de iframes de proveedores externos (API). Ingresa un ID de IMDb para cargar el reproductor.
+            </p>
+        </header>
+
+        <!-- Control Panel -->
+        <div class="glass-panel w-full p-6 rounded-2xl shadow-xl mb-8 flex flex-col md:flex-row gap-4 items-center justify-between z-10">
+            <div class="w-full flex flex-col sm:flex-row gap-3">
+                <div class="relative flex-grow">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                        </svg>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="imdbIdInput" 
+                        placeholder="Ej. tt0111161 (Película) o tt0903747 (Serie)" 
+                        class="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-200 placeholder-slate-500 transition-all"
+                        autocomplete="off"
+                    >
+                </div>
+                <button 
+                    id="loadBtn" 
+                    class="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg shadow-lg shadow-blue-500/30 transition-all flex items-center justify-center gap-2"
+                >
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Cargar Video
+                </button>
+            </div>
+            
+            <div class="flex items-center gap-2 text-sm text-slate-400 border-l border-slate-700 pl-4 hidden md:flex min-w-[150px]">
+                <span>Endpoint:</span>
+                <span class="bg-slate-800 px-2 py-1 rounded text-xs font-mono text-indigo-300">embed69.org</span>
+            </div>
+        </div>
+
+        <!-- Player Container (16:9 Aspect Ratio) -->
+        <div class="w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl relative border border-slate-700 group">
+            
+            <!-- Placeholder State -->
+            <div id="playerPlaceholder" class="absolute inset-0 flex flex-col items-center justify-center text-slate-500 bg-slate-900 z-10 transition-opacity duration-300">
+                <svg class="w-16 h-16 mb-4 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                <p class="text-lg font-medium">Esperando ID de IMDb...</p>
+                <p class="text-sm opacity-75 mt-1">El reproductor se cargará aquí</p>
+            </div>
+
+            <!-- Loading Spinner State -->
+            <div id="playerLoading" class="absolute inset-0 flex items-center justify-center bg-black z-20 opacity-0 pointer-events-none transition-opacity duration-300">
+                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+
+            <!-- The Iframe -->
+            <iframe 
+                id="videoIframe" 
+                class="absolute inset-0 w-full h-full opacity-0 transition-opacity duration-500" 
+                src="" 
+                frameborder="0" 
+                allowfullscreen 
+                scrolling="no"
+                title="Reproductor de Video"
+            ></iframe>
+            
+            <!-- Iframe overlay URL info (Development visual aid) -->
+            <div id="urlBadge" class="absolute top-4 left-4 bg-black/80 backdrop-blur text-xs font-mono text-green-400 px-3 py-1.5 rounded opacity-0 transition-opacity duration-300 pointer-events-none border border-green-500/30">
+                URL: --
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="w-full mt-8">
+            <h3 class="text-sm uppercase tracking-wider text-slate-500 font-semibold mb-3 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Historial Reciente
+            </h3>
+            <div id="historyContainer" class="flex flex-wrap gap-2 min-h-[40px]">
+                <p id="emptyHistory" class="text-sm text-slate-600 italic">No hay búsquedas recientes.</p>
+                <!-- History chips will be injected here via JS -->
+            </div>
+        </div>
+        
+        <!-- Info Alert -->
+        <div class="mt-12 w-full p-4 bg-slate-800/50 border border-slate-700/50 rounded-xl text-xs text-slate-400 flex items-start gap-3">
+            <svg class="w-5 h-5 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p>
+                <strong>Nota técnica:</strong> Las políticas de seguridad del navegador (CORS) y los bloqueadores de anuncios pueden afectar el comportamiento del iframe de sitios externos. Si el reproductor no carga, puede deberse a bloqueadores de ventanas emergentes o extensiones de privacidad activas en tu navegador.
+            </p>
+        </div>
+
+    </main>
+
+    <script>
+        // DOM Elements
+        const inputField = document.getElementById('imdbIdInput');
+        const loadBtn = document.getElementById('loadBtn');
+        const iframe = document.getElementById('videoIframe');
+        const placeholder = document.getElementById('playerPlaceholder');
+        const loader = document.getElementById('playerLoading');
+        const historyContainer = document.getElementById('historyContainer');
+        const emptyHistoryText = document.getElementById('emptyHistory');
+        const urlBadge = document.getElementById('urlBadge');
+
+        // State
+        let searchHistory = [];
+
+        // Load history from local storage on startup
+        function init() {
+            const savedHistory = localStorage.getItem('streamingTestHistory');
+            if (savedHistory) {
+                try {
+                    searchHistory = JSON.parse(savedHistory);
+                    renderHistory();
+                } catch (e) {
+                    console.error("Error loading history", e);
+                }
+            }
+        }
+
+        // Main function to load the video
+        function loadVideo(imdbId) {
+            // Basic validation for IMDb ID format (tt followed by numbers)
+            const sanitizedId = imdbId.trim().toLowerCase();
+            if (!sanitizedId.match(/^tt\d+$/)) {
+                alert("Por favor, ingresa un ID de IMDb válido (ej. tt0111161)");
+                inputField.focus();
+                return;
+            }
+
+            // Construct the URL (Using the standard embed69 play structure)
+            const targetUrl = `https://embed69.org/play.php?id=${sanitizedId}`;
+
+            // Show Loading State
+            loader.style.opacity = '1';
+            placeholder.style.opacity = '0';
+            iframe.style.opacity = '0';
+            urlBadge.style.opacity = '0';
+            
+            // Set slight delay to show loading animation (UX)
+            setTimeout(() => {
+                iframe.src = targetUrl;
+                
+                // Show iframe and hide loader
+                iframe.onload = () => {
+                    loader.style.opacity = '0';
+                    iframe.style.opacity = '1';
+                    
+                    // Show dev URL badge
+                    urlBadge.textContent = `URL: ${targetUrl}`;
+                    urlBadge.style.opacity = '1';
+                };
+            }, 600);
+
+            // Update History
+            addToHistory(sanitizedId);
+        }
+
+        // Add to history and update UI
+        function addToHistory(id) {
+            // Remove if already exists to move it to the front
+            searchHistory = searchHistory.filter(item => item !== id);
+            
+            // Add to beginning
+            searchHistory.unshift(id);
+            
+            // Keep only last 10
+            if (searchHistory.length > 10) {
+                searchHistory.pop();
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('streamingTestHistory', JSON.stringify(searchHistory));
+            
+            renderHistory();
+        }
+
+        // Render history chips
+        function renderHistory() {
+            if (searchHistory.length === 0) {
+                emptyHistoryText.style.display = 'block';
+                return;
+            }
+
+            emptyHistoryText.style.display = 'none';
+            
+            // Clear current chips (except the empty text element)
+            const chips = historyContainer.querySelectorAll('.history-chip');
+            chips.forEach(chip => chip.remove());
+
+            // Create new chips
+            searchHistory.forEach(id => {
+                const chip = document.createElement('button');
+                chip.className = 'history-chip px-3 py-1.5 bg-slate-800 hover:bg-blue-900 border border-slate-700 hover:border-blue-500 rounded-full text-xs font-medium text-slate-300 transition-colors flex items-center gap-1 group';
+                
+                // Content of chip
+                chip.innerHTML = `
+                    <svg class="w-3 h-3 text-slate-500 group-hover:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    </svg>
+                    ${id}
+                `;
+
+                // On click, load this ID
+                chip.onclick = () => {
+                    inputField.value = id;
+                    loadVideo(id);
+                };
+
+                historyContainer.appendChild(chip);
+            });
+        }
+
+        // Event Listeners
+        loadBtn.addEventListener('click', () => {
+            if(inputField.value) loadVideo(inputField.value);
+        });
+
+        inputField.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && inputField.value) {
+                loadVideo(inputField.value);
+            }
+        });
+
+        // Initialize app
+        init();
+
+    </script>
+</body>
+</html>
