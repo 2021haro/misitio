@@ -227,7 +227,7 @@ main{max-width:1400px;margin:0 auto;padding:0 22px 60px;min-height:80vh}
 }
 .card-sub{color:var(--muted);font-size:11.5px;margin-top:3px}
 
-/* ============ GRID ============ */
+/* ============ GRID (para vistas Películas / Series / Búsqueda) ============ */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
@@ -308,33 +308,16 @@ main{max-width:1400px;margin:0 auto;padding:0 22px 60px;min-height:80vh}
   width:7px;height:7px;border-radius:50%;background:var(--good);
   box-shadow:0 0 10px var(--good);animation:pulse 2s infinite;
 }
-.player-label .reload-btn{
-  margin-left:auto;font-size:11px;font-weight:700;
-  padding:6px 11px;border-radius:8px;
-  background:rgba(255,255,255,.06);color:var(--muted);
-  border:1px solid var(--border);letter-spacing:.3px;
-  transition:all .15s;
-}
-.player-label .reload-btn:hover{background:rgba(124,92,255,.15);color:var(--text);border-color:var(--accent)}
 @keyframes pulse{50%{opacity:.4}}
 .player{
   aspect-ratio:16/9;width:100%;background:#030507;
   border:1px solid var(--border);border-radius:14px;overflow:hidden;
-  position:relative;
 }
-.player iframe{width:100%;height:100%;border:0;display:block;position:absolute;inset:0}
+.player iframe{width:100%;height:100%;border:0;display:block}
 .player .placeholder{
   height:100%;display:grid;place-items:center;text-align:center;
   color:var(--muted);padding:30px;font-size:13.5px;
 }
-/* Overlay de carga dentro del reproductor */
-.player .loading-overlay{
-  position:absolute;inset:0;z-index:5;
-  background:#030507;display:grid;place-items:center;
-  flex-direction:column;gap:12px;color:var(--muted);font-size:13px;
-  pointer-events:none;transition:opacity .3s;
-}
-.player .loading-overlay.hide{opacity:0;pointer-events:none}
 
 /* Controles de temporada / episodio */
 .tv-controls{
@@ -558,7 +541,6 @@ footer a{color:var(--accent2)}
         <div class="player-label">
           <span class="live"></span>
           Reproductor · UnLimPlay
-          <button class="reload-btn" id="reloadPlayer">🔄 Recargar</button>
         </div>
         <div class="player" id="modalPlayer">
           <div class="placeholder">Selecciona una película o serie para comenzar.</div>
@@ -613,6 +595,7 @@ async function tmdb(path, params = {}){
   url.searchParams.set("api_key", TMDB_API_KEY);
   url.searchParams.set("language", LANG);
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+
   const res = await fetch(url.toString());
   if(!res.ok) throw new Error("TMDB HTTP " + res.status);
   return res.json();
@@ -626,7 +609,7 @@ function img(path, big = false){
 function typeName(t){ return t === "tv" ? "Serie" : "Película"; }
 
 /* =========================================================
-   NAVEGACIÓN
+   NAVEGACIÓN ENTRE VISTAS
 ========================================================= */
 document.querySelectorAll("nav.main-nav button").forEach(btn => {
   btn.onclick = () => switchView(btn.dataset.view);
@@ -649,7 +632,7 @@ document.querySelectorAll(".see-all").forEach(b => {
 });
 
 /* =========================================================
-   TARJETA
+   TARJETA (componente reutilizable)
 ========================================================= */
 function cardHTML(item, type){
   const name = item.title || item.name || "Sin título";
@@ -688,7 +671,7 @@ function bindCards(container){
 }
 
 /* =========================================================
-   HOME
+   HOME — CARRUSELES
 ========================================================= */
 async function loadHome(){
   loadHero();
@@ -715,7 +698,9 @@ async function loadRow(containerId, path, params, forcedType){
     const data = await tmdb(path, params);
     let items = (data.results || []).filter(x =>
       x.media_type ? (x.media_type === "movie" || x.media_type === "tv") : true
-    ).slice(0, 18);
+    );
+
+    items = items.slice(0, 18);
 
     container.innerHTML = items.map(item => {
       const t = forcedType === "multi" ? null : forcedType;
@@ -753,7 +738,7 @@ async function loadHero(){
 }
 
 /* =========================================================
-   PAGINACIÓN
+   VISTAS CON SCROLL INFINITO
 ========================================================= */
 async function loadMoviesPage(){
   if(state.loading.movies || !state.hasMore.movies) return;
@@ -833,18 +818,21 @@ async function loadSearchPage(){
 
 /* Scroll infinito */
 window.addEventListener("scroll", () => {
+  const home = $("view-home").classList.contains("active");
   const movies = $("view-movies").classList.contains("active");
   const tv = $("view-tv").classList.contains("active");
   const search = $("view-search").classList.contains("active");
+
   const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 700;
   if(!nearBottom) return;
+
   if(movies) loadMoviesPage();
   if(tv) loadTvPage();
   if(search) loadSearchPage();
 });
 
 /* =========================================================
-   BUSCADOR
+   BUSCADOR + SUGERENCIAS
 ========================================================= */
 const searchInput = $("searchInput");
 const searchWrap = $("searchWrap");
@@ -856,9 +844,11 @@ let searchTimer = null;
 searchInput.addEventListener("input", () => {
   const q = searchInput.value.trim();
   searchWrap.classList.toggle("has-value", q.length > 0);
+
   clearTimeout(suggestTimer);
   if(!q){ suggestions.classList.remove("open"); return; }
   suggestTimer = setTimeout(() => loadSuggestions(q), 220);
+
   clearTimeout(searchTimer);
   searchTimer = setTimeout(() => runSearch(q), 500);
 });
@@ -869,7 +859,9 @@ searchInput.addEventListener("keydown", e => {
     suggestions.classList.remove("open");
     runSearch(searchInput.value.trim());
   }
-  if(e.key === "Escape") suggestions.classList.remove("open");
+  if(e.key === "Escape"){
+    suggestions.classList.remove("open");
+  }
 });
 
 searchClear.onclick = () => {
@@ -941,7 +933,7 @@ function runSearch(q){
 }
 
 /* =========================================================
-   MODAL DE DETALLE
+   MODAL DE DETALLE + REPRODUCTOR
 ========================================================= */
 const modal = $("modal");
 
@@ -1097,51 +1089,15 @@ function renderPlayer(){
     $("modalPlayer").innerHTML = `<div class="placeholder">No se pudo cargar el reproductor.</div>`;
     return;
   }
-
-  // Overlay de carga mientras el iframe carga
   $("modalPlayer").innerHTML = `
-    <div class="loading-overlay" id="playerLoading">
-      <div class="spinner"></div>
-      <div>Cargando reproductor…</div>
-    </div>
-    <iframe
-      id="playerFrame"
-      src="${esc(url)}"
-      sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-orientation-lock"
+    <iframe src="${esc(url)}"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
       allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
       allowfullscreen
       referrerpolicy="origin-when-cross-origin">
     </iframe>
   `;
-
-  const frame = $("playerFrame");
-  const overlay = $("playerLoading");
-  if(frame && overlay){
-    frame.addEventListener("load", () => {
-      setTimeout(() => overlay.classList.add("hide"), 400);
-    }, { once: true });
-  }
 }
-
-/* Botón recargar del reproductor */
-$("reloadPlayer").onclick = () => {
-  const frame = $("playerFrame");
-  if(frame && frame.src){
-    // Forzar recarga
-    const src = frame.src;
-    frame.src = "about:blank";
-    setTimeout(() => { frame.src = src; }, 80);
-
-    // Mostrar overlay de nuevo
-    const player = $("modalPlayer");
-    const existingOverlay = player.querySelector(".loading-overlay");
-    if(existingOverlay){
-      existingOverlay.classList.remove("hide");
-    }
-  } else {
-    renderPlayer();
-  }
-};
 
 /* =========================================================
    INICIALIZACIÓN
@@ -1150,6 +1106,7 @@ loadHome();
 loadMoviesPage();
 loadTvPage();
 
+/* Foco en buscador con "/" */
 document.addEventListener("keydown", e => {
   if(e.key === "/" && document.activeElement !== searchInput){
     e.preventDefault();
