@@ -1,11 +1,10 @@
 #EXTM3U
 
 #EXTINF:-1 tvg-id="CAM1" tvg-name="CAM 1" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="Canales",CAM 1
-https://queputasteimporta.duckdns.org:64569/hls/canal.m3u8
+https://queputasteimporta.duckdns.org:52214/hls/canal.m3u8
 
 #EXTINF:-1 tvg-id="CAM2" tvg-name="CAM 2" tvg-logo="https://raw.githubusercontent.com/2021haro/misitio/main/la%20casa%20de%20los%20famosos%20logo.webp" group-title="Canales",CAM 2
-https://queputasteimporta.duckdns.org:64569/hls/canal2.m3u8
-
+https://queputasteimporta.duckdns.org:52214/hls/canal2.m3u8
 
 *****************************************************************************************************************************************************
 
