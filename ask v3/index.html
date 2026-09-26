@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mi Cine — TMDB</title>
+<style>
+:root{
+  --bg:#080b11;--panel:#111722;--panel2:#171e2b;--border:#293347;
+  --text:#f5f7fb;--muted:#98a4b8;--accent:#7c5cff;--accent2:#9b7cff;
+  --good:#4fd18b;--danger:#ff6b7d;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#182033 0,#080b11 50%);
+color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}
+header{position:sticky;top:0;z-index:20;background:rgba(8,11,17,.94);
+backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.header{max-width:1250px;margin:auto;padding:18px 22px;display:flex;align-items:center;gap:13px}
+.logo{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,#7c5cff,#b66cff);
+display:grid;place-items:center;font-weight:900;font-size:20px}
+h1{font-size:20px;margin:0}.sub{font-size:12px;color:var(--muted);margin-top:3px}
+main{max-width:1250px;margin:auto;padding:22px}
+.searchBox{background:rgba(17,23,34,.94);border:1px solid var(--border);border-radius:18px;padding:18px}
+.searchRow{display:flex;gap:10px}.searchRow input{flex:1}
+input,select,button{border:1px solid var(--border);background:var(--panel2);color:var(--text);
+border-radius:11px;padding:12px;font:inherit}
+input{outline:none}input:focus,select:focus{border-color:var(--accent)}
+button{cursor:pointer;font-weight:700}button:hover{border-color:#66718a}
+.primary{background:var(--accent);border-color:var(--accent)}
+.results{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:15px}
+.card{display:flex;gap:11px;padding:10px;border:1px solid var(--border);border-radius:13px;
+background:#121925;cursor:pointer;min-height:105px}.card:hover{background:#1a2130;border-color:#59657c}
+.card img{width:62px;height:90px;object-fit:cover;border-radius:8px;background:#080b11}
+.card b{font-size:13px;line-height:1.25}.card small{display:block;color:var(--muted);font-size:11px;margin-top:6px}
+.type{display:inline-block;border:1px solid var(--border);border-radius:99px;padding:3px 6px;font-size:9px;margin-top:7px}
+.layout{display:grid;grid-template-columns:260px 1fr;gap:18px;margin-top:18px}
+.panel{background:rgba(17,23,34,.94);border:1px solid var(--border);border-radius:18px;padding:17px}
+.poster{width:100%;border-radius:12px;display:block;background:#080b11;min-height:250px;object-fit:cover}
+h2{font-size:17px;margin:0 0 10px}.title{font-size:27px;font-weight:850}.meta{color:var(--muted);font-size:13px;margin:6px 0 14px}
+.overview{color:#cbd3e1;line-height:1.55;font-size:13px}
+.tag{display:inline-block;border:1px solid var(--border);border-radius:99px;padding:5px 8px;color:#cbd3e1;font-size:10px;margin:3px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.full{grid-column:1/-1}
+label{font-size:11px;color:var(--muted);display:block;margin:0 0 6px}
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:10px}
+.service{padding:14px;text-align:left}.service.active{border-color:var(--accent);background:#261e44}
+.service b{display:block}.service small{color:var(--muted);display:block;margin-top:4px}
+.playerWrap{margin-top:18px}.player{aspect-ratio:16/9;min-height:320px;background:#030507;
+border:1px solid var(--border);border-radius:15px;overflow:hidden}.player iframe{width:100%;height:100%;border:0}
+.placeholder{height:100%;min-height:320px;display:grid;place-items:center;text-align:center;color:var(--muted);padding:25px}
+.notice{padding:11px 13px;border:1px solid var(--border);border-radius:11px;color:var(--muted);
+font-size:11px;line-height:1.5;margin-top:12px}.hidden{display:none!important}
+.episodeGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;max-height:380px;overflow:auto}
+.ep{padding:10px;text-align:left}.ep.active{border-color:var(--accent);background:#261e44}
+.ep small{display:block;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status{font-size:12px;color:var(--muted);margin-top:8px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.controls{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header">
+    <div class="logo">▶</div>
+    <div>
+      <h1>MI CINE</h1>
+      <div class="sub">TMDB → película/serie → temporada → capítulo → servicio</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="searchBox">
+  <label>BUSCAR EN TMDB</label>
+  <div class="searchRow">
+    <input id="search" autocomplete="off" placeholder="Escribe: los, matrix, breaking bad, etc.">
+    <button class="primary" id="searchBtn">Buscar</button>
+  </div>
+  <div class="status" id="searchStatus">Escribe el nombre de una película o serie.</div>
+  <div id="results" class="results"></div>
+</section>
+
+<section id="workspace" class="layout hidden">
+
+  <aside class="panel">
+    <img id="poster" class="poster" alt="">
+    <div style="margin-top:12px">
+      <div id="sideTitle" style="font-weight:800"></div>
+      <div id="sideMeta" class="status"></div>
+    </div>
+  </aside>
+
+  <section>
+
+    <div class="panel">
+      <div id="title" class="title"></div>
+      <div id="meta" class="meta"></div>
+      <div id="tags"></div>
+      <p id="overview" class="overview"></p>
+
+      <div id="movieControls" class="controls hidden">
+        <div class="full">
+          <h2>Elige un servicio</h2>
+          <div id="movieServices" class="services"></div>
+        </div>
+      </div>
+
+      <div id="tvControls" class="hidden">
+        <div class="controls">
+          <div>
+            <label>TEMPORADA</label>
+            <select id="season"></select>
+          </div>
+          <div>
+            <label>EPISODIO</label>
+            <select id="episode"></select>
+          </div>
+        </div>
+
+        <div style="margin-top:17px">
+          <h2>Capítulos</h2>
+          <div id="episodes" class="episodeGrid"></div>
+        </div>
+
+        <div style="margin-top:18px">
+          <h2>Elige un servicio</h2>
+          <div id="tvServices" class="services"></div>
+        </div>
+      </div>
+
+      <div id="selectionStatus" class="notice">
+        Selecciona un servicio para cargar el reproductor.
+      </div>
+    </div>
+
+    <div class="panel playerWrap">
+      <h2>Reproductor</h2>
+      <div id="player" class="player">
+        <div class="placeholder">
+          Selecciona una película o serie y después un servicio.
+        </div>
+      </div>
+    </div>
+
+  </section>
+</section>
+
+<div class="notice">
+  TMDB proporciona los datos de películas, series, temporadas y episodios. UnLimPlay actúa como multi-scraper y ofrece contenido en español latino obtenido, entre otras fuentes, de Embed69.
+</div>
+
+</main>
+
+<footer>Powered by TMDB · Reproductor: UnLimPlay</footer>
+
+<script>
+/*
+  TMDB API KEY solicitada por el usuario.
+  Si la clave deja de funcionar, reemplázala aquí por una nueva.
+*/
+const TMDB_API_KEY = "619ec91494635dde84001d877186d865";
+const TMDB = "https://api.themoviedb.org/3";
+const IMG = "https://image.tmdb.org/t/p/w500";
+
+const state = {
+  item:null,
+  type:null,
+  seasons:[],
+  season:null,
+  episode:null,
+  selectedService:null
+};
+
+const $ = id => document.getElementById(id);
+
+function esc(v){
+  return String(v ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+async function api(path){
+  const separator = path.includes("?") ? "&" : "?";
+  const url = TMDB + path + separator +
+    "api_key=" + encodeURIComponent(TMDB_API_KEY) +
+    "&language=es-MX";
+
+  const response = await fetch(url);
+  if(!response.ok){
+    throw new Error("TMDB respondió con HTTP " + response.status);
+  }
+  return response.json();
+}
+
+function image(path){
+  return path ? IMG + path : "";
+}
+
+function typeName(type){
+  return type === "tv" ? "SERIE" : "PELÍCULA";
+}
+
+/* =========================
+   BÚSQUEDA
+========================= */
+
+let timer = null;
+
+$("search").addEventListener("input", () => {
+  clearTimeout(timer);
+  const q = $("search").value.trim();
+
+  if(!q){
+    $("results").innerHTML = "";
+    $("searchStatus").textContent = "Escribe el nombre de una película o serie.";
+    return;
+  }
+
+  timer = setTimeout(() => searchTMDB(q), 300);
+});
+
+$("search").addEventListener("keydown", e => {
+  if(e.key === "Enter") searchTMDB($("search").value.trim());
+});
+
+$("searchBtn").onclick = () => searchTMDB($("search").value.trim());
+
+async function searchTMDB(q){
+  if(!q) return;
+
+  $("searchStatus").textContent = "Buscando «" + q + "»…";
+  $("results").innerHTML = "";
+
+  try{
+    const data = await api(
+      "/search/multi?query=" + encodeURIComponent(q) +
+      "&include_adult=false&page=1"
+    );
+
+    const results = (data.results || [])
+      .filter(x => x.media_type === "movie" || x.media_type === "tv")
+      .slice(0, 40);
+
+    if(!results.length){
+      $("searchStatus").textContent = "No encontré resultados.";
+      return;
+    }
+
+    $("searchStatus").textContent =
+      results.length + " resultado(s) para «" + q + "».";
+
+    $("results").innerHTML = results.map((x, i) => {
+      const name = x.title || x.name || "Sin título";
+      const date = x.release_date || x.first_air_date || "";
+      return `
+        <div class="card" data-index="${i}">
+          <img src="${esc(image(x.poster_path))}" alt="">
+          <div>
+            <b>${esc(name)}</b>
+            <small>${esc(date.slice(0,4) || "Sin año")}</small>
+            <span class="type">${typeName(x.media_type)}</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    document.querySelectorAll(".card").forEach(card => {
+      card.onclick = () => selectResult(results[Number(card.dataset.index)]);
+    });
+
+  }catch(error){
+    $("searchStatus").textContent = "Error: " + error.message;
+  }
+}
+
+/* =========================
+   SELECCIÓN
+========================= */
+
+async function selectResult(result){
+  try{
+    $("searchStatus").textContent = "Cargando información…";
+
+    const type = result.media_type;
+    const id = result.id;
+
+    const details = await api(
+      "/" + type + "/" + id
+    );
+
+    state.item = details;
+    state.type = type;
+    state.selectedService = null;
+
+    $("workspace").classList.remove("hidden");
+
+    $("poster").src = image(details.poster_path);
+    $("sideTitle").textContent = details.title || details.name || "";
+    $("sideMeta").textContent =
+      (details.release_date || details.first_air_date || "").slice(0,4) +
+      " · " + typeName(type);
+
+    $("title").textContent = details.title || details.name || "";
+    $("meta").textContent =
+      (details.release_date || details.first_air_date || "").slice(0,4) +
+      " · TMDB " + details.id +
+      (details.vote_average ? " · ★ " + Number(details.vote_average).toFixed(1) : "");
+
+    $("tags").innerHTML =
+      `<span class="tag">${typeName(type)}</span>` +
+      `<span class="tag">TMDB ${details.id}</span>`;
+
+    $("overview").textContent =
+      details.overview || "No hay sinopsis disponible.";
+
+    $("player").innerHTML = `
+      <div class="placeholder">
+        ${type === "tv"
+          ? "Ahora selecciona temporada, capítulo y servicio."
+          : "Ahora selecciona un servicio."}
+      </div>`;
+
+    if(type === "movie"){
+      $("movieControls").classList.remove("hidden");
+      $("tvControls").classList.add("hidden");
+      renderServices("movieServices");
+    }else{
+      $("movieControls").classList.add("hidden");
+      $("tvControls").classList.remove("hidden");
+      await loadSeasons();
+    }
+
+    $("searchStatus").textContent = "Seleccionado: " + (details.title || details.name);
+
+    window.scrollTo({
+      top: $("workspace").offsetTop - 15,
+      behavior:"smooth"
+    });
+
+  }catch(error){
+    alert("No se pudo cargar el título: " + error.message);
+  }
+}
+
+/* =========================
+   SERIES
+========================= */
+
+async function loadSeasons(){
+  const seasons = (state.item.seasons || [])
+    .filter(s => Number(s.season_number) >= 0);
+
+  state.seasons = seasons;
+
+  $("season").innerHTML = seasons.map(s =>
+    `<option value="${s.season_number}">
+      Temporada ${s.season_number}${s.name ? " — " + esc(s.name) : ""}
+    </option>`
+  ).join("");
+
+  const normal = seasons.find(s => s.season_number === 1);
+  state.season = normal ? 1 : (seasons[0]?.season_number ?? 0);
+
+  $("season").value = state.season;
+
+  await loadEpisodes();
+}
+
+$("season").onchange = async () => {
+  state.season = Number($("season").value);
+  state.selectedService = null;
+  await loadEpisodes();
+  renderServices("tvServices");
+};
+
+async function loadEpisodes(){
+  $("episodes").innerHTML = "<div class='status'>Cargando capítulos…</div>";
+
+  try{
+    const data = await api(
+      "/tv/" + state.item.id + "/season/" + state.season
+    );
+
+    const episodes = data.episodes || [];
+
+    $("episodes").innerHTML = episodes.map(ep => `
+      <button class="ep" data-episode="${ep.episode_number}">
+        <b>E${String(ep.episode_number).padStart(2,"0")}</b>
+        <small>${esc(ep.name || "Sin título")}</small>
+      </button>
+    `).join("");
+
+    if(episodes.length){
+      state.episode = episodes[0].episode_number;
+      $("episode").innerHTML = episodes.map(ep =>
+        `<option value="${ep.episode_number}">
+          E${String(ep.episode_number).padStart(2,"0")} — ${esc(ep.name || "")}
+        </option>`
+      ).join("");
+
+      document.querySelectorAll(".ep").forEach(btn => {
+        btn.onclick = () => {
+          state.episode = Number(btn.dataset.episode);
+          $("episode").value = state.episode;
+          document.querySelectorAll(".ep").forEach(x => x.classList.remove("active"));
+          btn.classList.add("active");
+          renderServices("tvServices");
+        };
+      });
+
+      const first = document.querySelector(".ep");
+      if(first) first.classList.add("active");
+
+      $("episode").value = state.episode;
+    }else{
+      $("episode").innerHTML = "";
+    }
+
+    state.selectedService = null;
+    $("player").innerHTML = `
+      <div class="placeholder">
+        Selecciona un capítulo y después un servicio.
+      </div>`;
+
+  }catch(error){
+    $("episodes").innerHTML =
+      `<div class="notice">No pude cargar los capítulos: ${esc(error.message)}</div>`;
+  }
+}
+
+$("episode").onchange = () => {
+  state.episode = Number($("episode").value);
+  document.querySelectorAll(".ep").forEach(x =>
+    x.classList.toggle("active", Number(x.dataset.episode) === state.episode)
+  );
+  state.selectedService = null;
+  renderServices("tvServices");
+};
+
+/* =========================
+   SERVICIOS
+=========================
+
+   UnLimPlay es un multi-scraper que obtiene contenido (incluido
+   Embed69 y otras 9 fuentes) y ofrece una URL pública simple
+   basada en el ID de TMDB:
+
+   película: /play/embed/movie/{TMDB_ID}
+   serie:    /play/embed/tv/{TMDB_ID}/{TEMP}/{EP}
+
+   Ventaja: no requiere API Key ni plugin, se puede usar
+   directamente en un <iframe>.
+*/
+
+function getServices(){
+  return [
+    {
+      id:"unlimplay",
+      name:"UnLimPlay",
+      description:"Multi-scraper · incluye Embed69 · español latino",
+      url: buildUnLimPlay()
+    },
+    {
+      id:"tmdb",
+      name:"Opciones oficiales TMDB",
+      description:"Ver dónde está disponible legalmente",
+      url: buildTMDBWatch()
+    }
+  ];
+}
+
+function buildUnLimPlay(){
+  if(!state.item) return "";
+
+  if(state.type === "movie"){
+    return "https://unlimplay.com/play/embed/movie/" +
+      encodeURIComponent(state.item.id);
+  }
+
+  if(state.type === "tv"){
+    return "https://unlimplay.com/play/embed/tv/" +
+      encodeURIComponent(state.item.id) + "/" +
+      encodeURIComponent(state.season) + "/" +
+      encodeURIComponent(state.episode);
+  }
+
+  return "";
+}
+
+function buildTMDBWatch(){
+  if(!state.item) return "";
+  const type = state.type === "tv" ? "tv" : "movie";
+  return "https://www.themoviedb.org/" + type + "/" + state.item.id + "/watch";
+}
+
+function renderServices(containerId){
+  const services = getServices();
+  const container = $(containerId);
+
+  container.innerHTML = services.map(s => `
+    <button class="service ${state.selectedService === s.id ? "active" : ""}"
+            data-service="${s.id}">
+      <b>${esc(s.name)}</b>
+      <small>${esc(s.description)}</small>
+    </button>
+  `).join("");
+
+  container.querySelectorAll(".service").forEach(btn => {
+    btn.onclick = () => selectService(btn.dataset.service);
+  });
+}
+
+function selectService(serviceId){
+  const service = getServices().find(s => s.id === serviceId);
+  if(!service || !service.url) return;
+
+  state.selectedService = serviceId;
+
+  document.querySelectorAll(".service").forEach(btn =>
+    btn.classList.toggle("active", btn.dataset.service === serviceId)
+  );
+
+  if(serviceId === "tmdb"){
+    $("player").innerHTML = `
+      <div class="placeholder">
+        <div>
+          <b>Opciones oficiales de TMDB</b><br><br>
+          <button class="primary" id="openTMDB">Abrir opciones</button>
+        </div>
+      </div>`;
+    $("openTMDB").onclick = () => window.open(service.url, "_blank", "noopener");
+    $("selectionStatus").textContent =
+      "TMDB puede mostrar las plataformas oficiales disponibles para este título.";
+    return;
+  }
+
+  $("player").innerHTML = `
+    <iframe
+      src="${esc(service.url)}"
+      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+      allowfullscreen
+      referrerpolicy="origin-when-cross-origin">
+    </iframe>
+  `;
+
+  const itemName = state.item.title || state.item.name || "";
+
+  $("selectionStatus").textContent =
+    state.type === "movie"
+      ? "Película: " + itemName + " · Servicio: " + service.name
+      : "Serie: " + itemName +
+        " · T" + state.season +
+        " E" + state.episode +
+        " · Servicio: " + service.name;
+}
+
+/* Inicialización */
+$("search").focus();
+</script>
+
+</body>
+</html>
