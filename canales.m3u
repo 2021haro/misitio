@@ -1,7 +1,7 @@
 #EXTM3U
 
 
-#EXTINF:-1 tvg-id="Mileno" tvg-name="la granga" tvg-logo="https://i.imgur.com/TG1T5Oh.png" group-title="Informativos",Milenio
+#EXTINF:-1 tvg-id="Mileno" tvg-name="Milenio" tvg-logo="https://i.imgur.com/TG1T5Oh.png" group-title="Informativos",Milenio
 https://test-videos.co.uk/vids/bigbuckbunny/mkv/1080/Big_Buck_Bunny_1080_10s_5MB.mkv
 
 #EXTINF:-1 tvg-id="Mileno" tvg-name="Milenio" tvg-logo="https://i.imgur.com/TG1T5Oh.png" group-title="Informativos",Milenio
