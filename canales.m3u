@@ -6,6 +6,9 @@ https://mdstrm.com/live-stream-playlist/610178c7db32a4112d994650.m3u8
 #EXTINF:-1 tvg-id="LasEstrellas" tvg-name="Las Estrellas" tvg-logo="https://i.imgur.com/g5ShxZ7.png" group-title="Entretenimiento",Las Estrellas
 https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
 
+#EXTINF:-1 tvg-id="LaCaliente" tvg-name="La Caliente" tvg-logo="https://i.imgur.com/g5ShxZ7.png" group-title="Entretenimiento",La Caliente
+https://live.eu-north-1a.cf.dmcdn.net/sec2(lzuD5hpDk4hbEW-A3MFp9Nk9jcRuLgo3-L0yri8Rx_6dlQxokg66meCZC8oJjzng64FNs3AM2ShJCSc9x6aCXrVNllYhu0o0tJo3yUiKr7WNMH2xg0e1-FyPcgCHaP20srj0EOTCMCoVzuXCtP587N2IT_lSwCGNUmuUI6GhMIZiBqJU3teT9rPUF08wtNc5)/dm/4/x9sf39a/live-h264-480.m3u8
+
 #EXTINF:-1 tvg-id="EstrellaTV" tvg-name="Estrella TV" tvg-logo="https://imgur.com/IZxjnyp.png" group-title="Entretenimiento",Estrella TV
 https://estrellatv-oando.amagi.tv/playlist.m3u8
 
